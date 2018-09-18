@@ -1,0 +1,135 @@
+
+.timeline {
+  /*padding-left: 40px;*/
+  margin-left: 100px;
+  margin-right: 70px;
+  /*border: 2px solid black;*/
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tl_li {
+  /*border: 1px solid red;*/
+  padding-top: 30px;
+  transition: all 200ms ease-in;
+  width: 25%;
+}
+
+#phase4{
+  width: 28%;
+}
+#phase1{
+  width:22%;
+}
+
+
+
+.phase h4{
+  font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
+  font-size: 20px;
+  /*border: 2px solid black;*/
+  color: rgb(118,141,149);
+  /*color: #DCDCDC;*/
+  margin-bottom: 20px;
+  margin-right: auto,20px;
+  padding: 0px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 800;
+}
+
+.phase_descpt  {
+  /*font-family: "Titillium Web", sans serif;*/
+  font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
+  color: #758D96;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #D6DCE0;
+  position: relative;
+  transition: all 200ms ease-in;
+}
+/*#phase3.phase_descpt{
+  padding: 10px 20px;
+}*/
+
+.phase_descpt h4 {
+  font-weight: 100;
+  font-size: 16px;
+}
+.phase_descpt:before {
+  content: "";
+  width: 25px;
+  height: 25px;
+  background-color: #DCDCDC;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  position: absolute;
+  top: -15px;
+  left: 42%;
+  transition: all 200ms ease-in;
+}
+
+.tl_li.complete .phase_descpt {
+  border-top: 2px solid #66DC71;
+  border-top: 2px solid rgb(55,123,181);
+  /*border-top: 2px solid #fee433;*/
+}
+.tl_li.complete .phase_descpt:before {
+  /*background-color: #66DC71;*/
+  background-color: rgb(55,123,181);
+  /*background-color: #fee433;*/
+  border: none;
+  transition: all 200ms ease-in;
+}
+.tl_li.complete h4 {
+  /*color: #66DC71;*/
+  color: rgb(55,123,181);
+  /*color: #fee433;*/
+}
+
+@media screen and (max-width: 1004px){
+  /*  #phase1{
+      display: none;
+    }
+    #phase2{
+      display: none;
+    }*/
+    .phase_descpt h4{
+      display: none;
+    }
+    #phase1{
+          width: 25%;
+      }
+    #phase4{
+          width: 25%;
+      }
+}
+
+
+/*@media (min-device-width: 320px) and (max-device-width: 700px) {
+  .timeline {
+    list-style-type: none;
+    display: block;
+  }
+
+  .tl_li {
+    transition: all 200ms ease-in;
+    display: flex;
+    width: inherit;
+  }
+
+  .phase {
+    width: 100px;
+  }
+
+  .phase_descpt:before {
+    left: -8%;
+    top: 30%;
+    transition: all 200ms ease-in;
+  }
+}*/
+
