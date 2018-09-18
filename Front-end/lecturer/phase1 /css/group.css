@@ -1,9 +1,12 @@
 .group-info{
-height: 250px;
-width: 100%;
+height: 80%;
+width: 80%;
 display: none;
 border-radius: 3px;
 display: none;
+position: absolute;
+top:10%;
+  left: 10%;
 /*border: 2px solid black;*/
 }
 

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Student</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+    <!--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
+  <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <link rel='stylesheet' href='http://cdn.rawgit.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.css'>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/group.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/side_nav.css">
+  <link rel="stylesheet" href="css/shadow.css">
+  <link rel="stylesheet" href="css/reminder.css">
+  <link rel="stylesheet" href="css/notes.css">
+
+</head>
+
+<body>
+  <div class='container'>
+<!-- navbar -->
+        <nav class="navbar navbar-default ">
+            <div class="container-fluid">
+            <div class="navbar-header brand">
+                <a class="navbar-brand" href="/campgrounds">COMP9323</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                    <ur class="nav navbar-nav navbar-right">
+                            <li><a href="/login" >Login</a></li>
+                            <li><a href="/register">Sign up</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                    </ur>
+                    </div>
+            </div>
+          </nav>
+
+<!-- timeline -->
+      <div class="">
+          <ul class="timeline " id="timeline">
+                  <li class="tl_li complete" id='phase1'>
+                    <div class="phase">
+                      <h4>Phase 1</h4>
+                      <!-- <span class="date">Project scoping<span> -->
+                    </div>
+                    <div class="phase_descpt">
+                      <h4>Project Scoping & Group forming</h4>
+
+                    </div>
+                  </li>
+
+                  <li class="tl_li" id='phase2'>
+                    <div class="phase">
+                      <h4>Phase 2</h4>
+                      <!-- <span class="date">Requirements & design<span> -->
+                    </div>
+                    <div class="phase_descpt">
+                      <h4>Requirement document & Design document</h4>
+                    </div>
+                  </li>
+
+                  <li class="tl_li" id='phase3'>
+                    <div class="phase">
+                      <h4>Phase 3</h4>
+                      <!-- <span class="date">Software prototyping and implementation<span> -->
+                    </div>
+                    <div class="phase_descpt">
+                      <h4>Software prototyping & Implementation</h4>
+                    </div>
+                  </li>
+
+                  <li class="tl_li" id='phase4'>
+                    <div class="phase" >
+                      <h4>Phase 4</h4>
+                      <!-- <span class="date">implementation / testing / documentation (version2)<span> -->
+                    </div>
+                    <div class="phase_descpt">
+                      <h4>Implementation & Testing & Documentation</h4>
+                    </div>
+                  </li>
+            </ul>
+            <script type="text/javascript" src="js/timeline.js"></script>
+        </div>
+
+<!-- side nav bar -->
+      <!-- <div class="sidenav_group "> -->
+      <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+          
+    <!--   <ul class="side_nav">
+              <li>Group <span class="arrow">»</span>
+              <li>Topic 1 <span class="arrow">»</span></li>
+              <li>Topic 2 <span class="arrow">»</span></li>
+              <li>Topic 3 <span class="arrow">»</span></li>
+              <li>Topic 4 <span class="arrow">»</span></li>
+              <li>Deadline <span class="arrow">»</span></li>
+         
+      </ul> -->
+        <div class="sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active phase">Phase 1</a>
+            <a href="#" class="list-group-item navgrp">Group</a>
+            <a href="#" class="list-group-item tp1">Topic 1</a>
+            <a href="#" class="list-group-item tp2">Topic 2</a>
+            <a href="#" class="list-group-item tp3">Topic 3</a>
+            <a href="#" class="list-group-item tp4">Topic 4</a>
+            <a href="#" class="list-group-item tp5">Topic 5</a>
+          </div>
+        </div>
+            <script type="text/javascript" src="js/side-nar.js"></script>
+
+
+
+      <div class="group-reminder ">
+  <!-- notes -->
+            <div class="notes-wrapper">
+            <div class="saver-wrap" contenteditable="false">
+              <div class="notes-dot" contenteditable="false"></div>
+              <div class="rest" contenteditable="false"></div>
+            </div>
+            <div class="title" contenteditable="true">
+              Reminder
+            </div>
+            <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                Dear students,
+                Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                Date: Tuesday, July 24th, 2018
+                Venue: Colombo LG02 (K-B16-LG02)
+                Time: 18h00 to 19h00
+                See you all there.
+            </div>
+            <div class="line"></div>
+            <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
+          </div>
+           <script  src="js/notes.js"></script>
+
+
+
+<!-- group  -->
+
+          <div class="group-info drop-shadow-nav-grp curved.v2">
+            <div class="group-info-title"> Group Information</div>
+
+                       <h4 class="group-name">Group Name: <span>Group 8</span></h4>
+              <div class="group-wrapper">
+                      <div class="members">
+                          <h4  >Members: </h4>
+                           <ul>
+                               <li><div>Alex</div>z5105196</li>
+                               <li><div>Hank</div>z5105196</li>
+                               <li><div>Junnan Chen</div>z5105196</li>
+                           </ul>
+                      </div>
+
+                     <div class="group-topic">
+                         <h4>Topic:</h4>
+                         <ul>
+                             <li>Project-based learning management app</li>
+                         </ul>
+                     </div>
+                </div>
+                   
+          </div>
+          <br>
+          <div class="add-group"><i class="fas fa-plus-circle fa-2x add-group-btn"></i></div>
+          <div class="group_container drop-shadow-group lifted" >
+            <div class="container">
+                      <h1>Create New Group</h1>
+                      <h2 class="lead">Use the form below to create a new group.</h2>
+                      <form action="">
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li class="active"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs">Group Settings</span></a></li>
+                          <li><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></a></li>
+                          <li><a href="#advanced" aria-controls="advanced" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Advanced</span></a></li>
+                          <li class="pull-right"><button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div role="tabpanel" class="tab-pane active" id="form">
+                            <div class="form-group">
+                              <span class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-text-size"></span></span>
+                              <input type="text" class="form-control" placeholder="Group Name" />
+                              </span>
+                            </div>
+                            <div class="form-group">
+                              <span class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-folder-open"></span></span>
+                              <select class="form-control">
+                                  <option value="">Topic</option>
+                                  <option value="">Topic 1</option>
+                                  <option value="">Topic 2</option>
+                                  <option value="">Topic 3</option>
+                                  <option value="">Topic 4</option>
+                                  <option value="">Topic 5</option>
+                                </select>
+                              </span>
+                            </div>
+                            <div class="form-group">
+                              <span class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-level-up"></span></span>
+                              <input type="text" class="form-control" placeholder="Upload documents">
+                              </span>
+                            </div>
+                            <div class="form-group">
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <div class="btn-group">
+                                    <a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-bold"></span></a>
+                                    <a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-italic"></span></a>
+                                  </div>
+                                  <div class="btn-group">
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-align-left"></span></a>
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-align-center"></span></a>
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-align-right"></span></a>
+                                  </div>
+                                  <div class="btn-group">
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-list"></span></a>
+                                  </div>
+                                  <div class="btn-group">
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-link"></span></a>
+                                    <a href="#" class="btn btn-default  btn-sm"><span class="glyphicon glyphicon-erase"></span></a>
+                                  </div>
+                                </div>
+                                <div class="panel-body">
+                                  <textarea class="form-control" placeholder="Notes"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                              <!--<div class="list-group">-->
+                                <!--<label class="list-group-item"><input type="checkbox" /> &nbsp; Dynamic Refresh?</label>-->
+                                <!--<label class="list-group-item"><input type="checkbox" /> &nbsp; Create Report?</label>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                          </div>
+                          <div role="tabpanel" class="tab-pane" id="products">
+                            <div class="form-group">
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Filter">
+                                <span class="input-group-btn"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span><span class="hidden-xs"> Filter</span></button>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th class="col-sm-1">Sku #</th>
+                                    <th>Product</th>
+                                    <th class="col-sm-1"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>900001</td>
+                                    <td>Test Product 1</td>
+                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900002</td>
+                                    <td>Test Product 2</td>
+                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900003</td>
+                                    <td>Test Product 3</td>
+                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+            </div>
+                          <div role="tabpanel" class="tab-pane" id="search">
+                            <nav>
+                              <div class="navbar-header">
+                                <button type="button" class="btn btn-default btn-block navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                  <span class="glyphicon glyphicon-menu-hamburger"></span> Toggle Search Form
+                                </button>
+                              </div>
+                              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-barcode text-muted"></span></span>
+                                      <input type="text" class="form-control" placeholder="Sku / UPC">
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag text-muted"></span></span>
+                                      <input type="text" class="form-control" placeholder="Vendor No.">
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-align-left text-muted"></span></span>
+                                      <input type="text" class="form-control" placeholder="Description">
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-qrcode text-muted"></span></span>
+                                      <input type="text" class="form-control" placeholder="Part No.">
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <select class="form-control">
+                                      <option>Dept.</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <select class="form-control disabled" disabled="disabled">
+                                      <option>Sub Dept.</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <select class="form-control disabled" disabled="disabled">
+                                      <option>Class</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3 form-group">
+                                    <select class="form-control disabled" disabled="disabled">
+                                      <option>Sub Class</option>
+                                    </select>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </nav>
+                            <div class="panel panel-default">
+                              <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th class="col-sm-1">Sku #</th>
+                                    <th>Product</th>
+                                    <th align="right" width="1%"><a href="" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add All</span></a></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>900004</td>
+                                    <td>Test Product 4</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900005</td>
+                                    <td>Test Product 5</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900006</td>
+                                    <td>Test Product 6</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900007</td>
+                                    <td>Test Product 7</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900008</td>
+                                    <td>Test Product 8</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>900009</td>
+                                    <td>Test Product 9</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000010</td>
+                                    <td>Test Product 10</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000011</td>
+                                    <td>Test Product 11</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000012</td>
+                                    <td>Test Product 12</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000013</td>
+                                    <td>Test Product 13</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000014</td>
+                                    <td>Test Product 14</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000015</td>
+                                    <td>Test Product 15</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000016</td>
+                                    <td>Test Product 16</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000017</td>
+                                    <td>Test Product 17</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td>9000018</td>
+                                    <td>Test Product 18</td>
+                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <nav align="center">
+                              <ul class="pagination">
+                                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+                              </ul>
+                            </nav>
+                          </div>
+                          <div role="tabpanel" class="tab-pane" id="advanced">
+                            <div class="form-group">
+                              <div class="panel panel-default">
+                                <div class="panel-body">
+                                  <textarea class="form-control" placeholder="SQL Statement"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+            <br>
+
+
+          </div>
+      </div>
+      </div>
+</div>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+
+
+  
+
+</body>
+
+</html>

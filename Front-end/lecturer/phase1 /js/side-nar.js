@@ -1,3 +1,4 @@
+
 //click Group
 $(".navgrp").click( function(){
 	$(".notes-wrapper").hide()
