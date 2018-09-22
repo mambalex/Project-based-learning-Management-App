@@ -144,6 +144,25 @@ def change_student_mark(user_id, new_mark):
 def change_student_photo(user_id, new_photo):
     change_student_info(user_id, "photo", new_photo)
 
+def enrol_project(user_id, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "insert into enrol_project values ('{}', '{}');".format(user_id, project_uuid)
+    database_object.update(sql)
+    database_object.close()
+
+def get_project_student_list(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select s.user_id, s.name from enrol_project e_p, students s, where project_uuid = '{}' and e_p.user_id = s.user_id;".format(project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['user_id', 'name']
+    result = convert_result_to_dict(result, key_list)
+    return result
+
 def create_group(name, project_uuid):
     group_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}

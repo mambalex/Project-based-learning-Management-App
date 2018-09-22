@@ -51,6 +51,12 @@ CREATE TABLE managements
     PRIMARY KEY (user_id, group_uuid)
 );
 
+CREATE TABLE enrol_project
+(
+    user_id character varying(40) NOT NULL,
+    project_uuid uuid NOT NULL
+);
+
 CREATE TABLE projects
 (
     project_uuid uuid NOT NULL,
