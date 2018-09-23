@@ -54,7 +54,8 @@ CREATE TABLE managements
 CREATE TABLE enrol_project
 (
     user_id character varying(40) NOT NULL,
-    project_uuid uuid NOT NULL
+    project_uuid uuid NOT NULL,
+    user_type text NOT NULL
 );
 
 CREATE TABLE projects

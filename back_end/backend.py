@@ -123,7 +123,7 @@ class student_user(User):
     def generate_auth_token(self, expiration=600):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.user_id, 'user_type': self.user_type})
-
+# -------------------------------------user model end --------------------------------
 
 @auth.verify_password
 def verify_password(name_or_token, password):
@@ -146,13 +146,7 @@ def verify_password(name_or_token, password):
 
 @app.route('/api/test', methods=['GET'])
 def test():
-    user_id = request.args.get("id")
-    result = db.get_admin_user(user_id)
-    test1 = admin_user(result[0])
-    token1 = test1.generate_auth_token()
-    print(token1)
-    # print(admin_user.verify_auth_token('test2'))
-    return jsonify(result[0])
+    return jsonify([{'id': 'test1', 'name': 'test1'}, {'id': 'test2', 'name': 'test2'}])
 
 
 @app.route('/api/test2', methods=['GET'])
@@ -271,6 +265,7 @@ def change_admin_type():
     if g.user.is_admin_user():
         if g.user.admin_type == 0:
             db.change_admin_type(admin_id, new_type)
+            return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id})
         else:
             return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
 
@@ -283,7 +278,7 @@ def change_admin_type():
 def get_student_list():
     project_uuid = request.json.get('project_uuid')
     student_list = db.get_project_student_list(project_uuid)
-    return jsonify(json.dumps(student_list))
+    return jsonify({'code': 200, 'msg': 'Get student list success', 'data': student_list})
 
 
 @app.route('/api/get_student_timeline', methods=['POST'])
@@ -291,7 +286,7 @@ def get_student_list():
 def get_student_timeline():
     if not g.user.is_admin_user():
         timeline = db.get_student_timeline(g.user.user_id)
-        return jsonify(json.dumps(timeline))
+        return jsonify({'code': 200, 'msg': 'Get timeline success', 'data':timeline})
     else:
         return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
 
@@ -306,6 +301,54 @@ def create_group():
     group_uuid = db.create_group(group_name, project_uuid)
     db.create_group_relation(g.user.user_id, group_uuid, 0)
     return jsonify({'code': 200, 'msg': 'Create success', 'user_id': g.user.user_id, 'group_uuid': group_uuid})
+
+@app.route('/api/get_group_list', methods=['GET', 'POST'])
+@auth.login_required
+def get_group_list():
+    project_uuid = request.json.get('project_uuid')
+    return jsonify({'code': 200, 'msg': 'Get group list success', 'data': db.get_all_group(project_uuid)})
+
+@app.route('/api/join_group', methods=['GET', 'POST'])
+@auth.login_required
+def join_group():
+    group_uuid = request.json.get('group_uuid')
+    db.create_group_relation(g.user.user_id, group_uuid)
+    # TODO check whether already join a group
+    return jsonify({'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id})
+
+@app.route('/api/create_project', methods=['GET', 'POST'])
+@auth.login_required
+def create_project():
+    project_master = g.user.user_id
+    project_name = request.json.get('project_name')
+    project_deadline = request.json.get('project_deadline')
+    project_markrelease = request.json.get('project_markrelease', 'Null')
+    project_addr = request.json.get('project_addr', 'None')
+    if g.user.is_admin_user():
+        project_uuid = db.create_projects(project_master, project_name, project_deadline, project_markrelease, project_addr)
+        db.enrol_project(project_master, project_uuid, 'master')
+        return jsonify({'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id})
+    else:
+        return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
+
+@app.route('/api/get_project_list', methods=['GET', 'POST'])
+@auth.login_required
+def get_project_list():
+    return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
+
+@app.route('/api/enrol_project', methods=['GET', 'POST'])
+@auth.login_required
+def enrol_project():
+    project_uuid = request.json.get('project_uuid')
+    user_type = request.json.get('user_type', 'student')
+    db.enrol_project(g.user.user_id, project_uuid, user_type)
+    return jsonify({'code': 200, 'msg':'enrol in project success', 'user_id': g.user.user_id})
+
+@app.route('/api/get_self_project_list', methods=['GET', 'POST'])
+@auth.login_required
+def get_self_project_list():
+    return jsonify({'code': 200, 'msg': 'Get self project list success', 'data': db.get_self_project_list(g.user.user_id)})
+
 
 
 if __name__ == '__main__':
