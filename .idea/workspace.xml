@@ -2,30 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31551a7f-4865-445f-9671-813c1056f5ad" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/deadline.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/group.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/index.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/notes.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/reminder.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/shadow.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/side_nav.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/timeline.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/deadline.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/header-timeline.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/lecturer-phase1.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/notes.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/side-nar.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/timeline.js" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/header-timeline.css" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase1 /header-timeline.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/header-timeline.js" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /index-lectures.html" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase1 /phase1.html" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/group.css" afterPath="$PROJECT_DIR$/Front-end/students/phase1/css/group.css" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/notes.css" afterPath="$PROJECT_DIR$/Front-end/students/phase1/css/notes.css" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/reminder.css" afterPath="$PROJECT_DIR$/Front-end/students/phase1/css/reminder.css" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/index-student.html" afterPath="$PROJECT_DIR$/Front-end/students/phase1/index-student.html" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/side-nar.js" afterPath="$PROJECT_DIR$/Front-end/students/phase1/js/side-nar.js" />
+      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css" afterPath="$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css" />
+      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1.html" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase1.html" />
+      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase2.html" afterPath="$PROJECT_DIR$/Front-end/lecturer/phase2.html" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/index.css" afterPath="$PROJECT_DIR$/Front-end/students/phase1/css/index.css" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/index-student.html" afterPath="$PROJECT_DIR$/Front-end/students/phase1/student-phase1.html" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html" afterPath="$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -39,51 +22,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index-student.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/index-student.html">
+      <file leaf-file-name="student-phase1.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/student-phase1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="145" column="20" lean-forward="false" selection-start-line="145" selection-start-column="20" selection-end-line="145" selection-end-column="20" />
+            <state relative-caret-position="104">
+              <caret line="113" column="26" lean-forward="false" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="student-phase2.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html">
+      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
+            <state relative-caret-position="157">
+              <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header-timeline.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Front-end/lecturer/header-timeline.html">
+      <file leaf-file-name="student-phase1.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/student-phase1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="57" column="38" lean-forward="true" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="phase1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="106" column="59" lean-forward="true" selection-start-line="106" selection-start-column="59" selection-end-line="106" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="phase2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase2.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+            <state relative-caret-position="180">
+              <caret line="12" column="27" lean-forward="false" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -94,9 +57,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -120,6 +83,8 @@
       <find>note</find>
       <find>jo</find>
       <find>all_g</find>
+      <find>join</find>
+      <find>close</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,7 +101,6 @@
         <option value="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/reminder.css" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/deadline.css" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/notes.css" />
-        <option value="$PROJECT_DIR$/Front-end/students/phase1/css/index.css" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/header.html" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/timeline.html" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/header-timeline.js" />
@@ -149,21 +113,30 @@
         <option value="$PROJECT_DIR$/Front-end/lecturer/lecturer.html" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/header-timeline.html" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/css/phase1/timeline.css" />
-        <option value="$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/js/header-timeline.js" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/js/phase1/side-nar.js" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/lecturer-phase1.js" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/phase1 /phase1.html" />
-        <option value="$PROJECT_DIR$/Front-end/lecturer/phase1.html" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/js/phase1/lecturer-phase1.js" />
         <option value="$PROJECT_DIR$/Front-end/lecturer/js/phase2/lecturer-phase2.js" />
-        <option value="$PROJECT_DIR$/Front-end/lecturer/phase2.html" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/css/group.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/css/reminder.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/index-student.html" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/css/notes.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/js/side-nar.js" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/js/header-timeline.js" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/header-timeline.html" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/js/student-phase2.js" />
+        <option value="$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/css/header-timeline.css" />
+        <option value="$PROJECT_DIR$/Front-end/lecturer/phase1.html" />
+        <option value="$PROJECT_DIR$/Front-end/lecturer/phase2.html" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase2/js/student-phase2.js" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase2/css/student-phase2.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/student-phase1.html" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/css/index.css" />
+        <option value="$PROJECT_DIR$/Front-end/students/phase1/js/student-phase1.js" />
       </list>
     </option>
   </component>
@@ -174,10 +147,13 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="160" />
-    <option name="y" value="173" />
+    <option name="x" value="247" />
+    <option name="y" value="164" />
     <option name="width" value="1038" />
-    <option name="height" value="591" />
+    <option name="height" value="459" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -211,6 +187,12 @@
               <item name="COMP9323-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
               <item name="Front-end" type="462c0819:PsiDirectoryNode" />
+              <item name="lecturer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="COMP9323-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Front-end" type="462c0819:PsiDirectoryNode" />
               <item name="students" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -218,7 +200,15 @@
               <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
               <item name="Front-end" type="462c0819:PsiDirectoryNode" />
               <item name="students" type="462c0819:PsiDirectoryNode" />
-              <item name="phase2" type="462c0819:PsiDirectoryNode" />
+              <item name="phase1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="COMP9323-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Front-end" type="462c0819:PsiDirectoryNode" />
+              <item name="students" type="462c0819:PsiDirectoryNode" />
+              <item name="phase1" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -237,17 +227,18 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Front-end/students/phase2/css" />
+      <recent name="$PROJECT_DIR$/Front-end/students/phase2/js" />
+      <recent name="$PROJECT_DIR$/Front-end/students/phase2" />
+      <recent name="$PROJECT_DIR$/Front-end/students/phase1/js" />
+      <recent name="$PROJECT_DIR$/Front-end/students/phase1/css" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Front-end/lecturer/js" />
       <recent name="$PROJECT_DIR$/Front-end/lecturer/css" />
       <recent name="$PROJECT_DIR$/Front-end/lecturer/phase1 /css" />
       <recent name="$PROJECT_DIR$/Front-end/lecturer/phase1 /js" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Front-end/lecturer/js/phase1" />
-      <recent name="$PROJECT_DIR$/Front-end/lecturer/css/phase1" />
-      <recent name="$PROJECT_DIR$/Front-end/lecturer" />
-      <recent name="$PROJECT_DIR$/Front-end/lecturer/phase1 " />
     </key>
   </component>
   <component name="RunDashboard">
@@ -278,15 +269,15 @@
       <workItem from="1537246650718" duration="8819000" />
       <workItem from="1537263461520" duration="125000" />
       <workItem from="1537338869370" duration="16423000" />
-      <workItem from="1538005905964" duration="518000" />
+      <workItem from="1538005905964" duration="6109000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25885000" />
+    <option name="totallyTimeSpent" value="31476000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="160" y="173" width="1038" height="591" extended-state="0" />
+    <frame x="247" y="164" width="1038" height="459" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24975418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -320,85 +311,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/notes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/deadline.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /phase1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2175">
-          <caret line="145" column="38" lean-forward="false" selection-start-line="145" selection-start-column="38" selection-end-line="145" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/index-student.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /phase1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2175">
-          <caret line="145" column="38" lean-forward="false" selection-start-line="145" selection-start-column="38" selection-end-line="145" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/timeline.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/notes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /index.html" />
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/timeline.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="36" column="20" lean-forward="true" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /css/deadline.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /css/reminder.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="14" lean-forward="false" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1 /css/group.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -417,13 +329,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
           <caret line="28" column="23" lean-forward="false" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="29" column="23" lean-forward="false" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -502,17 +407,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/header-timeline.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -571,13 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/lecturer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -652,42 +544,154 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase2.html">
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/header-timeline.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="23" lean-forward="false" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/lecturer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="3" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/header-timeline.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="106" column="59" lean-forward="true" selection-start-line="106" selection-start-column="59" selection-end-line="106" selection-end-column="59" />
+        <state relative-caret-position="75">
+          <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/phase2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/header-timeline.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/css/header-timeline.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Front-end/lecturer/header-timeline.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
+        <state relative-caret-position="78">
           <caret line="57" column="38" lean-forward="true" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/index-student.html">
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/js/header-timeline.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="145" column="20" lean-forward="false" selection-start-line="145" selection-start-column="20" selection-end-line="145" selection-end-column="20" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/css/header-timeline.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-37">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/css/shadow.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/side_nav.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/header-timeline.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="802">
+          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/js/student-phase2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/css/student-phase2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
+        <state relative-caret-position="280">
+          <caret line="19" column="20" lean-forward="false" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/student-phase1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="113" column="26" lean-forward="false" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/students/phase1/js/student-phase1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="27" lean-forward="false" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
           <folding />
         </state>
       </provider>
