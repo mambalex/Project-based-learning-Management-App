@@ -170,8 +170,7 @@
                       <form action="">
                         <ul class="nav nav-tabs" role="tablist">
                           <li class="active"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs">Group Settings</span></a></li>
-                          <li><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></a></li>
-                          <li><a href="#advanced" aria-controls="advanced" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Advanced</span></a></li>
+                          <li ><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></a></li>
                           <li class="pull-right"><button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
                         </ul>
                         <div class="tab-content">
@@ -234,43 +233,7 @@
                               <!--</div>-->
                             <!--</div>-->
                           </div>
-                          <div role="tabpanel" class="tab-pane" id="products">
-                            <div class="form-group">
-                              <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Filter">
-                                <span class="input-group-btn"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span><span class="hidden-xs"> Filter</span></button>
-                                </span>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <table class="table table-striped">
-                                <thead>
-                                  <tr>
-                                    <th class="col-sm-1">Sku #</th>
-                                    <th>Product</th>
-                                    <th class="col-sm-1"></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>900001</td>
-                                    <td>Test Product 1</td>
-                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td>900002</td>
-                                    <td>Test Product 2</td>
-                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td>900003</td>
-                                    <td>Test Product 3</td>
-                                    <td align="right"><a href="" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span><span class="hidden-xs"> Remove</span></a></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-            </div>
+
                           <div role="tabpanel" class="tab-pane" id="search">
                             <nav>
                               <div class="navbar-header">
@@ -280,50 +243,13 @@
                               </div>
                               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <div class="row">
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-barcode text-muted"></span></span>
-                                      <input type="text" class="form-control" placeholder="Sku / UPC">
+                                    <div class="col-xs-6 col-sm-6 form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user text-muted"></span></span>
+                                            <input type="text" class="form-control" placeholder="Candidate">
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag text-muted"></span></span>
-                                      <input type="text" class="form-control" placeholder="Vendor No.">
-                                    </div>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-align-left text-muted"></span></span>
-                                      <input type="text" class="form-control" placeholder="Description">
-                                    </div>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <div class="input-group">
-                                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-qrcode text-muted"></span></span>
-                                      <input type="text" class="form-control" placeholder="Part No.">
-                                    </div>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <select class="form-control">
-                                      <option>Dept.</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <select class="form-control disabled" disabled="disabled">
-                                      <option>Sub Dept.</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <select class="form-control disabled" disabled="disabled">
-                                      <option>Class</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-xs-12 col-sm-3 form-group">
-                                    <select class="form-control disabled" disabled="disabled">
-                                      <option>Sub Class</option>
-                                    </select>
-                                  </div>
+                                    <div class="col-xs-4 col-sm-4"><button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></button></div>
 
                                 </div>
                               </div>
@@ -332,9 +258,7 @@
                               <table class="table table-striped">
                                 <thead>
                                   <tr>
-                                    <th class="col-sm-1">Sku #</th>
-                                    <th>Product</th>
-                                    <th align="right" width="1%"><a href="" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add All</span></a></th>
+                                    <th class="col-sm-1">Candidates</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -428,18 +352,11 @@
                               </ul>
                             </nav>
                           </div>
-                          <div role="tabpanel" class="tab-pane" id="advanced">
-                            <div class="form-group">
-                              <div class="panel panel-default">
-                                <div class="panel-body">
-                                  <textarea class="form-control" placeholder="SQL Statement"></textarea>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </form>
                     </div>
+              <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+              <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
             <br>
 
 

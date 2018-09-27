@@ -1,10 +1,9 @@
 .container{
     display: flex;
-    flex-direction: column;
     /*border: 2px solid black;*/
-    width: 100% !important;
+    width: 96% !important;
     height: 100%;
-    margin: 10px 0 0 0 !important;
+    margin-top:40px;
 }
 
 /*side-nav*/
@@ -130,13 +129,11 @@
     /*border: 2px solid black;*/
 
 }
-@media screen and (max-width: 767px) {
-    .row-offcanvas {
-        position: relative;
-        -webkit-transition: all .25s ease-out;
-        -o-transition: all .25s ease-out;
-        transition: all .25s ease-out;
-    }
-
+.file-input{
+    width:50%;
+    margin: 50px 0 0 150px;
 }
 
+.design{
+    display: none;
+}

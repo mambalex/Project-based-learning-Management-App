@@ -10,16 +10,37 @@
 </head>
 <body>
     <div id="header-timeline"></div>
-    <div class='container'>
-        <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+    <div class='container  drop-shadow-nav-grp curved.v2'>
+        <div class="sidenav_group">
             <div class="sidebar-offcanvas" id="sidebar">
                 <div class="list-group">
                     <a href="#" class="list-group-item active phase">Phase 2</a>
-                    <a href="#" class="list-group-item navgrp">Requirement document</a>
-                    <a href="#" class="list-group-item tp1">Design document</a>
-
+                    <a href="#" class="list-group-item nav-requirement">Requirement document</a>
+                    <a href="#" class="list-group-item nav-design">Design document</a>
                 </div>
             </div>
+        </div>
+        <div class="file-input">
+                <h4 class="requirement">Requirement document</h4>
+                <h4 class="design">Design document</h4>
+                <form method="POST" action="#" enctype="multipart/form-data">
+                    <!-- COMPONENT START -->
+                    <div class="form-group">
+                        <div class="input-group input-file" name="Fichier1">
+                            <input type="text" class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+
+
+                        </div>
+                    </div>
+                    <!-- COMPONENT END -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
         </div>
     </div>
 </body>
