@@ -1,9 +1,10 @@
-//click Group
-$(".navgrp").click( function(){
-	$(".notes-wrapper").hide()
-	$(".group-info").show()
-	$(".add-group").show()
 
+$(document).on('click', '.navgrp', function(e){
+    $(".notes-wrapper").hide();
+    $(".due-date").hide();
+    $(".group-info").show();
+    $(".add-group").show();
+    $(".all-groups").show();
 
 });
 
@@ -20,7 +21,10 @@ $(document).on('click', '.cancel-group', function(e){
 
 //click Phase1
 $(".phase").click( function(){
-    $(".notes-wrapper").show()
-    $(".group-info").hide()
-    $(".group_container").hide()
+    $(".notes-wrapper").show();
+    $(".due-date").show();
+    $(".add-group").hide();
+    $(".group-info").hide();
+    $(".group_container").hide();
+    $(".all-groups").hide();
 });
