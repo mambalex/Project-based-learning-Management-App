@@ -97,22 +97,14 @@
 <!-- side nav bar -->
       <!-- <div class="sidenav_group "> -->
       <div class="sidenav_group drop-shadow-nav-grp curved.v2">
-          
-    <!--   <ul class="side_nav">
-              <li>Group <span class="arrow">»</span>
-              <li>Topic 1 <span class="arrow">»</span></li>
-              <li>Topic 2 <span class="arrow">»</span></li>
-              <li>Topic 3 <span class="arrow">»</span></li>
-              <li>Topic 4 <span class="arrow">»</span></li>
-              <li>Deadline <span class="arrow">»</span></li>
-         
-      </ul> -->
+
         <div class="sidebar-offcanvas" id="sidebar">
           <div class="list-group">
             <a href="#" class="list-group-item active">Phase 1</a>
             <a href="#" class="list-group-item navgrp">Group</a>
             <a href="#" class="list-group-item reminder">Reminder</a>
             <a href="#" class="list-group-item deadline">Deadline</a>
+            <a href="#" class="list-group-item upload">Documents</a>
             <!-- <a href="#" class="list-group-item tp3">Topic 3</a>
             <a href="#" class="list-group-item tp3">Topic 4</a>
             <a href="#" class="list-group-item tp3">Topic 5</a> -->
@@ -122,7 +114,62 @@
 
 
 
-      <div class="group-reminder ">
+      <div class="group-reminder">
+
+  <!--file input-->
+
+          <div class="documenets">
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <th class="col-sm-1">DOCUMENTS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                  </tr>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                  </tr>
+
+                  </tbody>
+              </table>
+          </div>
+
+
+          <div class="upload-files">
+              <div class="upload-files-header"><h4 >Upload Files</h4></div>
+
+              <form method="POST" action="#" enctype="multipart/form-data">
+                  <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
+                      <input type="text" class="form-control" placeholder="Title">
+                  </div>
+                  <br>
+                  <textarea class="form-control" rows="5" id="description"></textarea><br>
+                  <!-- COMPONENT START -->
+                  <div class="form-group">
+                      <div class="input-group input-file" name="Fichier1">
+                          <input type="text" class="form-control" placeholder='Choose a file...' />
+                          <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+
+
+                      </div>
+                  </div>
+                  <!-- COMPONENT END -->
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                      <button type="reset" class="btn btn-danger">Reset</button>
+                  </div>
+              </form>
+          </div>
   <!-- notes -->
             <div class="notes-wrapper">
             <div class="saver-wrap" contenteditable="false">

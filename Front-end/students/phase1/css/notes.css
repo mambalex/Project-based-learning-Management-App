@@ -206,11 +206,9 @@
 }
 
 .due-date{
-  /*position: absolute;*/
-  /*left:150px;*/
-  /*top:220px;*/
-  margin-top: 40px;
-  width: 215px;
+  margin-top: 10px;
+  margin-left:60px;
+  width: 200px;
   /*border: 1px solid black;*/
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

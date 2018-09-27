@@ -7,6 +7,8 @@
   margin-top: 10px;
 }
 
+
+
 .sidenav_group{
   /*border: 2px solid black;*/
 	display: flex;
@@ -14,7 +16,11 @@
 	align-content:center;
 	margin-top: 30px;
     padding-bottom: 100px;
+    position: relative;
+    /*height: 500px;*/
 }
+
+
 
 .group-reminder{
   width: 70%;
@@ -68,7 +74,16 @@
 }
 
 
-
-
-
+.documenets{
+    display: none;
+    width: 80%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.documenets .table{
+    margin-bottom: 0 !important;
+}
+.documenets .table>thead>tr>th{
+    border-bottom: none !important;
+    font-weight: 500;
+}
 
