@@ -15,6 +15,12 @@ $("#logout").click( function(){
     $(location).attr('href','student.html')
 });
 
+$("#profile").click( function(e){
+    e.preventDefault();
+    var url = $(this).attr('href');
+    window.open(url, '_blank');
+});
+
 
 
 
