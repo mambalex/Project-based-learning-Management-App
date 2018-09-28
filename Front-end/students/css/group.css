@@ -183,7 +183,7 @@ font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
   box-shadow: none;
   padding: 0;
   outline: none;
-  overflow: scroll-x;
+  /*overflow: scroll-x;*/
   resize: none;
   min-height: 80px;
 }
@@ -226,4 +226,41 @@ select.form-control.disabled {
 
 .input-group select.form-control {
   -webkit-appearance: none;
+}
+
+/*group-popup*/
+
+.group-popup{
+  display: none;
+  position: absolute;
+  top:350px;
+  z-index: 5;
+  padding:0;
+  width: 60%;
+  height: 220px;
+  color:black;
+}
+.group-popup .group-popup-close{
+  color:rgb(55,123,181) ;
+  display: inline-block;
+  font-size: 18px;
+  margin-left: 94%;
+  cursor: pointer;
+}
+
+.group-popup>.group-name{
+  text-align: center;
+  font-size: 19px;
+  margin: 0;
+  font-weight: 400;
+  color: #245853;
+  /*display:inline-block;*/
+  width: 100%;
+}
+
+.group-popup-wrapper {
+  margin: 16px 0 10px 40px;
+}
+.group-popup-wrapper .title{
+  font-weight: 500;
 }

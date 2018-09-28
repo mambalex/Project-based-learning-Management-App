@@ -3,8 +3,71 @@ $(function(){
 });
 
 
-// file-input
+// phase1
 
+// side-nav
+
+// click group
+$(document).on('click', '.navgrp', function(e){
+    $(".notes-wrapper").hide();
+    $(".documenets").hide();
+    $(".group-info").show();
+    $(".add-group").show();
+    $(".all-groups").show();
+
+});
+
+//click Phase1
+$(".phase").click( function(){
+    $(".notes-wrapper").show();
+    $(".due-date").show();
+    $(".add-group").hide();
+    $(".group-info").hide();
+    $(".group_container").hide();
+    $(".all-groups").hide();
+    $(".documenets").hide();
+});
+
+//click Documents
+$(".document").click( function(){
+    $(".notes-wrapper").hide();
+    $(".add-group").hide();
+    $(".group-info").hide();
+    $(".group_container").hide();
+    $(".all-groups").hide();
+    $(".documenets").show();
+});
+
+
+// group
+
+// click-add-group
+$(document).on('click', '.add-group', function(e){
+    $(".group_container").show();
+    $(".add-group").hide();
+});
+
+// click cancel
+$(document).on('click', '.cancel-group', function(e){
+    $(".group_container").hide();
+    $(".add-group").show();
+});
+
+//click group name popup
+$(document).on('click', '.g-popup', function(e){
+    e.preventDefault();
+    $(".group-popup").show();
+});
+
+//click group popup close
+$(document).on('click', '.group-popup-close', function(e){
+    e.preventDefault();
+    $(".group-popup").hide();
+});
+
+
+// phase2
+// file-input
 function bs_input_file() {
     $(".input-file").before(
         function() {
@@ -35,7 +98,7 @@ $(function() {
     bs_input_file();
 });
 
-
+//side-nav
 $(document).on('click', '.nav-design', function(e){
     e.preventDefault();
     $(".requirement").hide();

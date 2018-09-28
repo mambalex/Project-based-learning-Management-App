@@ -1,3 +1,199 @@
-.phase1{
+.container{
+  display: flex;
+  flex-direction: column;
+  /*border: 2px solid black;*/
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+}
+
+
+/*phase1*/
+
+/*side-nav*/
+.sidebar{
+    text-align: left;
+    height: 300px;
+    width: 200px;
+    list-style: none;
+    margin-left: 60px;
+    margin-top: 30px;
+    position: relative;
+    /*border: 2px solid black;*/
+
+}
+
+.sidenav_group{
+  /*border: 2px solid black;*/
+	display: flex;
+	justify-content: space-between;
+	align-content:center;
+	margin-top: 30px;
+    margin-bottom: 200px;
+}
+
+.right-wrapper{
+    width: 70%;
+	margin-left: 10px;
+    padding-top: 20px;
+    padding-left:50px;
+    padding-right: 50px;
+	display: flex;
+	flex-direction: column;
+     align-items: center;
+	justify-content: space-between;
+    position: relative;
+}
+
+/*note-reminder*/
+.notes-wrapper {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    z-index: 999;
+}
+
+.notes-wrapper .title {
+    background-color: rgb(55,123,181);
+    padding: 18px 30px;
+    padding-right: 60px;
+    color: white;
+    font-size: 18px;
+    font-family:'Source Sans Pro';
+    position: relative;
+}
+
+.notes-wrapper .content {
+    padding: 10px 30px;
+    padding-bottom: 15px;
+    font-weight: 400;
+    color: #666D82;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+.new_note{
+    display: none;
+    /*border: 2px solid black;*/
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    position: absolute;
+    top:50px;
+    font-size: 20px;
+}
+
+.new_note label{
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+
+/*group*/
+.group-info{
+    height: 80%;
+    width: 80%;
+    display: none;
+    border-radius: 3px;
+    display: none;
+    position: absolute;
+    top:10%;
+    left: 10%;
+}
+
+.group-info-title{
+    padding-top: 7px;
+    text-align: center;
+    border-radius: 4px 4px 0 0;
+    color: white;
+    font-size: 18px;
     width: 100%;
+    height: 40px;
+    background-color: #377bb5;
+}
+
+.group-options {
+    font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
+    padding-top: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.question{
+    font-weight: 600;
+}
+
+.group-options button{
+    margin: 0 auto;
+}
+
+.two-options{
+    font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
+    text-align: left;
+    padding-left: 220px;
+}
+
+.two-options label{
+    font-weight: normal;
+    text-align: left;
+    margin-left: 20px;
+    font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
+}
+
+.group_container{
+    display: none;
+    width: 100%;
+    align-content: center;
+
+    -webkit-box-shadow: 5px 2px 7px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 5px 2px 7px rgba(0, 0, 0, 0.15);
+    box-shadow: 5px 2px 7px rgba(0, 0, 0, 0.15);
+}
+
+.group_container h1{
+    text-align: center;
+}
+
+/*deadline*/
+
+.deadline_view{
+    display: none;
+    width: 420px;
+    height: 155px;
+    position: absolute;
+    top:30px;
+    left: 100px;
+}
+
+/*documents*/
+
+.documenets{
+    display: none;
+    width: 80%;
+    margin-bottom: 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.documenets .table{
+    margin-bottom: 0 !important;
+}
+.documenets .table>thead>tr>th{
+    border-bottom: none !important;
+    font-weight: 500;
+}
+
+.upload-files{
+    width: 80%;
+    display: none;
+    padding: 5px 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.upload-files .upload-files-header{
+    color: #245853;
+    text-align: center;
 }

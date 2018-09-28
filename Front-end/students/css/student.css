@@ -1,0 +1,150 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  /*border: 2px solid black;*/
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+}
+
+/*phase1*/
+
+.phase1{
+    margin-bottom: 200px;
+}
+
+/*side-nar*/
+.left-wrapper>.sidebar {
+    text-align: left;
+    height: 200px;
+    width: 200px;
+    list-style: none;
+    margin-left: 60px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.sidenav_group{
+  /*border: 2px solid black;*/
+	display: flex;
+	justify-content: space-between;
+	align-content:center;
+	margin-top: 30px;
+    padding-bottom: 100px;
+    position: relative;
+}
+
+
+
+.right-wrapper{
+  width: 70%;
+    margin-left: 10px;
+  padding-top: 20px;
+  padding-left:50px;
+  padding-right: 50px;
+	/*border: 2px solid black;*/
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+	justify-content: space-between;
+    position: relative;
+}
+
+
+/*note*/
+.notes-wrapper {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    z-index: 999;
+}
+
+.notes-wrapper .title {
+    background-color: rgb(55,123,181);
+    padding: 18px 30px;
+    padding-right: 60px;
+    color: white;
+    font-size: 18px;
+    font-family:'Source Sans Pro';
+    position: relative;
+}
+
+.notes-wrapper .content {
+    padding: 10px 30px;
+    padding-bottom: 15px;
+    font-weight: 400;
+    color: #666D82;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+/*due-date*/
+
+.due-date{
+    margin-top: 10px;
+    margin-left:60px;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.due-date ul{
+    list-style: none;
+    padding: 0;
+}
+.due-date li{
+    padding: 10px 15px;
+}
+.due-date>.title{
+    height: 40px;
+    background: rgb(55,123,181);
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.due-date li>.content{
+    color: #245853;
+}
+.due-date li>.date{
+    color: #777;
+    text-align: right;
+}
+
+
+/*documents*/
+
+.documenets{
+    display: none;
+    width: 80%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.documenets .table{
+    margin-bottom: 0 !important;
+}
+.documenets .table>thead>tr>th{
+    border-bottom: none !important;
+    font-weight: 500;
+}
+
+/*phase2*/
+
+.phase2{
+    display: none;
+    margin-bottom: 100px;
+}
+
+.file-input{
+    width:70%;
+    margin: 50px 0 0 100px;
+}
+
+.design{
+    display: none;
+}
