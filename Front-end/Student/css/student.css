@@ -25,7 +25,9 @@
 }
 
 .remove-layer{
-    float: right;
+    position: fixed;
+    right: 40px;
+    top:80px;
     color:white;
     font-size: 25px;
     cursor: pointer;
