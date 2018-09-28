@@ -1,0 +1,413 @@
+COMP9323 Backend API Document
+
+-------------------
+Create new user
+
+POST request to /api/create_user
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+    email: 'sample@sample.com',
+    passwd: 'sample',
+}
+
+Sample Response:
+{
+    code: 201,
+    msg: 'Create admin success',
+    user_id: 'sample@sample.com',
+    token: 'sample_token',
+}
+
+-------------------
+Login
+
+GET/POST request to /api/login
+Methods: GET, POST
+Type: HTTP header
+
+Sample Post:
+Authorization: Basic base64(name_or_token:password)
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Login success',
+    token: 'sample_token',
+    user_id: 'sample@sample.com',
+}
+
+-------------------
+Change user password
+
+POST request to /api/change_passwd
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+    new_passwd: 'new_passwd',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Change success',
+    user_id: 'sample@sample.com',
+}
+
+-------------------
+Change user name
+
+GET/POST request to /api/change_name
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    new_name: 'new_name',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Change success',
+    user_id: 'sample@sample.com',
+}
+
+-------------------
+Change user photo
+
+GET/POST request to /api/change_photo
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    new_photo: '/new_photo/address/sample.jpg',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Change success',
+    user_id: 'sample@sample.com',
+}
+
+-------------------
+Change user type
+
+POST request to /api/change_user_type
+Methods: POST
+Type: JSON
+
+user_type: 0 stand for lecture, 1 stand for mentor, 2 stand for studnet
+
+Sample Post:
+{
+    user_id: 'mentor@sample.com',
+    new_type: 1,
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Change success',
+    user_id: 'lecturer@sample.com',
+}
+or
+{
+    code: 401,
+    msg: 'Insufficient permissions',
+    user_id: 'studnet@sample.com',
+}
+
+-------------------
+Get project student list
+
+GET/POST request to /api/get_student_list
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    project_uuid: 'sample_project_uuid',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Get student list success',
+    data: [
+            {
+                email: 'student1@sample.com',
+                name: 'sample name',
+            },
+            {
+                email: 'student2@sample.com',
+                name: 'another name',
+            },
+          ],
+}
+
+-------------------
+Get student timeline
+
+POST request to /api/get_student_timeline
+Methods: POST
+Type: None
+
+Sample Post: None
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Get timeline success',
+    data: [
+        {
+            email: 'student@sample.com',
+            group_uuid: 'sample_group_uuid',
+            group_name: 'group 1',
+            project_uuid: 'sample_project_uuid',
+            project_name: 'sample project',
+            project_deadline: '2018-09-11 18:29:55+10',
+            project_mark_release: '2018-09-11 18:29:55+10',
+            phase_uuid: 'sample_phase1_uuid',
+            phase_name: 'phase 1',
+            phase_deadline: '2018-09-11 18:29:55+10',
+            phase_mark_release: '2018-09-11 18:29:55+10',
+            phase_submit_require: 1,
+            task_uuid: 'sample_task1_uuid',
+            task_name: 'task',
+            task_deadline: '2018-09-11 18:29:55+10',
+            task_mark_release: '2018-09-11 18:29:55+10',
+            task_submit_require: 1,
+        },
+        {
+            email: 'student@sample.com',
+            group_uuid: 'sample_group_uuid',
+            group_name: 'group 1',
+            project_uuid: 'sample_project_uuid',
+            project_name: 'sample project',
+            project_deadline: '2018-09-11 18:29:55+10',
+            project_mark_release: '2018-09-11 18:29:55+10',
+            phase_uuid: 'sample_phase2_uuid',
+            phase_name: 'phase 2',
+            phase_deadline: '2018-09-11 18:29:55+10',
+            phase_mark_release: '2018-09-11 18:29:55+10',
+            phase_submit_require: 1,
+            task_uuid: 'sample_task2_uuid',
+            task_name: 'task',
+            task_deadline: '2018-09-11 18:29:55+10',
+            task_mark_release: '2018-09-11 18:29:55+10',
+            task_submit_require: 1,
+        },
+    ]
+}
+or
+{
+    code: 401,
+    msg: 'Insufficient permissions',
+    user_id: 'lecturer@sample.com',
+}
+
+-------------------
+Create group
+
+GET/POST request to /api/create_group
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    group_name: 'group 1',
+    project_uuid: 'sample_project_uuid',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: Create success,
+    user_id: 'sample@sample.com',
+    group_uuid: 'sample_group_uuid',
+}
+or
+{
+    code: 400,
+    msg: Bad Request
+    user_id: 'sample@sample.com',
+}
+
+-------------------
+Get group list
+
+GET/POST request to /api/get_group_list
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    project_uuid: 'sample_project_uuid',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Get group list success',
+    data: [
+        {
+            group_uuid: 'sample_group1_uuid',
+            group_name: 'group 1',
+            project_uuid: 'sample_project_uuid',
+            mark: 'None',
+        },
+        {
+            group_uuid: 'sample_group2_uuid',
+            group_name: 'group 2',
+            project_uuid: 'sample_project_uuid',
+            mark: 'None',
+        },
+    ]
+}
+
+-------------------
+Join group
+
+GET/POST request to /api/join_group
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    group_uuid: 'sample_group1_uuid',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Join group success',
+    user_id: 'student@sample.com'
+}
+or
+{
+    already join a group function unfinished, fail response undecided
+}
+
+-------------------
+Create project
+
+GET/POST request to /api/create_project
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    project_name: 'project 1',
+    project_deadline: '2018-09-11 18:29:55+10',
+    project_mark_release: '2018-09-11 18:29:55+10',
+    project_addr: '/sample_project/spec_file/address.pdf',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Create project success',
+    user_id: 'lecturer@sample.com',
+}
+or
+{
+    code: 401,
+    msg: 'Insufficient permissions',
+    user_id: 'student@sample.com',
+}
+
+-------------------
+Get project list
+
+GET/POST request to /api/get_project_list
+Methods: GET, POST
+Type: None
+
+Sample Post: None
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Get project list success',
+    data: [
+        {
+            project_uuid: 'sample_project1_uuid',
+            master: 'lecturer1@sample.com',
+            project_name: 'project 1',
+            deadline: '2018-09-11 18:29:55+10',
+            mark_release: '2018-09-11 18:29:55+10',
+            spec_address: '/sample_project1/spec_file.pdf'
+        },
+        {
+            project_uuid: 'sample_project2_uuid',
+            master: 'lecturer2@sample.com',
+            project_name: 'project 2',
+            deadline: '2018-09-11 18:29:55+10',
+            mark_release: '2018-09-11 18:29:55+10',
+            spec_address: '/sample_project2/spec_file.pdf'
+        },
+    ]
+}
+-------------------
+Enrol into project
+
+GET/POST request to /api/enrol_project
+Methods: GET, POST
+Type: JSON
+
+Sample Post:
+{
+    project_uuid: 'sample_project_uuid',
+    user_type: 'student',
+}
+
+Sample Response:
+{
+    code: 200,
+    msg: 'enrol in project success',
+    user_id: 'student@sample.com',
+}
+or
+{
+    already enrol in status unchecked, fail response undecided
+}
+
+-------------------
+Get self project list
+
+GET/POST request to /api/get_self_project_list
+Methods: GET, POST
+Type: None
+
+Sample Post: None
+
+Sample Response:
+{
+    code: 200,
+    msg: 'Get self project list success',
+    data: [
+        {
+            project_uuid: 'sample_project1_uuid',
+            master: 'lecturer1@sample.com',
+            project_name: 'project 1',
+            deadline: '2018-09-11 18:29:55+10',
+            mark_release: '2018-09-11 18:29:55+10',
+            spec_address: '/sample_project1/spec_file.pdf',
+        },
+        {
+            project_uuid: 'sample_project2_uuid',
+            master: 'lecturer2@sample.com',
+            project_name: 'project 2',
+            deadline: '2018-09-11 18:29:55+10',
+            mark_release: '2018-09-11 18:29:55+10',
+            spec_address: '/sample_project2/spec_file.pdf',
+        },
+    ]
+}
