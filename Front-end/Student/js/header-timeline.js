@@ -1,5 +1,3 @@
-
-
 $(document).on('click', '.user', function(e){
     e.preventDefault();
     if( $('.dropdown-content').css('display') === 'block' ){
@@ -13,7 +11,9 @@ $( ".dropdown-content" ).on({
     }
 })
 
-
+$("#logout").click( function(){
+    $(location).attr('href','student.html')
+});
 
 
 

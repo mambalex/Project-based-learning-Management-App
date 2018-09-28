@@ -31,7 +31,24 @@ body{
     color: white;
 }
 
+.log-in{
+    position: absolute;
+    right: 50px;
+    height: 100%;
+    width: 60px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    padding-top: 13px;
+    cursor: pointer;
+}
+
+.log-in:hover{
+    background: #2e6da4;
+}
+
 .user{
+    /*display: none;*/
     position: absolute;
     right: 50px;
     padding-top: 13px;

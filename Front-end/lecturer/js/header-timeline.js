@@ -11,7 +11,9 @@ $( ".dropdown-content" ).on({
     }
 })
 
-
+$("#logout").click( function(){
+    $(location).attr('href','lecturer.html')
+});
 
 
 
