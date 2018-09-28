@@ -2,68 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31551a7f-4865-445f-9671-813c1056f5ad" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/lecturer.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/deadline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/group.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/index.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/notes.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/reminder.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/shadow.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/side_nav.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/css/phase1/timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/header-timeline.js" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/header-timeline.js" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/lecturer.js" afterPath="$PROJECT_DIR$/Front-end/lecturer/js/lecturer.js" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/deadline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/header-timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/lecturer-phase1.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/notes.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/side-nar.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase1/timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/js/phase2/lecturer-phase2.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/deadline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/group.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/header-timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/index.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/notes.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/reminder.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/shadow.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/side_nav.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /css/timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /header-timeline.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/deadline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/header-timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/lecturer-phase1.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/notes.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/side-nar.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /js/timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1 /phase1.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase1.html" afterPath="$PROJECT_DIR$/Front-end/lecturer/lecturer.html" />
-      <change beforePath="$PROJECT_DIR$/Front-end/lecturer/phase2.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/deadline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/group.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/header-timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/index.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/notes.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/reminder.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/shadow.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/side_nav.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/css/timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/header-timeline.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/deadline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/header-timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/notes.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/side-nar.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/student-phase1.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/js/timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase1/student-phase1.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/css/header-timeline.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/css/shadow.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/css/student-phase2.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/header-timeline.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/js/header-timeline.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/js/student-phase2.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Front-end/students/phase2/student-phase2.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/Lecturer/lecturer.html" afterPath="$PROJECT_DIR$/Front-end/Lecturer/lecturer.html" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/css/group.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/css/header-timeline.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/css/shadow.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/css/student.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/header-timeline.html" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/js/deadline.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/js/header-timeline.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/js/student.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Front-end/students/student.html" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -77,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="student.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Front-end/students/student.html">
+      <file leaf-file-name="lecturer.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/lecturer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+            <state relative-caret-position="497">
+              <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -138,7 +86,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Front-end/lecturer/js/phase2/lecturer-phase2.js" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/css/group.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/css/reminder.css" />
         <option value="$PROJECT_DIR$/Front-end/students/phase1/index-student.html" />
@@ -189,6 +136,7 @@
         <option value="$PROJECT_DIR$/Front-end/students/js/student.js" />
         <option value="$PROJECT_DIR$/Front-end/students/js/notes.js" />
         <option value="$PROJECT_DIR$/Front-end/students/js/side-nar.js" />
+        <option value="$PROJECT_DIR$/Front-end/Lecturer/lecturer.html" />
       </list>
     </option>
   </component>
@@ -234,6 +182,12 @@
               <item name="COMP9323-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
               <item name="Front-end" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="COMP9323-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="COMP9323-project" type="462c0819:PsiDirectoryNode" />
+              <item name="Front-end" type="462c0819:PsiDirectoryNode" />
+              <item name="Student" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -294,18 +248,17 @@
       <workItem from="1537246650718" duration="8819000" />
       <workItem from="1537263461520" duration="125000" />
       <workItem from="1537338869370" duration="16423000" />
-      <workItem from="1538005905964" duration="22490000" />
+      <workItem from="1538005905964" duration="22656000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47857000" />
+    <option name="totallyTimeSpent" value="48023000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20174742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20174742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -520,7 +473,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/header-timeline.js">
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/js/header-timeline.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="539">
           <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
@@ -528,7 +481,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/lecturer.js">
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/js/lecturer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-400">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
@@ -594,7 +547,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/js/deadline.js">
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/js/deadline.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -602,7 +555,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/header-timeline.html">
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/header-timeline.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="669">
           <caret line="57" column="38" lean-forward="true" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
@@ -618,15 +571,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/lecturer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1272">
-          <caret line="215" column="7" lean-forward="false" selection-start-line="215" selection-start-column="7" selection-end-line="215" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Front-end/lecturer/css/lecturer.css">
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/css/lecturer.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
@@ -734,9 +679,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
           <caret line="68" column="9" lean-forward="false" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
-          <folding>
-            <marker date="1538094403000" expanded="true" signature="1618:1645" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -744,6 +687,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
           <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/lecturer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="204" column="0" lean-forward="false" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding />
         </state>
       </provider>
