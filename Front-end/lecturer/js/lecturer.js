@@ -1,8 +1,4 @@
 
-// load header-timeline
-$(function(){
-    $("#header-timeline").load("header-timeline.html");
-});
 
 // login-signup
 $(".log-in").click( function(e){
