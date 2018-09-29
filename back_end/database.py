@@ -479,10 +479,10 @@ def get_student_timeline(email):
 
 
 def create_test_data():
-    create_user({"user_id": "test1", "passwd": "123456", "email": "test1@test.com", "type": 1})
-    create_user({"user_id": "test2", "passwd": "123456", "email": "test2@test.com", "type": 2})
-    create_user({"user_id": "test3", "passwd": "123456", "email": "test3@test.com"})
-    create_user({"user_id": "test4", "passwd": "123456", "email": "test4@test.com"})
+    create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
+    create_user({"passwd": "123456", "email": "test2@test.com", "user_type": 1})
+    create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 2})
+    create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 2})
     project_uuid = create_projects("test1", "test", "2018-09-11 18:29:55+10", "2018-09-11 18:29:55+10")
     phase_uuid = create_phases(project_uuid=project_uuid, phase_name="test", deadline="2018-09-11 18:29:55+10",
                                mark_release="2018-09-11 18:29:55+10")
