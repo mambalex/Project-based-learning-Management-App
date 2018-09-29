@@ -188,7 +188,8 @@ def get_student_list():
 @auth.login_required
 def get_student_timeline():
     if not g.user.is_admin_user():
-        timeline = db.get_student_timeline(g.user.user_id)
+        group_uuid = request.form.get('group_uuid', type=str)
+        timeline = db.get_student_timeline(g.user.user_id, group_uuid)
         return jsonify({'code': 200, 'msg': 'Get timeline success', 'data':timeline})
     else:
         return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
@@ -225,7 +226,7 @@ def create_project():
     project_master = g.user.user_id
     project_name = request.form.get('project_name', type=str)
     project_deadline = request.form.get('project_deadline', type=str)
-    project_markrelease = request.form.get('project_markrelease', type=str, default='Null')
+    project_markrelease = request.form.get('project_markrelease', type=str, default=None)
     project_addr = request.form.get('project_addr', type=str, default='None')
     if g.user.is_admin_user():
         project_uuid = db.create_projects(project_master, project_name, project_deadline, project_markrelease, project_addr)

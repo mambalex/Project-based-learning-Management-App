@@ -3,6 +3,8 @@ COMP9323 Backend API Document
 -------------------
 Create new user
 
+Has been tested
+
 POST request to /api/create_user
 Methods: POST
 Type: JSON
@@ -24,6 +26,8 @@ Sample Response:
 -------------------
 Login
 
+Has been tested
+
 GET/POST request to /api/login
 Methods: GET, POST
 Type: HTTP header
@@ -41,6 +45,8 @@ Sample Response:
 
 -------------------
 Change user password
+
+Has been tested
 
 POST request to /api/change_passwd
 Methods: POST
@@ -61,6 +67,8 @@ Sample Response:
 -------------------
 Change user name
 
+Has been tested
+
 GET/POST request to /api/change_name
 Methods: GET, POST
 Type: JSON
@@ -80,6 +88,8 @@ Sample Response:
 -------------------
 Change user photo
 
+Has been tested
+
 GET/POST request to /api/change_photo
 Methods: GET, POST
 Type: JSON
@@ -98,6 +108,8 @@ Sample Response:
 
 -------------------
 Change user type
+
+Has been tested
 
 POST request to /api/change_user_type
 Methods: POST
@@ -127,6 +139,8 @@ or
 -------------------
 Get project student list
 
+Has been tested
+
 GET/POST request to /api/get_student_list
 Methods: GET, POST
 Type: JSON
@@ -155,11 +169,16 @@ Sample Response:
 -------------------
 Get student timeline
 
+Has been tested
+
 POST request to /api/get_student_timeline
 Methods: POST
 Type: None
 
-Sample Post: None
+Sample Post: 
+{
+    group_uuid: 'sample_group1_uuid',
+}
 
 Sample Response:
 {
@@ -216,6 +235,8 @@ or
 -------------------
 Create group
 
+Has been tested
+
 GET/POST request to /api/create_group
 Methods: GET, POST
 Type: JSON
@@ -242,6 +263,8 @@ or
 
 -------------------
 Get group list
+
+Has been tested
 
 GET/POST request to /api/get_group_list
 Methods: GET, POST
@@ -275,6 +298,8 @@ Sample Response:
 -------------------
 Join group
 
+Has been tested
+
 GET/POST request to /api/join_group
 Methods: GET, POST
 Type: JSON
@@ -298,6 +323,8 @@ or
 -------------------
 Create project
 
+Has been tested
+
 GET/POST request to /api/create_project
 Methods: GET, POST
 Type: JSON
@@ -306,7 +333,7 @@ Sample Post:
 {
     project_name: 'project 1',
     project_deadline: '2018-09-11 18:29:55+10',
-    project_mark_release: '2018-09-11 18:29:55+10',
+    project_markrelease: '2018-09-11 18:29:55+10',
     project_addr: '/sample_project/spec_file/address.pdf',
 }
 
@@ -325,6 +352,8 @@ or
 
 -------------------
 Get project list
+
+Has been tested
 
 GET/POST request to /api/get_project_list
 Methods: GET, POST
@@ -358,6 +387,8 @@ Sample Response:
 -------------------
 Enrol into project
 
+Has been tested
+
 GET/POST request to /api/enrol_project
 Methods: GET, POST
 Type: JSON
@@ -381,6 +412,8 @@ or
 
 -------------------
 Get self project list
+
+Has been tested
 
 GET/POST request to /api/get_self_project_list
 Methods: GET, POST
