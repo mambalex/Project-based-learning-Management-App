@@ -1,0 +1,184 @@
+body {
+    background: rgb(220,220,220);
+}
+
+.container {
+    background: #FFFFFF;
+    width: 640px;
+    height: 520px;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 10%;
+    box-shadow: 2px 5px 20px rgba(119, 119, 119, .5);
+}
+
+.save {
+    position: absolute;
+    z-index: 3;
+    right: 18px;
+    top: 12px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: white;
+    font-weight: 900;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+
+}
+#save{
+    color: white;
+    margin-right: 40px;
+    margin-top: 12px;
+    font-size: 14px;
+    text-transform: none;
+}
+
+#save span{
+    color: white;
+    font-size: 12px;
+}
+
+
+h1 {
+    color: #FFFFFF;
+    margin-top: 10px;
+    margin-left: 9px;}
+/*&:hover {*/
+     /*background: #3FB6A8;*/
+     /*transform: scale(1.1);*/
+ /*}*/
+
+
+.leftbox {
+    float: left;
+    top: -5%;
+    left: 5%;
+    position: absolute;
+    width: 15%;
+    height: 110%;
+    background: rgb(59,124,179);
+    /*box-shadow: 3px 3px 10px rgba(#777777, .5);*/
+}
+
+.leftbox i{
+    font-size: 25px;
+}
+
+
+nav{
+    margin-top: 80px;
+}
+
+nav a {
+    list-style: none;
+    padding: 35px;
+    color: #FFFFFF;
+    font-size: 1.1em;
+    display: block;
+    transition: all .3s ease-in-out;}
+
+
+
+.active {
+    color: #203683;
+}
+
+.rightbox {
+    float: right;
+    width: 69%;
+    height: 100%;
+}
+
+
+.profile,.settings {
+    transition: opacity .5s ease-in;
+    position: absolute;
+    width: 70%;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(59,124,179);
+    font-size: 1.6em;
+    margin-top: 40px;
+    margin-bottom: 35px;
+}
+
+h2 {
+    color: #777777;
+    font-family: 'Roboto', sans-serif;
+    width: 80%;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-left: 2px;
+}
+
+p{
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(to right, rgb(63, 182, 168), rgba(126, 211, 134,.5)) 1 0%;
+    border-top: 0;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    padding: 7px 0;
+    color: #070707;
+}
+
+
+span {
+    font-size: .5em;
+    color: #777777;
+}
+
+.edit-row{
+    position: relative;
+    width: 80%;
+}
+.update {
+    position:absolute;
+    right: 0;
+    top:10px;
+    z-index: 2;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-size: 10px;
+    border: none;
+    color: rgb(59,124,179);
+    outline: none;
+}
+
+.rightbox .update:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 900;
+    outline: none;
+}
+button{
+    border: none;
+}
+button:focus {outline:0 !important;}
+.rightbox .btn:active {outline:0 !important;}
+
+
+input {
+    /*border: 1px solid lighten(#777777,40%);*/
+    font-family: 'Roboto', sans-serif;
+    padding: 2px;
+    margin: 0;
+}
+
+.privacy h2{
+    margin-top: 25px;
+}
+
+.settings h2{
+    margin-top: 25px;
+}
+
+.noshow {
+    opacity: 0;
+}
+
+

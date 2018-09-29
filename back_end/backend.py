@@ -4,7 +4,7 @@ import json
 import database as db
 from datetime import datetime
 
-from flask import Flask, g, jsonify, make_response, request, abort, url_for
+from flask import Flask, g, jsonify, make_response, request, abort, url_for,render_template
 from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 # from flask_sqlalchemy import SQLAlchemy
@@ -84,7 +84,12 @@ class User:
         user = User(db.get_user(data['id'])[0])
         return user
 
+
+
 # -------------------------------------user model end --------------------------------
+@app.route('/')
+def index():
+	return render_template('student.html')
 
 @auth.verify_password
 def verify_password(name_or_token, password):
@@ -117,9 +122,13 @@ def test2():
 # create user
 @app.route('/api/create_user', methods=['POST'])
 def new_user():
-    user_id = request.json.get('email')
-    passwd = request.json.get('passwd')
-    user_type = request.json.get('user_type', 2)
+    user_id = request.form.get('email')
+    passwd = request.form.get('passwd')
+    # user_id = request.form['email']
+    # passwd = request.form['passwd']
+    print(user_id, passwd)
+    # user_type = request.json.get('user_type', 2)
+    user_type = 2
     if user_id is None or passwd is None:
         abort(400)  # missing arguments
     if not db.check_user_id(user_id):
@@ -255,4 +264,9 @@ def get_self_project_list():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(
+        host='0.0.0.0',
+        # host='localhost',
+        # port = 63342,
+        debug=True
+            )
