@@ -1,7 +1,7 @@
 -- Method to use
 -- Open terminal in current directory
--- $ createdb comp9900
--- $ psql comp9900 -s
+-- $ createdb comp9323
+-- $ psql comp9323 -s
 -- $ \i init.sql
 -- and all tables will be create
 
