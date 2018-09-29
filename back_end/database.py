@@ -499,7 +499,7 @@ def create_reminder(email, project_uuid, ass_uuid, message, submit_check = "no")
     database_object.open()
     sql = "insert into reminder values \
     ('{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check)
-    result = database_object.update(sql)
+    database_object.update(sql)
     database_object.close()
     return reminder_uuid
 
@@ -511,6 +511,77 @@ def change_reminder_info(reminder_uuid, field, new_data):
     database_object.update(sql)
     database_object.close()
 
+def change_reminder_ass(reminder_uuid, new_ass_uuid):
+    change_reminder_info(reminder_uuid, "ass_uuid", new_ass_uuid)
+
+def change_reminder_message(reminder_uuid, new_message):
+    change_reminder_info(reminder_uuid, "message", new_message)
+
+def change_reminder_submit_check(reminder_uuid, new_submit_check):
+    change_reminder_info(reminder_uuid, "submit_check", new_submit_check)
+
+def admin_get_self_reminder(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select * from reminder where master = '{}' and project_uuid = '{}';".format(email, project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check"]
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+def student_get_self_global_reminder(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select * from reminder where project_uuid = '{}' and submit_check = 'no';".format(project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check"]
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+def student_get_self_unsubmit_reminder(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    result = list()
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select rem.*, count(*) from reminder rem, submits s, groups g, group_relation g_r \
+      where  g_r.email = '{}' and g_r.group_uuid = g.group_uuid and g.project_uuid = '{}' and \
+      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid;".format(email, project_uuid, project_uuid)
+    submit_reminder = database_object.search(sql)
+    database_object.close()
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "count"]
+    temp_result = convert_result_to_dict(submit_reminder, key_list)
+    for reminder in temp_result:
+        if reminder["count"] <= 0:
+            result.append(reminder)
+    return result
+
+
+# addition resource
+def add_addition_resource(email, project_uuid, file_addr="None"):
+    resource_uuid = uuid.uuid1()
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "insert into addition_resource values \
+        ('{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, file_addr)
+    database_object.update(sql)
+    database_object.close()
+    return resource_uuid
+
+def delete_addition_resource(resource_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "delete from addition_resource where res_uuid = '{}';".format(resource_uuid)
+    database_object.update(sql)
+    database_object.close()
+
+def get_resource_list(project_uuid):
+    pass
 
 def create_test_data():
     create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
