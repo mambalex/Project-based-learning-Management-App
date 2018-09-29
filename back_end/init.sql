@@ -1,19 +1,19 @@
 -- Method to use
 -- Open terminal in current directory
--- $ createdb comp9900
--- $ psql comp9900 -s
+-- $ createdb comp9323
+-- $ psql comp9323 -s
 -- $ \i init.sql
 -- and all tables will be create
 
 CREATE TABLE user_info
-{
+(
     email text NOT NULL,
     password text NOT NULL,
     name text NOT NULL,
     user_type integer NOT NULL,
     photo text,
     PRIMARY KEY (email)
-};
+);
 
 CREATE TABLE groups
 (
@@ -29,14 +29,14 @@ CREATE TABLE group_relation
     email text NOT NULL,
     group_uuid uuid NOT NULL,
     mem_type integer NOT NULL,
-    PRIMARY KEY (user_id, group_uuid)
+    PRIMARY KEY (email, group_uuid)
 );
 
 CREATE TABLE managements
 (
     email text NOT NULL,
     group_uuid uuid NOT NULL,
-    PRIMARY KEY (user_id, group_uuid)
+    PRIMARY KEY (email, group_uuid)
 );
 
 CREATE TABLE enrol_project

@@ -97,7 +97,7 @@ def get_project_student_list(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select u_i.email, u_i.name from enrol_project e_p, user_info u_i, where e_p.project_uuid = '{}' and e_p.email = u_i.email and e_p.user_type = 'student';".format(
+    sql = "select u_i.email, u_i.name from enrol_project e_p, user_info u_i where e_p.project_uuid = '{}' and e_p.email = u_i.email and e_p.user_type = 'student';".format(
         project_uuid)
     result = database_object.search(sql)
     database_object.close()
@@ -209,12 +209,16 @@ def mark_submits(submit_uuid, new_mark):
     database_object.close()
 
 # project part
-def create_projects(master, project_name, deadline, mark_release="Null", spec_address="None"):
+def create_projects(master, project_name, deadline, mark_release=None, spec_address="None"):
     project_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into projects values \
+    if mark_release is None:
+        sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address) values \
+    ('{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, spec_address)
+    else:
+        sql = "insert into projects values \
     ('{}', '{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, mark_release, spec_address)
     database_object.update(sql)
     database_object.close()
@@ -301,12 +305,17 @@ def delete_project(project_uuid):
     database_object.close()
 
 # phases part
-def create_phases(project_uuid, phase_name, deadline, mark_release="Null", submit_require=0, spec_address="None"):
+def create_phases(project_uuid, phase_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
     phase_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into phases values \
+    if mark_release is None:
+        sql = "insert into phases (phase_uuid, project_uuid, phase_name, deadline, submit_require, spec_address) values \
+    ('{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline,
+                                                      submit_require, spec_address)
+    else:
+        sql = "insert into phases values \
     ('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline, mark_release,
                                                       submit_require, spec_address)
     database_object.update(sql)
@@ -372,12 +381,17 @@ def delete_phases(phase_uuid):
     database_object.close()
 
 # task part
-def create_tasks(phase_uuid, task_name, deadline, mark_release="Null", submit_require=0, spec_address="None"):
+def create_tasks(phase_uuid, task_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
     task_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into tasks values \
+    if mark_release is None:
+        sql = "insert into tasks (task_uuid, phase_uuid, task_name, deadline, submit_require, spec_address) values \
+    ('{}', '{}', '{}', '{}', {}, '{}');".format(task_uuid, phase_uuid, task_name, deadline,
+                                                      submit_require, spec_address)
+    else:
+        sql = "insert into tasks values \
     ('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(task_uuid, phase_uuid, task_name, deadline, mark_release,
                                                       submit_require, spec_address)
     database_object.update(sql)
@@ -455,7 +469,7 @@ def check_submit(group_uuid, ass_uuid):
     return result
 
 
-def get_student_timeline(email):
+def get_student_timeline(email, group_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
@@ -465,9 +479,9 @@ def get_student_timeline(email):
     ph.deadline as phase_deadline, ph.mark_release as phase_mark_release,\
     ph.submit_require as phase_submit_require, t.task_uuid as task_uuid, t.task_name as task_name,\
     t.deadline as task_deadline, t.mark_release as task_mark_release, t.submit_require as task_submit_require\
-    from group_relation gr, groups g, projects pj, phases ph, tasks t where gr.email = '{}' and\
+    from group_relation gr, groups g, projects pj, phases ph, tasks t where gr.email = '{}' and gr.group_uuid = '{}' and\
     gr.group_uuid = g.group_uuid and g.project_uuid = pj.project_uuid and pj.project_uuid = ph.project_uuid\
-    and ph.phase_uuid = t.phase_uuid;".format(email)
+    and ph.phase_uuid = t.phase_uuid;".format(email, group_uuid)
     result = database_object.search(sql)
     database_object.close()
     key_list = ['email', 'group_uuid', 'group_name', 'project_uuid', 'project_name', 'project_deadline',
@@ -479,10 +493,10 @@ def get_student_timeline(email):
 
 
 def create_test_data():
-    create_user({"user_id": "test1", "passwd": "123456", "email": "test1@test.com", "type": 1})
-    create_user({"user_id": "test2", "passwd": "123456", "email": "test2@test.com", "type": 2})
-    create_user({"user_id": "test3", "passwd": "123456", "email": "test3@test.com"})
-    create_user({"user_id": "test4", "passwd": "123456", "email": "test4@test.com"})
+    create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
+    create_user({"passwd": "123456", "email": "test2@test.com", "user_type": 1})
+    create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 2})
+    create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 2})
     project_uuid = create_projects("test1", "test", "2018-09-11 18:29:55+10", "2018-09-11 18:29:55+10")
     phase_uuid = create_phases(project_uuid=project_uuid, phase_name="test", deadline="2018-09-11 18:29:55+10",
                                mark_release="2018-09-11 18:29:55+10")
@@ -500,8 +514,11 @@ def convert_result_to_dict(temp_result, key_list, except_passwd=False):
                 temp_dict[key_list[i]] = tuples[i]
             elif tuples[i] is None:
                 temp_dict[key_list[i]] = "None"
-            else:
+            elif isinstance(tuples[i], str):
                 temp_dict[key_list[i]] = tuples[i].rstrip()
+            else:
+                temp_dict[key_list[i]] = tuples[i]
+
         result.append(temp_dict)
     return result
 
