@@ -92,3 +92,14 @@ CREATE TABLE submits
     mark integer,
     PRIMARY KEY (submit_uuid)
 );
+
+CREATE TABLE reminder
+(
+    reminder_uuid uuid NOT NULL,
+    master text NOT NULL,
+    project_uuid NOT NULL,
+    ass_uuid uuid NOT NULL,
+    message text,
+    submit_check text NOT NULL,
+    PRIMARY KEY (reminder_uuid)
+);

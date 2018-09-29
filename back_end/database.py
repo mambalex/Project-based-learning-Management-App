@@ -491,6 +491,26 @@ def get_student_timeline(email, group_uuid):
     result = convert_result_to_dict(result, key_list)
     return result
 
+# reminder part
+def create_reminder(email, project_uuid, ass_uuid, message, submit_check = "no"):
+    reminder_uuid = uuid.uuid1()
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "insert into reminder values \
+    ('{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check)
+    result = database_object.update(sql)
+    database_object.close()
+    return reminder_uuid
+
+def change_reminder_info(reminder_uuid, field, new_data):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "update reminder set {} = '{}' where reminder_uuid = '{}';".format(field, new_data, reminder_uuid)
+    database_object.update(sql)
+    database_object.close()
+
 
 def create_test_data():
     create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
