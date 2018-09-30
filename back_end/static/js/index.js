@@ -1,3 +1,28 @@
+// sign-up AJAX
+$("#signupButton").on('click',function () {
+    var data = {
+        user_type: $('#user-type').val(),
+        email: $('.signup-email').val(),
+        passwd: $('.signup-password').val(),
+    };
+    $.ajax({
+        type:'POST',
+        url:'/api/create_user',
+        data: data,
+        success:function () {
+            alert("successfully sign in");
+        },
+        error:function () {
+            alert('something went wrong');
+        }
+
+    });
+});
+
+
+
+
+
 // login-signup
 
 $(".log-in").click( function(e){

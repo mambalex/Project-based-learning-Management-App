@@ -1,24 +1,24 @@
 //sign-up AJAX
 
-$("#signupButton").on('click',function () {
-    var data = {
-        email: $('.signup-email').val(),
-        passwd: $('.signup-password').val(),
-    };
+// $("#signupButton").on('click',function () {
+//     var data = {
+//         email: $('.signup-email').val(),
+//         passwd: $('.signup-password').val(),
+//     };
 
-    $.ajax({
-       type:'POST',
-        url:'/api/create_user',
-        data: data,
-        success:function () {
-            alert("successfully sign in")
-        },
-        error:function () {
-            alert('something went wrong')
-        }
+//     $.ajax({
+//        type:'POST',
+//         url:'/api/create_user',
+//         data: data,
+//         success:function () {
+//             alert("successfully sign in")
+//         },
+//         error:function () {
+//             alert('something went wrong')
+//         }
 
-    });
-});
+//     });
+// });
 
 
 
