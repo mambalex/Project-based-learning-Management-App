@@ -408,7 +408,7 @@ def change_reminder_ass():
 
 @app.route('/api/change_reminder_message', methods=['POST'])
 @auth.login_required
-def change_reminder_ass():
+def change_reminder_message():
     reminder_uuid = request.form.get('reminder_uuid', type=str)
     message = request.form.get('message', type=str)
     if g.user.is_admin_user():
@@ -422,7 +422,7 @@ def change_reminder_ass():
 
 @app.route('/api/change_reminder_submit_check', methods=['POST'])
 @auth.login_required
-def change_reminder_ass():
+def change_reminder_submit_check():
     reminder_uuid = request.form.get('reminder_uuid', type=str)
     submit_check = request.form.get('submit_check', type=str)
     if g.user.is_admin_user():
