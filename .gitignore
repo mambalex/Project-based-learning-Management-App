@@ -1,3 +1,4 @@
 .DS_Store
 ./back_end/__pycache__/*
 .idea/*
+./back_end/.idea/*
