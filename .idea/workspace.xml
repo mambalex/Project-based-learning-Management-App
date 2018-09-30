@@ -2,10 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31551a7f-4865-445f-9671-813c1056f5ad" name="Default" comment="">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/back_end/backend.py" afterPath="$PROJECT_DIR$/back_end/backend.py" />
+      <change beforePath="$PROJECT_DIR$/back_end/database_lib.py" afterPath="$PROJECT_DIR$/back_end/database_lib.py" />
+      <change beforePath="$PROJECT_DIR$/back_end/static/js/index.js" afterPath="$PROJECT_DIR$/back_end/static/js/index.js" />
+      <change beforePath="$PROJECT_DIR$/back_end/static/js/student/student.js" afterPath="$PROJECT_DIR$/back_end/static/js/student/student.js" />
+      <change beforePath="$PROJECT_DIR$/back_end/templates/index.html" afterPath="$PROJECT_DIR$/back_end/templates/index.html" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/COMP9323-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/COMP9323-project.iml" afterDir="false" />
+>>>>>>> f3a5154bbb13f414221b91e31193a7cbdf232a2d
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back_end/backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/back_end/backend.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back_end/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/back_end/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back_end/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/back_end/init.sql" afterDir="false" />
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,7 +31,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="backend.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/back_end/backend.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="50">
+              <caret line="82" column="20" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+=======
     <leaf />
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -129,12 +157,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+<<<<<<< HEAD
+  <component name="ProjectFrameBounds">
+    <option name="x" value="83" />
+    <option name="y" value="81" />
+=======
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="456" />
     <option name="y" value="-16" />
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
     <option name="width" value="1141" />
     <option name="height" value="620" />
   </component>
@@ -147,6 +181,10 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+<<<<<<< HEAD
+      <pane id="Scratches" />
+=======
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -237,13 +275,37 @@
       <workItem from="1538193600655" duration="613000" />
       <workItem from="1538200966925" duration="4074000" />
       <workItem from="1538207070518" duration="300000" />
+      <workItem from="1538226261320" duration="41000" />
+      <workItem from="1538265633833" duration="6000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77551000" />
+    <option name="totallyTimeSpent" value="77598000" />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+    <frame x="83" y="81" width="1141" height="620" extended-state="0" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22678572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32862905" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -268,6 +330,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32862905" />
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,6 +387,13 @@
     <entry file="file://$PROJECT_DIR$/Front-end/Lecturer/js/profile.js" />
     <entry file="file://$PROJECT_DIR$/Front-end/Student/js/student.js" />
     <entry file="file://$PROJECT_DIR$/Front-end/Student/student.html" />
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/back_end/backend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="82" column="20" lean-forward="false" selection-start-line="82" selection-start-column="20" selection-end-line="82" selection-end-column="20" />
+          <folding />
+=======
     <entry file="file://$PROJECT_DIR$/back_end/database_lib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1242" />
@@ -345,11 +415,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/back_end/backend.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="744">
           <caret line="501" column="36" selection-start-line="501" selection-start-column="36" selection-end-line="501" selection-end-column="36" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="614">
+          <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+>>>>>>> 85a8464c63a14a91e754dbc87c66611978028df8
+>>>>>>> f3a5154bbb13f414221b91e31193a7cbdf232a2d
         </state>
       </provider>
     </entry>

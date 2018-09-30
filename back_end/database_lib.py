@@ -7,7 +7,7 @@ class Database_object():
 
     database_name = "postgres"
     host_addr = "localhost"
-    host_port = 5432
+    host_port = 5430
     user_name = "postgres"
     passwd = "postgres"
 
@@ -86,6 +86,6 @@ class Database_object():
 
 
 if __name__ == "__main__":
-    database = Database_object({"dbname": "comp9900"})
+    database = Database_object({"dbname": "comp9323"})
     database.open()
     database.close()
