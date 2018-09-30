@@ -125,6 +125,7 @@ def new_user():
     user_id = request.form.get('email', type=str, default=None)
     passwd = request.form.get('passwd', type=str, default=None)
     user_type = request.form.get('user_type', type=int, default=2)
+    print(user_id, passwd, user_type)
     if user_id is None or passwd is None:
         abort(400)  # missing arguments
     if not db.check_user_id(user_id):
@@ -142,7 +143,8 @@ def new_user():
 @auth.login_required
 def get_auth_token():
     token = g.user.generate_auth_token()
-    return jsonify({'code': 200, 'msg': "Login success", 'token': token.decode('ascii'), 'user_id': g.user.user_id})
+    return jsonify({'code': 200, 'msg': "Login success", 'token': token.decode('ascii'), 
+        'user_id': g.user.user_id, 'user_type':g.user.user_type})
 
 
 @app.route('/api/change_passwd', methods=['POST'])

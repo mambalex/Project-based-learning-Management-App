@@ -32,34 +32,38 @@
 
   <div class="login-signup">
 
-      <div class="formHolder login">
+      <form class="formHolder login">
           <h3>Login</h3>
           <div class="form-group">
-              <input type="text" class="form-control simplebox"  placeholder="Email">
+              <input type="email" class="form-control simplebox login-email"  placeholder="Email">
           </div>
           <div class="form-group">
-              <input type="password" class="form-control simplebox"  placeholder="Password">
+              <input type="password" class="form-control simplebox login-password"  placeholder="Password">
           </div>
-          <button type="submit" id="loginButton" class="btn btn-sm btn-default simplebutton loginButton">Login</button><button type="submit" class="btn btn-sm btn-link newAccButton" id="showSignUp">Don't have an account?</button>
-      </div>
-      <div class="formHolder signup">
+          <button type="submit" id="loginButton" class="btn btn-sm btn-default simplebutton loginButton">Login</button><a class="btn btn-sm btn-link newAccButton" id="showSignUp">Don't have an account?</a>
+          <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+          <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+      </form>
+      <form class="formHolder signup">
           <h3>Sign Up</h3>
           <div class="form-group">
-              <input type="text" class="form-control simplebox signup-email" placeholder="Email">
+              <input type="email" class="form-control simplebox signup-email" placeholder="Email">
           </div>
           <div class="form-group">
               <input type="password" class="form-control simplebox signup-password"  placeholder="Password">
           </div>
           <div class="form-group">
-              <input type="password" class="form-control simplebox"  placeholder="Confirm Password">
+              <input type="password" class="form-control simplebox comfirm-password"  placeholder="Confirm Password">
           </div>
           <select name="user-type" id="user-type" placeholder="USER TYPE">
                 <option value="" hidden="">USER TYPE</option>
                 <option value="student">STUDENT</option>
                 <option value="lecturer">LECTURER</option>
           </select><br><br>
-          <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton">Sign Up</button><button type="submit" class="btn btn-sm btn-link loginButton" id="showLogin">Already have an account?</button>
-      </div>
+          <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton">Sign Up</button><a class="btn btn-sm btn-link loginButton" id="showLogin">Already have an account?</a>
+           <div id="successAlert2" class="alert alert-success" role="alert" style="display:none;"></div>
+          <div id="errorAlert2" class="alert alert-danger" role="alert" style="display:none;"></div>
+      </form>
   </div>
 <div class="layer">
     <div class="glyphicon glyphicon-remove remove-layer"></div>
