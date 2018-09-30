@@ -1,7 +1,8 @@
 import os
 import re
 import json
-import database as db
+# import database as db
+from back_end import database as db
 from datetime import datetime
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template
@@ -84,11 +85,12 @@ class User:
         user = User(db.get_user(data['id'])[0])
         return user
 
+
 # -------------------------------------user model end --------------------------------
 
 @app.route('/')
 def index():
-	return render_template('student.html')
+    return render_template('student.html')
 
 
 @auth.verify_password
@@ -107,6 +109,7 @@ def verify_password(name_or_token, password):
     g.user = user
     return True
 
+
 # test api
 @app.route('/api/test', methods=['GET'])
 def test():
@@ -117,6 +120,8 @@ def test():
 @auth.login_required
 def test2():
     return "Ture"
+
+
 # end test api
 
 # create user
@@ -135,22 +140,39 @@ def new_user():
     user.load_from_db(user_id)
     token = user.generate_auth_token()
     return jsonify(
-        {'code': 201, 'msg': "Create admin success", 'user_id': user.user_id, 'token': token.decode('ascii')})
+        {'code': 201, 'msg': "Create admin success", 'user_id': user.user_id, 'user_type': user.user_type,
+         'token': token.decode('ascii')})
 
-
+# login
 @app.route('/api/login', methods=['POST'])
-@auth.login_required
 def get_auth_token():
+    name_or_token = request.form.get('email', type=str, default=None)
+    passwd = request.form.get('passwd', type=str, default=None)
+    if name_or_token is None:
+        return jsonify({'code': 400, 'msg': 'Invalid email'})
+    if passwd is None:
+        return jsonify({'code': 400, 'msg': 'Invalid password'})
+    name_or_token = re.sub(r'^"|"$', '', name_or_token)
+    user = User.verify_auth_token(name_or_token)
+    if user is None:
+        if not db.check_user_id(name_or_token):
+            user = User(db.get_user(name_or_token)[0])
+        else:
+            return jsonify({'code': 400, 'msg': 'No such user'})
+        if not user.verify_password(passwd):
+            return jsonify({'code': 400, 'msg': 'Wrong password'})
+    g.user = user
     token = g.user.generate_auth_token()
-    return jsonify({'code': 200, 'msg': "Login success", 'token': token.decode('ascii'), 'user_id': g.user.user_id})
+    return jsonify({'code': 200, 'msg': "Login success", 'token': token.decode('ascii'), 'user_id': g.user.user_id,
+                    'user_type': g.user.user_type})
 
-
+# change user setting part
 @app.route('/api/change_passwd', methods=['POST'])
 @auth.login_required
 def change_passwd():
     new_passwd = request.form.get('new_passwd', type=str)
     db.change_user_passwd(email=g.user.user_id, new_passwd=new_passwd)
-    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id})
+    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 @app.route('/api/change_name', methods=["GET", "POST"])
@@ -158,7 +180,7 @@ def change_passwd():
 def change_name():
     new_name = request.form.get('new_name', type=str)
     db.change_user_name(email=g.user.user_id, new_name=new_name)
-    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id})
+    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 @app.route('/api/change_photo', methods=['GET', 'POST'])
@@ -166,7 +188,7 @@ def change_name():
 def change_photo():
     new_photo = request.form.get('new_photo', type=str)
     db.change_user_photo(email=g.user.user_id, new_photo=new_photo)
-    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id})
+    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 @app.route('/api/change_user_type', methods=['POST'])
@@ -177,10 +199,11 @@ def change_user_type():
     if g.user.user_type == 0:
         db.change_user_type(email=user_id, new_type=new_type)
     else:
-        return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
-    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id})
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# get student list
 @app.route('/api/get_student_list', methods=['GET', 'POST'])
 @auth.login_required
 def get_student_list():
@@ -188,43 +211,101 @@ def get_student_list():
     student_list = db.get_project_student_list(project_uuid)
     return jsonify({'code': 200, 'msg': 'Get student list success', 'data': student_list})
 
-
+# get student timeline
 @app.route('/api/get_student_timeline', methods=['POST'])
 @auth.login_required
 def get_student_timeline():
     if not g.user.is_admin_user():
         group_uuid = request.form.get('group_uuid', type=str)
         timeline = db.get_student_timeline(g.user.user_id, group_uuid)
-        return jsonify({'code': 200, 'msg': 'Get timeline success', 'data':timeline})
+        return jsonify({'code': 200, 'msg': 'Get timeline success', 'data': timeline})
     else:
-        return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# Group part
 
+# create a group
 @app.route('/api/create_group', methods=['GET', 'POST'])
 @auth.login_required
 def create_group():
     group_name = request.form.get('group_name', type=str)
     project_uuid = request.form.get('project_uuid', type=str)
     if project_uuid is None:
-        return jsonify({'code': 400, 'msg': 'Bad Request', 'user_id': g.user.user_id})
+        return jsonify({'code': 400, 'msg': 'Bad Request', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     group_uuid = db.create_group(group_name, project_uuid)
     db.create_group_relation(g.user.user_id, group_uuid, 0)
-    return jsonify({'code': 200, 'msg': 'Create success', 'user_id': g.user.user_id, 'group_uuid': group_uuid})
+    return jsonify({'code': 200, 'msg': 'Create success', 'user_id': g.user.user_id, 'group_uuid': group_uuid,
+                    'user_type': g.user.user_type})
 
+# get group list
 @app.route('/api/get_group_list', methods=['GET', 'POST'])
 @auth.login_required
 def get_group_list():
     project_uuid = request.form.get('project_uuid', type=str)
     return jsonify({'code': 200, 'msg': 'Get group list success', 'data': db.get_all_group(project_uuid)})
 
+# join a group
 @app.route('/api/join_group', methods=['GET', 'POST'])
 @auth.login_required
 def join_group():
     group_uuid = request.form.get('group_uuid', type=str)
-    db.create_group_relation(g.user.user_id, group_uuid)
-    # TODO check whether already join a group
-    return jsonify({'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id})
+    project_uuid = request.form.get('project_uuid', type=str)
+    if db.check_has_group(g.user.user_id, project_uuid):
+        return jsonify({'code': 400, 'msg': 'Already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        db.create_group_relation(g.user.user_id, group_uuid)
+        return jsonify({'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
+# leave a group
+@app.route('/api/leave_group', methods=['POST'])
+@auth.login_required
+def leave_group():
+    group_uuid = request.form.get('group_uuid', type=str)
+    if g.user.is_admin_user():
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        db.leave_group(g.user.user_id, group_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Leave group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+# get group member list
+@app.route('/api/get_member_list', methods=['POST'])
+@auth.login_required
+def get_member_list():
+    group_uuid = request.form.get('group_uuid', type=str)
+    member_list = db.get_group_member(group_uuid)
+    return jsonify(
+        {'code': 200, 'msg': 'Get member list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': member_list})
+
+
+# get current group
+@app.route('/api/current_group', methods=['POST'])
+@auth.login_required
+def get_current_group():
+    project_uuid = request.form.get('project_uuid', type=str)
+    if g.user.is_admin_user():
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        if db.check_has_group(g.user.user_id, project_uuid):
+            current_group = db.get_self_group(g.user.user_id, project_uuid)[0]
+            group_member = db.get_group_member(current_group["group_uuid"])
+            current_group["member"] = group_member
+            return jsonify(
+                {'code': 200, 'msg': 'Get member list success', 'user_id': g.user.user_id,
+                 'user_type': g.user.user_type, 'data': current_group})
+        else:
+            return jsonify(
+                {'code': 400, 'msg': 'You have not join a group', 'user_id': g.user.user_id,
+                 'user_type': g.user.user_type})
+
+# Project part
+
+# create a project
 @app.route('/api/create_project', methods=['GET', 'POST'])
 @auth.login_required
 def create_project():
@@ -234,30 +315,191 @@ def create_project():
     project_markrelease = request.form.get('project_markrelease', type=str, default=None)
     project_addr = request.form.get('project_addr', type=str, default='None')
     if g.user.is_admin_user():
-        project_uuid = db.create_projects(project_master, project_name, project_deadline, project_markrelease, project_addr)
+        project_uuid = db.create_projects(project_master, project_name, project_deadline, project_markrelease,
+                                          project_addr)
         db.enrol_project(project_master, project_uuid, 'master')
-        return jsonify({'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id})
+        return jsonify(
+            {'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
-        return jsonify({'code': 401, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id})
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# get project list
 @app.route('/api/get_project_list', methods=['GET', 'POST'])
 @auth.login_required
 def get_project_list():
     return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
 
+# enrol in a project
 @app.route('/api/enrol_project', methods=['GET', 'POST'])
 @auth.login_required
 def enrol_project():
     project_uuid = request.form.get('project_uuid', type=str)
     user_type = request.form.get('user_type', type=str, default='student')
     db.enrol_project(g.user.user_id, project_uuid, user_type)
-    return jsonify({'code': 200, 'msg':'enrol in project success', 'user_id': g.user.user_id})
+    return jsonify(
+        {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# get self project_list
 @app.route('/api/get_self_project_list', methods=['GET', 'POST'])
 @auth.login_required
 def get_self_project_list():
-    return jsonify({'code': 200, 'msg': 'Get self project list success', 'data': db.get_self_project_list(g.user.user_id)})
+    return jsonify(
+        {'code': 200, 'msg': 'Get self project list success', 'data': db.get_self_project_list(g.user.user_id)})
 
+
+# Reminder part
+
+# lecturer and mentor get reminder list
+@app.route('/api/admin_get_reminder_list', methods=["POST"])
+@auth.login_required
+def admin_get_reminder_list():
+    project_uuid = request.form.get('project_uuid', type=str)
+    if g.user.is_admin_user():
+        reminder_list = db.admin_get_self_reminder(g.user.user_type, project_uuid)
+        return jsonify({'code': 200, 'msg': 'Get reminder list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': reminder_list})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+# post a new reminder
+@app.route('/api/create_new_reminder', methods=["POST"])
+@auth.login_required
+def create_new_reminder():
+    project_uuid = request.form.get('project_uuid', type=str)
+    ass_uuid = request.form.get('ass_uuid', type=str, default=project_uuid)
+    message = request.form.get('message', type=str)
+    submit_check = request.form.get('submit_check', type=str, default="no")
+    if g.user.is_admin_user():
+        reminder_uuid = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid, message=message, submit_check=submit_check)
+        return jsonify({'code': 200, 'msg': 'Create reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'reminder_uuid': reminder_uuid})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+# delete a reminder
+@app.route('/api/delete_reminder', methods=['POST'])
+@auth.login_required
+def delete_reminder():
+    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    if g.user.is_admin_user():
+        db.delete_reminder(reminder_uuid)
+        return jsonify({'code': 200, 'msg': 'Delete reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+# change reminder part
+@app.route('/api/change_reminder_ass_uuid', methods=['POST'])
+@auth.login_required
+def change_reminder_ass():
+    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    ass_uuid = request.form.get('ass_uuid', type=str)
+    if g.user.is_admin_user():
+        db.change_reminder_ass(reminder_uuid, ass_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Change reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+@app.route('/api/change_reminder_message', methods=['POST'])
+@auth.login_required
+def change_reminder_ass():
+    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    message = request.form.get('message', type=str)
+    if g.user.is_admin_user():
+        db.change_reminder_message(reminder_uuid, message)
+        return jsonify(
+            {'code': 200, 'msg': 'Change reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+@app.route('/api/change_reminder_submit_check', methods=['POST'])
+@auth.login_required
+def change_reminder_ass():
+    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    submit_check = request.form.get('submit_check', type=str)
+    if g.user.is_admin_user():
+        db.change_reminder_submit_check(reminder_uuid, submit_check)
+        return jsonify(
+            {'code': 200, 'msg': 'Change reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+@app.route('/api/student_get_reminder_list')
+@auth.login_required
+def student_get_reminder_list():
+    project_uuid = request.form.get('project_uuid', type=str)
+    if g.user.is_admin_user():
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        global_reminder_list = db.student_get_self_global_reminder(project_uuid)
+        unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
+        reminder_list = global_reminder_list + unsubmit_reminder_list
+        return jsonify(
+            {'code': 200, 'msg': 'Get reminder list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+             'data': reminder_list})
+
+
+# Addition documents
+
+@app.route('/api/create_addition_resource', methods=['POST'])
+@auth.login_required
+def create_addition_resource():
+    project_uuid = request.form.get('project_uuid', type=str)
+    description = request.form.get('description', type=str, default="None")
+    file_addr = request.form.get('file_address', type=str, default="None")
+    if g.user.is_admin_user():
+        db.add_addition_resource(g.user.user_id, project_uuid, description, file_addr)
+        return jsonify(
+            {'code': 200, 'msg': 'Upload resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+@app.route('/api/delete_addition_resource', methods=['POST'])
+@auth.login_required
+def delete_addition_resource():
+    resource_uuid = request.form.get('resource_uuid', type=str)
+    if g.user.is_admin_user():
+        db.delete_addition_resource(resource_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Delete resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+@app.route('/api/get_upload_resource_list', methods=['POST'])
+@auth.login_required
+def get_upload_resource_list():
+    project_uuid = request.form.get('project_uuid', type=str)
+    if g.user.is_admin_user():
+        resource_list = db.get_upload_file_list(g.user.user_id, project_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Delete resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': resource_list})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+@app.route('/api/student_resource_list', methods=['POST'])
+@auth.login_required
+def student_resource_list():
+    project_uuid = request.form.get('project_uuid', type=str)
+    if g.user.is_admin_user():
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        resource_list = db.get_resource_list(project_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Delete resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+             'data': resource_list})
 
 
 if __name__ == '__main__':
