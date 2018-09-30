@@ -164,8 +164,11 @@ def get_auth_token():
             return jsonify({'code': 400, 'msg': 'Wrong password'})
     g.user = user
     token = g.user.generate_auth_token()
-    return jsonify({'code': 200, 'msg': "Login success", 'token': token.decode('ascii'), 
-        'user_id': g.user.user_id, 'user_type':g.user.user_type})
+    if g.user.is_admin_user():
+        return render_template('lecturer.html'), 200, {'token': token.decode('ascii')}
+    else:
+        return render_template('student.html'), 200, {'token': token.decode('ascii')}
+
 
 
 # change user setting part
@@ -193,6 +196,15 @@ def change_photo():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
+@app.route('/api/change_gender', methods=['POST'])
+@auth.login_required
+def change_gender():
+    new_gender = request.form.get('new_gender', type=str)
+    db.change_user_gender(g.user.user_id, new_gender)
+    return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+
 @app.route('/api/change_user_type', methods=['POST'])
 @auth.login_required
 def change_user_type():
@@ -217,10 +229,14 @@ def get_student_list():
 @app.route('/api/get_student_timeline', methods=['POST'])
 @auth.login_required
 def get_student_timeline():
+    project_uuid = request.form.get('project_uuid', type=str)
     if not g.user.is_admin_user():
-        group_uuid = request.form.get('group_uuid', type=str)
-        timeline = db.get_student_timeline(g.user.user_id, group_uuid)
-        return jsonify({'code': 200, 'msg': 'Get timeline success', 'data': timeline})
+        if db.check_has_group(g.user.user_id, project_uuid):
+            group_uuid = request.form.get('group_uuid', type=str)
+            timeline = db.get_student_timeline(g.user.user_id, group_uuid)
+            return jsonify({'code': 200, 'msg': 'Get timeline success', 'data': timeline})
+        else:
+            return jsonify({'code': 400, 'msg': 'You have not join a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
@@ -433,7 +449,7 @@ def change_reminder_submit_check():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-@app.route('/api/student_get_reminder_list')
+@app.route('/api/student_get_reminder_list', methods=['POST'])
 @auth.login_required
 def student_get_reminder_list():
     project_uuid = request.form.get('project_uuid', type=str)
@@ -484,7 +500,7 @@ def get_upload_resource_list():
     if g.user.is_admin_user():
         resource_list = db.get_upload_file_list(g.user.user_id, project_uuid)
         return jsonify(
-            {'code': 200, 'msg': 'Delete resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': resource_list})
+            {'code': 200, 'msg': 'Get upload resource list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': resource_list})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
@@ -500,7 +516,7 @@ def student_resource_list():
     else:
         resource_list = db.get_resource_list(project_uuid)
         return jsonify(
-            {'code': 200, 'msg': 'Delete resource success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+            {'code': 200, 'msg': 'Get resource list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
              'data': resource_list})
 
 

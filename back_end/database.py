@@ -152,7 +152,7 @@ def get_all_group(project_uuid):
     sql = "select * from groups where project_uuid = '{}';".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["group_uuid", "group_name", "project_uuid", "mark"]
+    key_list = ["group_uuid", "group_name", "project_uuid", "description", "mark"]
     result = convert_result_to_dict(result, key_list)
     return result
 
