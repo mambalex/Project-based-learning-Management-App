@@ -88,7 +88,13 @@ class User:
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	return render_template('index.html', value=1)
+
+
+@app.route('/student')
+@auth.login_required
+def student():
+    return render_template('student.html')
 
 
 @auth.verify_password

@@ -1,60 +1,35 @@
-//sign-up AJAX
-
-// $("#signupButton").on('click',function () {
-//     var data = {
-//         email: $('.signup-email').val(),
-//         passwd: $('.signup-password').val(),
-//     };
-
+// $(#profile).on('click', function(e){
+//     e.preventDefault();
+    
 //     $.ajax({
-//        type:'POST',
-//         url:'/api/create_user',
-//         data: data,
-//         success:function () {
-//             alert("successfully sign in")
+//         type:'POST',
+//         url:'/api/login',
+//         headers: {
+//             'Authorization': 'Basic ' + btoa(email + ':' + passwd)
 //         },
-//         error:function () {
-//             alert('something went wrong')
+//         success:function (rsp_data) {
+//             console.log(rsp_data);
+//             $('#successAlert').text("successfully log in!").show();
+//             $('#errorAlert').hide();
+
+//             localStorage.setItem('token', JSON.stringify(rsp_data))
+//             console.log(JSON.parse(localStorage.getItem('token')));
+//             setTimeout(function(){ 
+//                if(rsp_data.user_type == 2){
+//                 window.location.href = "./student";
+//             }else if(rsp_data.user_type == 0){
+//                 window.location.pathname = "./lecturer";
+//             } }, 3000);
+//         },
+//         error:function (rsp_data) {
+//             console.log(rsp_data);
+//             $('#errorAlert').text(data.error).show();
+//             $('#successAlert').hide();
 //         }
-
 //     });
-// });
+// })
 
 
-
-
-
-
-
-// login-signup
-$(".log-in").click( function(e){
-    e.stopImmediatePropagation();
-    $(".layer").show();
-    $(".login-signup").show();
-});
-
-$(".remove-layer").click( function(e){
-    $(".layer").hide();
-    $(".login-signup").hide();
-});
-
-
-$("#showSignUp").click( function(){
-    $(".login").fadeOut("slow");
-    $(".signup").fadeIn();
-})
-
-$("#showLogin").click( function(){
-    $(".signup").hide();
-    $(".login").show();
-})
-
-$("#loginButton").click( function(){
-    $(".layer").hide();
-    $(".login-signup").hide();
-    $(".welcome-page").hide();
-    $(".container").css('display','flex');
-})
 
 
 // phase1

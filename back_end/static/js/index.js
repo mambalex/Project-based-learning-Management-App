@@ -91,7 +91,25 @@ $(".login").on('submit',function (e) {
             console.log(rsp_data);
             $('#successAlert').text("successfully log in!").show();
             $('#errorAlert').hide();
-            
+
+            localStorage.setItem('token', JSON.stringify(rsp_data))
+            console.log(JSON.parse(localStorage.getItem('token')).token);
+            setTimeout(function(){ 
+               if(rsp_data.user_type == 2){
+
+                    $.ajax({
+                        type:'GET',
+                        url: '/student',
+                        headers: {
+                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                        },
+                    success:function (rsp_data){
+                        console.log(rsp_data);
+                     }
+                     })
+                    }else if(rsp_data.user_type == 0){
+                    window.location.pathname = "./lecturer";
+                } }, 3000);
         },
         error:function (rsp_data) {
             console.log(rsp_data);
