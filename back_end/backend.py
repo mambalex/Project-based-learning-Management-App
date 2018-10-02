@@ -90,15 +90,6 @@ class User:
 
 @app.route('/')
 def index():
-<<<<<<< HEAD
-	return render_template('index.html', value=1)
-
-
-@app.route('/student')
-@auth.login_required
-def student():
-=======
->>>>>>> 7535dbc83e12fc5c9435f7575802f0519794db23
     return render_template('student.html')
 
 
