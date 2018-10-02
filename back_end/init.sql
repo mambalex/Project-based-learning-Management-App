@@ -10,6 +10,7 @@ CREATE TABLE user_info
     email text NOT NULL,
     password text NOT NULL,
     name text NOT NULL,
+    gender text,
     user_type integer NOT NULL,
     photo text,
     PRIMARY KEY (email)
@@ -20,6 +21,7 @@ CREATE TABLE groups
     group_uuid uuid NOT NULL,
     group_name text NOT NULL,
     project_uuid uuid NOT NULL,
+    description text,
     mark integer,
     PRIMARY KEY (group_uuid)
 );
@@ -109,6 +111,7 @@ CREATE TABLE addition_resource
     res_uuid uuid NOT NULL,
     master text NOT NULL,
     project_uuid uuid NOT NULL,
+    description text NOT NULL,
     file_addr text NOT NULL,
     PRIMARY KEY (res_uuid)
 );

@@ -2,6 +2,7 @@ import database_lib
 import uuid
 import time
 
+
 # user info part
 def check_user_id(email):
     dbconfig = {"dbname": "comp9323"}
@@ -14,18 +15,20 @@ def check_user_id(email):
         return True
     else:
         return False
-        
+
+
 # 0 stand for lecturer, 1 stand for mentor, 2 stand for student
 def create_user(user_profile):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     sql = "insert into user_info values \
-    ('{}', '{}', '{}', {}, '{}');".format(user_profile["email"], user_profile["passwd"],
-                                                user_profile.get("name", user_profile["email"]),
-                                                user_profile["user_type"], user_profile.get("photo", "None"))
+    ('{}', '{}', '{}', '{}', {}, '{}');".format(user_profile["email"], user_profile["passwd"],
+                                          user_profile.get("name", user_profile["email"]), user_profile.get('gender', "None"),
+                                          user_profile["user_type"], user_profile.get("photo", "None"))
     database_object.update(sql)
     database_object.close()
+
 
 def get_user(email):
     dbconfig = {"dbname": "comp9323"}
@@ -34,9 +37,10 @@ def get_user(email):
     sql = "select * from user_info where email = '{}';".format(email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["email", "passwd", "name", "user_type", "photo"]
+    key_list = ["email", "passwd", "name", "gender", "user_type", "photo"]
     result = convert_result_to_dict(result, key_list, True)
     return result
+
 
 def get_user_passwd(email):
     dbconfig = {"dbname": "comp9323"}
@@ -45,9 +49,10 @@ def get_user_passwd(email):
     sql = "select * from user_info where email = '{}';".format(email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["email", "passwd", "name", "user_type", "photo"]
+    key_list = ["email", "passwd", "name", "gender", "user_type", "photo"]
     result = convert_result_to_dict(result, key_list)
     return result[0]["passwd"]
+
 
 def change_user_info(email, field, new_data):
     dbconfig = {"dbname": "comp9323"}
@@ -57,11 +62,16 @@ def change_user_info(email, field, new_data):
     database_object.update(sql)
     database_object.close()
 
+
 def change_user_passwd(email, new_passwd):
     change_user_info(email, "password", new_passwd)
 
+
 def change_user_name(email, new_name):
     change_user_info(email, "name", new_name)
+
+def change_user_gender(email, new_gender):
+    change_user_info(email, 'gender', new_gender)
 
 
 def change_user_type(email, new_type):
@@ -72,8 +82,10 @@ def change_user_type(email, new_type):
     database_object.update(sql)
     database_object.close()
 
+
 def change_user_photo(email, new_photo):
     change_user_info(email, "photo", new_photo)
+
 
 # enrol project part
 
@@ -81,17 +93,22 @@ def enrol_project(email, project_uuid, user_type='student'):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into enrol_project (email, project_uuid, user_type) values ('{}', '{}', '{}');".format(email, project_uuid, user_type)
+    sql = "insert into enrol_project (email, project_uuid, user_type) values ('{}', '{}', '{}');".format(email,
+                                                                                                         project_uuid,
+                                                                                                         user_type)
     database_object.update(sql)
     database_object.close()
+
 
 def change_student_mark(email, project_uuid, new_mark):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "update enrol_project set mark = {} where email = '{}' and project_uuid = '{}';".format(new_mark, email, project_uuid)
+    sql = "update enrol_project set mark = {} where email = '{}' and project_uuid = '{}';".format(new_mark, email,
+                                                                                                  project_uuid)
     database_object.update(sql)
     database_object.close()
+
 
 def get_project_student_list(project_uuid):
     dbconfig = {"dbname": "comp9323"}
@@ -105,14 +122,15 @@ def get_project_student_list(project_uuid):
     result = convert_result_to_dict(result, key_list)
     return result
 
+
 # group part
-def create_group(group_name, project_uuid):
+def create_group(group_name, project_uuid, description="None"):
     group_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into groups (group_uuid, group_name, project_uuid) values \
-    ('{}', '{}', '{}');".format(group_uuid, group_name, project_uuid)
+    sql = "insert into groups (group_uuid, group_name, project_uuid, description) values \
+    ('{}', '{}', '{}', '{}');".format(group_uuid, group_name, project_uuid, description)
     database_object.update(sql)
     database_object.close()
     return group_uuid
@@ -134,7 +152,7 @@ def get_all_group(project_uuid):
     sql = "select * from groups where project_uuid = '{}';".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["group_uuid", "group_name", "project_uuid", "mark"]
+    key_list = ["group_uuid", "group_name", "project_uuid", "description", "mark"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -146,6 +164,16 @@ def mark_group(group_uuid, new_mark):
     sql = "update groups set mark = {} where group_uuid = '{}';".format(new_mark, group_uuid)
     database_object.update(sql)
     database_object.close()
+
+
+def change_group_description(group_uuid, new_description):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "update groups set description = '{}' where group_uuid = '{}';".format(new_description, group_uuid)
+    database_object.update(sql)
+    database_object.close()
+
 
 # group relation part
 # 0 stand for group leader, 1 stand for group member, 2 stand for mentor
@@ -167,6 +195,82 @@ def leave_group(email, group_uuid):
     database_object.update(sql)
     database_object.close()
 
+
+def get_group_member(group_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select u_i.email, u_i.name, u_i.photo, g_r.mem_type from group_relation g_r, user_info u_i where g_r.group_uuid = '{}' and g_r.email = u_i.email;".format(group_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['email', 'name', 'photo', 'mem_type']
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+def get_group_info(group_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select * from groups where group_uuid = '{}';".format(
+        group_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['group_uuid', 'group_name', 'project_uuid', 'description', 'mark']
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+def get_self_group(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select g.* from groups g, group_relation g_r where g.project_uuid = '{}' and g.group_uuid = g_r.group_uuid and g_r.email = '{}';".format(
+        project_uuid, email)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['group_uuid', 'group_name', 'project_uuid', 'description', 'mark']
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+def check_has_group(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select count(*) from groups g, group_relation g_r where g.project_uuid = '{}' and g.group_uuid = g_r.group_uuid and g_r.email = '{}';".format(project_uuid, email)
+    result = database_object.search(sql)
+    database_object.close()
+    if result[0][0] == 0:
+        return False
+    else:
+        return True
+
+def get_ungroup_student(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select u_i.email, u_i.name from enrol_project e_p, user_info u_i where e_p.project_uuid = '{}' and e_p.email = u_i.email and e_p.user_type = 'student';".format(
+        project_uuid)
+    all_student_list = database_object.search(sql)
+    sql = "select g_r.email, count(*) from groups g, group_relation g_r where g.project_uuid = '{}' and g.group_uuid = g_r.group_uuid group by g_r.email;".format(project_uuid)
+    ingroup_student_list = database_object.search(sql)
+    database_object.close()
+    all_student_list = convert_result_to_dict(temp_result=all_student_list, key_list=["email", "name"])
+    ingroup_student_list = convert_result_to_dict(temp_result=ingroup_student_list, key_list=["email", "count"])
+    all_list = [item["email"] for item in all_student_list]
+    all_student_list = {item["email"]: item["name"] for item in all_student_list}
+    in_list = list()
+    for item in ingroup_student_list:
+        if item["count"] > 0:
+            in_list.append(item["email"])
+    result = list()
+
+    for email in all_list:
+        if email not in in_list:
+            result.append({'email': email, 'name': all_student_list[email]})
+
+    return result
+
+
+
 # management part
 def create_managements(email, group_uuid):
     dbconfig = {"dbname": "comp9323"}
@@ -185,6 +289,7 @@ def delete_managements(email, group_uuid):
     sql = "delete from managements where email = '{}' and group_uuid = '{}';".format(email, group_uuid)
     database_object.update(sql)
     database_object.close()
+
 
 # submit part
 def create_submits(group_uuid, ass_uuid, address):
@@ -208,6 +313,20 @@ def mark_submits(submit_uuid, new_mark):
     database_object.update(sql)
     database_object.close()
 
+
+def get_submits(ass_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select s.submit_uuid, g.group_uuid, g.group_name, s.file_address, s.submit_time, s.mark from submits s, groups g where s.group_uuid = g.group_uuid and s.ass_uuid = '{}';".format(
+        ass_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['submit_uuid', 'group_uuid', 'group_name', 'file_address', 'submit_time', 'mark']
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+
 # project part
 def create_projects(master, project_name, deadline, mark_release=None, spec_address="None"):
     project_uuid = uuid.uuid1()
@@ -219,7 +338,8 @@ def create_projects(master, project_name, deadline, mark_release=None, spec_addr
     ('{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, spec_address)
     else:
         sql = "insert into projects values \
-    ('{}', '{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, mark_release, spec_address)
+    ('{}', '{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, mark_release,
+                                                  spec_address)
     database_object.update(sql)
     database_object.close()
     return project_uuid
@@ -304,6 +424,7 @@ def delete_project(project_uuid):
     database_object.update(sql)
     database_object.close()
 
+
 # phases part
 def create_phases(project_uuid, phase_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
     phase_uuid = uuid.uuid1()
@@ -313,7 +434,7 @@ def create_phases(project_uuid, phase_name, deadline, mark_release=None, submit_
     if mark_release is None:
         sql = "insert into phases (phase_uuid, project_uuid, phase_name, deadline, submit_require, spec_address) values \
     ('{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline,
-                                                      submit_require, spec_address)
+                                                submit_require, spec_address)
     else:
         sql = "insert into phases values \
     ('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline, mark_release,
@@ -330,7 +451,8 @@ def get_phases(phase_uuid):
     sql = "select * from phases where phase_uuid = '{}';".format(phase_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require", "spec_address"]
+    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require",
+                "spec_address"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -342,7 +464,8 @@ def get_project_all_phases(project_uuid):
     sql = "select * from phases where project_uuid = '{}';".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require", "spec_address"]
+    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require",
+                "spec_address"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -380,6 +503,7 @@ def delete_phases(phase_uuid):
     database_object.update(sql)
     database_object.close()
 
+
 # task part
 def create_tasks(phase_uuid, task_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
     task_uuid = uuid.uuid1()
@@ -389,7 +513,7 @@ def create_tasks(phase_uuid, task_name, deadline, mark_release=None, submit_requ
     if mark_release is None:
         sql = "insert into tasks (task_uuid, phase_uuid, task_name, deadline, submit_require, spec_address) values \
     ('{}', '{}', '{}', '{}', {}, '{}');".format(task_uuid, phase_uuid, task_name, deadline,
-                                                      submit_require, spec_address)
+                                                submit_require, spec_address)
     else:
         sql = "insert into tasks values \
     ('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(task_uuid, phase_uuid, task_name, deadline, mark_release,
@@ -456,6 +580,7 @@ def delete_tasks(task_uuid):
     database_object.update(sql)
     database_object.close()
 
+
 # help function
 def check_submit(group_uuid, ass_uuid):
     dbconfig = {"dbname": "comp9323"}
@@ -491,8 +616,9 @@ def get_student_timeline(email, group_uuid):
     result = convert_result_to_dict(result, key_list)
     return result
 
+
 # reminder part
-def create_reminder(email, project_uuid, ass_uuid, message, submit_check = "no"):
+def create_reminder(email, project_uuid, ass_uuid, message, submit_check="no"):
     reminder_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
@@ -503,6 +629,7 @@ def create_reminder(email, project_uuid, ass_uuid, message, submit_check = "no")
     database_object.close()
     return reminder_uuid
 
+
 def change_reminder_info(reminder_uuid, field, new_data):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
@@ -511,14 +638,27 @@ def change_reminder_info(reminder_uuid, field, new_data):
     database_object.update(sql)
     database_object.close()
 
+
 def change_reminder_ass(reminder_uuid, new_ass_uuid):
     change_reminder_info(reminder_uuid, "ass_uuid", new_ass_uuid)
+
 
 def change_reminder_message(reminder_uuid, new_message):
     change_reminder_info(reminder_uuid, "message", new_message)
 
+
 def change_reminder_submit_check(reminder_uuid, new_submit_check):
     change_reminder_info(reminder_uuid, "submit_check", new_submit_check)
+
+
+def delete_reminder(reminder_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "delete from reminder where reminder_uuid = '{}';".format(reminder_uuid)
+    database_object.update(sql)
+    database_object.close()
+
 
 def admin_get_self_reminder(email, project_uuid):
     dbconfig = {"dbname": "comp9323"}
@@ -531,6 +671,7 @@ def admin_get_self_reminder(email, project_uuid):
     result = convert_result_to_dict(result, key_list)
     return result
 
+
 def student_get_self_global_reminder(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
@@ -542,6 +683,7 @@ def student_get_self_global_reminder(project_uuid):
     result = convert_result_to_dict(result, key_list)
     return result
 
+
 def student_get_self_unsubmit_reminder(email, project_uuid):
     dbconfig = {"dbname": "comp9323"}
     result = list()
@@ -549,7 +691,8 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
     database_object.open()
     sql = "select rem.*, count(*) from reminder rem, submits s, groups g, group_relation g_r \
       where  g_r.email = '{}' and g_r.group_uuid = g.group_uuid and g.project_uuid = '{}' and \
-      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid;".format(email, project_uuid, project_uuid)
+      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid;".format(
+        email, project_uuid, project_uuid)
     submit_reminder = database_object.search(sql)
     database_object.close()
     key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "count"]
@@ -561,16 +704,17 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
 
 
 # addition resource
-def add_addition_resource(email, project_uuid, file_addr="None"):
+def add_addition_resource(email, project_uuid, description="None", file_addr="None"):
     resource_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     sql = "insert into addition_resource values \
-        ('{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, file_addr)
+        ('{}', '{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, description, file_addr)
     database_object.update(sql)
     database_object.close()
     return resource_uuid
+
 
 def delete_addition_resource(resource_uuid):
     dbconfig = {"dbname": "comp9323"}
@@ -580,8 +724,32 @@ def delete_addition_resource(resource_uuid):
     database_object.update(sql)
     database_object.close()
 
+
 def get_resource_list(project_uuid):
-    pass
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select res_uuid, master, description, file_addr from addition_resource where project_uuid = '{}';".format(
+        project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['resource_uuid', 'master', 'description', 'file_addr']
+    result = convert_result_to_dict(temp_result=result, key_list=key_list)
+    return result
+
+
+def get_upload_file_list(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select res_uuid, master, description, file_addr from addition_resource where master = '{}' and project_uuid = '{}';".format(
+        email, project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ['resource_uuid', 'master', 'description', 'file_addr']
+    result = convert_result_to_dict(temp_result=result, key_list=key_list)
+    return result
+
 
 def create_test_data():
     create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
