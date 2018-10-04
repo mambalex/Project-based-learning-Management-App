@@ -180,7 +180,7 @@ def change_passwd():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-@app.route('/api/change_name', methods=["GET", "POST"])
+@app.route('/api/change_name', methods=["POST"])
 @auth.login_required
 def change_name():
     new_name = request.form.get('new_name', type=str)
@@ -188,7 +188,7 @@ def change_name():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-@app.route('/api/change_photo', methods=['GET', 'POST'])
+@app.route('/api/change_photo', methods=['POST'])
 @auth.login_required
 def change_photo():
     new_photo = request.form.get('new_photo', type=str)
@@ -218,12 +218,12 @@ def change_user_type():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get student list
-@app.route('/api/get_student_list', methods=['GET', 'POST'])
+@app.route('/api/get_student_list', methods=['POST'])
 @auth.login_required
 def get_student_list():
     project_uuid = request.form.get('project_uuid', type=str)
     student_list = db.get_project_student_list(project_uuid)
-    return jsonify({'code': 200, 'msg': 'Get student list success', 'data': student_list})
+    return jsonify({'code': 200, 'msg': 'Get student list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': student_list})
 
 # get student timeline
 @app.route('/api/get_student_timeline', methods=['POST'])
@@ -244,7 +244,7 @@ def get_student_timeline():
 # Group part
 
 # create a group
-@app.route('/api/create_group', methods=['GET', 'POST'])
+@app.route('/api/create_group', methods=['POST'])
 @auth.login_required
 def create_group():
     group_name = request.form.get('group_name', type=str)
@@ -257,14 +257,14 @@ def create_group():
                     'user_type': g.user.user_type})
 
 # get group list
-@app.route('/api/get_group_list', methods=['GET', 'POST'])
+@app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
     project_uuid = request.form.get('project_uuid', type=str)
-    return jsonify({'code': 200, 'msg': 'Get group list success', 'data': db.get_all_group(project_uuid)})
+    return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
 
 # join a group
-@app.route('/api/join_group', methods=['GET', 'POST'])
+@app.route('/api/join_group', methods=['POST'])
 @auth.login_required
 def join_group():
     group_uuid = request.form.get('group_uuid', type=str)
@@ -324,7 +324,7 @@ def get_current_group():
 # Project part
 
 # create a project
-@app.route('/api/create_project', methods=['GET', 'POST'])
+@app.route('/api/create_project', methods=['POST'])
 @auth.login_required
 def create_project():
     project_master = g.user.user_id
@@ -343,13 +343,13 @@ def create_project():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get project list
-@app.route('/api/get_project_list', methods=['GET', 'POST'])
+@app.route('/api/get_project_list', methods=['POST'])
 @auth.login_required
 def get_project_list():
     return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
 
 # enrol in a project
-@app.route('/api/enrol_project', methods=['GET', 'POST'])
+@app.route('/api/enrol_project', methods=['POST'])
 @auth.login_required
 def enrol_project():
     project_uuid = request.form.get('project_uuid', type=str)
@@ -359,11 +359,11 @@ def enrol_project():
         {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get self project_list
-@app.route('/api/get_self_project_list', methods=['GET', 'POST'])
+@app.route('/api/get_self_project_list', methods=['POST'])
 @auth.login_required
 def get_self_project_list():
     return jsonify(
-        {'code': 200, 'msg': 'Get self project list success', 'data': db.get_self_project_list(g.user.user_id)})
+        {'code': 200, 'msg': 'Get self project list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_self_project_list(g.user.user_id)})
 
 
 # Reminder part
