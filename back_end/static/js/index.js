@@ -61,23 +61,22 @@ $(".signup").on('submit',function (e) {
         type:'POST',
         url:'/api/create_user',
         data: data,
-        success:function (rsp_data) {
-            alert("successfully sign up");
-            $('#successAlert2').text("successfully sign up").show();
+    }).done(function(rsp_data){
+        console.log(rsp_data);
+        var status = rsp_data['code'];
+        if(status == '201'){
+            $('#successAlert2').text("Successfully sign up").show();
             $('#errorAlert2').hide();
             setTimeout(function(){ 
                $(".signup").hide();
                $(".login").fadeIn("slow"); 
-           }, 3000);
-            
-            console.log(rsp_data);
-
-        },
-        error:function (rsp_data) {
-            console.log(rsp_data);
-            alert("something went wrong");
+            }, 2000);
+        }else if(status == '400'){
+            $('#errorAlert2').text(rsp_data['msg']).show();
+            $('#successAlert2').hide();
         }
-    });
+
+    })
 });
 
 
@@ -95,27 +94,12 @@ $(".login").on('submit',function (e) {
         type:'POST',
         url:'/api/login',
         data: data,
-        // success:function (rsp_data) {
-        //     console.log(rsp_data);
-        //     $('#successAlert').text("successfully log in!").show();
-        //     $('#errorAlert').hide();
-
-        //     localStorage.setItem('token', JSON.stringify(rsp_data));
-        //     console.log(JSON.parse(localStorage.getItem('token')).token);
-        //     setTimeout(function(){ 
-        //         window.location.pathname = "./student";},1500);
-        // },
-        // error:function (rsp_data) {
-        //     console.log(rsp_data);
-        //     $('#errorAlert').text(data.error).show();
-        //     $('#successAlert').hide();
-        // }
     }).done(function(rsp_data){
         console.log(rsp_data);
         var status = rsp_data['code'];
         var user_type = rsp_data['user_type'];
         if(status == '200'){
-            $('#successAlert').text("Successfully sign up").show();
+            $('#successAlert').text("Successfully login").show();
             $('#errorAlert').hide();
             localStorage.setItem('token', JSON.stringify(rsp_data));
             console.log(JSON.parse(localStorage.getItem('token')).token);

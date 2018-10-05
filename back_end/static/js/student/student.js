@@ -1,34 +1,32 @@
-// $(#profile).on('click', function(e){
+// $("#profile").on('click', function(e){
 //     e.preventDefault();
-//     window.location.pathname = "./profile";
-// }
-    
-//     $.ajax({
-//         type:'POST',
-//         url:'/api/login',
-//         headers: {
-//             'Authorization': 'Basic ' + btoa(email + ':' + passwd)
-//         },
-//         success:function (rsp_data) {
-//             console.log(rsp_data);
-//             $('#successAlert').text("successfully log in!").show();
-//             $('#errorAlert').hide();
+//     window.location.pathname = "./profile";})
+    // $.ajax({
+    //     type:'POST',
+    //     url:'/api/login',
+    //     headers: {
+    //         'Authorization': 'Basic ' + btoa(email + ':' + passwd)
+    //     },
+    //     success:function (rsp_data) {
+    //         console.log(rsp_data);
+    //         $('#successAlert').text("successfully log in!").show();
+    //         $('#errorAlert').hide();
 
-//             localStorage.setItem('token', JSON.stringify(rsp_data))
-//             console.log(JSON.parse(localStorage.getItem('token')));
-//             setTimeout(function(){ 
-//                if(rsp_data.user_type == 2){
-//                 window.location.href = "./student";
-//             }else if(rsp_data.user_type == 0){
-//                 window.location.pathname = "./lecturer";
-//             } }, 3000);
-//         },
-//         error:function (rsp_data) {
-//             console.log(rsp_data);
-//             $('#errorAlert').text(data.error).show();
-//             $('#successAlert').hide();
-//         }
-//     });
+    //         localStorage.setItem('token', JSON.stringify(rsp_data))
+    //         console.log(JSON.parse(localStorage.getItem('token')));
+    //         setTimeout(function(){ 
+    //            if(rsp_data.user_type == 2){
+    //             window.location.href = "./student";
+    //         }else if(rsp_data.user_type == 0){
+    //             window.location.pathname = "./lecturer";
+    //         } }, 3000);
+    //     },
+    //     error:function (rsp_data) {
+    //         console.log(rsp_data);
+    //         $('#errorAlert').text(data.error).show();
+    //         $('#successAlert').hide();
+    //     }
+    // });
 // })
 
 
@@ -38,6 +36,61 @@
 
 // side-nav
 
+function getProjectList(){
+    var projectList;
+    $.ajax({
+        type:'POST',
+        url:'/api/get_self_project_list',
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+        success(rsp_data){
+            console.log(rsp_data);
+            projectList = rsp_data['data'];
+        }
+    })
+    return projectList;
+}
+
+function getSelfGroup(projId){
+        $.ajax({
+        type:'POST',
+        url:'/api/current_group',
+        data:projId,
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+    }).done(function(rsp_data){
+        if(rsp_data['code']==200){
+            var description = rsp_data['data']['description'];
+            var groupName = rsp_data['data']['group_name'];
+            var members = rsp_data['data']['memeber'];
+            $("#group-name-own").val(groupName);
+            $("#group-note-own").val(description);
+            members.forEach(function(val){
+                 $("#memebers").append(`<li>${val['name']}</li>`)
+            })
+        }})
+}
+
+function getGroupList(projId){
+        $.ajax({
+        type:'POST',
+        url:'/api/get_group_list',
+        data:projId,
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+    }).done(function(rsp_data){
+        if(rsp_data['code']==200){
+            var groupId = rsp_data['data']['group_uuid'];
+            var groupName = rsp_data['data']['group_name'];
+            var members = rsp_data['data']['memeber'];
+            
+           
+        }})   
+}
+
 // click group
 $(document).on('click', '.navgrp', function(e){
     $(".notes-wrapper").hide();
@@ -45,6 +98,9 @@ $(document).on('click', '.navgrp', function(e){
     $(".group-info").show();
     $(".add-group").show();
     $(".all-groups").show();
+    var projectList = getProjectList();
+    var projectId = projectList[0]['project_uuid']
+    getSelfGroup(projectId);
 
 });
 

@@ -31,7 +31,7 @@
                     <div class="user">
                         <i class="fas fa-user-alt"></i>
                         <div class="dropdown-content">
-                            <a href="profile.html" id="profile">My Profile</a>
+                            <a href="/profile" id="profile">My Profile</a>
                             <a href="#">Notifications</a>
                             <a href="#">Settings</a>
                             <a href="index.html" id="logout">Logout</a>
@@ -96,7 +96,7 @@
                         <a href="#" class="list-group-item document">Documents</a>
                       </div>
                     </div>
-                        <script type="text/javascript" src="js/side-nar.js"></script>
+                        <!-- <script type="text/javascript" src="js/side-nar.js"></script> -->
 
 <!--due-date-->
                     <div class="due-date">
@@ -131,7 +131,7 @@
                         <div class="line"></div>
                         <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
                 </div>
-               <script  src="js/notes.js"></script>
+               <!-- <script  src="js/notes.js"></script> -->
 
 <!--documents-->
                 <div class="documenets">
@@ -162,20 +162,20 @@
 
           <div class="group-info drop-shadow-nav-grp curved.v2">
                 <div class="group-info-title"> Group Information</div>
-                           <h4 class="group-name">Group Name: <span>Group 8</span></h4>
+                           <h4 class="group-name">Group Name: <span id="group-name-own">Group 8</span></h4>
                   <div class="group-wrapper">
                           <div class="members">
                               <h4  >Members: </h4>
-                               <ul>
-                                   <li><div>Alex</div>z5105196</li>
-                                   <li><div>Hank</div>z5105196</li>
-                                   <li><div>Junnan Chen</div>z5105196</li>
+                               <ul id="members">
+                                   <li>Alex</li>
+                                   <li>Hank</li>
+                                   <li>Junnan Chen</li>
                                </ul>
                           </div>
                          <div class="group-topic">
                              <h4>Note:</h4>
                              <ul>
-                                 <li>Project-based learning management app</li>
+                                 <li id="group-note-own">Project-based learning management app</li>
                              </ul>
                          </div>
                     </div>

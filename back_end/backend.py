@@ -105,7 +105,7 @@ def student():
 
 
 
-@app.route('/profile.html')
+@app.route('/profile')
 def profile():
     return render_template('profile.html')
 
@@ -149,9 +149,9 @@ def new_user():
     user_type = request.form.get('user_type', type=str)
     print(user_id, passwd, user_type)
     if user_id is None or passwd is None:
-        abort(400)  # missing arguments
+        return jsonify({'code': 400, 'msg': 'Email and password are needed'})
     if not db.check_user_id(user_id):
-        abort(400)
+        return jsonify({'code': 400, 'msg': 'User already exists'})
     user_profile = {'email': user_id, 'passwd': passwd, 'user_type': user_type}
     db.create_user(user_profile)
     user = User()

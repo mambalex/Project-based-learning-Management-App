@@ -13,3 +13,17 @@ $(document).on('click', ".update", function(e){
         $(this).text('update');
     }
 });
+
+
+$(document).ready(function(){
+    $.ajax({
+        type:'POST',
+        url:'/api/login',
+         headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+    }).done(function(rsp_data){
+
+    }
+
+})
