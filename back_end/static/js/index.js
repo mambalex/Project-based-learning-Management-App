@@ -80,36 +80,39 @@ $(".login").on('submit',function (e) {
     e.preventDefault();
     var email = $('.login-email').val();
     var passwd = $('.login-password').val();
+    var data = {
+        email: $('.login-email').val(),
+        passwd: $('.login-password').val(),
+    };
 
     $.ajax({
         type:'POST',
         url:'/api/login',
-        headers: {
-            'Authorization': 'Basic ' + btoa(email + ':' + passwd)
-        },
+        data: data,
         success:function (rsp_data) {
             console.log(rsp_data);
             $('#successAlert').text("successfully log in!").show();
             $('#errorAlert').hide();
 
-            localStorage.setItem('token', JSON.stringify(rsp_data))
+            localStorage.setItem('token', JSON.stringify(rsp_data));
             console.log(JSON.parse(localStorage.getItem('token')).token);
             setTimeout(function(){ 
-               if(rsp_data.user_type == 2){
+                window.location.pathname = "./student";},3000);
+               // if(rsp_data.user_type == 2){
 
-                    $.ajax({
-                        type:'GET',
-                        url: '/student',
-                        headers: {
-                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-                        },
-                    success:function (rsp_data){
-                        console.log(rsp_data);
-                     }
-                     })
-                    }else if(rsp_data.user_type == 0){
-                    window.location.pathname = "./lecturer";
-                } }, 3000);
+               //      $.ajax({
+               //          type:'GET',
+               //          url: '/student',
+               //          headers: {
+               //              'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+               //          },
+               //      success:function (rsp_data){
+               //          console.log(rsp_data);
+               //       }
+               //       })
+               //      }else if(rsp_data.user_type == 0){
+               //      window.location.pathname = "./lecturer";
+               //  } }, 3000);
         },
         error:function (rsp_data) {
             console.log(rsp_data);

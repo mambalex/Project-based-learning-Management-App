@@ -90,7 +90,21 @@ class User:
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/lecturer')
+def lecturer():
+    return render_template('lecturer.html')
+
+
+@app.route('/student')
+# @auth.login_required
+def student():
     return render_template('student.html')
+
+@app.route('/profile.html')
+def profile():
+    return render_template('profile.html')
 
 
 @auth.verify_password
