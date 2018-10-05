@@ -1,5 +1,7 @@
 // $(#profile).on('click', function(e){
 //     e.preventDefault();
+//     window.location.pathname = "./profile";
+// }
     
 //     $.ajax({
 //         type:'POST',

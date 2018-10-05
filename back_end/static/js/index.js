@@ -32,9 +32,15 @@ $("#showLogin").click( function(){
 // sign-up request
 $(".signup").on('submit',function (e) {
     e.preventDefault();
+    var email = $('.signup-email').val();
     var password = $('.signup-password').val();
     var confirmPassword = $('.comfirm-password').val();
     var userType = $('#user-type').val();
+    if(password ==""|| email==""){
+        $('#errorAlert2').text("Email and password are needed").show();
+        $('#successAlert2').hide();
+        return
+    }
     if (!userType){
         $('#errorAlert2').text("please select user type").show();
         $('#successAlert2').hide();
@@ -46,11 +52,11 @@ $(".signup").on('submit',function (e) {
     }
 
     var data = {
-        user_type: $('#user-type').val(),
-        email: $('.signup-email').val(),
-        passwd: $('.signup-password').val(),
+        user_type: userType,
+        email: email,
+        passwd: password
     };
-    // console.log(data);
+    console.log(data);
     $.ajax({
         type:'POST',
         url:'/api/create_user',
@@ -80,43 +86,51 @@ $(".login").on('submit',function (e) {
     e.preventDefault();
     var email = $('.login-email').val();
     var passwd = $('.login-password').val();
+    var data = {
+        email: $('.login-email').val(),
+        passwd: $('.login-password').val(),
+    };
 
     $.ajax({
         type:'POST',
         url:'/api/login',
-        headers: {
-            'Authorization': 'Basic ' + btoa(email + ':' + passwd)
-        },
-        success:function (rsp_data) {
-            console.log(rsp_data);
-            $('#successAlert').text("successfully log in!").show();
-            $('#errorAlert').hide();
+        data: data,
+        // success:function (rsp_data) {
+        //     console.log(rsp_data);
+        //     $('#successAlert').text("successfully log in!").show();
+        //     $('#errorAlert').hide();
 
-            localStorage.setItem('token', JSON.stringify(rsp_data))
+        //     localStorage.setItem('token', JSON.stringify(rsp_data));
+        //     console.log(JSON.parse(localStorage.getItem('token')).token);
+        //     setTimeout(function(){ 
+        //         window.location.pathname = "./student";},1500);
+        // },
+        // error:function (rsp_data) {
+        //     console.log(rsp_data);
+        //     $('#errorAlert').text(data.error).show();
+        //     $('#successAlert').hide();
+        // }
+    }).done(function(rsp_data){
+        console.log(rsp_data);
+        var status = rsp_data['code'];
+        var user_type = rsp_data['user_type'];
+        if(status == '200'){
+            $('#successAlert').text("Successfully sign up").show();
+            $('#errorAlert').hide();
+            localStorage.setItem('token', JSON.stringify(rsp_data));
             console.log(JSON.parse(localStorage.getItem('token')).token);
             setTimeout(function(){ 
-               if(rsp_data.user_type == 2){
-
-                    $.ajax({
-                        type:'GET',
-                        url: '/student',
-                        headers: {
-                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-                        },
-                    success:function (rsp_data){
-                        console.log(rsp_data);
-                     }
-                     })
-                    }else if(rsp_data.user_type == 0){
-                    window.location.pathname = "./lecturer";
-                } }, 3000);
-        },
-        error:function (rsp_data) {
-            console.log(rsp_data);
-            $('#errorAlert').text(data.error).show();
+                if(user_type == 'student'){
+                     window.location.pathname = "./student";
+                }else{
+                     window.location.pathname = "./lecturer";
+                }
+             },1500)
+        }else if(status == '400'){
+            $('#errorAlert').text(rsp_data['msg']).show();
             $('#successAlert').hide();
         }
-    });
+    })
 
  });
 

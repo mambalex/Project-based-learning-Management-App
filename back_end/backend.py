@@ -50,7 +50,7 @@ class User:
             user_profile.get("passwd", "None"))
         self.name = user_profile.get("name", self.user_id)
         self.photo = user_profile.get("photo", "None")
-        self.user_type = user_profile.get("user_type", 2)
+        self.user_type = user_profile.get("user_type", 'student')
 
     def load_from_db(self, user_id):
         self.user_id = user_id
@@ -93,6 +93,23 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/lecturer')
+def lecturer():
+    return render_template('lecturer.html')
+
+
+@app.route('/student')
+# @auth.login_required
+def student():
+    return render_template('student.html')
+
+
+
+@app.route('/profile.html')
+def profile():
+    return render_template('profile.html')
+
+
 @auth.verify_password
 def verify_password(name_or_token, password):
     if not name_or_token:
@@ -129,7 +146,7 @@ def test2():
 def new_user():
     user_id = request.form.get('email', type=str, default=None)
     passwd = request.form.get('passwd', type=str, default=None)
-    user_type = request.form.get('user_type', type=int, default='student')
+    user_type = request.form.get('user_type', type=str)
     print(user_id, passwd, user_type)
     if user_id is None or passwd is None:
         abort(400)  # missing arguments
@@ -165,9 +182,9 @@ def get_auth_token():
     g.user = user
     token = g.user.generate_auth_token()
     if g.user.is_admin_user():
-        return render_template('lecturer.html'), 200, {'token': token.decode('ascii')}
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'lecturer'})
     else:
-        return render_template('student.html'), 200, {'token': token.decode('ascii')}
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'student'})
 
 
 
