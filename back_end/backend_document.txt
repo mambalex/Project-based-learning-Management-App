@@ -986,30 +986,51 @@ or
 }
 
 -------------------
+Get user profile
 
-
-POST request to 
+POST request to /api/get_user_profile
 Methods: POST
 Type: FORM
 
-Sample Post:
-{}
+Sample Post: None
 
 Sample Response:
-{}
+{
+    'code': 200,
+    'msg': 'Get user profile success',
+    'user_id': 'test1@test.com',
+    'user_type': 'student',
+    'data':
+    {
+        'email': 'test1@test.com',
+        'dob': 'October 05',
+        'gender': 'male',
+        'name': 'test name'
+    }
+}
 
 -------------------
+Change user profile
 
-
-POST request to 
+POST request to /api/change_user_profile
 Methods: POST
 Type: FORM
 
 Sample Post:
-{}
+{
+    'name': 'test name',
+    'dob': 'October 06',
+    'gender': 'male',
+    'passwd': '123456'
+}
 
 Sample Response:
-{}
+{
+    'code': 200,
+    'msg': 'Change user profile success',
+    'user_id': 'test1@test.com',
+    'user_type': 'student',
+}
 
 -------------------
 

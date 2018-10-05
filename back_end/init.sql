@@ -11,6 +11,7 @@ CREATE TABLE user_info
     password text NOT NULL,
     name text NOT NULL,
     gender text,
+    dob text,
     user_type text NOT NULL,
     photo text,
     PRIMARY KEY (email)
@@ -103,6 +104,7 @@ CREATE TABLE reminder
     ass_uuid uuid NOT NULL,
     message text,
     submit_check text NOT NULL,
+    post_time timestamp(0) with time zone NOT NULL,
     PRIMARY KEY (reminder_uuid)
 );
 

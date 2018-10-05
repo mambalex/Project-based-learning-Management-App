@@ -36,6 +36,8 @@ class User:
     user_id = None
     password = None
     name = None
+    gender = None
+    dob = None
     photo = None
     user_type = None
 
@@ -49,6 +51,8 @@ class User:
         self.__password = self.hash_password(
             user_profile.get("passwd", "None"))
         self.name = user_profile.get("name", self.user_id)
+        self.gender = user_profile.get("gender", "None")
+        self.dob = user_profile.get('dob', "None")
         self.photo = user_profile.get("photo", "None")
         self.user_type = user_profile.get("user_type", 'student')
 
@@ -68,6 +72,14 @@ class User:
 
     def is_admin_user(self):
         return (self.user_type == 'lecturer' or self.user_type == 'mentor')
+
+    def get_user_profile(self):
+        user_profile = dict()
+        user_profile["email"] = self.user_id
+        user_profile["dob"] = self.dob
+        user_profile["gender"] = self.gender
+        user_profile["name"] = self.name
+        return user_profile
 
     def generate_auth_token(self, expiration=600):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -257,6 +269,26 @@ def get_student_timeline():
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+# Get self profile
+@app.route('/api/get_user_profile', methods=['POST'])
+@auth.login_required
+def get_user_profile():
+    return jsonify({'code': 200, 'msg': 'Get user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': g.user.get_user_profile()})
+
+# Change self profile
+@app.route('/api/change_user_profile', methods=['POST'])
+@auth.login_required
+def change_user_profile():
+    name = request.form.get('name', type=str)
+    dob = request.form.get('dob', type=str)
+    gender = request.form.get('gender', type=str)
+    passwd = request.form.get('passwd', type=str)
+    db.change_user_name(g.user.user_id, name)
+    db.change_user_dob(g.user.user_id, dob)
+    db.change_user_gender(g.user.user_id, gender)
+    db.change_user_passwd(g.user.user_id, passwd)
+    return jsonify({'code': 200, 'msg': 'Change user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # Group part
 

@@ -23,9 +23,9 @@ def create_user(user_profile):
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     sql = "insert into user_info values \
-    ('{}', '{}', '{}', '{}', '{}', '{}');".format(user_profile["email"], user_profile["passwd"],
+    ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(user_profile["email"], user_profile["passwd"],
                                           user_profile.get("name", user_profile["email"]), user_profile.get('gender', "None"),
-                                          user_profile["user_type"], user_profile.get("photo", "None"))
+                                          user_profile.get("dob", "October 05"), user_profile["user_type"], user_profile.get("photo", "None"))
     database_object.update(sql)
     database_object.close()
 
@@ -37,7 +37,7 @@ def get_user(email):
     sql = "select * from user_info where email = '{}';".format(email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["email", "passwd", "name", "gender", "user_type", "photo"]
+    key_list = ["email", "passwd", "name", "gender", "dob", "user_type", "photo"]
     result = convert_result_to_dict(result, key_list, True)
     return result
 
@@ -49,7 +49,7 @@ def get_user_passwd(email):
     sql = "select * from user_info where email = '{}';".format(email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["email", "passwd", "name", "gender", "user_type", "photo"]
+    key_list = ["email", "passwd", "name", "gender", "dob", "user_type", "photo"]
     result = convert_result_to_dict(result, key_list)
     return result[0]["passwd"]
 
@@ -73,6 +73,8 @@ def change_user_name(email, new_name):
 def change_user_gender(email, new_gender):
     change_user_info(email, 'gender', new_gender)
 
+def change_user_dob(email, new_dob):
+    change_user_info(email, 'dob', new_dob)
 
 def change_user_type(email, new_type):
     dbconfig = {"dbname": "comp9323"}
@@ -191,8 +193,16 @@ def leave_group(email, group_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "delete from group_relation where email = '{}' and group_uuid = '{}';".format(email, group_uuid)
-    database_object.update(sql)
+    sql = "select * from group_relation where email = '{}' and group_uuid = '{}';".format(email, group_uuid)
+    result = database_object.search(sql)
+    if result[0][0] == 0:
+        sql = "delete from group_relation where group_uuid = '{}';".format(group_uuid)
+        database_object.update(sql)
+        sql = "delete from groups where group_uuid = '{}';".format(group_uuid)
+        database_object.update(sql)
+    else:
+        sql = "delete from group_relation where email = '{}' and group_uuid = '{}';".format(email, group_uuid)
+        database_object.update(sql)
     database_object.close()
 
 
@@ -214,9 +224,15 @@ def get_group_info(group_uuid):
     sql = "select * from groups where group_uuid = '{}';".format(
         group_uuid)
     result = database_object.search(sql)
-    database_object.close()
     key_list = ['group_uuid', 'group_name', 'project_uuid', 'description', 'mark']
     result = convert_result_to_dict(result, key_list)
+    for group in result:
+        sql = "select u_i.email, u_i.name, u_i.photo, g_r.mem_type from group_relation g_r, user_info u_i where g_r.group_uuid = '{}' and g_r.email = u_i.email;".format(group['group_uuid'])
+        mem_result = database_object.search(sql)
+        key_list = ['email', 'name', 'photo', 'mem_type']
+        mem_result = convert_result_to_dict(mem_result, key_list)
+        group["member"] = mem_result
+    database_object.close()
     return result
 
 def get_self_group(email, project_uuid):
@@ -624,7 +640,7 @@ def create_reminder(email, project_uuid, ass_uuid, message, submit_check="no"):
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     sql = "insert into reminder values \
-    ('{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check)
+    ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) + "+0")
     database_object.update(sql)
     database_object.close()
     return reminder_uuid
@@ -667,7 +683,7 @@ def admin_get_self_reminder(email, project_uuid):
     sql = "select * from reminder where master = '{}' and project_uuid = '{}';".format(email, project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check"]
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -679,7 +695,7 @@ def student_get_self_global_reminder(project_uuid):
     sql = "select * from reminder where project_uuid = '{}' and submit_check = 'no';".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check"]
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -695,7 +711,7 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
         email, project_uuid, project_uuid)
     submit_reminder = database_object.search(sql)
     database_object.close()
-    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "count"]
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time", "count"]
     temp_result = convert_result_to_dict(submit_reminder, key_list)
     for reminder in temp_result:
         if reminder["count"] <= 0:
@@ -756,11 +772,22 @@ def create_test_data():
     create_user({"passwd": "123456", "email": "test2@test.com", "user_type": 'mentor'})
     create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 'student'})
     create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 'student'})
-    project_uuid = create_projects("test1", "test", "2018-09-11 18:29:55+10", "2018-09-11 18:29:55+10")
-    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="test", deadline="2018-09-11 18:29:55+10",
-                               mark_release="2018-09-11 18:29:55+10")
-    task_uuid = create_tasks(phase_uuid, "test", "2018-09-11 18:29:55+10", mark_release="2018-09-11 18:29:55+10")
-
+    project_uuid = create_projects("test1@test.com", "Test Project", "2018-10-20 23:59:59+0", "2018-10-25 00:00:00+0")
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 1", deadline="2018-10-11 23:59:59+0",
+                               mark_release="2018-10-13 00:00:00+0")
+    task_uuid = create_tasks(phase_uuid, "Proposal", "2018-10-11 23:59:59+0", mark_release="2018-10-13 00:00:00+0", submit_require=1)
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 2", deadline="2018-10-13 23:59:59+0",
+                               mark_release="2018-10-15 00:00:00+0")
+    task_uuid = create_tasks(phase_uuid, "Requirement document & Design document", "2018-10-13 23:59:59+0", mark_release="2018-10-15 00:00:00+0", submit_require=1)
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 3", deadline="2018-10-15 23:59:59+0",
+                               mark_release="2018-10-17 00:00:00+0")
+    task_uuid = create_tasks(phase_uuid, "Implementation", "2018-10-15 23:59:59+0", mark_release="2018-10-17 00:00:00+0", submit_require=1)
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 4", deadline="2018-10-17 23:59:59+0",
+                               mark_release="2018-10-20 00:00:00+0")
+    task_uuid = create_tasks(phase_uuid, "Demo", "2018-10-17 23:59:59+0", mark_release="2018-10-20 00:00:00+0", submit_require=1)
+    enrol_project("test3@test.com", project_uuid)
+    group_uuid = create_group("group 1", project_uuid)
+    create_group_relation("test3@test.com", group_uuid, 0)
 
 def convert_result_to_dict(temp_result, key_list, except_passwd=False):
     result = list()
