@@ -50,7 +50,7 @@ class User:
             user_profile.get("passwd", "None"))
         self.name = user_profile.get("name", self.user_id)
         self.photo = user_profile.get("photo", "None")
-        self.user_type = user_profile.get("user_type", 2)
+        self.user_type = user_profile.get("user_type", 'student')
 
     def load_from_db(self, user_id):
         self.user_id = user_id
@@ -67,7 +67,7 @@ class User:
         return custom_app_context.verify(password, self.password)
 
     def is_admin_user(self):
-        return (self.user_type == 0 or self.user_type == 1)
+        return (self.user_type == 'lecturer' or self.user_type == 'mentor')
 
     def generate_auth_token(self, expiration=600):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -92,6 +92,7 @@ class User:
 def index():
     return render_template('index.html')
 
+
 @app.route('/lecturer')
 def lecturer():
     return render_template('lecturer.html')
@@ -101,6 +102,8 @@ def lecturer():
 # @auth.login_required
 def student():
     return render_template('student.html')
+
+
 
 @app.route('/profile.html')
 def profile():
@@ -143,7 +146,7 @@ def test2():
 def new_user():
     user_id = request.form.get('email', type=str, default=None)
     passwd = request.form.get('passwd', type=str, default=None)
-    user_type = request.form.get('user_type', type=int, default=2)
+    user_type = request.form.get('user_type', type=str)
     print(user_id, passwd, user_type)
     if user_id is None or passwd is None:
         abort(400)  # missing arguments
@@ -179,9 +182,9 @@ def get_auth_token():
     g.user = user
     token = g.user.generate_auth_token()
     if g.user.is_admin_user():
-        return render_template('lecturer.html'), 200, {'token': token.decode('ascii')}
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'lecturer'})
     else:
-        return render_template('student.html'), 200, {'token': token.decode('ascii')}
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'student'})
 
 
 
@@ -194,7 +197,7 @@ def change_passwd():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-@app.route('/api/change_name', methods=["GET", "POST"])
+@app.route('/api/change_name', methods=["POST"])
 @auth.login_required
 def change_name():
     new_name = request.form.get('new_name', type=str)
@@ -202,7 +205,7 @@ def change_name():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-@app.route('/api/change_photo', methods=['GET', 'POST'])
+@app.route('/api/change_photo', methods=['POST'])
 @auth.login_required
 def change_photo():
     new_photo = request.form.get('new_photo', type=str)
@@ -224,7 +227,7 @@ def change_gender():
 def change_user_type():
     new_type = request.form.get('new_type', type=int)
     user_id = request.form.get('user_id', type=str)
-    if g.user.user_type == 0:
+    if g.user.user_type == 'lecturer':
         db.change_user_type(email=user_id, new_type=new_type)
     else:
         return jsonify(
@@ -232,12 +235,12 @@ def change_user_type():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get student list
-@app.route('/api/get_student_list', methods=['GET', 'POST'])
+@app.route('/api/get_student_list', methods=['POST'])
 @auth.login_required
 def get_student_list():
     project_uuid = request.form.get('project_uuid', type=str)
     student_list = db.get_project_student_list(project_uuid)
-    return jsonify({'code': 200, 'msg': 'Get student list success', 'data': student_list})
+    return jsonify({'code': 200, 'msg': 'Get student list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': student_list})
 
 # get student timeline
 @app.route('/api/get_student_timeline', methods=['POST'])
@@ -258,7 +261,7 @@ def get_student_timeline():
 # Group part
 
 # create a group
-@app.route('/api/create_group', methods=['GET', 'POST'])
+@app.route('/api/create_group', methods=['POST'])
 @auth.login_required
 def create_group():
     group_name = request.form.get('group_name', type=str)
@@ -271,14 +274,14 @@ def create_group():
                     'user_type': g.user.user_type})
 
 # get group list
-@app.route('/api/get_group_list', methods=['GET', 'POST'])
+@app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
     project_uuid = request.form.get('project_uuid', type=str)
-    return jsonify({'code': 200, 'msg': 'Get group list success', 'data': db.get_all_group(project_uuid)})
+    return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
 
 # join a group
-@app.route('/api/join_group', methods=['GET', 'POST'])
+@app.route('/api/join_group', methods=['POST'])
 @auth.login_required
 def join_group():
     group_uuid = request.form.get('group_uuid', type=str)
@@ -338,7 +341,7 @@ def get_current_group():
 # Project part
 
 # create a project
-@app.route('/api/create_project', methods=['GET', 'POST'])
+@app.route('/api/create_project', methods=['POST'])
 @auth.login_required
 def create_project():
     project_master = g.user.user_id
@@ -357,13 +360,13 @@ def create_project():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get project list
-@app.route('/api/get_project_list', methods=['GET', 'POST'])
+@app.route('/api/get_project_list', methods=['POST'])
 @auth.login_required
 def get_project_list():
     return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
 
 # enrol in a project
-@app.route('/api/enrol_project', methods=['GET', 'POST'])
+@app.route('/api/enrol_project', methods=['POST'])
 @auth.login_required
 def enrol_project():
     project_uuid = request.form.get('project_uuid', type=str)
@@ -373,11 +376,11 @@ def enrol_project():
         {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # get self project_list
-@app.route('/api/get_self_project_list', methods=['GET', 'POST'])
+@app.route('/api/get_self_project_list', methods=['POST'])
 @auth.login_required
 def get_self_project_list():
     return jsonify(
-        {'code': 200, 'msg': 'Get self project list success', 'data': db.get_self_project_list(g.user.user_id)})
+        {'code': 200, 'msg': 'Get self project list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_self_project_list(g.user.user_id)})
 
 
 # Reminder part
