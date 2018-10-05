@@ -67,7 +67,7 @@ class User:
         return custom_app_context.verify(password, self.password)
 
     def is_admin_user(self):
-        return (self.user_type == 0 or self.user_type == 1)
+        return (self.user_type == 'lecturer' or self.user_type == 'mentor')
 
     def generate_auth_token(self, expiration=600):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
@@ -129,7 +129,7 @@ def test2():
 def new_user():
     user_id = request.form.get('email', type=str, default=None)
     passwd = request.form.get('passwd', type=str, default=None)
-    user_type = request.form.get('user_type', type=int, default=2)
+    user_type = request.form.get('user_type', type=int, default='student')
     print(user_id, passwd, user_type)
     if user_id is None or passwd is None:
         abort(400)  # missing arguments
@@ -210,7 +210,7 @@ def change_gender():
 def change_user_type():
     new_type = request.form.get('new_type', type=int)
     user_id = request.form.get('user_id', type=str)
-    if g.user.user_type == 0:
+    if g.user.user_type == 'lecturer':
         db.change_user_type(email=user_id, new_type=new_type)
     else:
         return jsonify(

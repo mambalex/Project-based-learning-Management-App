@@ -11,7 +11,7 @@ CREATE TABLE user_info
     password text NOT NULL,
     name text NOT NULL,
     gender text,
-    user_type integer NOT NULL,
+    user_type text NOT NULL,
     photo text,
     PRIMARY KEY (email)
 );

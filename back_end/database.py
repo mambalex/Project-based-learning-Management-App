@@ -23,7 +23,7 @@ def create_user(user_profile):
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     sql = "insert into user_info values \
-    ('{}', '{}', '{}', '{}', {}, '{}');".format(user_profile["email"], user_profile["passwd"],
+    ('{}', '{}', '{}', '{}', '{}', '{}');".format(user_profile["email"], user_profile["passwd"],
                                           user_profile.get("name", user_profile["email"]), user_profile.get('gender', "None"),
                                           user_profile["user_type"], user_profile.get("photo", "None"))
     database_object.update(sql)
@@ -78,7 +78,7 @@ def change_user_type(email, new_type):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "update user_info set user_type = {} where email = '{}';".format(new_type, email)
+    sql = "update user_info set user_type = '{}' where email = '{}';".format(new_type, email)
     database_object.update(sql)
     database_object.close()
 
@@ -752,10 +752,10 @@ def get_upload_file_list(email, project_uuid):
 
 
 def create_test_data():
-    create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 0})
-    create_user({"passwd": "123456", "email": "test2@test.com", "user_type": 1})
-    create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 2})
-    create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 2})
+    create_user({"passwd": "123456", "email": "test1@test.com", "user_type": 'lecturer'})
+    create_user({"passwd": "123456", "email": "test2@test.com", "user_type": 'mentor'})
+    create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 'student'})
+    create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 'student'})
     project_uuid = create_projects("test1", "test", "2018-09-11 18:29:55+10", "2018-09-11 18:29:55+10")
     phase_uuid = create_phases(project_uuid=project_uuid, phase_name="test", deadline="2018-09-11 18:29:55+10",
                                mark_release="2018-09-11 18:29:55+10")
