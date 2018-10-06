@@ -3,9 +3,8 @@ import re
 import json
 import time
 import base64
-import database as db
-# from back_end import database as db
-
+# import database as db
+from back_end import database as db
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
@@ -15,7 +14,6 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from passlib.apps import custom_app_context
 from werkzeug.utils import secure_filename
-
 
 app = Flask(__name__)
 
@@ -36,7 +34,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 auth = HTTPBasicAuth()
 CSRF_ENABLED = True
 app.debug = True
-
 
 
 # -------------------------- start classes ---------------------
@@ -125,7 +122,6 @@ def student():
     return render_template('student.html')
 
 
-
 @app.route('/profile')
 def profile():
     return render_template('profile.html')
@@ -159,9 +155,11 @@ def test():
 def test2():
     return "Ture"
 
+
 @app.route('/test/upload')
 def upload_test():
     return render_template('upload.html')
+
 
 # end test api
 
@@ -185,6 +183,7 @@ def new_user():
         {'code': 201, 'msg': "Create admin success", 'user_id': user.user_id, 'user_type': user.user_type,
          'token': token.decode('ascii')})
 
+
 # login
 @app.route('/api/login', methods=['POST'])
 def get_auth_token():
@@ -206,10 +205,9 @@ def get_auth_token():
     g.user = user
     token = g.user.generate_auth_token()
     if g.user.is_admin_user():
-        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'lecturer'})
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer'})
     else:
-        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type':'student'})
-
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student'})
 
 
 # change user setting part
@@ -245,7 +243,6 @@ def change_gender():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-
 @app.route('/api/change_user_type', methods=['POST'])
 @auth.login_required
 def change_user_type():
@@ -258,13 +255,17 @@ def change_user_type():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 # get student list
 @app.route('/api/get_student_list', methods=['POST'])
 @auth.login_required
 def get_student_list():
     project_uuid = request.form.get('project_uuid', type=str)
     student_list = db.get_project_student_list(project_uuid)
-    return jsonify({'code': 200, 'msg': 'Get student list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': student_list})
+    return jsonify(
+        {'code': 200, 'msg': 'Get student list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+         'data': student_list})
+
 
 # get student timeline
 @app.route('/api/get_student_timeline', methods=['POST'])
@@ -277,16 +278,21 @@ def get_student_timeline():
             timeline = db.get_student_timeline(g.user.user_id, group_uuid)
             return jsonify({'code': 200, 'msg': 'Get timeline success', 'data': timeline})
         else:
-            return jsonify({'code': 400, 'msg': 'You have not join a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+            return jsonify({'code': 400, 'msg': 'You have not join a group', 'user_id': g.user.user_id,
+                            'user_type': g.user.user_type})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # Get self profile
 @app.route('/api/get_user_profile', methods=['POST'])
 @auth.login_required
 def get_user_profile():
-    return jsonify({'code': 200, 'msg': 'Get user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': g.user.get_user_profile()})
+    return jsonify(
+        {'code': 200, 'msg': 'Get user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+         'data': g.user.get_user_profile()})
+
 
 # Change self profile
 @app.route('/api/change_user_profile', methods=['POST'])
@@ -300,7 +306,9 @@ def change_user_profile():
     db.change_user_dob(g.user.user_id, dob)
     db.change_user_gender(g.user.user_id, gender)
     db.change_user_passwd(g.user.user_id, passwd)
-    return jsonify({'code': 200, 'msg': 'Change user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    return jsonify(
+        {'code': 200, 'msg': 'Change user profile success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # Group part
 
@@ -318,12 +326,16 @@ def create_group():
     return jsonify({'code': 200, 'msg': 'Create success', 'user_id': g.user.user_id, 'group_uuid': group_uuid,
                     'user_type': g.user.user_type})
 
+
 # get group list
 @app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
     project_uuid = request.json.get('project_uuid')
-    return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
+    return jsonify(
+        {'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+         'data': db.get_all_group(project_uuid)})
+
 
 # join a group
 @app.route('/api/join_group', methods=['POST'])
@@ -332,10 +344,12 @@ def join_group():
     group_uuid = request.form.get('group_uuid', type=str)
     project_uuid = request.form.get('project_uuid', type=str)
     if db.check_has_group(g.user.user_id, project_uuid):
-        return jsonify({'code': 400, 'msg': 'Already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+        return jsonify(
+            {'code': 400, 'msg': 'Already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         db.create_group_relation(g.user.user_id, group_uuid)
-        return jsonify({'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+        return jsonify(
+            {'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 # leave a group
@@ -359,7 +373,8 @@ def get_member_list():
     group_uuid = request.form.get('group_uuid', type=str)
     member_list = db.get_group_member(group_uuid)
     return jsonify(
-        {'code': 200, 'msg': 'Get member list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': member_list})
+        {'code': 200, 'msg': 'Get member list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+         'data': member_list})
 
 
 # get current group
@@ -384,6 +399,7 @@ def get_current_group():
                 {'code': 400, 'msg': 'You have not join a group', 'user_id': g.user.user_id,
                  'user_type': g.user.user_type})
 
+
 # Project part
 
 # create a project
@@ -405,11 +421,13 @@ def create_project():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 # get project list
 @app.route('/api/get_project_list', methods=['POST'])
 @auth.login_required
 def get_project_list():
     return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
+
 
 # enrol in a project
 @app.route('/api/enrol_project', methods=['POST'])
@@ -421,12 +439,14 @@ def enrol_project():
     return jsonify(
         {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 # get self project_list
 @app.route('/api/get_self_project_list', methods=['POST'])
 @auth.login_required
 def get_self_project_list():
     return jsonify(
-        {'code': 200, 'msg': 'Get self project list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_self_project_list(g.user.user_id)})
+        {'code': 200, 'msg': 'Get self project list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+         'data': db.get_self_project_list(g.user.user_id)})
 
 
 # Reminder part
@@ -438,10 +458,13 @@ def admin_get_reminder_list():
     project_uuid = request.form.get('project_uuid', type=str)
     if g.user.is_admin_user():
         reminder_list = db.admin_get_self_reminder(g.user.user_type, project_uuid)
-        return jsonify({'code': 200, 'msg': 'Get reminder list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': reminder_list})
+        return jsonify(
+            {'code': 200, 'msg': 'Get reminder list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+             'data': reminder_list})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # post a new reminder
 @app.route('/api/create_new_reminder', methods=["POST"])
@@ -452,11 +475,15 @@ def create_new_reminder():
     message = request.form.get('message', type=str)
     submit_check = request.form.get('submit_check', type=str, default="no")
     if g.user.is_admin_user():
-        reminder_uuid = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid, message=message, submit_check=submit_check)
-        return jsonify({'code': 200, 'msg': 'Create reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'reminder_uuid': reminder_uuid})
+        reminder_uuid = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
+                                           message=message, submit_check=submit_check)
+        return jsonify(
+            {'code': 200, 'msg': 'Create reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+             'reminder_uuid': reminder_uuid})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # delete a reminder
 @app.route('/api/delete_reminder', methods=['POST'])
@@ -465,10 +492,12 @@ def delete_reminder():
     reminder_uuid = request.form.get('reminder_uuid', type=str)
     if g.user.is_admin_user():
         db.delete_reminder(reminder_uuid)
-        return jsonify({'code': 200, 'msg': 'Delete reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+        return jsonify(
+            {'code': 200, 'msg': 'Delete reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # change reminder part
 @app.route('/api/change_reminder_ass_uuid', methods=['POST'])
@@ -512,6 +541,7 @@ def change_reminder_submit_check():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 @app.route('/api/student_get_reminder_list', methods=['POST'])
 @auth.login_required
 def student_get_reminder_list():
@@ -544,6 +574,7 @@ def create_addition_resource():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 @app.route('/api/delete_addition_resource', methods=['POST'])
 @auth.login_required
 def delete_addition_resource():
@@ -556,6 +587,7 @@ def delete_addition_resource():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 @app.route('/api/get_upload_resource_list', methods=['POST'])
 @auth.login_required
 def get_upload_resource_list():
@@ -563,7 +595,8 @@ def get_upload_resource_list():
     if g.user.is_admin_user():
         resource_list = db.get_upload_file_list(g.user.user_id, project_uuid)
         return jsonify(
-            {'code': 200, 'msg': 'Get upload resource list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': resource_list})
+            {'code': 200, 'msg': 'Get upload resource list success', 'user_id': g.user.user_id,
+             'user_type': g.user.user_type, 'data': resource_list})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
@@ -588,6 +621,7 @@ def student_resource_list():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 # Upload file part
 @app.route('/api/upload', methods=['POST'], strict_slashes=False)
 # @auth.login_required
@@ -606,6 +640,7 @@ def api_upload():
     else:
         return jsonify({'code': 400, 'msg': 'Upload fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 # Download file part
 @app.route('/api/download', methods=['GET', 'POST'])
 # @auth.login_required
@@ -616,7 +651,34 @@ def download():
     abort(404)
 
 
-
+# Start phase part
+@app.route('/api/student_main_info', methods=['POST'])
+@auth.login_required
+def student_load_main_info():
+    project_uuid = request.json.get('project_uuid')
+    phase_uuid = request.json.get('phase_uuid')
+    # Group part
+    group_info = dict()
+    if db.check_has_group(g.user.user_id, project_uuid):
+        current_group = db.get_self_group(g.user.user_id, project_uuid)[0]
+        group_member = db.get_group_member(current_group["group_uuid"])
+        current_group["member"] = group_member
+        group_info = current_group
+        group_info['status'] = 1
+        group_info['msg'] = 'Current join a group'
+    else:
+        group_info['status'] = 0
+        group_info['msg'] = 'Current do not join a group'
+    # Group list
+    group_list = db.get_all_group(project_uuid)
+    # Resource part
+    resource_list = db.get_resource_list(project_uuid, phase_uuid)
+    # Phase part
+    phase_info = db.get_phases(phase_uuid)
+    # Task part
+    task_list = db.get_phase_all_tasks(phase_uuid)
+    return jsonify({'code': 200, 'msg': 'Get data success', 'group_info': group_info, 'group_list': group_list,
+                    'phase_info': phase_info, 'task_list': task_list, 'resource_list': resource_list})
 
 
 if __name__ == '__main__':
