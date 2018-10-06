@@ -153,9 +153,15 @@ def get_all_group(project_uuid):
     database_object.open()
     sql = "select * from groups where project_uuid = '{}';".format(project_uuid)
     result = database_object.search(sql)
-    database_object.close()
     key_list = ["group_uuid", "group_name", "project_uuid", "description", "mark"]
     result = convert_result_to_dict(result, key_list)
+    for group in result:
+        sql = "select u_i.email, u_i.name, u_i.photo, g_r.mem_type from group_relation g_r, user_info u_i where g_r.group_uuid = '{}' and g_r.email = u_i.email;".format(group['group_uuid'])
+        mem_result = database_object.search(sql)
+        key_list = ['email', 'name', 'photo', 'mem_type']
+        mem_result = convert_result_to_dict(mem_result, key_list)
+        group["member"] = mem_result
+    database_object.close()
     return result
 
 
@@ -720,13 +726,17 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
 
 
 # addition resource
-def add_addition_resource(email, project_uuid, description="None", file_addr="None"):
+def add_addition_resource(email, project_uuid, filename, phase_uuid = None, description="None", file_addr="None"):
     resource_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "insert into addition_resource values \
-        ('{}', '{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, description, file_addr)
+    if phase_uuid is None:
+        sql = "insert into addition_resource (res_uuid, master, project_uuid, filename, description, file_addr) values \
+        ('{}', '{}', '{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, filename, description, file_addr)
+    else:
+        sql = "insert into addition_resource values \
+            ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(resource_uuid, email, project_uuid, phase_uuid, filename, description, file_addr)
     database_object.update(sql)
     database_object.close()
     return resource_uuid
@@ -741,15 +751,19 @@ def delete_addition_resource(resource_uuid):
     database_object.close()
 
 
-def get_resource_list(project_uuid):
+def get_resource_list(project_uuid, phase_uuid = None):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select res_uuid, master, description, file_addr from addition_resource where project_uuid = '{}';".format(
-        project_uuid)
+    if phase_uuid is None:
+        sql = "select res_uuid, master, filename, description, file_addr from addition_resource where project_uuid = '{}';".format(
+            project_uuid)
+    else:
+        sql = "select res_uuid, master, filename, description, file_addr from addition_resource where project_uuid = '{}' and phase_uuid = '{}';".format(
+            project_uuid, phase_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ['resource_uuid', 'master', 'description', 'file_addr']
+    key_list = ['resource_uuid', 'master', 'filename', 'description', 'file_addr']
     result = convert_result_to_dict(temp_result=result, key_list=key_list)
     return result
 
@@ -758,11 +772,11 @@ def get_upload_file_list(email, project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select res_uuid, master, description, file_addr from addition_resource where master = '{}' and project_uuid = '{}';".format(
+    sql = "select res_uuid, master, filename, description, file_addr from addition_resource where master = '{}' and project_uuid = '{}';".format(
         email, project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ['resource_uuid', 'master', 'description', 'file_addr']
+    key_list = ['resource_uuid', 'master', 'filename', 'description', 'file_addr']
     result = convert_result_to_dict(temp_result=result, key_list=key_list)
     return result
 

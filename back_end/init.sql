@@ -113,6 +113,8 @@ CREATE TABLE addition_resource
     res_uuid uuid NOT NULL,
     master text NOT NULL,
     project_uuid uuid NOT NULL,
+    phase_uuid uuid,
+    filename text NOT NULL,
     description text NOT NULL,
     file_addr text NOT NULL,
     PRIMARY KEY (res_uuid)

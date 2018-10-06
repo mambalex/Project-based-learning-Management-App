@@ -1,11 +1,13 @@
 import os
 import re
 import json
+import time
+import base64
 import database as db
 # from back_end import database as db
-from datetime import datetime
 
-from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template
+
+from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 # from flask_sqlalchemy import SQLAlchemy
@@ -14,9 +16,13 @@ from itsdangerous import BadSignature, SignatureExpired
 from passlib.apps import custom_app_context
 from werkzeug.utils import secure_filename
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+UPLOAD_FOLDER = 'temp'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 CORS(app, resources=r'/*')
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -25,10 +31,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_RECORD_QUERIES'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
                                         os.path.join(basedir, 'data.sqlite')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 auth = HTTPBasicAuth()
 CSRF_ENABLED = True
 app.debug = True
+
 
 
 # -------------------------- start classes ---------------------
@@ -151,6 +159,9 @@ def test():
 def test2():
     return "Ture"
 
+@app.route('/test/upload')
+def upload_test():
+    return render_template('upload.html')
 
 # end test api
 
@@ -295,7 +306,7 @@ def change_user_profile():
 
 # create a group
 @app.route('/api/create_group', methods=['POST'])
-# @auth.login_required
+@auth.login_required
 def create_group():
     group_name = request.json.get('group_name')
     project_uuid = request.json.get('project_uuid')
@@ -355,7 +366,7 @@ def get_member_list():
 @app.route('/api/current_group', methods=['POST'])
 @auth.login_required
 def get_current_group():
-    project_uuid = request.json.get('project_uuid');
+    project_uuid = request.json.get('project_uuid')
     print(project_uuid)
     if g.user.is_admin_user():
         return jsonify(
@@ -572,26 +583,41 @@ def student_resource_list():
              'data': resource_list})
 
 
-# Start upload file part
-UPLOAD_FOLDER = '/temp'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+# Start upload and download file part
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['file'] or request.form['file']
-    print(file)
-    # if file and allowed_file(file.filename):
-    #      filename = secure_filename(file.filename)
-    #      file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+# Upload file part
+@app.route('/api/upload', methods=['POST'], strict_slashes=False)
+# @auth.login_required
+def api_upload():
+    file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
+    file_to_upload = request.files['upload_file']
+    if file_to_upload and allowed_file(file_to_upload.filename):
+        filename = secure_filename(file_to_upload.filename)
+        ext = filename.rsplit('.', 1)[1].lower()
+        unix_time = int(time.time())
+        new_filename = str(unix_time) + '.' + ext
+        file_to_upload.save(os.path.join(file_dir, new_filename))
+        return jsonify({'code': 200, 'msg': 'Upload success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify({'code': 400, 'msg': 'Upload fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# Download file part
+@app.route('/api/download', methods=['GET', 'POST'])
+# @auth.login_required
+def download():
+    filename = request.form.get('filename', type=str)
+    if os.path.isfile(os.path.join('temp', filename)):
+        return send_from_directory('temp', filename, as_attachment=True)
+    abort(404)
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000)
