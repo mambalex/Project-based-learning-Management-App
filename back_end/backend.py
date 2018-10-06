@@ -590,7 +590,7 @@ def allowed_file(filename):
 
 # Upload file part
 @app.route('/api/upload', methods=['POST'], strict_slashes=False)
-# @auth.login_required
+@auth.login_required
 def api_upload():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
     if not os.path.exists(file_dir):

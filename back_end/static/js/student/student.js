@@ -1,5 +1,6 @@
 var projectList;
 var projectId;
+const groupInfo={};
 
 
 $(document).ready(function(){
@@ -77,7 +78,10 @@ function getGroupList(projId){
                     var groupId = val['group_uuid'];
                     var groupName = val['group_name'];
                     var description = val['description'];
-                    $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>5</span></div><div class="join">Join</div> </li>`)
+                    var members = val['member'];
+                    var group_uuid = val['group_uuid']
+                    groupInfo[groupName] = val;
+                    $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
                 })
 
         }})  
@@ -197,6 +201,16 @@ $("document").on('click', '#add-candidates', function(e){
 //click group name popup
 $(document).on('click', '.g-popup', function(e){
     e.preventDefault();
+    var group_name = $(this).text();
+    // console.log(group_name)
+    // console.log(groupInfo)
+    let description = groupInfo[group_name]['description']
+    let members = groupInfo[group_name]['member']
+    $(".group-popup").find(".group-name").text(group_name);
+    $(".group-popup").find(".note").text(description);
+    members.forEach(function(val){
+         $(".group-popup").find(".all-members").append(`<li>${val['name']}</li>`)
+    })
     $(".group-popup").show();
 });
 
@@ -244,11 +258,11 @@ $("#upload-btn").click(function(e){
         var file = $('#upload-file').find("input[type=file]").prop('files')[0]
         console.log(file)
         var formData = new FormData();
-        formData.append('file', file);
+        formData.append('upload_file', file);
         console.log(formData)
         $.ajax({
             type: 'POST',
-            url: '/upload',
+            url: '/api/upload',
             data: formData,
             contentType: false,
             cache: false,
