@@ -294,10 +294,12 @@ def change_user_profile():
 
 # create a group
 @app.route('/api/create_group', methods=['POST'])
-@auth.login_required
+# @auth.login_required
 def create_group():
-    group_name = request.form.get('group_name', type=str)
-    project_uuid = request.form.get('project_uuid', type=str)
+    # group_name = request.form.get('group_name', type=str)
+    group_name = request.json['group_name']
+    project_uuid = request.json['project_uuid']
+    group_note = request.json['note']
     if project_uuid is None:
         return jsonify({'code': 400, 'msg': 'Bad Request', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     group_uuid = db.create_group(group_name, project_uuid)
@@ -309,7 +311,7 @@ def create_group():
 @app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
-    project_uuid = request.form.get('project_uuid', type=str)
+    project_uuid = request.json['project_uuid'];
     return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
 
 # join a group
@@ -353,7 +355,8 @@ def get_member_list():
 @app.route('/api/current_group', methods=['POST'])
 @auth.login_required
 def get_current_group():
-    project_uuid = request.form.get('project_uuid', type=str)
+    project_uuid = request.json['project_uuid'];
+    print(project_uuid)
     if g.user.is_admin_user():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
@@ -363,7 +366,7 @@ def get_current_group():
             group_member = db.get_group_member(current_group["group_uuid"])
             current_group["member"] = group_member
             return jsonify(
-                {'code': 200, 'msg': 'Get member list success', 'user_id': g.user.user_id,
+                {'code': 200, 'msg': 'Get self group success', 'user_id': g.user.user_id,
                  'user_type': g.user.user_type, 'data': current_group})
         else:
             return jsonify(
@@ -570,4 +573,4 @@ def student_resource_list():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=False)

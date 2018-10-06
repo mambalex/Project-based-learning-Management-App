@@ -36,9 +36,11 @@
 
 // side-nav
 
+
 function getProjectList(){
     var projectList;
     $.ajax({
+        async: false,
         type:'POST',
         url:'/api/get_self_project_list',
         headers:{
@@ -47,6 +49,8 @@ function getProjectList(){
         success(rsp_data){
             console.log(rsp_data);
             projectList = rsp_data['data'];
+            // localStorage.setItem('user_id', JSON.stringify(rsp_data['user_id']));
+            console.log(projectList)
         }
     })
     return projectList;
@@ -55,20 +59,23 @@ function getProjectList(){
 function getSelfGroup(projId){
         $.ajax({
         type:'POST',
+        dataType : 'json',
         url:'/api/current_group',
-        data:projId,
+        contentType: "application/json",
+        data:JSON.stringify({'project_uuid':projId}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
     }).done(function(rsp_data){
+        console.log(rsp_data);
         if(rsp_data['code']==200){
             var description = rsp_data['data']['description'];
             var groupName = rsp_data['data']['group_name'];
-            var members = rsp_data['data']['memeber'];
-            $("#group-name-own").val(groupName);
-            $("#group-note-own").val(description);
+            var members = rsp_data['data']['member'];
+            $("#group-name-own").text(groupName);
+            $("#group-note-own").text(description);
             members.forEach(function(val){
-                 $("#memebers").append(`<li>${val['name']}</li>`)
+                 $("#members").append(`<li>${val['name']}</li>`)
             })
         }})
 }
@@ -77,17 +84,35 @@ function getGroupList(projId){
         $.ajax({
         type:'POST',
         url:'/api/get_group_list',
-        data:projId,
+        contentType: "application/json",
+        data:JSON.stringify({'project_uuid':projId}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
-    }).done(function(rsp_data){
+        }).done(function(rsp_data){
+        console.log(rsp_data);
         if(rsp_data['code']==200){
             var groupId = rsp_data['data']['group_uuid'];
             var groupName = rsp_data['data']['group_name'];
-            var members = rsp_data['data']['memeber'];
-            
-           
+            var members = rsp_data['data']['member'];
+        }})   
+}
+
+function createNewGroup(prjId, group_name, note){
+        $.ajax({
+        type:'POST',
+        url:'/api/create_group',
+        contentType: "application/json",
+        data:JSON.stringify({'project_uuid':projId}),
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+        }).done(function(rsp_data){
+        console.log(rsp_data);
+        if(rsp_data['code']==200){
+            var groupId = rsp_data['data']['group_uuid'];
+            var groupName = rsp_data['data']['group_name'];
+            var members = rsp_data['data']['member'];
         }})   
 }
 
@@ -98,9 +123,11 @@ $(document).on('click', '.navgrp', function(e){
     $(".group-info").show();
     $(".add-group").show();
     $(".all-groups").show();
-    var projectList = getProjectList();
+    var projectList = getProjectList();  
     var projectId = projectList[0]['project_uuid']
+    console.log(projectId)
     getSelfGroup(projectId);
+    getGroupList(projectId);
 
 });
 
