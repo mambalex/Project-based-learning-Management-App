@@ -3,8 +3,8 @@ import re
 import json
 import time
 import base64
-# import database as db
-from back_end import database as db
+import database as db
+# from back_end import database as db
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
