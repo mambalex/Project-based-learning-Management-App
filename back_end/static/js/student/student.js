@@ -1,35 +1,18 @@
-// $("#profile").on('click', function(e){
-//     e.preventDefault();
-//     window.location.pathname = "./profile";})
-    // $.ajax({
-    //     type:'POST',
-    //     url:'/api/login',
-    //     headers: {
-    //         'Authorization': 'Basic ' + btoa(email + ':' + passwd)
-    //     },
-    //     success:function (rsp_data) {
-    //         console.log(rsp_data);
-    //         $('#successAlert').text("successfully log in!").show();
-    //         $('#errorAlert').hide();
-
-    //         localStorage.setItem('token', JSON.stringify(rsp_data))
-    //         console.log(JSON.parse(localStorage.getItem('token')));
-    //         setTimeout(function(){ 
-    //            if(rsp_data.user_type == 2){
-    //             window.location.href = "./student";
-    //         }else if(rsp_data.user_type == 0){
-    //             window.location.pathname = "./lecturer";
-    //         } }, 3000);
-    //     },
-    //     error:function (rsp_data) {
-    //         console.log(rsp_data);
-    //         $('#errorAlert').text(data.error).show();
-    //         $('#successAlert').hide();
-    //     }
-    // });
-// })
+var projectList;
+var projectId;
 
 
+$(document).ready(function(){
+    getProjectList();
+    projectId = projectList[0]['project_uuid']
+    getSelfGroup(projectId);
+    getGroupList(projectId);
+})
+
+
+$("#logout").click(function(){
+     window.location.pathname = "/";
+})
 
 
 // phase1
@@ -38,7 +21,6 @@
 
 
 function getProjectList(){
-    var projectList;
     $.ajax({
         async: false,
         type:'POST',
@@ -53,7 +35,6 @@ function getProjectList(){
             console.log(projectList)
         }
     })
-    return projectList;
 }
 
 function getSelfGroup(projId){
@@ -90,12 +71,17 @@ function getGroupList(projId){
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
         }).done(function(rsp_data){
-        console.log(rsp_data);
-        if(rsp_data['code']==200){
-            var groupId = rsp_data['data']['group_uuid'];
-            var groupName = rsp_data['data']['group_name'];
-            var members = rsp_data['data']['member'];
-        }})   
+            console.log(rsp_data);
+            if(rsp_data['code']==200){
+                rsp_data['data'].forEach(function(val){
+                    var groupId = val['group_uuid'];
+                    var groupName = val['group_name'];
+                    var description = val['description'];
+                    $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>5</span></div><div class="join">Join</div> </li>`)
+                })
+
+        }})  
+ 
 }
 
 function createNewGroup(prjId, group_name, note){
@@ -103,17 +89,13 @@ function createNewGroup(prjId, group_name, note){
         type:'POST',
         url:'/api/create_group',
         contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projId}),
+        data:JSON.stringify({'project_uuid':projId, 'group_name':group_name, 'note':note}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
         }).done(function(rsp_data){
         console.log(rsp_data);
-        if(rsp_data['code']==200){
-            var groupId = rsp_data['data']['group_uuid'];
-            var groupName = rsp_data['data']['group_name'];
-            var members = rsp_data['data']['member'];
-        }})   
+        })
 }
 
 function uploadFiles(){
@@ -134,6 +116,7 @@ function uploadFiles(){
     });
 }
 
+var projectId;
 // click group
 $(document).on('click', '.navgrp', function(e){
     $(".notes-wrapper").hide();
@@ -141,13 +124,31 @@ $(document).on('click', '.navgrp', function(e){
     $(".group-info").show();
     $(".add-group").show();
     $(".all-groups").show();
-    var projectList = getProjectList();  
-    var projectId = projectList[0]['project_uuid']
-    console.log(projectId)
-    getSelfGroup(projectId);
-    getGroupList(projectId);
+    // var projectList = getProjectList();  
+    // projectId = projectList[0]['project_uuid']
+    // console.log(projectId)
+    // getSelfGroup(projectId);
+    // getGroupList(projectId);
 
 });
+
+$(document).on('click', '#group-save', function(e){
+        e.preventDefault();
+        var group_name =$("#new-group-name").val();
+        var note = $("#new-group-note").val();
+        $.ajax({
+        type:'POST',
+        url:'/api/create_group',
+        contentType: "application/json",
+        data:JSON.stringify({'project_uuid':projectId, 'group_name':group_name, 'note':note}),
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+        }).done(function(rsp_data){
+        console.log(rsp_data);
+        })
+});
+
 
 //click Phase1
 $(".phase1-nav").click( function(){

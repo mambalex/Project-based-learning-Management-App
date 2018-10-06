@@ -311,7 +311,7 @@ def create_group():
 @app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
-    project_uuid = request.json.get('project_uuid');
+    project_uuid = request.json.get('project_uuid')
     return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
 
 # join a group

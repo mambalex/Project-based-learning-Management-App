@@ -34,7 +34,7 @@
                             <a href="/profile" id="profile">My Profile</a>
                             <a href="#">Notifications</a>
                             <a href="#">Settings</a>
-                            <a href="index.html" id="logout">Logout</a>
+                            <a href="/" id="logout">Logout</a>
                         </div>
                     </div>
                 </nav>
@@ -202,8 +202,8 @@
 <!--all-groups-->
           <div class="all-groups drop-shadow-nav-grp curved.v2">
               <div class="all-groups-title"> All Groups</div>
-                <ul>
-                    <li >
+                <ul id="all-groups">
+                    <!-- <li >
                         <div class="title g-popup">Goup1</div>
                         <div class="description">blabla</div>
                         <div class="num-members">Members: <span>5</span></div>
@@ -226,7 +226,7 @@
                         <div class="description">blabla</div>
                         <div class="num-members">Members: <span>5</span></div>
                         <div class="join">Join</div>
-                    </li>
+                    </li> -->
                 </ul>
           </div>
 
@@ -244,7 +244,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                           <li class="active"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs">Group Settings</span></a></li>
                           <li ><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span id="add-candidates" class="hidden-xs">Search</span></a></li>
-                          <li class="pull-right"><button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
+                          <li class="pull-right"><button class="btn btn-primary" id="group-save"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
                         </ul>
                         <div class="tab-content">
                           <div role="tabpanel" class="tab-pane active" id="form">
