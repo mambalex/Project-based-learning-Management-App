@@ -349,6 +349,31 @@ def get_submits(ass_uuid):
     return result
 
 
+def check_submits(group_uuid, ass_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select count(*) from submits where group_uuid = '{}' and ass_uuid = '{}';".format(
+        group_uuid, ass_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    if result[0][0] == 0:
+        return False
+    else:
+        return True
+
+
+def re_submit(submit_uuid, address):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "update submits set submit_time = '{}' where submit_uuid = '{}';".format(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) + "+0", submit_uuid)
+    database_object.update(sql)
+    sql = "update submits set file_address = '{}' where submit_uuid = '{}';".format(address, submit_uuid)
+    database_object.update(sql)
+    database_object.close()
+    return submit_uuid
+
 # project part
 def create_projects(master, project_name, deadline, mark_release=None, spec_address="None"):
     project_uuid = uuid.uuid1()
@@ -604,7 +629,7 @@ def delete_tasks(task_uuid):
 
 
 # help function
-def check_submit(group_uuid, ass_uuid):
+def get_self_submit(group_uuid, ass_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()

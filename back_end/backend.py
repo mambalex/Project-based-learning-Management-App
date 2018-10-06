@@ -3,8 +3,8 @@ import re
 import json
 import time
 import base64
-import database as db
-# from back_end import database as db
+# import database as db
+from back_end import database as db
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
@@ -30,6 +30,9 @@ app.config['SQLALCHEMY_RECORD_QUERIES'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
                                         os.path.join(basedir, 'data.sqlite')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.jinja_env.variable_start_string = '%%'
+app.jinja_env.variable_end_string = '%%'
 
 auth = HTTPBasicAuth()
 CSRF_ENABLED = True
@@ -623,10 +626,14 @@ def allowed_file(filename):
 
 
 # Upload file part
-@app.route('/api/upload', methods=['POST'], strict_slashes=False)
+# Lecture upload resource api
+@app.route('/api/upload_resource', methods=['POST'], strict_slashes=False)
 @auth.login_required
 def api_upload():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
+    project_uuid = request.form.get('project_uuid', type=str)
+    phase_uuid = request.form.get('phase_uuid', type=str)
+    description = request.form.get('description', type=str)
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
     file_to_upload = request.files['upload_file']
@@ -635,15 +642,43 @@ def api_upload():
         ext = filename.rsplit('.', 1)[1].lower()
         unix_time = int(time.time())
         new_filename = str(unix_time) + '.' + ext
-        file_to_upload.save(os.path.join(file_dir, new_filename))
+        file_address = os.path.join(file_dir, new_filename)
+        file_to_upload.save(file_address)
+        db.add_addition_resource(g.user.user_id, project_uuid, filename, phase_uuid, description, file_address)
         return jsonify({'code': 200, 'msg': 'Upload success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         return jsonify({'code': 400, 'msg': 'Upload fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# Student submit api
+@app.route('/api/submit_file', methods=['POST'], strict_slashes=False)
+@auth.login_required
+def api_upload():
+    file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
+    group_uuid = request.form.get('group_uuid', type=str)
+    ass_uuid = request.form.get('assessment_uuid', type=str)
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
+    file_to_upload = request.files['upload_file']
+    if file_to_upload and allowed_file(file_to_upload.filename):
+        filename = secure_filename(file_to_upload.filename)
+        ext = filename.rsplit('.', 1)[1].lower()
+        unix_time = int(time.time())
+        new_filename = str(unix_time) + '.' + ext
+        file_address = os.path.join(file_dir, new_filename)
+        file_to_upload.save(file_address)
+        if db.check_submits(group_uuid, ass_uuid):
+            submit_rec = db.get_self_submit(group_uuid, ass_uuid)[0]
+            db.re_submit(submit_rec['submit_uuid'], file_address)
+        else:
+            db.create_submits(group_uuid, ass_uuid, file_address)
+        return jsonify({'code': 200, 'msg': 'Submit success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify({'code': 400, 'msg': 'Submit fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # Download file part
 @app.route('/api/download', methods=['GET', 'POST'])
-# @auth.login_required
+@auth.login_required
 def download():
     filename = request.form.get('filename', type=str)
     if os.path.isfile(os.path.join('temp', filename)):
