@@ -3,8 +3,8 @@ import re
 import json
 import time
 import base64
-# import database as db
-from back_end import database as db
+import database as db
+# from back_end import database as db
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
@@ -652,7 +652,7 @@ def api_upload():
 # Student submit api
 @app.route('/api/submit_file', methods=['POST'], strict_slashes=False)
 @auth.login_required
-def api_upload():
+def api_submit():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
     group_uuid = request.form.get('group_uuid', type=str)
     ass_uuid = request.form.get('assessment_uuid', type=str)
