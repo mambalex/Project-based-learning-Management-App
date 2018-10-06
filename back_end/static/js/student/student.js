@@ -62,6 +62,21 @@ function getSelfGroup(projId){
         }})
 }
 
+
+//           <div class="group-popup drop-shadow-nav-grp curved.v2">
+//               <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
+//               <div class="group-name">Group 1</div>
+//               <div class="group-popup-wrapper">
+//                   <div class="memebers">
+//                       <div class="title">Members:</div>
+//                       <ul class="all-members">
+// <!--                           <li>Zhiqin Zhang </li>
+//                           <li>Han Zhang </li> -->
+//                       </ul>
+//                   </div>
+//                   <div class="note">Project-based learning management app</div>
+//               </div>
+//           </div>
 function getGroupList(projId){
         $.ajax({
         type:'POST',
@@ -208,6 +223,7 @@ $(document).on('click', '.g-popup', function(e){
     let members = groupInfo[group_name]['member']
     $(".group-popup").find(".group-name").text(group_name);
     $(".group-popup").find(".note").text(description);
+    $(".group-popup").find(".all-members").children().remove();
     members.forEach(function(val){
          $(".group-popup").find(".all-members").append(`<li>${val['name']}</li>`)
     })
