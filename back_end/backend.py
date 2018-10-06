@@ -297,13 +297,12 @@ def change_user_profile():
 @app.route('/api/create_group', methods=['POST'])
 # @auth.login_required
 def create_group():
-    # group_name = request.form.get('group_name', type=str)
-    group_name = request.json['group_name']
-    project_uuid = request.json['project_uuid']
-    group_note = request.json['note']
+    group_name = request.json.get('group_name')
+    project_uuid = request.json.get('project_uuid')
+    group_description = request.json.get('note')
     if project_uuid is None:
         return jsonify({'code': 400, 'msg': 'Bad Request', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
-    group_uuid = db.create_group(group_name, project_uuid)
+    group_uuid = db.create_group(group_name, project_uuid, group_description)
     db.create_group_relation(g.user.user_id, group_uuid, 0)
     return jsonify({'code': 200, 'msg': 'Create success', 'user_id': g.user.user_id, 'group_uuid': group_uuid,
                     'user_type': g.user.user_type})
@@ -312,7 +311,7 @@ def create_group():
 @app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
-    project_uuid = request.json['project_uuid'];
+    project_uuid = request.json.get('project_uuid');
     return jsonify({'code': 200, 'msg': 'Get group list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type, 'data': db.get_all_group(project_uuid)})
 
 # join a group
@@ -356,7 +355,7 @@ def get_member_list():
 @app.route('/api/current_group', methods=['POST'])
 @auth.login_required
 def get_current_group():
-    project_uuid = request.json['project_uuid'];
+    project_uuid = request.json.get('project_uuid');
     print(project_uuid)
     if g.user.is_admin_user():
         return jsonify(
@@ -572,6 +571,8 @@ def student_resource_list():
             {'code': 200, 'msg': 'Get resource list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
              'data': resource_list})
 
+
+# Start upload file part
 UPLOAD_FOLDER = '/temp'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
