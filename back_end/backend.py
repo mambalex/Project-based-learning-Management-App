@@ -12,6 +12,7 @@ from flask_httpauth import HTTPBasicAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from passlib.apps import custom_app_context
+from werkzeug.utils import secure_filename
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -570,6 +571,25 @@ def student_resource_list():
         return jsonify(
             {'code': 200, 'msg': 'Get resource list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
              'data': resource_list})
+
+UPLOAD_FOLDER = '/temp'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file'] or request.form['file']
+    print(file)
+    # if file and allowed_file(file.filename):
+    #      filename = secure_filename(file.filename)
+    #      file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+
+
 
 
 if __name__ == '__main__':

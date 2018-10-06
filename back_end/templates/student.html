@@ -237,12 +237,12 @@
 
           <div class="group_container drop-shadow-group lifted" >
             <div class="container">
-                      <h1>Create New Group</h1>
-                      <h2 class="lead">Use the form below to create a new group.</h2>
+                      <h1 id="group-candidate">Create New Group</h1>
+                      <h2 class="lead" id="group-candidate-msg">Use the form below to create a new group.</h2>
                       <form action="">
                         <ul class="nav nav-tabs" role="tablist">
                           <li class="active"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs">Group Settings</span></a></li>
-                          <li ><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></a></li>
+                          <li ><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span id="add-candidates" class="hidden-xs">Search</span></a></li>
                           <li class="pull-right"><button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
                         </ul>
                         <div class="tab-content">
@@ -309,7 +309,7 @@
                                             <input type="text" class="form-control" placeholder="Candidate">
                                         </div>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4"><button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></button></div>
+                                    <div class="col-xs-4 col-sm-4"><button class="btn btn-default cancel-group" ><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></button></div>
 
                                 </div>
                               </div>
@@ -391,11 +391,11 @@
             <div class="file-input">
                 <h4 class="requirement">Requirement document</h4>
                 <h4 class="design">Design document</h4>
-                <form method="POST" action="#" enctype="multipart/form-data">
+                <form method="POST" action="#" enctype="multipart/form-data" >
                     <!-- COMPONENT START -->
-                    <div class="form-group">
-                        <div class="input-group input-file" name="Fichier1">
-                            <input type="text" class="form-control" placeholder='Choose a file...' />
+                    <div class="form-group" id="upload-file">
+                        <div class="input-group input-file" name="Fichier1" >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
                         </span>
@@ -405,7 +405,7 @@
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        <button  class="btn btn-primary pull-right" id="upload-btn">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>
                 </form>

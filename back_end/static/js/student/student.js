@@ -116,6 +116,24 @@ function createNewGroup(prjId, group_name, note){
         }})   
 }
 
+function uploadFiles(){
+    $("#upload-file").click(function() {
+        var form_data = new FormData($('#upload-file')[0]);
+        $.ajax({
+            type: 'POST',
+            url: '/upload',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            async: false,
+            success: function(data) {
+                console.log('Success!');
+            },
+        });
+    });
+}
+
 // click group
 $(document).on('click', '.navgrp', function(e){
     $(".notes-wrapper").hide();
@@ -167,6 +185,14 @@ $(document).on('click', '.cancel-group', function(e){
     $(".add-group").show();
 });
 
+//click search
+$("document").on('click', '#add-candidates', function(e){
+    alert("hhh");
+    $("#group-candidate").text("Search for candidates");
+    $("#group-candidate-msg").text("Use the form below to search candidates");
+});
+
+
 //click group name popup
 $(document).on('click', '.g-popup', function(e){
     e.preventDefault();
@@ -211,6 +237,32 @@ function bs_input_file() {
 $(function() {
     bs_input_file();
 });
+
+$("#upload-btn").click(function(e){
+        e.preventDefault();
+        var file = $('#upload-file').find("input[type=file]").prop('files')[0]
+        console.log(file)
+        var formData = new FormData();
+        formData.append('file', file);
+        console.log(formData)
+        $.ajax({
+            type: 'POST',
+            url: '/upload',
+            data: formData,
+            contentType: false,
+            cache: false,
+            // enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            async: false,
+            success: function(data) {
+                console.log(data);
+                console.log('Success!');
+            },
+        });
+})
+
+
 
 //side-nav
 $(document).on('click', '.nav-design', function(e){
