@@ -3,8 +3,8 @@ import re
 import json
 import time
 import base64
-# import database as db
-from back_end import database as db
+import database as db
+# from back_end import database as db
 
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
@@ -159,6 +159,9 @@ def test():
 def test2():
     return "Ture"
 
+@app.route('/test/upload')
+def upload_test():
+    return render_template('upload.html')
 
 # end test api
 
@@ -586,8 +589,8 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Upload file part
-@app.route('/api/upload', methods=['POST'])
-@auth.login_required
+@app.route('/api/upload', methods=['POST'], strict_slashes=False)
+# @auth.login_required
 def api_upload():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
     if not os.path.exists(file_dir):
@@ -595,24 +598,20 @@ def api_upload():
     file_to_upload = request.files['upload_file']
     if file_to_upload and allowed_file(file_to_upload.filename):
         filename = secure_filename(file_to_upload.filename)
-        print(filename)
         ext = filename.rsplit('.', 1)[1].lower()
         unix_time = int(time.time())
         new_filename = str(unix_time) + '.' + ext
         file_to_upload.save(os.path.join(file_dir, new_filename))
-        token = base64.b64encode(new_filename)
-        print(token)
-
         return jsonify({'code': 200, 'msg': 'Upload success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         return jsonify({'code': 400, 'msg': 'Upload fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # Download file part
 @app.route('/api/download', methods=['GET', 'POST'])
-@auth.login_required
+# @auth.login_required
 def download():
     filename = request.form.get('filename', type=str)
-    if os.path.isfile(os.path.join('temp'), filename):
+    if os.path.isfile(os.path.join('temp', filename)):
         return send_from_directory('temp', filename, as_attachment=True)
     abort(404)
 
@@ -621,4 +620,4 @@ def download():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000)
