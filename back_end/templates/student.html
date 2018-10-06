@@ -91,9 +91,10 @@
            <div class="left-wrapper">
                     <div class="sidebar-offcanvas sidebar">
                       <div class="list-group">
-                        <a href="#" class="list-group-item active phase">Phase 1</a>
+                        <a href="#" class="list-group-item active phase1-nav">Phase 1</a>
                         <a href="#" class="list-group-item navgrp">Group</a>
-                        <a href="#" class="list-group-item document">Documents</a>
+                        <a href="#" class="list-group-item document">Resources</a>
+                        <a href="#" class="list-group-item document">Mark</a>
                       </div>
                     </div>
                         <!-- <script type="text/javascript" src="js/side-nar.js"></script> -->
@@ -133,12 +134,12 @@
                 </div>
                <!-- <script  src="js/notes.js"></script> -->
 
-<!--documents-->
-                <div class="documenets">
+<!--document-->
+                <div class="documents">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th class="col-sm-1">DOCUMENTS</th>
+                            <th class="col-sm-1">Resources</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -371,12 +372,14 @@
         <div class="left-wrapper">
                 <div class="sidebar-offcanvas sidebar">
                     <div class="list-group">
-                        <a href="#" class="list-group-item active phase">Phase 2</a>
+                        <a href="#" class="list-group-item active phase2-nav">Phase 2</a>
                         <a href="#" class="list-group-item nav-requirement">Requirement document</a>
                         <a href="#" class="list-group-item nav-design">Design document</a>
+                        <a href="#" class="list-group-item document">Resources</a>
+                        <a href="#" class="list-group-item nav-design">Mark</a>
                     </div>
                 </div>
-            <div class="due-date">
+            <div class="due-date" id='due-date2'>
                 <div class="title">Upcoming Due Dates</div>
                 <ul>
                     <li >
@@ -388,6 +391,27 @@
             </div>
         </div>
         <div class="right-wrapper">
+          <!-- notes -->
+                <div class="notes-wrapper-2 notes-wrapper">
+                        <div class="saver-wrap" contenteditable="false">
+                          <div class="notes-dot" contenteditable="false"></div>
+                          <div class="rest" contenteditable="false"></div>
+                        </div>
+                        <div class="title" contenteditable="true">
+                          Reminder
+                        </div>
+                        <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                            Dear students,222222
+                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                            Date: Tuesday, July 24th, 2018
+                            Venue: Colombo LG02 (K-B16-LG02)
+                            Time: 18h00 to 19h00
+                            See you all there.
+                        </div>
+                        <div class="line"></div>
+                        <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
+                </div>
+
             <div class="file-input">
                 <h4 class="requirement">Requirement document</h4>
                 <h4 class="design">Design document</h4>
@@ -410,10 +434,232 @@
                     </div>
                 </form>
             </div>
+
+            <div class="documents document-2">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-1">Resources</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p2</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p2</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
         </div>
         </div>
     </div>
 </div>
+
+<!--phase3-->
+
+
+    <div class="phase3">
+        <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+        <div class="left-wrapper">
+                <div class="sidebar-offcanvas sidebar">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active phase3-nav">Phase 3</a>
+                        <a href="#" class="list-group-item upload-nav-3">Uploading files</a>
+                          <a href="#" class="list-group-item document-nav-3">Resources</a>
+                        <a href="#" class="list-group-item mark-nav-3">Mark</a>
+                    </div>
+                </div>
+            <div class="due-date">
+                <div class="title">Upcoming Due Dates</div>
+                <ul>
+                    <li >
+                        <div class="content">Proposal</div>
+                        <div class="date">4 days from now</div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="right-wrapper">
+          <!-- notes -->
+                <div class="notes-wrapper-3 notes-wrapper">
+                        <div class="saver-wrap" contenteditable="false">
+                          <div class="notes-dot" contenteditable="false"></div>
+                          <div class="rest" contenteditable="false"></div>
+                        </div>
+                        <div class="title" contenteditable="true">
+                          Reminder
+                        </div>
+                        <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                            Dear students,
+                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                            Date: Tuesday, July 24th, 2018
+                            Venue: Colombo LG02 (K-B16-LG02)
+                            Time: 18h00 to 19h00
+                            See you all there.
+                        </div>
+                        <div class="line"></div>
+                        <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
+                </div>
+            <div class="file-input">
+                <h4 class="requirement">Requirement document</h4>
+                <h4 class="design">Design document</h4>
+                <form method="POST" action="#" enctype="multipart/form-data" >
+                    <!-- COMPONENT START -->
+                    <div class="form-group" id="upload-file">
+                        <div class="input-group input-file" name="Fichier1" >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                        </span>
+
+
+                        </div>
+                    </div>
+                    <!-- COMPONENT END -->
+                    <div class="form-group">
+                        <button  class="btn btn-primary pull-right" id="upload-btn">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="documents document-3">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-1">Resources</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p3</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p3</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<!--phase4-->
+    <div class="phase4">
+        <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+        <div class="left-wrapper">
+                <div class="sidebar-offcanvas sidebar">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active phase4-nav">Phase 4</a>
+                  <!--       <a href="#" class="list-group-item nav-requirement">Uploading files</a> -->
+                    <a href="#" class="list-group-item document">Resources</a>
+                        <a href="#" class="list-group-item nav-design">Mark</a>
+                    </div>
+                </div>
+            <div class="due-date">
+                <div class="title">Upcoming Due Dates</div>
+                <ul>
+                    <li >
+                        <div class="content">Proposal</div>
+                        <div class="date">4 days from now</div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="right-wrapper">
+          <!-- notes -->
+                <div class="notes-wrapper-4 notes-wrapper">
+                        <div class="saver-wrap" contenteditable="false">
+                          <div class="notes-dot" contenteditable="false"></div>
+                          <div class="rest" contenteditable="false"></div>
+                        </div>
+                        <div class="title" contenteditable="true">
+                          Reminder
+                        </div>
+                        <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                            Dear students,
+                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                            Date: Tuesday, July 24th, 2018
+                            Venue: Colombo LG02 (K-B16-LG02)
+                            Time: 18h00 to 19h00
+                            See you all there.
+                        </div>
+                        <div class="line"></div>
+                        <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
+                </div>
+            <div class="file-input">
+                <h4 class="requirement">Requirement document</h4>
+                <h4 class="design">Design document</h4>
+                <form method="POST" action="#" enctype="multipart/form-data" >
+                    <!-- COMPONENT START -->
+                    <div class="form-group" id="upload-file">
+                        <div class="input-group input-file" name="Fichier1" >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                        </span>
+
+
+                        </div>
+                    </div>
+                    <!-- COMPONENT END -->
+                    <div class="form-group">
+                        <button  class="btn btn-primary pull-right" id="upload-btn">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="documents document-4">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-1">Resources</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p4</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+                        <tr>
+                            <td>Doc1</td>
+                            <td>p4</td>
+                            <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <div class="layer">
     <div class="glyphicon glyphicon-remove remove-layer"></div>

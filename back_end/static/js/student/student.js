@@ -137,7 +137,7 @@ function uploadFiles(){
 // click group
 $(document).on('click', '.navgrp', function(e){
     $(".notes-wrapper").hide();
-    $(".documenets").hide();
+    $(".documents").hide();
     $(".group-info").show();
     $(".add-group").show();
     $(".all-groups").show();
@@ -150,14 +150,14 @@ $(document).on('click', '.navgrp', function(e){
 });
 
 //click Phase1
-$(".phase").click( function(){
+$(".phase1-nav").click( function(){
     $(".notes-wrapper").show();
     $(".due-date").show();
     $(".add-group").hide();
     $(".group-info").hide();
     $(".group_container").hide();
     $(".all-groups").hide();
-    $(".documenets").hide();
+    $(".documents").hide();
 });
 
 //click Documents
@@ -167,7 +167,7 @@ $(".document").click( function(){
     $(".group-info").hide();
     $(".group_container").hide();
     $(".all-groups").hide();
-    $(".documenets").show();
+    $(".documents").show();
 });
 
 
@@ -265,14 +265,75 @@ $("#upload-btn").click(function(e){
 
 
 //side-nav
+
+//click Phase2
+$(".phase2-nav").click( function(){
+    $(".notes-wrapper-2").show();
+    $(".file-input").hide();
+    $(".document-2").hide();
+
+});
+
+//click requirement document
 $(document).on('click', '.nav-design', function(e){
     e.preventDefault();
+    $(".file-input").show();
+    $(".notes-wrapper-2").hide();
     $(".requirement").hide();
     $(".design").show();
 })
 
+//click design document
 $(document).on('click', '.nav-requirement', function(e){
     e.preventDefault();
+    $(".file-input").show();
+    $(".notes-wrapper-2").hide();
     $(".requirement").show();
     $(".design").hide();
 })
+
+//click resources
+$(document).on('click', '.document', function(e){
+    e.preventDefault();
+    $(".file-input").hide();
+    $(".notes-wrapper-2").hide();
+    $(".requirement").hide();
+    $(".design").hide();
+    $(".documents-2").show();
+})
+
+
+//phase 3
+
+//click phase3
+$(document).on('click', '.phase3-nav', function(e){
+    $(".notes-wrapper-3").show();
+    $(".file-input").hide();
+    $(".document-3").hide();
+})
+
+//click uploading files
+$(document).on('click', '.upload-nav-3', function(e){
+    $(".notes-wrapper-3").hide();
+    $(".file-input").show();
+    $(".document-3").hide();
+})
+
+//click resources
+$(document).on('click', '.document-nav-3', function(e){
+    $(".notes-wrapper-3").hide();
+    $(".file-input").hide();
+    $(".document-3").show();
+})
+
+//click mark
+$(document).on('click', '.mark-nav-3', function(e){
+    $(".notes-wrapper-3").hide();
+    $(".file-input").hide();
+    $(".document-3").hide();
+})
+
+
+
+
+
