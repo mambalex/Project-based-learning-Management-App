@@ -508,7 +508,7 @@ def get_project_all_phases(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select * from phases where project_uuid = '{}';".format(project_uuid)
+    sql = "select * from phases where project_uuid = '{}' order by deadline;".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
     key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require",
@@ -586,7 +586,7 @@ def get_phase_all_tasks(phase_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select * from tasks where phase_uuid = '{}';".format(phase_uuid)
+    sql = "select * from tasks where phase_uuid = '{}' order by deadline;".format(phase_uuid)
     result = database_object.search(sql)
     database_object.close()
     key_list = ["task_uuid", "phase_uuid", "task_name", "deadline", "mark_release", "submit_require", "spec_address"]
@@ -723,7 +723,7 @@ def student_get_self_global_reminder(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select * from reminder where project_uuid = '{}' and submit_check = 'no';".format(project_uuid)
+    sql = "select * from reminder where project_uuid = '{}' and submit_check = 'no' order by post_time desc;".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
     key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time"]
@@ -738,7 +738,7 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
     database_object.open()
     sql = "select rem.*, count(*) from reminder rem, submits s, groups g, group_relation g_r \
       where  g_r.email = '{}' and g_r.group_uuid = g.group_uuid and g.project_uuid = '{}' and \
-      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid;".format(
+      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid order by rem.post_time desc;".format(
         email, project_uuid, project_uuid)
     submit_reminder = database_object.search(sql)
     database_object.close()
