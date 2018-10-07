@@ -166,17 +166,17 @@ insert into enrol_project (email, project_uuid, user_type) values ('student7@gma
 insert into enrol_project (email, project_uuid, user_type) values ('student8@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
 insert into enrol_project (email, project_uuid, user_type) values ('student9@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('04b9e23e-c968-11e8-87f5-4c3275989ef5', 'Group 1', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('04b9e23e-c968-11e8-87f5-4c3275989ef5', 'Group 1', 'a5259728-c967-11e8-8220-4c3275989ef5', 'Happy coding!');
 insert into group_relation values ('student1@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 0);
 insert into group_relation values ('student2@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 1);
 insert into group_relation values ('student3@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 1);
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('caf594d4-c968-11e8-badd-4c3275989ef5', 'Group 2', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('caf594d4-c968-11e8-badd-4c3275989ef5', 'Group 2', 'a5259728-c967-11e8-8220-4c3275989ef5', 'Need one more member');
 insert into group_relation values ('student4@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 0);
 insert into group_relation values ('student5@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 1);
 insert into group_relation values ('student6@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 1);
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('05c5f5d8-c969-11e8-91ee-4c3275989ef5', 'Group 3', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('05c5f5d8-c969-11e8-91ee-4c3275989ef5', 'Group 3', 'a5259728-c967-11e8-8220-4c3275989ef5', 'COMP9323 Group');
 insert into group_relation values ('student7@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 0);
 insert into group_relation values ('student8@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 1);
 insert into group_relation values ('student9@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 1);
@@ -185,3 +185,6 @@ insert into group_relation values ('student9@gmail.com', '05c5f5d8-c969-11e8-91e
 insert into enrol_project (email, project_uuid, user_type) values ('student10@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
 insert into groups (group_uuid, group_name, project_uuid, description) values ('a5351b8a-c967-11e8-aca2-4c3275989ef5', 'First Group', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
 insert into group_relation values ('student10@gmail.com', 'a5351b8a-c967-11e8-aca2-4c3275989ef5', 0);
+
+insert into reminder values ('e6aef29a-ca23-11e8-8c13-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon.', 'no', '2018-10-07 11:26:57+0');
+insert into reminder values ('e6b15800-ca23-11e8-be86-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon, you have not submit.', 'yes', '2018-10-07 11:26:57+0');
