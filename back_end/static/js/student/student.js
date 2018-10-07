@@ -1,130 +1,100 @@
 var projectList;
-var projectId;
-const groupInfo={};
-const userInfo={};
+const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+var groupInfo={};
+var selfGroup={};
+var selfGroupStatus;
+var userInfo={};
+var phaseList={};
+var projectInfo={};
+var userProfile={};
 var inGroupOrnot;
 var currentGroupName;
 
 
 
 $(document).ready(function(){
+    getAllInfo();
     $(".loaders").hide();
-    getProjectList();
-    $.when(getUserInfo(),getSelfGroup(), getGroupList()).done(function(){
-            $(".loaders").hide();
-            $(".phase1-nav").click();
-        })
+    displayGroupInfo();
+    $(".phase1-nav").click();
 })
 
 
-$("#logout").click(function(){
-     window.location.pathname = "/";
-})
+
+
+function getAllInfo(){
+    return $.ajax({
+            type:'POST',
+            url:'/api/student_main_info',
+            contentType: "application/json",
+            data:JSON.stringify({'project_uuid':projectId}),
+            async:false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            success(rsp_data){
+                        console.log(rsp_data);
+                        selfGroup = rsp_data['group_info'];  
+                        selfGroupStatus = rsp_data['group_info']['status']
+                        rsp_data['group_list'].forEach(function(val){
+                            groupInfo[val['group_name']]= val;
+                        });   
+                        rsp_data['phase_list'].forEach(function(val){
+                            phaseList[val['phase_name']]= val;
+                        }); 
+                        projectInfo = rsp_data['project_info'];
+                        userProfile = rsp_data['user_profile']; 
+                        console.log(selfGroup)
+                        console.log(groupInfo)       
+                        console.log(phaseList)       
+                        console.log(projectInfo)       
+                        console.log(userProfile)       
+            }
+    })
+}
+
+function displayGroupInfo(){
+    //current group
+    if(selfGroupStatus==1){
+            inGroupOrnot = 'yes';
+            $(".leave").show();
+            var description = selfGroup['description'];
+            currentGroupName = selfGroup['group_name'];
+            var members = selfGroup['member'];
+            $("#group-name-own").text(currentGroupName);
+            $("#group-note-own").text(description);
+            members.forEach(function(val){
+                 $("#members").append(`<li>${val['name']}</li>`)
+            })
+        }else if(selfGroupStatus==0){
+                inGroupOrnot = 'no';
+                $(".leave").hide();
+                $("#group-name-own").text("You have not group");
+        }
+    // all groups
+        for(var key in groupInfo){
+            var val = groupInfo[key];
+            var groupId = val['group_uuid'];
+            var groupName = val['group_name'];
+            var description = val['description'];
+            var members = val['member'];
+            var group_uuid = val['group_uuid']          
+            if(members.length !==0){
+                 $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
+            }
+        }
+}
 
 
 
 
 // phase1
 
+//click logout
+$("#logout").click(function(){
+     window.location.pathname = "/";
+})
 // side-nav
-
-function getUserInfo(){
-    return $.ajax({
-                    type:'POST',
-                    url:'/api/get_user_profile',
-                    headers:{
-                        'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-                    },
-                    success(rsp_data){
-                        console.log(rsp_data);
-                        userInfo["userId"] = rsp_data['user_id'];
-                        userInfo["email"] = rsp_data['data']['email'];
-                        userInfo["dob"] = rsp_data['data']['dob'];
-                        userInfo["gender"] = rsp_data['data']['gender'];
-                        userInfo["name"] = rsp_data['data']['name'];
-                        $(".welcome-user").text(`Welcome, ${userInfo['name']}`);
-                        $(".welcome-user").show();
-                    }
-                })
-}
-
-
-function getProjectList(){
-    return $.ajax({
-        async: false,
-        type:'POST',
-        url:'/api/get_self_project_list',
-        headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-        },
-        success(rsp_data){
-            console.log(rsp_data);
-            projectList = rsp_data['data'];
-            projectId = projectList[0]['project_uuid'];
-            // localStorage.setItem('user_id', JSON.stringify(rsp_data['user_id']));
-            // console.log(projectList)
-        }
-        })
-}
-
-function getSelfGroup(){
-    return $.ajax({
-        type:'POST',
-        dataType : 'json',
-        url:'/api/current_group',
-        contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projectId}),
-        headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-        },
-        }).done(function(rsp_data){
-        console.log(rsp_data);
-        if(rsp_data['code']==200){
-            inGroupOrnot = 'yes';
-            $(".leave").show();
-            var description = rsp_data['data']['description'];
-            currentGroupName = rsp_data['data']['group_name'];
-            var members = rsp_data['data']['member'];
-            $("#group-name-own").text(currentGroupName);
-            $("#group-note-own").text(description);
-            members.forEach(function(val){
-                 $("#members").append(`<li>${val['name']}</li>`)
-            })
-        }else if(rsp_data['code']==400){
-                inGroupOrnot = 'no';
-                $(".leave").hide();
-                $("#group-name-own").text("You have not group");
-        }
-
-    })
-}
-
-function getGroupList(){
-    return $.ajax({
-        type:'POST',
-        url:'/api/get_group_list',
-        contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projectId}),
-        headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-        },
-        }).done(function(rsp_data){
-            console.log(rsp_data);
-            if(rsp_data['code']==200){
-                rsp_data['data'].forEach(function(val){
-                    var groupId = val['group_uuid'];
-                    var groupName = val['group_name'];
-                    var description = val['description'];
-                    var members = val['member'];
-                    var group_uuid = val['group_uuid']
-                    groupInfo[groupName] = val;
-                    if(members.length !==0){
-                         $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
-                    }
-                })
-        }})  
-    }
-
 
 
 
@@ -163,17 +133,21 @@ $(document).on('click', '#group-save', function(e){
                             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
                         },
                         }).done(function(rsp_data){
-                            currentGroupName = group_name;
                             console.log(rsp_data)
                             if(rsp_data['code']==200){
-                                groupInfo[group_name] = {group_uuid: `${rsp_data['group_uuid']}`, group_name: `${group_name}`,member:[{name:`${userInfo['name']}`}]};
+                                currentGroupName = group_name;
+                                selfGroup['group_name'] = currentGroupName;
+                                selfGroup['description'] = note;
+                                selfGroup['member'] = [{email:userProfile['email'],name:userProfile['name']}];
+                                groupInfo[group_name] = {group_uuid: `${rsp_data['group_uuid']}`, group_name: `${group_name}`,member:[{name:`${userProfile['name']}`}]};
+                                console.log(selfGroup)
                                 console.log(groupInfo);
                                 //display in all group
                                 $("#all-groups").append(`<li><div class="title g-popup">${group_name}</div><div class="description">${note}</div><div class="num-members">Members: <span>1</span></div><div class="join">Join</div> </li>`);
                                 // display in current group
                                 $("#group-name-own").text(group_name);
                                 $("#group-note-own").text(note);
-                                $("#members").append(`<li>${userInfo['name']}</li>`);
+                                $("#members").append(`<li>${userProfile['name']}</li>`);
                                 $("#successAlert-create-group").text("Sucessfully create a group!").show();
                                 $("#errorAlert-create-group").hide();
                                 inGroupOrnot = 'yes';
@@ -207,21 +181,25 @@ $(document).on('click', '.join', function(e){
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
         }).done(function(rsp_data){
-            currentGroupName = groupName;
             if(rsp_data['code']==400){
                 alert("You already have a group")
             }else{
+                currentGroupName = groupName;
                 alert("Congrats! you successfully join a group");
                 inGroupOrnot = 'yes';
                 $(".leave").show();
+                //change member's number
                 let num = groupInfo[groupName]["member"].length;
-                // let num = $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text();
                 $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(++num);
                 // console.log(groupInfo[groupName]);
                 // console.log(userInfo);
-                groupInfo[groupName]['member'].push({name:`${userInfo['name']}`})
+                groupInfo[groupName]['member'].push({name:`${userProfile['name']}`})
                 var description = groupInfo[groupName]['description'];
                 var members = groupInfo[groupName]['member'];
+                selfGroup['group_name'] = currentGroupName;
+                selfGroup['description'] = description;
+                selfGroup['member'] = [{email:userProfile['email'],name:userProfile['name']}];
+                //display in self group part
                 $("#group-name-own").text(groupName);
                 $("#group-note-own").text(description);
                 members.forEach(function(val){
@@ -257,9 +235,10 @@ $(document).on('click', '.leave', function(e){
                         $(".leave").hide();
                         $("#group-name-own").text("You have not group");
                         $("#group-note-own").text("");
-                        $("#members").find("li").remove();           
+                        $("#members").find("li").remove(); 
+                        selfGroup = {};          
                         groupInfo[groupName]['member'].forEach(function(item, index, object) {
-                                  if (item['name'] === userInfo['name']) {
+                                  if (item['name'] === userProfile['name']) {
                                         object.splice(index, 1);
                                   }
                         });
