@@ -156,32 +156,32 @@ insert into tasks values ('04b30358-c968-11e8-802b-4c3275989ef5', '04b1cd58-c968
 insert into phases values ('04b4dac8-c968-11e8-bc21-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'Phase 4', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 0, 'None');
 insert into tasks values ('04b6bc30-c968-11e8-af25-4c3275989ef5', '04b4dac8-c968-11e8-bc21-4c3275989ef5', 'Demo', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 1, 'None');
 
-insert into enrol_project (email, project_uuid, user_type) values ('student1@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student2@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student3@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student4@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student5@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student6@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student7@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student8@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
-insert into enrol_project (email, project_uuid, user_type) values ('student9@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student2@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student3@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student4@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student5@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student6@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student7@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student8@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
+insert into enrol_project (email, project_uuid, user_type) values ('student9@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('04b9e23e-c968-11e8-87f5-4c3275989ef5', 'Group 1', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('04b9e23e-c968-11e8-87f5-4c3275989ef5', 'Group 1', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
 insert into group_relation values ('student1@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 0);
 insert into group_relation values ('student2@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 1);
 insert into group_relation values ('student3@gmail.com', '04b9e23e-c968-11e8-87f5-4c3275989ef5', 1);
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('caf594d4-c968-11e8-badd-4c3275989ef5', 'Group 2', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('caf594d4-c968-11e8-badd-4c3275989ef5', 'Group 2', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
 insert into group_relation values ('student4@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 0);
 insert into group_relation values ('student5@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 1);
 insert into group_relation values ('student6@gmail.com', 'caf594d4-c968-11e8-badd-4c3275989ef5', 1);
 
-insert into groups (group_uuid, group_name, project_uuid, description) values ('05c5f5d8-c969-11e8-91ee-4c3275989ef5', 'Group 3', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('05c5f5d8-c969-11e8-91ee-4c3275989ef5', 'Group 3', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
 insert into group_relation values ('student7@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 0);
 insert into group_relation values ('student8@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 1);
 insert into group_relation values ('student9@gmail.com', '05c5f5d8-c969-11e8-91ee-4c3275989ef5', 1);
 
 
-insert into enrol_project (email, project_uuid, user_type) values ('student10@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'student');
-insert into groups (group_uuid, group_name, project_uuid, description) values ('a5351b8a-c967-11e8-aca2-4c3275989ef5', 'First Group', 'a5259728-c967-11e8-8220-4c3275989ef5', 'None');
+insert into enrol_project (email, project_uuid, user_type) values ('student10@gmail.com', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'student');
+insert into groups (group_uuid, group_name, project_uuid, description) values ('a5351b8a-c967-11e8-aca2-4c3275989ef5', 'First Group', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
 insert into group_relation values ('student10@gmail.com', 'a5351b8a-c967-11e8-aca2-4c3275989ef5', 0);
