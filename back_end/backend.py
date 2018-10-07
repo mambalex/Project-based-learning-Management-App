@@ -656,6 +656,7 @@ def api_submit():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
     group_uuid = request.form.get('group_uuid', type=str)
     ass_uuid = request.form.get('assessment_uuid', type=str)
+    print(group_uuid, ass_uuid)
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
     file_to_upload = request.files['upload_file']

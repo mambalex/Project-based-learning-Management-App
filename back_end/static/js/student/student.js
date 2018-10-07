@@ -3,15 +3,16 @@ var projectId;
 const groupInfo={};
 const userInfo={};
 var inGroupOrnot;
+var currentGroupName;
 
 
 
 $(document).ready(function(){
-    getUserInfo();
     getProjectList();
-    projectId = projectList[0]['project_uuid'];
-    getSelfGroup(projectId);
-    getGroupList(projectId);
+    $.when(getUserInfo(),getSelfGroup(), getGroupList()).done(function(){
+            $(".loaders").hide();
+            $(".phase1-nav").click();
+        })
 })
 
 
@@ -20,33 +21,35 @@ $("#logout").click(function(){
 })
 
 
+
+
 // phase1
 
 // side-nav
 
 function getUserInfo(){
-    $.ajax({
-        type:'POST',
-        url:'/api/get_user_profile',
-        headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-        },
-        success(rsp_data){
-            console.log(rsp_data);
-            userInfo["userId"] = rsp_data['user_id'];
-            userInfo["email"] = rsp_data['data']['email'];
-            userInfo["dob"] = rsp_data['data']['dob'];
-            userInfo["gender"] = rsp_data['data']['gender'];
-            userInfo["name"] = rsp_data['data']['name'];
-            $(".welcome-user").text(`Welcome, ${userInfo['name']}`);
-            $(".welcome-user").show();
-        }
-    })
+    return $.ajax({
+                    type:'POST',
+                    url:'/api/get_user_profile',
+                    headers:{
+                        'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                    },
+                    success(rsp_data){
+                        console.log(rsp_data);
+                        userInfo["userId"] = rsp_data['user_id'];
+                        userInfo["email"] = rsp_data['data']['email'];
+                        userInfo["dob"] = rsp_data['data']['dob'];
+                        userInfo["gender"] = rsp_data['data']['gender'];
+                        userInfo["name"] = rsp_data['data']['name'];
+                        $(".welcome-user").text(`Welcome, ${userInfo['name']}`);
+                        $(".welcome-user").show();
+                    }
+                })
 }
 
 
 function getProjectList(){
-    $.ajax({
+    return $.ajax({
         async: false,
         type:'POST',
         url:'/api/get_self_project_list',
@@ -56,31 +59,32 @@ function getProjectList(){
         success(rsp_data){
             console.log(rsp_data);
             projectList = rsp_data['data'];
+            projectId = projectList[0]['project_uuid'];
             // localStorage.setItem('user_id', JSON.stringify(rsp_data['user_id']));
             // console.log(projectList)
         }
-    })
+        })
 }
 
-function getSelfGroup(projId){
-        $.ajax({
+function getSelfGroup(){
+    return $.ajax({
         type:'POST',
         dataType : 'json',
         url:'/api/current_group',
         contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projId}),
+        data:JSON.stringify({'project_uuid':projectId}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
-    }).done(function(rsp_data){
+        }).done(function(rsp_data){
         console.log(rsp_data);
         if(rsp_data['code']==200){
             inGroupOrnot = 'yes';
             $(".leave").show();
             var description = rsp_data['data']['description'];
-            var groupName = rsp_data['data']['group_name'];
+            currentGroupName = rsp_data['data']['group_name'];
             var members = rsp_data['data']['member'];
-            $("#group-name-own").text(groupName);
+            $("#group-name-own").text(currentGroupName);
             $("#group-note-own").text(description);
             members.forEach(function(val){
                  $("#members").append(`<li>${val['name']}</li>`)
@@ -94,27 +98,12 @@ function getSelfGroup(projId){
     })
 }
 
-
-//           <div class="group-popup drop-shadow-nav-grp curved.v2">
-//               <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
-//               <div class="group-name">Group 1</div>
-//               <div class="group-popup-wrapper">
-//                   <div class="memebers">
-//                       <div class="title">Members:</div>
-//                       <ul class="all-members">
-// <!--                           <li>Zhiqin Zhang </li>
-//                           <li>Han Zhang </li> -->
-//                       </ul>
-//                   </div>
-//                   <div class="note">Project-based learning management app</div>
-//               </div>
-//           </div>
-function getGroupList(projId){
-        $.ajax({
+function getGroupList(){
+    return $.ajax({
         type:'POST',
         url:'/api/get_group_list',
         contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projId}),
+        data:JSON.stringify({'project_uuid':projectId}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
@@ -132,29 +121,11 @@ function getGroupList(projId){
                          $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
                     }
                 })
-
         }})  
- 
-}
+    }
 
 
-function uploadFiles(){
-    $("#upload-file").click(function() {
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/upload',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            async: false,
-            success: function(data) {
-                console.log('Success!');
-            },
-        });
-    });
-}
+
 
 // click group
 $(document).on('click', '.navgrp', function(e){
@@ -191,6 +162,7 @@ $(document).on('click', '#group-save', function(e){
                             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
                         },
                         }).done(function(rsp_data){
+                            currentGroupName = group_name;
                             console.log(rsp_data)
                             if(rsp_data['code']==200){
                                 groupInfo[group_name] = {group_uuid: `${rsp_data['group_uuid']}`, group_name: `${group_name}`,member:[{name:`${userInfo['name']}`}]};
@@ -213,6 +185,7 @@ $(document).on('click', '#group-save', function(e){
         }
 })
 
+
 // join a group
 $(document).on('click', '.join', function(e){
         e.preventDefault();
@@ -233,6 +206,7 @@ $(document).on('click', '.join', function(e){
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
         }).done(function(rsp_data){
+            currentGroupName = groupName;
             if(rsp_data['code']==400){
                 alert("You already have a group")
             }else{
@@ -257,6 +231,7 @@ $(document).on('click', '.join', function(e){
         })
 });
 
+
 //leave a group
 $(document).on('click', '.leave', function(e){
         e.preventDefault();
@@ -275,6 +250,7 @@ $(document).on('click', '.leave', function(e){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
             },
             }).done(function(rsp_data){
+                        currentGroupName = "None";
                         console.log(rsp_data)
                         inGroupOrnot = 'no';
                         $(".leave").hide();
@@ -292,9 +268,6 @@ $(document).on('click', '.leave', function(e){
                         if(num==0){
                             $('.g-popup:contains("'+groupName+'")').parent().remove();
                         }else{$('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(num);}
-                        
-
-
             })
 });
 
@@ -404,16 +377,20 @@ $(function() {
     bs_input_file();
 });
 
+
+//upload files
 $("#upload-btn").click(function(e){
         e.preventDefault();
-        var file = $('#upload-file').find("input[type=file]").prop('files')[0]
-        console.log(file)
+        var file = $('#upload-file').find("input[type=file]").prop('files')[0];
+        console.log(file);
         var formData = new FormData();
         formData.append('upload_file', file);
-        console.log(formData)
+        formData.append('group_uuid', groupInfo[currentGroupName]['group_uuid']);
+        formData.append('assessment_uuid', "04AFE482-C968-11E8-8423-4C3275989EF5");
+        console.log(formData);
         $.ajax({
             type: 'POST',
-            url: '/api/upload',
+            url: '/api/submit_file',
             data: formData,
             contentType: false,
             cache: false,
@@ -421,9 +398,13 @@ $("#upload-btn").click(function(e){
             contentType: false,
             processData: false,
             async: false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
             success: function(data) {
-                console.log(data);
-                console.log('Success!');
+                if(data['code']==200){
+
+                }
             },
         });
 })

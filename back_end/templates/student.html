@@ -23,6 +23,7 @@
 <body>
 
 <div class='container'>
+    <section class="loaders"><span class="loader loader-quart"> </span> Loading...</section>
     <div id="header-timeline">
           <nav class="header">
                     <div class="home">
@@ -419,6 +420,8 @@
                 </div>
 
             <div class="file-input">
+                <div id="successAlert-phase2" class="alert alert-success" role="alert" style="display:none;"></div>
+                <div id="errorAlert-phase2" class="alert alert-danger" role="alert" style="display:none;"></div>
                 <h4 class="requirement">Requirement document</h4>
                 <h4 class="design">Design document</h4>
                 <form method="POST" action="#" enctype="multipart/form-data" >
@@ -667,9 +670,9 @@
 
 
 
-<div class="layer">
+<!-- <div class="layer">
     <div class="glyphicon glyphicon-remove remove-layer"></div>
-</div>
+</div> -->
 </body>
 <script type="text/javascript" src="../static/js/student/student.js"></script>
 <script type="text/javascript" src="../static/js/student/header-timeline.js"></script>
