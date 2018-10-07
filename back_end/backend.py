@@ -22,6 +22,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER = 'temp'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 CORS(app, resources=r'/*')
 app.config['SECRET_KEY'] = 'hard to guess string'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
@@ -556,6 +561,7 @@ def student_get_reminder_list():
         global_reminder_list = db.student_get_self_global_reminder(project_uuid)
         unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
         reminder_list = global_reminder_list + unsubmit_reminder_list
+        reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
         return jsonify(
             {'code': 200, 'msg': 'Get reminder list success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
              'data': reminder_list})
@@ -619,10 +625,28 @@ def student_resource_list():
              'data': resource_list})
 
 
-# Start upload and download file part
+# Get project all phase
+@app.route('/api/get_project_info', methods=['POST'])
+@auth.login_required
+def get_project_info():
+    project_uuid = request.json.get('project_uuid')
+    project_info = db.get_projects(project_uuid)
+    if len(project_info) > 0:
+        project_info = project_info[0]
+        phase_list = db.get_project_all_phases(project_uuid)
+        for phase in phase_list:
+            task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+            phase['task_list'] = task_list
+        project_info['phase_list'] = phase_list
+        return jsonify(
+            {'code': 400, 'msg': 'Get project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+             'data': project_info})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Start upload and download file part
 
 
 # Upload file part
@@ -648,6 +672,7 @@ def api_upload():
         return jsonify({'code': 200, 'msg': 'Upload success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         return jsonify({'code': 400, 'msg': 'Upload fail', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # Student submit api
 @app.route('/api/submit_file', methods=['POST'], strict_slashes=False)
@@ -691,7 +716,13 @@ def download():
 @auth.login_required
 def student_load_main_info():
     project_uuid = request.json.get('project_uuid')
-    phase_uuid = request.json.get('phase_uuid')
+    project_info = db.get_projects(project_uuid)
+    if len(project_info) > 0:
+        project_info = project_info[0]
+        phase_list = db.get_project_all_phases(project_uuid)
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     # Group part
     group_info = dict()
     if db.check_has_group(g.user.user_id, project_uuid):
@@ -706,14 +737,20 @@ def student_load_main_info():
         group_info['msg'] = 'Current do not join a group'
     # Group list
     group_list = db.get_all_group(project_uuid)
-    # Resource part
-    resource_list = db.get_resource_list(project_uuid, phase_uuid)
     # Phase part
-    phase_info = db.get_phases(phase_uuid)
-    # Task part
-    task_list = db.get_phase_all_tasks(phase_uuid)
+    for phase in phase_list:
+        resource_list = db.get_resource_list(project_uuid, phase['phase_uuid'])
+        phase['resource_list'] = resource_list
+        task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+        phase['task_list'] = task_list
+    # Reminder part
+    global_reminder_list = db.student_get_self_global_reminder(project_uuid)
+    unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
+    reminder_list = global_reminder_list + unsubmit_reminder_list
+    reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
+    
     return jsonify({'code': 200, 'msg': 'Get data success', 'group_info': group_info, 'group_list': group_list,
-                    'phase_info': phase_info, 'task_list': task_list, 'resource_list': resource_list})
+                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0, 'reminder_list': reminder_list})
 
 
 if __name__ == '__main__':
