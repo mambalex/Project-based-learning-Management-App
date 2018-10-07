@@ -344,8 +344,8 @@ def get_group_list():
 @app.route('/api/join_group', methods=['POST'])
 @auth.login_required
 def join_group():
-    group_uuid = request.form.get('group_uuid', type=str)
-    project_uuid = request.form.get('project_uuid', type=str)
+    group_uuid = request.json.get('group_uuid')
+    project_uuid = request.json.get('project_uuid')
     if db.check_has_group(g.user.user_id, project_uuid):
         return jsonify(
             {'code': 400, 'msg': 'Already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
@@ -359,7 +359,7 @@ def join_group():
 @app.route('/api/leave_group', methods=['POST'])
 @auth.login_required
 def leave_group():
-    group_uuid = request.form.get('group_uuid', type=str)
+    group_uuid = request.json.get('group_uuid')
     if g.user.is_admin_user():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})

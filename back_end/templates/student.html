@@ -28,6 +28,9 @@
                     <div class="home">
                         <a href="main-page.html">Home</a>
                     </div>
+                    <div class="welcome-user">
+                          Welcome, John
+                    </div>
                     <div class="user">
                         <i class="fas fa-user-alt"></i>
                         <div class="dropdown-content">
@@ -163,7 +166,7 @@
 
           <div class="group-info drop-shadow-nav-grp curved.v2">
                 <div class="group-info-title"> Group Information</div>
-                           <h4 class="group-name">Group Name: <span id="group-name-own">Group 8</span></h4>
+                           <h4 class="group-name">Group Name: <span id="group-name-own"></span></h4>
                   <div class="group-wrapper">
                           <div class="members">
                               <h4  >Members: </h4>
@@ -176,17 +179,18 @@
                          <div class="group-topic">
                              <h4>Note:</h4>
                              <ul>
-                                 <li id="group-note-own">Project-based learning management app</li>
+                                 <li id="group-note-own"></li>
                              </ul>
                          </div>
                     </div>
+                    <div class="leave">Leave</div>
           </div>
           <br>
 
 <!--group-popup-->
           <div class="group-popup drop-shadow-nav-grp curved.v2">
               <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
-              <div class="group-name">Group 1</div>
+              <div class="group-name"></div>
               <div class="group-popup-wrapper">
                   <div class="memebers">
                       <div class="title">Members:</div>
@@ -195,7 +199,7 @@
                           <li>Han Zhang </li> -->
                       </ul>
                   </div>
-                  <div class="note">Project-based learning management app</div>
+                  <div class="note"></div>
               </div>
           </div>
 
@@ -238,12 +242,14 @@
 
           <div class="group_container drop-shadow-group lifted" >
             <div class="container">
+                      <div id="successAlert-create-group" class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div id="errorAlert-create-group" class="alert alert-danger" role="alert" style="display:none;"></div>
                       <h1 id="group-candidate">Create New Group</h1>
                       <h2 class="lead" id="group-candidate-msg">Use the form below to create a new group.</h2>
                       <form action="">
                         <ul class="nav nav-tabs" role="tablist">
-                          <li class="active"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs">Group Settings</span></a></li>
-                          <li ><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span id="add-candidates" class="hidden-xs">Search</span></a></li>
+                          <li class="active newGroup"><a href="#form" aria-controls="form" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs group-candidate-option">Group Settings</span></a></li>
+                          <li class="searchCan"><a href="#search" aria-controls="search" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> <span id="add-candidates" class="hidden-xs group-candidate-option">Search</span></a></li>
                           <li class="pull-right"><button class="btn btn-primary" id="group-save"><span class="glyphicon glyphicon-floppy-saved"></span> Save</button> <button class="btn btn-default cancel-group"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs">Cancel</span></button></li>
                         </ul>
                         <div class="tab-content">

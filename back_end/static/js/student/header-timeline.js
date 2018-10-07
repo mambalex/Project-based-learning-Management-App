@@ -12,7 +12,8 @@ $( ".dropdown-content" ).on({
 })
 
 $("#logout").click( function(){
-    $(location).attr('href','student.html')
+    $(location).attr('href','/');
+    localStorage.clear();
 });
 
 $("#profile").click( function(e){

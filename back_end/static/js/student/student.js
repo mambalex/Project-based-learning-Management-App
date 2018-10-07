@@ -1,11 +1,15 @@
 var projectList;
 var projectId;
 const groupInfo={};
+const userInfo={};
+var inGroupOrnot;
+
 
 
 $(document).ready(function(){
+    getUserInfo();
     getProjectList();
-    projectId = projectList[0]['project_uuid']
+    projectId = projectList[0]['project_uuid'];
     getSelfGroup(projectId);
     getGroupList(projectId);
 })
@@ -20,6 +24,26 @@ $("#logout").click(function(){
 
 // side-nav
 
+function getUserInfo(){
+    $.ajax({
+        type:'POST',
+        url:'/api/get_user_profile',
+        headers:{
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+        },
+        success(rsp_data){
+            console.log(rsp_data);
+            userInfo["userId"] = rsp_data['user_id'];
+            userInfo["email"] = rsp_data['data']['email'];
+            userInfo["dob"] = rsp_data['data']['dob'];
+            userInfo["gender"] = rsp_data['data']['gender'];
+            userInfo["name"] = rsp_data['data']['name'];
+            $(".welcome-user").text(`Welcome, ${userInfo['name']}`);
+            $(".welcome-user").show();
+        }
+    })
+}
+
 
 function getProjectList(){
     $.ajax({
@@ -33,7 +57,7 @@ function getProjectList(){
             console.log(rsp_data);
             projectList = rsp_data['data'];
             // localStorage.setItem('user_id', JSON.stringify(rsp_data['user_id']));
-            console.log(projectList)
+            // console.log(projectList)
         }
     })
 }
@@ -51,6 +75,8 @@ function getSelfGroup(projId){
     }).done(function(rsp_data){
         console.log(rsp_data);
         if(rsp_data['code']==200){
+            inGroupOrnot = 'yes';
+            $(".leave").show();
             var description = rsp_data['data']['description'];
             var groupName = rsp_data['data']['group_name'];
             var members = rsp_data['data']['member'];
@@ -59,7 +85,13 @@ function getSelfGroup(projId){
             members.forEach(function(val){
                  $("#members").append(`<li>${val['name']}</li>`)
             })
-        }})
+        }else if(rsp_data['code']==400){
+                inGroupOrnot = 'no';
+                $(".leave").hide();
+                $("#group-name-own").text("You have not group");
+        }
+
+    })
 }
 
 
@@ -96,26 +128,15 @@ function getGroupList(projId){
                     var members = val['member'];
                     var group_uuid = val['group_uuid']
                     groupInfo[groupName] = val;
-                    $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
+                    if(members.length !==0){
+                         $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
+                    }
                 })
 
         }})  
  
 }
 
-function createNewGroup(prjId, group_name, note){
-        $.ajax({
-        type:'POST',
-        url:'/api/create_group',
-        contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projId, 'group_name':group_name, 'note':note}),
-        headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-        },
-        }).done(function(rsp_data){
-        console.log(rsp_data);
-        })
-}
 
 function uploadFiles(){
     $("#upload-file").click(function() {
@@ -135,7 +156,6 @@ function uploadFiles(){
     });
 }
 
-var projectId;
 // click group
 $(document).on('click', '.navgrp', function(e){
     $(".notes-wrapper").hide();
@@ -143,30 +163,141 @@ $(document).on('click', '.navgrp', function(e){
     $(".group-info").show();
     $(".add-group").show();
     $(".all-groups").show();
-    // var projectList = getProjectList();  
-    // projectId = projectList[0]['project_uuid']
-    // console.log(projectId)
-    // getSelfGroup(projectId);
-    // getGroupList(projectId);
-
 });
 
+// create new group
 $(document).on('click', '#group-save', function(e){
         e.preventDefault();
-        var group_name =$("#new-group-name").val();
-        var note = $("#new-group-note").val();
+        var createOrSearch = 'create';
+        if($(".searchCan").hasClass("active")){
+            createOrSearch = 'search';
+        }
+        if(inGroupOrnot=="yes"){
+            $("#errorAlert-create-group").text("You already got a group").show();
+            $("#successAlert-create-group").hide();
+            $(".leave").show();
+            return
+        }
+
+        if(createOrSearch=="create"){
+                    var group_name =$("#new-group-name").val();
+                    var note = $("#new-group-note").val();
+                    $.ajax({
+                        type:'POST',
+                        url:'/api/create_group',
+                        contentType: "application/json",
+                        data:JSON.stringify({'project_uuid':projectId, 'group_name':group_name, 'note':note}),
+                        headers:{
+                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                        },
+                        }).done(function(rsp_data){
+                            console.log(rsp_data)
+                            if(rsp_data['code']==200){
+                                groupInfo[group_name] = {group_uuid: `${rsp_data['group_uuid']}`, group_name: `${group_name}`,member:[{name:`${userInfo['name']}`}]};
+                                console.log(groupInfo);
+                                //display in all group
+                                $("#all-groups").append(`<li><div class="title g-popup">${group_name}</div><div class="description">${note}</div><div class="num-members">Members: <span>1</span></div><div class="join">Join</div> </li>`);
+                                // display in current group
+                                $("#group-name-own").text(group_name);
+                                $("#group-note-own").text(note);
+                                $("#members").append(`<li>${userInfo['name']}</li>`);
+                                $("#successAlert-create-group").text("Sucessfully create a group!").show();
+                                $("#errorAlert-create-group").hide();
+                                inGroupOrnot = 'yes';
+                                $(".leave").show();
+                                setTimeout(function(){
+                                        $(".cancel-group").click();
+                                },2000)
+                                }
+                        });
+        }
+})
+
+// join a group
+$(document).on('click', '.join', function(e){
+        e.preventDefault();
+        console.log("in group: "+inGroupOrnot)
+        var groupName = $(this).siblings('.title').text();
+        var group_uuid = groupInfo[groupName]['group_uuid'];
+        if(inGroupOrnot=="yes"){
+            alert("You already have a group");
+            $(".leave").show();
+            return
+        }
         $.ajax({
         type:'POST',
-        url:'/api/create_group',
+        url:'/api/join_group',
         contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projectId, 'group_name':group_name, 'note':note}),
+        data:JSON.stringify({'project_uuid':projectId, 'group_uuid':group_uuid}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
         },
         }).done(function(rsp_data){
-        console.log(rsp_data);
+            if(rsp_data['code']==400){
+                alert("You already have a group")
+            }else{
+                alert("Congrats! you successfully join a group");
+                inGroupOrnot = 'yes';
+                $(".leave").show();
+                let num = groupInfo[groupName]["member"].length;
+                // let num = $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text();
+                $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(++num);
+                // console.log(groupInfo[groupName]);
+                // console.log(userInfo);
+                groupInfo[groupName]['member'].push({name:`${userInfo['name']}`})
+                var description = groupInfo[groupName]['description'];
+                var members = groupInfo[groupName]['member'];
+                $("#group-name-own").text(groupName);
+                $("#group-note-own").text(description);
+                members.forEach(function(val){
+                     $("#members").append(`<li>${val['name']}</li>`)
+            })
+
+            }
         })
 });
+
+//leave a group
+$(document).on('click', '.leave', function(e){
+        e.preventDefault();
+        var groupName = $("#group-name-own").text();
+        var group_uuid = groupInfo[groupName]['group_uuid'];
+        if(inGroupOrnot == "no"){
+            return
+        }
+        console.log(groupInfo)
+        $.ajax({
+            type:'POST',
+            url:'/api/leave_group',
+            contentType: "application/json",
+            data:JSON.stringify({'group_uuid':group_uuid}),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            }).done(function(rsp_data){
+                        console.log(rsp_data)
+                        inGroupOrnot = 'no';
+                        $(".leave").hide();
+                        $("#group-name-own").text("You have not group");
+                        $("#group-note-own").text("");
+                        $("#members").find("li").remove();           
+                        groupInfo[groupName]['member'].forEach(function(item, index, object) {
+                                  if (item['name'] === userInfo['name']) {
+                                        object.splice(index, 1);
+                                  }
+                        });
+                        let num = groupInfo[groupName]["member"].length;
+                        // console.log(num);
+                        // console.log(groupInfo[groupName]["member"]);
+                        if(num==0){
+                            $('.g-popup:contains("'+groupName+'")').parent().remove();
+                        }else{$('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(num);}
+                        
+
+
+            })
+});
+
 
 
 //click Phase1
@@ -195,12 +326,16 @@ $(".document").click( function(){
 
 // click-add-group
 $(document).on('click', '.add-group', function(e){
+    e.preventDefault();
     $(".group_container").show();
     $(".add-group").hide();
+    $("#errorAlert-create-group").hide();
+    $("#successAlert-create-group").hide();
 });
 
 // click cancel
 $(document).on('click', '.cancel-group', function(e){
+    e.preventDefault();
     $(".group_container").hide();
     $(".add-group").show();
 });
@@ -362,7 +497,7 @@ $(document).on('click', '.mark-nav-3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").hide();
     $(".document-3").hide();
-})
+});
 
 
 

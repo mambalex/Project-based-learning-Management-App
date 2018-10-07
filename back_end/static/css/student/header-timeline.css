@@ -32,6 +32,14 @@ body{
     color: white;
 }
 
+.welcome-user{
+    display: none;
+    color: white;
+    position: absolute;
+    right: 90px;
+    top: 18px;
+}
+
 .user{
     position: absolute;
     right: 50px;
