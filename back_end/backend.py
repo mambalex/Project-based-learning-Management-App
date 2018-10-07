@@ -723,6 +723,8 @@ def student_load_main_info():
     else:
         return jsonify(
             {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    # User profile
+    user_profile = g.user.get_user_profile()
     # Group part
     group_info = dict()
     if db.check_has_group(g.user.user_id, project_uuid):
@@ -749,7 +751,7 @@ def student_load_main_info():
     reminder_list = global_reminder_list + unsubmit_reminder_list
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
     
-    return jsonify({'code': 200, 'msg': 'Get data success', 'group_info': group_info, 'group_list': group_list,
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info, 'group_list': group_list,
                     'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0, 'reminder_list': reminder_list})
 
 
