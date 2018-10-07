@@ -128,6 +128,17 @@ body{
     padding-top: 30px;
     transition: all 200ms ease-in;
     width: 25%;
+
+}
+
+.phase{
+    position: relative;
+}
+.phase-deadline{
+    position: absolute;
+    top:-30px;
+    color: rgb(117, 141, 150);
+
 }
 
 #phase-4{

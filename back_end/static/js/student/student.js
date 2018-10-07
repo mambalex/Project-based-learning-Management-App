@@ -8,6 +8,7 @@ var currentGroupName;
 
 
 $(document).ready(function(){
+    $(".loaders").hide();
     getProjectList();
     $.when(getUserInfo(),getSelfGroup(), getGroupList()).done(function(){
             $(".loaders").hide();
