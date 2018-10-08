@@ -3,14 +3,16 @@ var userInfo={};
 var reminderList={};
 var projectInfo={};
 var phaseList={};
+var taskList={};
 var groupInfo={};
 var currentPhase;
 
 $(document).ready(function(){
-    // getAllInfo();
+    getAllInfo();
     $(".loaders").hide();
-    // welcomeUser();
+    welcomeUser();
     $(".active").click();
+    displayAllReminder();
 })
 
 //logout
@@ -66,8 +68,16 @@ function getAllInfo(){
                         rsp_data['phase_list'].forEach(function(val){
                             phaseList[val['phase_name']]= val;
                         }); 
+                        for(var phase in phaseList){
+                            console.log(phaseList[phase]);
+                            phaseList[phase]['task_list'].forEach(function(task){
+                                taskList[task['task_name']] = task['task_uuid'];
+                            })
+                        }
                         rsp_data['reminder_list'].forEach(function(val){
-                            reminderList[val['post_time']] = val['message'];
+                            var d = new Date(val['post_time'])
+                            reminderList[d.getTime()/1000] = val;
+                            // reminderList[val['post_time']] = val;
                         });
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
@@ -75,7 +85,9 @@ function getAllInfo(){
                         console.log(groupInfo)       
                         console.log(phaseList)       
                         console.log(projectInfo)       
-                        console.log(userProfile)       
+                        console.log(userProfile)   
+                        console.log(taskList)  
+                        console.log(reminderList)  
             }
     })
 }
@@ -120,9 +132,10 @@ $(".reminder").click(function(){
     $(".documenets").hide()
     $(".group-info").hide()
     $(".deadline_view").hide()
-    $(".new_note").css('display','inline-block')
+    $(".new_note").css('display','flex')
     $("#task-select").val($("#task-select option:first").val());
     $("#group-select").val($("#group-select option:first").val());
+    $(".new-reminder-msg").val("");
 })
 
 //Click Phase1
@@ -235,14 +248,86 @@ $(document).on('click', '.phase1-upload', function(e){
             })
 })
 
+function swap(json){
+  var ret = {};
+  for(var key in json){
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
+
+
+function displayAllReminder(){
+    $(".reminder-list").find("li").remove();
+    var reminderTimestamp = Object.keys(reminderList);
+    reminderTimestamp.sort(function(a, b){return a - b});
+    var taskListReverse = swap(taskList);
+    taskListReverse["a5259728-c967-11e8-8220-4c3275989ef5"] = "Project";
+    console.log(taskListReverse);
+    reminderTimestamp.forEach(function(val){
+        console.log(reminderList[val]);
+        var message = reminderList[val]["message"];
+        var ass_uuid = reminderList[val]['ass_uuid'];
+        var date = reminderList[val]['post_time'];
+        var task = taskListReverse[ass_uuid];
+        $(".reminder-list").append(`<li >
+                                <div class="content">${message}</div>
+                                <div class="task">Task: <span id="task-name">${task}</span></div>
+                                <div class="date"><span class="due">${date}</span></div>
+                            </li>`)
+    })
+}
+
 
 //new reminder
 $(".new_note").find('.btn-info').on('click',function(){
     var msg = $(".new-reminder-msg").val();
     var task = $("#task-select").val();
     var groupType = $("#group-select").val();
-    console.log(msg, task, groupType)
+    var submit_check;
+    var task_uuid;
+    if(groupType=="All groups"){
+        submit_check = 'no';
+    }else{ submit_check = 'yes'}
+    if(task=="Others"){
+        task_uuid = projectId;
+    }else{
+        task_uuid = taskList[task];
+        console.log(taskList);
+        console.log(taskList[task]);
+    }
+    console.log(msg, task, groupType,submit_check,task_uuid)
+    var data = {
+                project_uuid: projectId,
+                ass_uuid:task_uuid,
+                message:msg,
+                submit_check:submit_check
+            }
+    $.ajax({
+            type: 'POST',
+            url: '/api/create_new_reminder',
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    alert("Successfully create new message");
+                    $(".reminder").click();
+                    // $("#successAlert-phase1").text("Successfully uploaded!").show();
+                    // $("#errorAlert-phase1").hide();
+                }else{
+                    alert("Something went wrong");
+                    // $("#errorAlert-phase1").text("File upload fails").show();
+                    // $("#successAlert-phase1").hide();
+                }
+    })
 })
+
+
 
 //set Dateline
 
