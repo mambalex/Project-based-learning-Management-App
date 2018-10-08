@@ -6,7 +6,7 @@
   <title>Lecturer</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
   <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+ <!--  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
@@ -25,6 +25,7 @@
 
   <div class='container'>
 <!-- header-timeline -->
+    <section class="loaders"><span class="loader loader-quart"> </span> Loading...</section>
       <div id="header-timeline">
         <nav class="header">
               <div class="home">
@@ -98,7 +99,7 @@
                         <a href="#" class="list-group-item navgrp">Group</a>
                         <a href="#" class="list-group-item reminder">Reminder</a>
                         <a href="#" class="list-group-item deadline">Deadline</a>
-                        <a href="#" class="list-group-item upload">Documents</a>
+                        <a href="#" class="list-group-item upload">Resources</a>
                       </div>
                     </div>
            </div>
@@ -117,7 +118,7 @@
                   <tr>
                       <td>Doc1</td>
                       <td>Test Product 4</td>
-                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                      <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
                   </tr>
                   <tr>
                       <td>Doc1</td>
@@ -129,30 +130,30 @@
            </div>
 
 
-          <div class="upload-files">
+          <div class="upload-files ">
               <div class="upload-files-header"><h4 >Upload Files</h4></div>
-
-              <form method="POST" action="#" enctype="multipart/form-data">
-                  <div class="input-group">
+               <div class="input-group">
                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
-                      <input type="text" class="form-control" placeholder="Title">
+                      <input type="text" class="form-control phase1-title" placeholder="Title">
                   </div>
                   <br>
-                  <textarea class="form-control" rows="5" id="description"></textarea><br>
+                  <textarea class="form-control" rows="5" id="phase1-description"></textarea><br>
+
+              <form method="POST"  action="#" enctype="multipart/form-data">
+                 
                   <!-- COMPONENT START -->
-                  <div class="form-group">
+                  <div class="form-group" id="phase1-file">
                       <div class="input-group input-file" name="Fichier1">
-                          <input type="text" class="form-control" placeholder='Choose a file...' />
+                          <input type="text"  class="form-control" placeholder='Choose a file...' />
                           <span class="input-group-btn">
                         <button class="btn btn-default btn-choose" type="button">Choose</button>
                     </span>
-
 
                       </div>
                   </div>
                   <!-- COMPONENT END -->
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                      <button type="submit" class="btn btn-primary pull-right phase1-upload">Submit</button>
                       <button type="reset" class="btn btn-danger">Reset</button>
                   </div>
               </form>
@@ -174,7 +175,7 @@
                 Time: 18h00 to 19h00
                 See you all there.
             </div>
-<!--             <div class="line"></div> -->
+            <div class="line"><span class="daypass"></span> days ago</div>
           </div>
 
 
@@ -183,7 +184,7 @@
                <div>
                 <div class="form-group">
                     <label >New Reminder</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
                </div>
                <button type="button" class="btn btn-info">Submit</button>
                </div>
@@ -201,10 +202,14 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <button class="btn btn-primary" ng-click="launch()">Deadline</button>
                         </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                        </div>
                       </div>
+                      
                       <div class="row">
                         <div class="col-md-12">
                           <br/>
@@ -227,10 +232,10 @@
           <div class="group-info drop-shadow-nav-grp curved.v2">
             <div class="group-info-title"> Group Forming</div>
                 <div class="group-options">
-                       <h4 class="question">How would you like to generate the groups?</h4>
-                       <div class="two-options">
-                      <input type="checkbox" name="Randomly"> <label>Randomly Generate</label> <br>
-                      <input type="checkbox" name="Manually"><label>Manually Generate</label>   <br><br>
+                      <h4 class="question">How would you like to generate the groups?</h4>
+                <div class="two-options">
+                      <input type="checkbox" name="Randomly" class="generate-group"><label>Randomly Generate</label> <br>
+                      <input type="checkbox" name="Manually" class="generate-group"><label>Manually Generate</label>   <br><br>
                       </div>
                       <button type="button" class="btn btn-success">Submit</button>
             
@@ -256,7 +261,7 @@
                           <a href="#" class="list-group-item navgrp">Group</a>
                           <a href="#" class="list-group-item reminder">Reminder</a>
                           <a href="#" class="list-group-item deadline">Deadline</a>
-                          <a href="#" class="list-group-item upload">Documents</a>
+                          <a href="#" class="list-group-item upload">Resources</a>
                       </div>
                   </div>
               </div>
@@ -266,10 +271,9 @@
 
 
 </div>
-<div class="layer">
+<!-- <div class="layer">
     <div class="glyphicon glyphicon-remove remove-layer"></div>
-</div>
-  <script type="text/javascript" src="../static/js/lecturer/side-nar.js"></script>
+</div> -->
   <script type="text/javascript" src="../static/js/lecturer/header-timeline.js"></script>
   <script  src="../static/js/lecturer/deadline.js"></script>
   <script  src="../static/js/lecturer/lecturer.js"></script>

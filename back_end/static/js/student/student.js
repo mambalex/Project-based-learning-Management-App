@@ -16,6 +16,7 @@ var currentGroupName;
 $(document).ready(function(){
     getAllInfo();
     $(".loaders").hide();
+    welcomeUser();
     $(".phase1-nav").click();
     displayReminder();
     displayGroupInfo();
@@ -61,6 +62,12 @@ function getAllInfo(){
                         console.log(userProfile)       
             }
     })
+}
+
+function welcomeUser(){
+    var name = userProfile['name'];
+    $(".welcome-user").text(`Welcome ${name}`);
+    $(".welcome-user").show();
 }
 
 function displayReminder(){

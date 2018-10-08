@@ -32,7 +32,7 @@ $(document).on('click', "#save", function(e){
     var github = $("#github").text();
     var gender = $("#gender").text();
     var passwd = $("#password").text();
-    console.log(name,dob,email,gender,passwd)
+    // console.log(name,dob,email,gender,passwd)
     $.ajax({
             type:'POST',
             url:'/api/change_user_profile',
@@ -41,7 +41,7 @@ $(document).on('click', "#save", function(e){
                     'name': name,
                     'dob': dob,
                     'gender': gender,
-                    'passwd': passwd
+                    // 'passwd': passwd
             }),
             async:false,
             headers:{
