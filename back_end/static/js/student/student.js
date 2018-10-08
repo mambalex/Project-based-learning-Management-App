@@ -23,9 +23,6 @@ $(document).ready(function(){
     displayDeadline(2);
     displayDeadline(3);
     displayDeadline(4);
-    // var diff = new Date(dueTimeStamp - d.getTime());
-    // var daysLeft = diff.getUTCDate()-1;
-    // console.log('days left: ',daysLeft)
 })
 
 
@@ -379,6 +376,45 @@ $(document).on('click', '.leave', function(e){
 
 
 
+//phase 1 upload files
+$("#upload-btn-phase1").click(function(e){
+        e.preventDefault();
+        var uuid = "A529FD7A-C967-11E8-A7BE-4C3275989EF5";
+        var file = $('#upload-file1').find("input[type=file]").prop('files')[0];
+        console.log(file);
+        console.log(uuid);
+        var formData = new FormData();
+        formData.append('upload_file', file);
+        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+        formData.append('assessment_uuid', uuid);
+        $.ajax({
+            type: 'POST',
+            url: '/api/submit_file',
+            data: formData,
+            contentType: false,
+            cache: false,
+            // enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            async: false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    $("#successAlert-phase1").text("Successfully uploaded!").show();
+                    $("#errorAlert-phase1").hide();
+                }else{
+                    $("#errorAlert-phase1").text("File upload fails").show();
+                    $("#successAlert-phase1").hide();
+                }
+            })
+        
+})
+
+
+
 //click Phase1
 $(".phase1-nav").click( function(){
     $(".notes-wrapper").show();
@@ -389,6 +425,10 @@ $(".phase1-nav").click( function(){
     $(".all-groups").hide();
     $(".documents").hide();
     $(".phase1-mark").hide();
+    $("#phase1-upload").hide();
+    $("#successAlert-phase1").hide();
+    $("#errorAlert-phase1").hide();
+    $("button[type='reset']").click();
 });
 
 // click group
@@ -399,7 +439,12 @@ $(document).on('click', '.navgrp', function(e){
     $(".add-group").show();
     $(".all-groups").show();
     $(".phase1-mark").hide();
+    $("#phase1-upload").hide();
+    $("#successAlert-phase1").hide();
+    $("#errorAlert-phase1").hide();
+    $("button[type='reset']").click();
 });
+
 
 //click Documents
 $(".document").click( function(){
@@ -410,6 +455,25 @@ $(".document").click( function(){
     $(".all-groups").hide();
     $(".documents").show();
     $(".phase1-mark").hide();
+    $("#phase1-upload").hide();
+    $("#successAlert-phase1").hide();
+    $("#errorAlert-phase1").hide();
+    $("button[type='reset']").click();
+});
+
+// click proposal
+$(".nav-proposal").click( function(){
+    $(".notes-wrapper").hide();
+    $(".add-group").hide();
+    $(".group-info").hide();
+    $(".group_container").hide();
+    $(".all-groups").hide();
+    $(".documents").hide();
+    $(".phase1-mark").hide();
+    $("#phase1-upload").show();
+    $("#successAlert-phase1").hide();
+    $("#errorAlert-phase1").hide();
+    $("button[type='reset']").click();
 });
 
 //click mark
@@ -421,6 +485,10 @@ $(".navmark1").click(function(){
     $(".all-groups").hide();
     $(".documents").hide();
     $(".phase1-mark").show();
+    $("#phase1-upload").hide();
+    $("#successAlert-phase1").hide();
+    $("#errorAlert-phase1").hide();
+    $("button[type='reset']").click();
 })
 
 // group
@@ -506,7 +574,7 @@ $(function() {
 });
 
 
-//upload files
+//phase 2 upload files
 $("#upload-btn-phase2").click(function(e){
         e.preventDefault();
         var uuid;
@@ -534,14 +602,18 @@ $("#upload-btn-phase2").click(function(e){
             async: false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
-            },
-            success: function(data) {
+            }
+        }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
-
+                    $("#successAlert-phase2").text("Successfully uploaded!").show();
+                    $("#errorAlert-phase2").hide();
+                }else{
+                    $("#errorAlert-phase2").text("File upload fails").show();
+                    $("#successAlert-phase2").hide();
                 }
-            },
-        });
+            })
+        
 })
 
 
@@ -554,6 +626,9 @@ $(".phase2-nav").click( function(){
     $(".file-input").hide();
     $(".document-2").hide();
     $(".phase2-mark").hide();
+    $("#successAlert-phase2").hide();
+    $("#errorAlert-phase2").hide();
+    $("button[type='reset']").click();
 
 });
 
@@ -566,6 +641,9 @@ $(document).on('click', '.nav-requirement', function(e){
     $(".design").hide();
     $(".requirement").show();
     $(".file-input").show();
+    $("#successAlert-phase2").hide();
+    $("#errorAlert-phase2").hide();
+    $("button[type='reset']").click();
     
 })
 
@@ -578,6 +656,9 @@ $(document).on('click', '.nav-design', function(e){
     $(".requirement").hide();
     $(".file-input").show();
     $(".design").show(); 
+    $("#successAlert-phase2").hide();
+    $("#errorAlert-phase2").hide();
+    $("button[type='reset']").click();
 })
 
 //click resources
@@ -589,6 +670,9 @@ $(document).on('click', '.document', function(e){
     $(".design").hide();
     $(".phase2-mark").hide();
     $(".document-2").show();
+    $("#successAlert-phase2").hide();
+    $("#errorAlert-phase2").hide();
+    $("button[type='reset']").click();
 })
 
 //click mark
@@ -600,6 +684,9 @@ $(document).on('click', '.navmark2', function(e){
     $(".design").hide();
     $(".document-2").hide();
     $(".phase2-mark").show();
+    $("#successAlert-phase2").hide();
+    $("#errorAlert-phase2").hide();
+    $("button[type='reset']").click();
 })
 
 
@@ -611,6 +698,9 @@ $(document).on('click', '.phase3-nav', function(e){
     $(".file-input").hide();
     $(".document-3").hide();
     $(".phase3-mark").hide();
+    $("#successAlert-phase3").hide();
+    $("#errorAlert-phase3").hide();
+    $("button[type='reset']").click();
 })
 
 //click uploading files
@@ -619,6 +709,9 @@ $(document).on('click', '.upload-nav-3', function(e){
     $(".file-input").show();
     $(".document-3").hide();
     $(".phase3-mark").hide();
+    $("#successAlert-phase3").hide();
+    $("#errorAlert-phase3").hide();
+    $("button[type='reset']").click();
 })
 
 //click resources
@@ -627,6 +720,9 @@ $(document).on('click', '.document-nav-3', function(e){
     $(".file-input").hide();
     $(".document-3").show();
     $(".phase3-mark").hide();
+    $("#successAlert-phase3").hide();
+    $("#errorAlert-phase3").hide();
+    $("button[type='reset']").click();
 })
 
 //click mark
@@ -635,6 +731,9 @@ $(document).on('click', '.navmark3', function(e){
     $(".file-input").hide();
     $(".document-3").hide();
     $(".phase3-mark").show();
+    $("#successAlert-phase3").hide();
+    $("#errorAlert-phase3").hide();
+    $("button[type='reset']").click();
 });
 
 //click add input
@@ -651,6 +750,73 @@ $(document).on('click', '.add-input', function(e){
 $(document).on('click', '.remove-input', function(e){
     $(this).parent().remove();
 })
+
+
+//phase 3 upload file
+$("#upload-btn-phase3").click(function(e){
+        e.preventDefault();
+        var uuid = "A52FA206-C967-11E8-989A-4C3275989EF5";
+        var file = $('#upload-file3').find("input[type=file]").prop('files')[0];
+        var formData = new FormData();
+        formData.append('upload_file', file);
+        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+        formData.append('assessment_uuid', uuid);
+        $.ajax({
+            type: 'POST',
+            url: '/api/submit_file',
+            data: formData,
+            contentType: false,
+            cache: false,
+            // enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            async: false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    $("#successAlert-phase3").text("Successfully uploaded!").show();
+                    $("#errorAlert-phase3").hide();
+                }else{
+                    $("#errorAlert-phase3").text("File upload fails").show();
+                    $("#successAlert-phase3").hide();
+                }
+            })
+})
+
+//phase4
+
+//click phase4
+$(document).on('click', '.phase4-nav', function(e){
+    $(".notes-wrapper-4").show();
+    $(".document-4").hide();
+    $(".phase4-mark").hide();
+    $("button[type='reset']").click();
+})
+
+//click resources
+$(document).on('click', '.document-nav-4', function(e){
+    $(".notes-wrapper-4").hide();
+    $(".document-4").show();
+    $(".phase4-mark").hide();
+    $("button[type='reset']").click();
+})
+
+//click mark
+$(document).on('click', '.navmark4', function(e){
+    $(".notes-wrapper-4").hide();
+    $(".document-4").hide();
+    $(".phase4-mark").show();
+    $("button[type='reset']").click();
+})
+
+
+
+
+
+
 
 
 
