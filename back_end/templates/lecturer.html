@@ -181,13 +181,41 @@
 
 <!-- create new reminder -->
             <div class="new_note" >
-               <div>
-                <div class="form-group">
-                    <label >New Reminder</label>
-                    <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
-               </div>
-               <button type="button" class="btn btn-info">Submit</button>
-               </div>
+
+                <div class="form-group new_reminder">
+                          <label >New Reminder</label>
+                          <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
+                      <select class="form-control" id="task-select">
+                        <option value=""hidden>Task</option>
+                        <option>Proposal</option>
+                        <option>Design document</option>
+                        <option>Requirement document</option>
+                        <option>Implementation files</option>
+                        <option>Demo</option>
+                        <option>Others</option>
+                      </select>
+                      <select class="form-control" id="group-select">
+                        <option value=""hidden>Group Type</option>
+                        <option>All groups</option>
+                        <option>Unsubmitted groups</option>
+                      </select>
+                     <button type="button" class="btn btn-info">Submit</button>
+                  </div>
+                  <div class="all-reminders"  id="due-date1">
+                      <div class="title">All Reminders</div>
+                        <ul class="reminder-list">
+                            <li >
+                                <div class="content">Proposal</div>
+                                <div class="date"><span class="due">4</span> days ago</div>
+                            </li>
+                            <li>
+                              <div class="content">Phase1</div>
+                                <div class="date"><span class="due">7</span> ago</div>
+                            </li>
+                      </ul>
+                  </div>
+
+
             </div>
 
            <br><br><br><br>

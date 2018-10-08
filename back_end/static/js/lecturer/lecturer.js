@@ -1,3 +1,5 @@
+const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+
 $(".loaders").hide();
 // welcomeUser();
 //logout
@@ -43,7 +45,7 @@ function getMonthFromString(mon){
 function getAllInfo(){
     return $.ajax({
             type:'POST',
-            url:'/api/student_main_info',
+            url:'/api/lecturer_main_info',
             contentType: "application/json",
             data:JSON.stringify({'project_uuid':projectId}),
             async:false,
@@ -113,7 +115,7 @@ $(".reminder").click(function(){
     $(".documenets").hide()
     $(".group-info").hide()
     $(".deadline_view").hide()
-    $(".new_note").show()
+    $(".new_note").css('display','inline-block')
 })
 
 //Click Phase1
