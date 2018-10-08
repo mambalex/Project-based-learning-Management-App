@@ -1033,30 +1033,52 @@ Sample Response:
 }
 
 -------------------
+Change phase
 
-
-POST request to 
+POST request to /api/change_phase
 Methods: POST
-Type: FORM
+Type: JSON
 
 Sample Post:
-{}
+{
+    'phase_uuid': 'sample_phase_uuid',
+    'name': 'New Phase Name',
+    'deadline': '2018-10-08 22:14:21+11',
+    'mark_release': '2018-10-08 22:14:21+11',
+    'spec_address': '/sample/specific/file.pdf',
+}
 
 Sample Response:
-{}
+{
+    'code': 200,
+    'msg': 'Change success',
+    'user_id': 'lecturer1@gmail.com',
+    'user_type': 'lecturer'
+}
 
 -------------------
+Change task
 
-
-POST request to 
+POST request to /api/change_task
 Methods: POST
-Type: FORM
+Type: JSON
 
 Sample Post:
-{}
+{
+    'task_uuid': 'sample_task_uuid',
+    'name': 'New Task Name',
+    'deadline': '2018-10-08 22:14:21+11',
+    'mark_release': '2018-10-08 22:14:21+11',
+    'spec_address': '/sample/specific/file.pdf',
+}
 
 Sample Response:
-{}
+{
+    'code': 200,
+    'msg': 'Change success',
+    'user_id': 'lecturer1@gmail.com',
+    'user_type': 'lecturer'
+}
 
 -------------------
 
