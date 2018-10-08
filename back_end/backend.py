@@ -95,7 +95,7 @@ class User:
         user_profile["name"] = self.name
         return user_profile
 
-    def generate_auth_token(self, expiration=600):
+    def generate_auth_token(self, expiration=6000):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.user_id, 'user_type': self.user_type})
 

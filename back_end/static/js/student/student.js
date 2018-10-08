@@ -5,18 +5,24 @@ var selfGroup={};
 var selfGroupStatus;
 var userInfo={};
 var phaseList={};
+var reminderList={};
 var projectInfo={};
 var userProfile={};
 var inGroupOrnot;
 var currentGroupName;
 
-$(".loaders").hide();
+// $(".loaders").hide();
 
 $(document).ready(function(){
     getAllInfo();
     $(".loaders").hide();
     $(".phase1-nav").click();
+    displayReminder();
     displayGroupInfo();
+    displayDeadline(1);
+    displayDeadline(2);
+    displayDeadline(3);
+    displayDeadline(4);
     // var diff = new Date(dueTimeStamp - d.getTime());
     // var daysLeft = diff.getUTCDate()-1;
     // console.log('days left: ',daysLeft)
@@ -45,6 +51,9 @@ function getAllInfo(){
                         rsp_data['phase_list'].forEach(function(val){
                             phaseList[val['phase_name']]= val;
                         }); 
+                        rsp_data['reminder_list'].forEach(function(val){
+                            reminderList[val['post_time']] = val['message'];
+                        });
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
@@ -55,6 +64,31 @@ function getAllInfo(){
                         console.log(userProfile)       
             }
     })
+}
+
+function displayReminder(){
+    var max = 0;
+    var latestReminder;
+    console.log(reminderList);
+    var reminderTimeList = Object.keys(reminderList);
+    reminderTimeList.forEach(function(val){
+        var temp = new Date(val);
+        var timeSTamp = temp.getTime();
+        if(timeSTamp > max){
+            max = timeSTamp;
+            latestReminder = val;
+        }
+    })
+    console.log(latestReminder);
+    var latestMessage = reminderList[latestReminder];
+    console.log(latestMessage);
+    var temp = new Date(latestReminder);
+    var now = new Date();
+    var daypass = Math.ceil((now.getTime()/1000 - temp.getTime()/1000)/(60 * 60 * 24));
+    $(".reminder").text(latestMessage);
+    $(".daypass").text(daypass);
+
+
 }
 
 function displayGroupInfo(){
@@ -88,33 +122,48 @@ function displayGroupInfo(){
             }
         }
 }
-
-function displayDeadline(){
+function displayDeadline(id){
+    var phase = "Phase "+id;
     let allDeadlines = {};
+    //phase deadline
     var d = new Date();
-    var phase1Due = phaseList['Phase 1']['deadline'].slice(5);
-    var taskList = phaseList['Phase 1']['task_list'];
-    allDeadlines[""] = "Phase 1";
-    // console.log(phase1Due);
-    // var dueTimeStamp = Date.parse(phase1Due);
-    // console.log(dueTimeStamp);
-    // console.log(d.getTime());
-    // console.log(dueTimeStamp - d.getTime());
-    // var daysLeft = Math.ceil((dueTimeStamp - d.getTime())/(60 * 60 * 24));
-    taskList.forEach(function(val){
-        let taskDeadline = val['deadline'];
-        let taskName = val['task_name'];
-        let taskId = val['task_uuid'];
-        allDeadlines[""] = taskName;
-    })
-    for(var name in allDeadlines){
-            $(".all-dealines").append(`<li >
-                              <div class='content'>${name}</div>
-                              <div class='date'><span class="due">${allDeadlines[name]}</span> days from now</div>
-                          </li>`);
-    }
+    var phase1Due = phaseList[phase]['deadline'].split(" ")[0];
+    var newD = new Date(phase1Due);
+    console.log(d.getTime(), newD.getTime());
+    var phase1left = Math.ceil((newD.getTime()/1000 - d.getTime()/1000)/(60 * 60 * 24));
+    allDeadlines[phase1left] = [phase];
+    console.log(allDeadlines);
 
+    //task deadline
+    var taskList = phaseList[phase]['task_list'];
+    console.log(taskList);
+    taskList.forEach(function(val){
+        var taskDeadline = val['deadline'].split(" ")[0];
+        var taskName = val['task_name'];
+        var taskId = val['task_uuid'];
+        var d = new Date();
+        var taskD = new Date(taskDeadline);
+        var taskleft = Math.ceil((taskD.getTime()/1000 - d.getTime()/1000)/(60 * 60 * 24));
+        if(taskleft in allDeadlines){
+            allDeadlines[taskleft].push(taskName);
+        }else{allDeadlines[taskleft] = [taskName];}
+        
+    })
+    console.log(allDeadlines);
+    var deadlines = Object.keys(allDeadlines);
+    deadlines.sort(function(a, b){return a - b});
+    deadlines.forEach(function(left){
+        allDeadlines[left].forEach(function(val){
+            // var temp = `.${phase}`;
+            // console.log(temp);
+            $(`.phase${id}`).find(".all-dealines").append(`<li >
+                              <div class='content'>${val}</div>
+                              <div class='date'><span class="due">${left}</span> days from now</div>
+                          </li>`);
+        })
+    })
 }
+
 
 // function setProfileCookie(){
 //     setCookie('name', userProfile['name'], 1, "/");
@@ -145,6 +194,9 @@ function displayDeadline(){
 //     }
 //     return "";
 // }
+
+
+
 
 
 
@@ -460,11 +512,12 @@ $("#upload-btn-phase2").click(function(e){
         var uuid;
         var designUuid = '2733B150-C9EA-11E8-94AC-4C3275989EF5';
         var rqmUuid = 'A52CF4BE-C967-11E8-8B38-4C3275989EF5';
-        if ($("#phase2-upload").find('h4').text() == "Requirement document"){
+        if ($("#phase2-upload").find('.design').css('display')=="none"){
             uuid = rqmUuid;
         }else{ uuid = designUuid;}
         var file = $('#upload-file2').find("input[type=file]").prop('files')[0];
         console.log(file);
+        console.log(uuid);
         var formData = new FormData();
         formData.append('upload_file', file);
         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
