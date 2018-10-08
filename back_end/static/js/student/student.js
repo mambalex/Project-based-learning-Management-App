@@ -10,13 +10,16 @@ var userProfile={};
 var inGroupOrnot;
 var currentGroupName;
 
-
+$(".loaders").hide();
 
 $(document).ready(function(){
     getAllInfo();
     $(".loaders").hide();
-    displayGroupInfo();
     $(".phase1-nav").click();
+    displayGroupInfo();
+    // var diff = new Date(dueTimeStamp - d.getTime());
+    // var daysLeft = diff.getUTCDate()-1;
+    // console.log('days left: ',daysLeft)
 })
 
 
@@ -44,6 +47,7 @@ function getAllInfo(){
                         }); 
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
+                        localStorage.setItem('profile', JSON.stringify(userProfile));
                         console.log(selfGroup)
                         console.log(groupInfo)       
                         console.log(phaseList)       
@@ -85,10 +89,87 @@ function displayGroupInfo(){
         }
 }
 
+function displayDeadline(){
+    let allDeadlines = {};
+    var d = new Date();
+    var phase1Due = phaseList['Phase 1']['deadline'].slice(5);
+    var taskList = phaseList['Phase 1']['task_list'];
+    allDeadlines[""] = "Phase 1";
+    // console.log(phase1Due);
+    // var dueTimeStamp = Date.parse(phase1Due);
+    // console.log(dueTimeStamp);
+    // console.log(d.getTime());
+    // console.log(dueTimeStamp - d.getTime());
+    // var daysLeft = Math.ceil((dueTimeStamp - d.getTime())/(60 * 60 * 24));
+    taskList.forEach(function(val){
+        let taskDeadline = val['deadline'];
+        let taskName = val['task_name'];
+        let taskId = val['task_uuid'];
+        allDeadlines[""] = taskName;
+    })
+    for(var name in allDeadlines){
+            $(".all-dealines").append(`<li >
+                              <div class='content'>${name}</div>
+                              <div class='date'><span class="due">${allDeadlines[name]}</span> days from now</div>
+                          </li>`);
+    }
+
+}
+
+// function setProfileCookie(){
+//     setCookie('name', userProfile['name'], 1, "/");
+//     setCookie('dob', userProfile['dob'], 1, "/");
+//     setCookie('gender', userProfile['gender'], 1, "/");
+//     setCookie('email', userProfile['email'], 1, "/");
+// }
+
+// function setCookie(cname, cvalue, exdays, path) {
+//     var d = new Date();
+//     d.setTime(d.getTime() + (exdays*24*60*60*1000));
+//     var expires = "expires="+ d.toUTCString();
+//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=" + path;
+// }
+
+// function getCookie(cname) {
+//     var name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(';');
+//     for(var i = 0; i <ca.length; i++) {
+//         var c = ca[i];
+//         while (c.charAt(0) == ' ') {
+//             c = c.substring(1);
+//         }
+//         if (c.indexOf(name) == 0) {
+//             return c.substring(name.length, c.length);
+//         }
+//     }
+//     return "";
+// }
 
 
 
 // phase1
+
+//reminder
+
+
+
+
+
+//deadline
+
+// var myDate="26-02-2012";
+// myDate=myDate.split("-");
+// var newDate=myDate[1]+"/"+myDate[0]+"/"+myDate[2];
+// alert(new Date(newDate).getTime()); //w
+// var d = new Date();
+// var phase1Due = phaseList['Phase 1']['deadline'];
+// var dueTimeStamp = Date.parse(phase1Due);
+// var diff = new Date(dueTimeStamp - d.getTime());
+// var daysLeft = diff.getUTCDate()-1;
+// console.log('days left: ',daysLeft)
+// $(".phase1-due").
+
 
 //click logout
 $("#logout").click(function(){
@@ -98,14 +179,7 @@ $("#logout").click(function(){
 
 
 
-// click group
-$(document).on('click', '.navgrp', function(e){
-    $(".notes-wrapper").hide();
-    $(".documents").hide();
-    $(".group-info").show();
-    $(".add-group").show();
-    $(".all-groups").show();
-});
+
 
 // create new group
 $(document).on('click', '#group-save', function(e){
@@ -262,6 +336,17 @@ $(".phase1-nav").click( function(){
     $(".group_container").hide();
     $(".all-groups").hide();
     $(".documents").hide();
+    $(".phase1-mark").hide();
+});
+
+// click group
+$(document).on('click', '.navgrp', function(e){
+    $(".notes-wrapper").hide();
+    $(".documents").hide();
+    $(".group-info").show();
+    $(".add-group").show();
+    $(".all-groups").show();
+    $(".phase1-mark").hide();
 });
 
 //click Documents
@@ -272,8 +357,19 @@ $(".document").click( function(){
     $(".group_container").hide();
     $(".all-groups").hide();
     $(".documents").show();
+    $(".phase1-mark").hide();
 });
 
+//click mark
+$(".navmark1").click(function(){
+    $(".notes-wrapper").hide();
+    $(".add-group").hide();
+    $(".group-info").hide();
+    $(".group_container").hide();
+    $(".all-groups").hide();
+    $(".documents").hide();
+    $(".phase1-mark").show();
+})
 
 // group
 
@@ -359,15 +455,20 @@ $(function() {
 
 
 //upload files
-$("#upload-btn").click(function(e){
+$("#upload-btn-phase2").click(function(e){
         e.preventDefault();
-        var file = $('#upload-file').find("input[type=file]").prop('files')[0];
+        var uuid;
+        var designUuid = '2733B150-C9EA-11E8-94AC-4C3275989EF5';
+        var rqmUuid = 'A52CF4BE-C967-11E8-8B38-4C3275989EF5';
+        if ($("#phase2-upload").find('h4').text() == "Requirement document"){
+            uuid = rqmUuid;
+        }else{ uuid = designUuid;}
+        var file = $('#upload-file2').find("input[type=file]").prop('files')[0];
         console.log(file);
         var formData = new FormData();
         formData.append('upload_file', file);
-        formData.append('group_uuid', groupInfo[currentGroupName]['group_uuid']);
-        formData.append('assessment_uuid', "04AFE482-C968-11E8-8423-4C3275989EF5");
-        console.log(formData);
+        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+        formData.append('assessment_uuid', uuid);
         $.ajax({
             type: 'POST',
             url: '/api/submit_file',
@@ -382,6 +483,7 @@ $("#upload-btn").click(function(e){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
             },
             success: function(data) {
+                console.log(data);
                 if(data['code']==200){
 
                 }
@@ -398,25 +500,31 @@ $(".phase2-nav").click( function(){
     $(".notes-wrapper-2").show();
     $(".file-input").hide();
     $(".document-2").hide();
+    $(".phase2-mark").hide();
 
 });
 
 //click requirement document
-$(document).on('click', '.nav-design', function(e){
+$(document).on('click', '.nav-requirement', function(e){
     e.preventDefault();
-    $(".file-input").show();
+    $(".phase2-mark").hide();
     $(".notes-wrapper-2").hide();
-    $(".requirement").hide();
-    $(".design").show();
+    $(".document-2").hide();
+    $(".design").hide();
+    $(".requirement").show();
+    $(".file-input").show();
+    
 })
 
 //click design document
-$(document).on('click', '.nav-requirement', function(e){
+$(document).on('click', '.nav-design', function(e){
     e.preventDefault();
-    $(".file-input").show();
+    $(".phase2-mark").hide();
     $(".notes-wrapper-2").hide();
-    $(".requirement").show();
-    $(".design").hide();
+    $(".document-2").hide();
+    $(".requirement").hide();
+    $(".file-input").show();
+    $(".design").show(); 
 })
 
 //click resources
@@ -426,7 +534,19 @@ $(document).on('click', '.document', function(e){
     $(".notes-wrapper-2").hide();
     $(".requirement").hide();
     $(".design").hide();
-    $(".documents-2").show();
+    $(".phase2-mark").hide();
+    $(".document-2").show();
+})
+
+//click mark
+$(document).on('click', '.navmark2', function(e){
+    e.preventDefault();
+    $(".file-input").hide();
+    $(".notes-wrapper-2").hide();
+    $(".requirement").hide();
+    $(".design").hide();
+    $(".document-2").hide();
+    $(".phase2-mark").show();
 })
 
 
@@ -437,6 +557,7 @@ $(document).on('click', '.phase3-nav', function(e){
     $(".notes-wrapper-3").show();
     $(".file-input").hide();
     $(".document-3").hide();
+    $(".phase3-mark").hide();
 })
 
 //click uploading files
@@ -444,6 +565,7 @@ $(document).on('click', '.upload-nav-3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").show();
     $(".document-3").hide();
+    $(".phase3-mark").hide();
 })
 
 //click resources
@@ -451,16 +573,31 @@ $(document).on('click', '.document-nav-3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").hide();
     $(".document-3").show();
+    $(".phase3-mark").hide();
 })
 
 //click mark
-$(document).on('click', '.mark-nav-3', function(e){
+$(document).on('click', '.navmark3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").hide();
     $(".document-3").hide();
+    $(".phase3-mark").show();
 });
 
-
+//click add input
+$(document).on('click', '.add-input', function(e){
+    $("#upload-file3").append(`<div class="input-group inputFile" >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                            </span>
+                            <div class="remove-input"><i class="fas fa-minus-circle fa-2x"></i></div>
+                        </div>`)
+})
+//click remove btn
+$(document).on('click', '.remove-input', function(e){
+    $(this).parent().remove();
+})
 
 
 

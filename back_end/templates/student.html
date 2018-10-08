@@ -98,7 +98,7 @@
                         <a href="#" class="list-group-item active phase1-nav">Phase 1</a>
                         <a href="#" class="list-group-item navgrp">Group</a>
                         <a href="#" class="list-group-item document">Resources</a>
-                        <a href="#" class="list-group-item document">Mark</a>
+                        <a href="#" class="list-group-item navmark1">Mark</a>
                       </div>
                     </div>
                         <!-- <script type="text/javascript" src="js/side-nar.js"></script> -->
@@ -106,14 +106,14 @@
 <!--due-date-->
                     <div class="due-date">
                       <div class="title">Upcoming Due Dates</div>
-                      <ul>
+                      <ul class="all-dealines">
                           <li >
                               <div class="content">Proposal</div>
-                              <div class="date"><span>4</span> days from now</div>
+                              <div class="date"><span class="due">4</span> days from now</div>
                           </li>
                           <li>
-                            <div class="content">Phase1</div>
-                              <div class="date"><span>7</span> days from now</div>
+                            <div >Phase1</div>
+                              <div class="date"><span class="due">7</span> days from now</div>
                           </li>
                       </ul>
                     </div>
@@ -371,9 +371,16 @@
               <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
             <br>
           </div>
+
+              <div id="mark" class="all-groups drop-shadow-nav-grp curved.v2 phase1-mark">
+                <div class="group-info-title"> Mark</div>
+                       <div class="group-wrapper mark-wrapper">
+                        <p>Your mark for phase 1 is <span class="mark-phase1"></span></p></div>
+              </div>
         </div>
       </div>
     </div>
+
 
 <!--phase2-->
 
@@ -387,7 +394,7 @@
                         <a href="#" class="list-group-item nav-requirement">Requirement document</a>
                         <a href="#" class="list-group-item nav-design">Design document</a>
                         <a href="#" class="list-group-item document">Resources</a>
-                        <a href="#" class="list-group-item nav-design">Mark</a>
+                        <a href="#" class="list-group-item navmark2">Mark</a>
                     </div>
                 </div>
             <div class="due-date" id='due-date2'>
@@ -427,14 +434,14 @@
                         <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
                 </div>
 
-            <div class="file-input">
+            <div class="file-input" id="phase2-upload">
                 <div id="successAlert-phase2" class="alert alert-success" role="alert" style="display:none;"></div>
                 <div id="errorAlert-phase2" class="alert alert-danger" role="alert" style="display:none;"></div>
                 <h4 class="requirement">Requirement document</h4>
                 <h4 class="design">Design document</h4>
                 <form method="POST" action="#" enctype="multipart/form-data" >
                     <!-- COMPONENT START -->
-                    <div class="form-group" id="upload-file">
+                    <div class="form-group" id="upload-file2">
                         <div class="input-group input-file" name="Fichier1" >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
@@ -446,7 +453,7 @@
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
-                        <button  class="btn btn-primary pull-right" id="upload-btn">Submit</button>
+                        <button  class="btn btn-primary pull-right" id="upload-btn-phase2">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>
                 </form>
@@ -475,6 +482,11 @@
                     </table>
 
                 </div>
+               <div id="mark" class="all-groups drop-shadow-nav-grp curved.v2 phase2-mark">
+                <div class="group-info-title"> Mark</div>
+                       <div class="group-wrapper mark-wrapper">
+                        <p>Your mark for phase 2 is <span class="mark-phase2"></span></p></div>
+              </div>
 
         </div>
         </div>
@@ -492,7 +504,7 @@
                         <a href="#" class="list-group-item active phase3-nav">Phase 3</a>
                         <a href="#" class="list-group-item upload-nav-3">Uploading files</a>
                           <a href="#" class="list-group-item document-nav-3">Resources</a>
-                        <a href="#" class="list-group-item mark-nav-3">Mark</a>
+                        <a href="#" class="list-group-item navmark3">Mark</a>
                     </div>
                 </div>
             <div class="due-date">
@@ -536,15 +548,21 @@
                 <h4 class="design">Design document</h4>
                 <form method="POST" action="#" enctype="multipart/form-data" >
                     <!-- COMPONENT START -->
-                    <div class="form-group" id="upload-file">
-                        <div class="input-group input-file" name="Fichier1" >
+                    <div class="add-input"><i class="fas fa-plus-circle fa-2x"></i></div>
+                    <div class="form-group" id="upload-file3">
+                        <div class="input-group input-file"  >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
                         </span>
-
-
                         </div>
+<!--                      <div class="input-group inputFile" >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                            </span>
+                            <div class="remove-input"><i class="fas fa-minus-circle fa-2x"></i></div>
+                        </div> -->
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
@@ -578,7 +596,13 @@
 
                 </div>
 
-        </div>
+        
+         <div id="mark" class="all-groups drop-shadow-nav-grp curved.v2 phase3-mark">
+                <div class="group-info-title"> Mark</div>
+                       <div class="group-wrapper mark-wrapper">
+                        <p>Your mark for phase 3 is <span class="mark-phase3"></span></p></div>
+         </div>
+         </div>
         </div>
     </div>
 </div>
@@ -592,7 +616,7 @@
                         <a href="#" class="list-group-item active phase4-nav">Phase 4</a>
                   <!--       <a href="#" class="list-group-item nav-requirement">Uploading files</a> -->
                     <a href="#" class="list-group-item document">Resources</a>
-                        <a href="#" class="list-group-item nav-design">Mark</a>
+                        <a href="#" class="list-group-item navmark4">Mark</a>
                     </div>
                 </div>
             <div class="due-date">
@@ -636,14 +660,13 @@
                 <h4 class="design">Design document</h4>
                 <form method="POST" action="#" enctype="multipart/form-data" >
                     <!-- COMPONENT START -->
-                    <div class="form-group" id="upload-file">
+                    <div class="form-group" id="upload-file4">
+                        <div><i></i></div>
                         <div class="input-group input-file" name="Fichier1" >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
-                        </span>
-
-
+                            </span>
                         </div>
                     </div>
                     <!-- COMPONENT END -->
@@ -676,6 +699,12 @@
                     </table>
 
                 </div>
+
+             <div id="mark" class="all-groups drop-shadow-nav-grp curved.v2 phase3-mark">
+                <div class="group-info-title"> Mark</div>
+                       <div class="group-wrapper mark-wrapper">
+                        <p>Your mark for phase 3 is <span class="mark-phase3"></span></p></div>
+              </div>
 
         </div>
         </div>
