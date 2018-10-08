@@ -132,6 +132,8 @@
 
 
           <div class="upload-files ">
+              <div class="alert alert-success" role="alert" style="display:none;"></div>
+              <div  class="alert alert-danger" role="alert" style="display:none;"></div>
               <div class="upload-files-header"><h4 >Upload Files</h4></div>
                <div class="input-group">
                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
@@ -139,6 +141,13 @@
                   </div>
                   <br>
                   <textarea class="form-control" rows="5" id="phase1-description" placeholder="Description"></textarea><br>
+                <select class="form-control upload-selector">
+                          <option value=""hidden>Phase</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>                 
+                </select>
 
               <form method="POST"  action="#" enctype="multipart/form-data">
                  
@@ -182,8 +191,9 @@
 
 <!-- create new reminder -->
             <div class="new_note" >
-
                 <div class="form-group new_reminder">
+                      <div class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
                       <select class="form-control" id="task-select">
@@ -221,6 +231,8 @@
 
             <div class="deadline_view" style="display: none;">
               <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
+                      <div  class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
                       <div class="row">
                         <div class="col-md-12">
                           <h1>Please pick a deadline.</h1>
@@ -310,7 +322,6 @@
 
           </div>
       </div>
-
 
 </div>
 <!-- <div class="layer">

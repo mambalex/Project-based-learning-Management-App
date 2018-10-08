@@ -17,6 +17,12 @@ button{
     -moz-outline-style: none !important;
 }
 
+
+.alert{
+  font-size: 14px;
+  text-align: center !important;
+}
+
 /*phase1*/
 
 /*side-nav*/
@@ -324,6 +330,10 @@ button{
 .upload-files .upload-files-header{
     color: #245853;
     text-align: center;
+}
+
+.upload-selector{
+  margin-bottom: 20px;
 }
 
 /*phase2*/

@@ -25,6 +25,14 @@ $(".files").on('click',function(){
     
 })
 
+function popUp(src, sucessOrFail, text, click){
+   $(src).find(sucessOrFail).text(text).show();
+    setTimeout(function(){
+         $(click).click();
+    },3000)
+
+}
+
 
 
 
@@ -117,16 +125,19 @@ $('input.generate-group').on('change', function() {
 
 //click Group
 $(".navgrp").click( function(){
+    $(".alert").hide()
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
     $(".documenets").hide()
     $(".new_note").hide()
     $(".deadline_view").hide()
     $(".group-info").show()
+
 });
 
 //Click reminder
 $(".reminder").click(function(){
+    $(".alert").hide()
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
     $(".documenets").hide()
@@ -140,6 +151,7 @@ $(".reminder").click(function(){
 
 //Click Phase1
 $(".active").click( function(){
+    $(".alert").hide()
     $(".group-info").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
@@ -150,6 +162,7 @@ $(".active").click( function(){
 
 //Click Deadline
 $(".deadline").click( function(){
+    $(".alert").hide()
     $(".group-info").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
@@ -162,12 +175,14 @@ $(".deadline").click( function(){
 
 //Click Documents
 $(".upload").click( function(){
+    $(".alert").hide()
     $(".group-info").hide()
     $(".new_note").hide()
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
     $(".upload-files").show()
     $(".documenets").show()
+    $(".reset").click();
 });
 
 
@@ -216,34 +231,39 @@ $(document).on('click', '.phase1-upload', function(e){
         var title = $(".phase1-title").val();
         var description = $("#phase1-description").val();
         var file = $('#phase1-file').find("input[type=file]").prop('files')[0];
-
+        var phase = $(".upload-selector").val();
+        if(phase==""){
+            popUp(".upload-files", ".alert-danger","Please select a phase",".upload");
+            return
+        }
+        var phaseId = phaseList[phase]['phase_uuid'];
         var formData = new FormData();
-        formData.append('upload_file', file);
-        // formData.append('description', description);
-        // formData.append('title', title);
-        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-        formData.append('assessment_uuid', uuid);
+        formData.append('upload_file', file);       
+        formData.append('description', description);
+        formData.append('title', title);
+        formData.append('project_uuid', projectId);
+        formData.append('phase_uuid', phaseId);
         $.ajax({
             type: 'POST',
-            url: '/api/submit_file',
+            url: '/api/upload_resource',
             data: formData,
             contentType: false,
             cache: false,
-            // enctype: 'multipart/form-data',
             contentType: false,
             processData: false,
             async: false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            error:function(){
+                popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
             }
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
-                    $("#successAlert-phase1").text("Successfully uploaded!").show();
-                    $("#errorAlert-phase1").hide();
+                    popUp(".upload-files", ".alert-success","Successfully uploaded", ".upload");
                 }else{
-                    $("#errorAlert-phase1").text("File upload fails").show();
-                    $("#successAlert-phase1").hide();
+                    popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
                 }
             })
 })
@@ -311,16 +331,19 @@ $(".new_note").find('.btn-info').on('click',function(){
             data:JSON.stringify(data),
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            error:function(){
+                popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
             }
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
-                    alert("Successfully create new message");
-                    $(".reminder").click();
+                    popUp(".new_note", ".alert-success","Successfully create new message",".reminder");
                     // $("#successAlert-phase1").text("Successfully uploaded!").show();
                     // $("#errorAlert-phase1").hide();
                 }else{
                     alert("Something went wrong");
+                    popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
                     // $("#errorAlert-phase1").text("File upload fails").show();
                     // $("#successAlert-phase1").hide();
                 }
@@ -372,15 +395,19 @@ $(".saveDeadline").on('click',function(){
             data:JSON.stringify(data),
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            error: function() {
+                popUp(".deadline-container", ".alert-danger","Something went wrong",".deadline");
             }
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
-                    alert("Successfully create new message");
+                    popUp(".deadline-container", ".alert-success","Successfully set a deadline",".deadline");
+
                     // $("#successAlert-phase1").text("Successfully uploaded!").show();
                     // $("#errorAlert-phase1").hide();
                 }else{
-                    alert("Something went wrong");
+                    popUp(".deadline-container", ".alert-danger","Something went wrong",".deadline");
                     // $("#errorAlert-phase1").text("File upload fails").show();
                     // $("#successAlert-phase1").hide();
                 }
