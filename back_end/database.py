@@ -492,6 +492,19 @@ def create_phases(project_uuid, phase_name, deadline, mark_release=None, submit_
     return phase_uuid
 
 
+def is_phase(phase_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select count(*) from phases where phase_uuid = '{}';".format(phase_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    if result[0][0] == 1:
+        return True
+    else:
+        return False
+
+
 def get_phases(phase_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
