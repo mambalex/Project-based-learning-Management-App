@@ -29,7 +29,7 @@ $(document).ready(function(){
 $(document).on('click', "#save", function(e){
     var name = $("#name").text();
     var dob = $("#dob").text();
-    var github = $("#github").text();
+    // var github = $("#github").text();
     var gender = $("#gender").text();
     var passwd = $("#password").text();
     // console.log(name,dob,email,gender,passwd)
@@ -41,15 +41,27 @@ $(document).on('click', "#save", function(e){
                     'name': name,
                     'dob': dob,
                     'gender': gender,
-                    // 'passwd': passwd
+                    'passwd': passwd
             }),
             async:false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
             },
-            success(rsp_data){
-                console.log(rsp_data)
-                alert("sucessfully updated!")
+            success:function(rsp_data){
+                console.log(rsp_data);
+                $(".alert-success").text("Successfully updated!").show();
+                $(".alert-danger").hide();
+                setTimeout(function(){
+                    $(".alert-success").hide();
+                    },3000)
+            },
+            erro:function(rsp_data){
+                console.log(rsp_data);
+                $(".alert-danger").text("Oops! Something went wrong!").show();
+                $(".alert-success").hide();
+                setTimeout(function(){
+                    $(".alert-danger").hide();
+                    },3000)
             }
         })
 })

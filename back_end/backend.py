@@ -497,7 +497,7 @@ def create_new_reminder():
 @app.route('/api/delete_reminder', methods=['POST'])
 @auth.login_required
 def delete_reminder():
-    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    reminder_uuid = request.json.get('reminder_uuid')
     if g.user.is_admin_user():
         db.delete_reminder(reminder_uuid)
         return jsonify(

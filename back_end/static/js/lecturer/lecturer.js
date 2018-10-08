@@ -292,6 +292,7 @@ function displayAllReminder(){
         var date = reminderList[val]['post_time'];
         var task = taskListReverse[ass_uuid];
         $(".reminder-list").append(`<li >
+                                <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
                                 <div class="content">${message}</div>
                                 <div class="task">Task: <span id="task-name">${task}</span></div>
                                 <div class="date"><span class="due">${date}</span></div>
@@ -349,6 +350,50 @@ $(".new_note").find('.btn-info').on('click',function(){
                 }
     })
 })
+
+//delete a reminder
+
+$(document).on('click', '.delete-reminder', function(e){
+        var message = $(this).siblings(".content").text();
+        var temp = $(this).closest('li');
+        console.log(message);
+        var reminder_uuid;
+        for(var time in reminderList){
+            for(var key in reminderList[time]){
+                if(reminderList[time][key]== message){
+                    console.log(reminderList[time]);
+                    reminder_uuid = reminderList[time]['reminder_uuid'];
+                }
+            }
+        }
+        var data={'reminder_uuid' :reminder_uuid}
+        $.ajax({
+            type: 'POST',
+            url: '/api/delete_reminder',
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            error:function(){
+                alert("Something went wrong");
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    temp.remove();
+                    alert("Successfully delete the message");
+                    // $("#successAlert-phase1").text("Successfully uploaded!").show();
+                    // $("#errorAlert-phase1").hide();
+                }else{
+                    alert("Something went wrong");
+                    // $("#errorAlert-phase1").text("File upload fails").show();
+                    // $("#successAlert-phase1").hide();
+                }
+    })
+
+})
+
 
 
 
