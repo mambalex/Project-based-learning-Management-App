@@ -121,6 +121,8 @@ $(".reminder").click(function(){
     $(".group-info").hide()
     $(".deadline_view").hide()
     $(".new_note").css('display','inline-block')
+    $("#task-select").val($("#task-select option:first").val());
+    $("#group-select").val($("#group-select option:first").val());
 })
 
 //Click Phase1
@@ -141,6 +143,8 @@ $(".deadline").click( function(){
     $(".documenets").hide()
     $(".notes-wrapper").hide()
     $(".deadline_view").show()
+    $(".deadline-selector").val($(".deadline-selector option:first").val());
+    $(".others-deadline").hide();
 });
 
 //Click Documents
@@ -185,6 +189,12 @@ function bs_input_file() {
 $(function() {
     bs_input_file();
 });
+// click reset
+ $("button[type='reset']").on('click',function() {
+    $(".phase1-title").val('');
+    $("#phase1-description").val('');
+ })
+
 
 //upload file
 
