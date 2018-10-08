@@ -1,7 +1,18 @@
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+var userInfo={};
+var reminderList={};
+var projectInfo={};
+var phaseList={};
+var groupInfo={};
+var currentPhase;
 
-$(".loaders").hide();
-// welcomeUser();
+$(document).ready(function(){
+    getAllInfo();
+    $(".loaders").hide();
+    welcomeUser();
+    $(".active").click();
+})
+
 //logout
 $("#logout").click(function(){
      window.location.pathname = "/";
@@ -54,8 +65,8 @@ function getAllInfo(){
             },
             success(rsp_data){
                         console.log(rsp_data);
-                        selfGroup = rsp_data['group_info'];  
-                        selfGroupStatus = rsp_data['group_info']['status']
+                        // selfGroup = rsp_data['group_info'];  
+                        // selfGroupStatus = rsp_data['group_info']['status']
                         rsp_data['group_list'].forEach(function(val){
                             groupInfo[val['group_name']]= val;
                         });   
@@ -68,7 +79,6 @@ function getAllInfo(){
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
-                        console.log(selfGroup)
                         console.log(groupInfo)       
                         console.log(phaseList)       
                         console.log(projectInfo)       
@@ -81,9 +91,11 @@ function getAllInfo(){
 
 function welcomeUser(){
     var name = userProfile['name'];
-    $(".welcome-user").text(`Welcome ${name}`);
+    $(".welcome-user").text(`Welcome ${name} `);
     $(".welcome-user").show();
 }
+
+
 
 
 
@@ -223,7 +235,10 @@ $(document).on('click', '.phase1-upload', function(e){
 
 //new reminder
 $(".new_note").find('.btn-info').on('click',function(){
-    alert($(".new-reminder-msg").val());
+    var msg = $(".new-reminder-msg").val();
+    var task = $("#task-select").val();
+    var groupType = $("#group-select").val();
+    console.log(msg, task, groupType)
 })
 
 

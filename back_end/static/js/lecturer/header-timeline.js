@@ -1,3 +1,15 @@
+$("#logout").click( function(){
+    $(location).attr('href','/');
+    localStorage.clear();
+});
+
+$("#profile").click( function(e){
+    e.preventDefault();
+    var url = $(this).attr('href');
+    window.open(url, '_blank');
+});
+
+
 $(document).on('click', '.user', function(e){
     e.preventDefault();
     if( $('.dropdown-content').css('display') === 'block' ){

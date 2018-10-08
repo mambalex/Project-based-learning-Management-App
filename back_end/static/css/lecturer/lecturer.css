@@ -32,6 +32,7 @@ button{
 
 }
 
+
 .sidenav_group{
   /*border: 2px solid black;*/
 	display: flex;
@@ -58,6 +59,7 @@ button{
 
 /*note-reminder*/
 .notes-wrapper {
+    display: none;
     max-width: 400px;
     width: 90%;
     margin: 0 auto;
