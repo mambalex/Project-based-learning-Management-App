@@ -1,6 +1,7 @@
 import database_lib
 import uuid
 import time
+import datetime
 
 
 # user info part
@@ -841,6 +842,8 @@ def convert_result_to_dict(temp_result, key_list, except_passwd=False):
                 temp_dict[key_list[i]] = "None"
             elif isinstance(tuples[i], str):
                 temp_dict[key_list[i]] = tuples[i].rstrip()
+            elif isinstance(tuples[i], datetime.datetime):
+                temp_dict[key_list[i]] = tuples[i].strftime("%Y-%m-%d %H:%M:%S")
             else:
                 temp_dict[key_list[i]] = tuples[i]
 
