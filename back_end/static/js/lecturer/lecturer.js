@@ -340,11 +340,53 @@ $('.deadline-selector').change(function(){
 });
 
 $(".saveDeadline").on('click',function(){
+    var taskPhaseId;
+    var task = $(".deadline-selector").val();
     var month = $(".text-info").text().split(" ")[1];
     var day = $(".text-info").text().split(" ")[2].slice(0, -1);
     var year = $(".text-info").text().split(" ")[3];
     month = getMonthFromString(month);
-    console.log(`${year}-${month}-${day}`);
+    if(task =="Others"){
+        task = $(".others-deadline").val();
+        return
+    }
+    var temp = task.slice(0, -1);
+    if(temp == "Phase "){
+        console.log(phaseList);
+        console.log(task);
+        taskPhaseId = phaseList[task]["phase_uuid"];
+    }else{
+        taskPhaseId = taskList[task];
+    }
+
+    var data = {
+                deadline:`${year}-${month}-${day}`,
+                name:task,
+                ass_uuid:taskPhaseId
+            }
+    console.log(data);
+    $.ajax({
+            type: 'POST',
+            url: '/api/change_ass',
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    alert("Successfully create new message");
+                    // $("#successAlert-phase1").text("Successfully uploaded!").show();
+                    // $("#errorAlert-phase1").hide();
+                }else{
+                    alert("Something went wrong");
+                    // $("#errorAlert-phase1").text("File upload fails").show();
+                    // $("#successAlert-phase1").hide();
+                }
+        })
+
+  
 })
 
 
