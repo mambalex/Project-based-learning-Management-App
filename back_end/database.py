@@ -737,16 +737,20 @@ def student_get_self_unsubmit_reminder(email, project_uuid):
     result = list()
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select rem.*, count(*) from reminder rem, submits s, groups g, group_relation g_r \
-      where  g_r.email = '{}' and g_r.group_uuid = g.group_uuid and g.project_uuid = '{}' and \
-      s.group_uuid = g.group_uuid and s.ass_uuid = rem.ass_uuid and rem.project_uuid = '{}' and rem.submit_check = 'yes' group by rem.reminder_uuid order by rem.post_time desc;".format(
-        email, project_uuid, project_uuid)
+    sql = "select * from reminder where project_uuid = '{}' and submit_check = 'yes' order by post_time desc;".format(project_uuid)
+    require_submit_reminder = database_object.search(sql)
+    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time"]
+    require_submit_reminder = convert_result_to_dict(require_submit_reminder, key_list)
+    sql = "select rem.* from reminder rem, submits s, groups g, group_relation g_r \
+        where rem.project_uuid = '{}' and rem.project_uuid = g.project_uuid and \
+        g.group_uuid = g_r.group_uuid and g_r.email = '{}' and rem.submit_check = \
+        'yes' order by rem.post_time desc;".format(project_uuid, email)
     submit_reminder = database_object.search(sql)
+    submit_reminder = convert_result_to_dict(submit_reminder, key_list)
     database_object.close()
-    key_list = ["reminder_uuid", "master", "project_uuid", "ass_uuid", "message", "submit_check", "post_time", "count"]
-    temp_result = convert_result_to_dict(submit_reminder, key_list)
-    for reminder in temp_result:
-        if reminder["count"] <= 0:
+    submit_reminder_list = [reminder['reminder_uuid'] for reminder in submit_reminder]
+    for reminder in require_submit_reminder:
+        if reminder['reminder_uuid'] not in submit_reminder_list:
             result.append(reminder)
     return result
 
