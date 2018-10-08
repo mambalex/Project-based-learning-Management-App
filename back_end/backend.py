@@ -646,6 +646,59 @@ def get_project_info():
             {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
+# Change phase part
+@app.route('/api/change_phase', methods=['POST'])
+@auth.login_required
+def change_phase():
+    phase_uuid = request.json.get('phase_uuid')
+    new_name = request.json.get('name')
+    new_deadline = request.json.get('deadline')
+    new_mark_release = request.json.get('mark_release')
+    spec_address = request.json.get('spec_address')
+    submit_require = request.json.get('submit_require')
+    if phase_uuid is None:
+        return jsonify({'code': 400, 'msg': 'Wrong request.', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    if g.user.is_admin_user():
+        if new_name is not None:
+            db.change_phases_name(phase_uuid, new_name)
+        if new_deadline is not None:
+            db.change_phases_deadline(phase_uuid, new_deadline)
+        if new_mark_release is not None:
+            db.change_phases_mark_release(phase_uuid, new_mark_release)
+        if spec_address is not None:
+            db.change_phases_address(phase_uuid, spec_address)
+        if submit_require is not None:
+            db.change_phases_submit_require(phase_uuid, submit_require)
+        return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+# Change task part
+@app.route('/api/change_task', methods=['POST'])
+@auth.login_required
+def change_task():
+    task_uuid = request.json.get('task_uuid')
+    new_name = request.json.get('name')
+    new_deadline = request.json.get('deadline')
+    new_mark_release = request.json.get('mark_release')
+    spec_address = request.json.get('spec_address')
+    submit_require = request.json.get('submit_require')
+    if task_uuid is None:
+        return jsonify({'code': 400, 'msg': 'Wrong request.', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    if g.user.is_admin_user():
+        if new_name is not None:
+            db.change_tasks_name(task_uuid, new_name)
+        if new_deadline is not None:
+            db.change_tasks_deadline(task_uuid, new_deadline)
+        if new_mark_release is not None:
+            db.change_tasks_mark_release(task_uuid, new_mark_release)
+        if spec_address is not None:
+            db.change_tasks_address(task_uuid, spec_address)
+        if submit_require is not None:
+            db.change_tasks_submit_require(task_uuid, submit_require)
+        return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+
 # Start upload and download file part
 
 
