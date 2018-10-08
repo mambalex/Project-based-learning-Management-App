@@ -751,9 +751,43 @@ def student_load_main_info():
     unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
     reminder_list = global_reminder_list + unsubmit_reminder_list
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
-    
-    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info, 'group_list': group_list,
-                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0, 'reminder_list': reminder_list})
+
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info,
+                    'group_list': group_list,
+                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0,
+                    'reminder_list': reminder_list})
+
+
+# Lecturer main info
+@app.route('/api/lecturer_main_info', methods=['POST'])
+@auth.login_required
+def lecturer_load_main_info():
+    pass
+    project_uuid = request.json.get('project_uuid')
+    project_info = db.get_projects(project_uuid)
+    if len(project_info) > 0:
+        project_info = project_info[0]
+        phase_list = db.get_project_all_phases(project_uuid)
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    # User profile
+    user_profile = g.user.get_user_profile()
+    # Group list
+    group_list = db.get_all_group(project_uuid)
+    # Phase part
+    for phase in phase_list:
+        resource_list = db.get_resource_list(project_uuid, phase['phase_uuid'])
+        phase['resource_list'] = resource_list
+        task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+        phase['task_list'] = task_list
+    # Reminder part
+    reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
+    reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
+
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
+                    'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
+                    'current_phase': 0, 'reminder_list': reminder_list})
 
 
 if __name__ == '__main__':
