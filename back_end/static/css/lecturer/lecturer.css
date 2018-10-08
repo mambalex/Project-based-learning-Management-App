@@ -33,6 +33,7 @@ button{
 }
 
 
+
 .sidenav_group{
   /*border: 2px solid black;*/
 	display: flex;
@@ -254,6 +255,10 @@ button{
 
 /*deadline*/
 
+.deadline-container{
+  position: relative;
+}
+
 .deadline_view{
     display: none;
     width: 420px;
@@ -262,6 +267,28 @@ button{
     top:30px;
     left: 100px;
 }
+
+.deadline-select{
+  display: inline-block;
+  height: 30px !important;
+  width: 70%;
+}
+
+.others-deadline{
+    display: none;
+    position: absolute;
+    width: 70%;
+    top: 88px;
+    left: 350px;
+}
+
+.deadline-btn{
+  margin-top: 30px;
+}
+
+
+
+
 
 /*documents*/
 

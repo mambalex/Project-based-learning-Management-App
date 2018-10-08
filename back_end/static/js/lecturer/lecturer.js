@@ -7,9 +7,9 @@ var groupInfo={};
 var currentPhase;
 
 $(document).ready(function(){
-    getAllInfo();
+    // getAllInfo();
     $(".loaders").hide();
-    welcomeUser();
+    // welcomeUser();
     $(".active").click();
 })
 
@@ -23,14 +23,7 @@ $(".files").on('click',function(){
     
 })
 
-//set Dateline
-$(".saveDeadline").on('click',function(){
-    var month = $(".text-info").text().split(" ")[1];
-    var day = $(".text-info").text().split(" ")[2].slice(0, -1);
-    var year = $(".text-info").text().split(" ")[3];
-    month = getMonthFromString(month);
-    console.log(`${year}-${month}-${day}`);
-})
+
 
 
 function getMonthFromString(mon){
@@ -241,6 +234,23 @@ $(".new_note").find('.btn-info').on('click',function(){
     console.log(msg, task, groupType)
 })
 
+//set Dateline
+
+$('.deadline-selector').change(function(){ 
+  if($(this).val() == 'Others'){
+     $(".others-deadline").show();
+  }else{
+    $(".others-deadline").hide();
+  }
+});
+
+$(".saveDeadline").on('click',function(){
+    var month = $(".text-info").text().split(" ")[1];
+    var day = $(".text-info").text().split(" ")[2].slice(0, -1);
+    var year = $(".text-info").text().split(" ")[3];
+    month = getMonthFromString(month);
+    console.log(`${year}-${month}-${day}`);
+})
 
 
 

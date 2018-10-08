@@ -223,14 +223,30 @@
 <!-- Deadline -->
 
             <div class="deadline_view" style="display: none;">
-              <div class="container " ng-app="modalTest" ng-controller="dialogTestCtrl">
+              <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
                       <div class="row">
                         <div class="col-md-12">
                           <h1>Please pick a deadline.</h1>
                           <br>
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="deadline-select">
+                      <select class="form-control deadline-selector">
+                          <option value=""hidden>Options</option>
+                                  <option>Phase1</option>
+                                  <option>Phase2</option>
+                                  <option>Phase3</option>
+                                  <option>Phase4</option>
+                                  <option>Proposal</option>
+                                  <option>Design document</option>
+                                  <option>Requirement document</option>
+                                  <option>Implementation files</option>
+                                  <option>Demo</option>
+                                  <option>Others</option>
+                      </select>
+                      </div>
+                      <input class="form-control others-deadline" type="text" placeholder="Others">
+                      <div class="row deadline-btn">
                         <div class="col-md-6">
                           <button class="btn btn-primary" ng-click="launch()">Deadline</button>
                         </div>
