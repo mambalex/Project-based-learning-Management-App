@@ -25,10 +25,17 @@ $("#logout").click(function(){
      window.location.pathname = "/";
 })
 
-//view files
-// $(".files").on('click',function(){
-    
-// })
+// view files
+$(".files").on('click',function(){
+    $.ajax({
+            type:'GET',
+            url:'/temp/phase1_1.pdf',
+            async:false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+            }
+    })
+})
 
 function popUp(src, sucessOrFail, text, click){
    $(src).find(sucessOrFail).text(text).show();

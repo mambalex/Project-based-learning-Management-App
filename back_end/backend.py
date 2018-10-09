@@ -3,6 +3,7 @@ import re
 import json
 import time
 import base64
+import random
 import database as db
 # from back_end import database as db
 
@@ -133,6 +134,17 @@ def student():
 @app.route('/profile')
 def profile():
     return render_template('profile.html')
+
+
+@app.route('/temp/<string:filename>', methods=['GET'])
+def get_file(filename):
+    if filename is None:
+        pass
+    else:
+        file_data = open(os.path.join(UPLOAD_FOLDER, filename), "rb").read()
+        response = make_response(file_data)
+        response.headers['Content-Type'] = 'application/pdf'
+        return response
 
 
 @auth.verify_password
@@ -372,6 +384,15 @@ def leave_group():
         db.leave_group(g.user.user_id, group_uuid)
         return jsonify(
             {'code': 200, 'msg': 'Leave group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+# Random group
+@app.route('/api/random_group', methods=['POST'])
+@auth.login_required
+def random_group():
+    project_uuid = request.json.get('project_uuid')
+    if g.user.is_admin_user():
+        db.clear_all_group(project_uuid)
 
 
 # get group member list
