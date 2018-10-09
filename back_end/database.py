@@ -148,6 +148,26 @@ def delete_group(group_uuid):
     database_object.close()
 
 
+def clear_all_group(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select group_uuid, group_name from groups where project_uuid = '{}';".format(project_uuid)
+    group_list = database_object.search(sql)
+    key_list = ['group_uuid', 'group_name']
+    group_list = convert_result_to_dict(group_list, key_list)
+    for group in group_list:
+        sql = "delete from groups where group_uuid = '{}';".format(group['group_uuid'])
+        database_object.update(sql)
+        sql = "delete from group_relation where group_uuid = '{}';".format(group['group_uuid'])
+        database_object.update(sql)
+    database_object.close()
+
+
+def random_group(project_uuid):
+    pass
+
+
 def get_all_group(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
