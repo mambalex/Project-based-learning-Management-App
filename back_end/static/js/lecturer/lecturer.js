@@ -8,11 +8,13 @@ var groupInfo={};
 var currentPhase;
 
 $(document).ready(function(){
-    // getAllInfo();
+    getAllInfo();
+    $('#live-chat header').click();
     $(".loaders").hide();
-    // welcomeUser();
     $(".active").click();
-    // displayAllReminder();
+    welcomeUser();
+    displayAllReminder();
+
 })
 
 //logout
@@ -340,8 +342,12 @@ $(".new_note").find('.btn-info').on('click',function(){
                 console.log(data);
                 if(data['code']==200){
                     popUp(".new_note", ".alert-success","Successfully create new message",".reminder");
-                    // $("#successAlert-phase1").text("Successfully uploaded!").show();
-                    // $("#errorAlert-phase1").hide();
+                   // $(".reminder-list").append(`<li >
+                   //              <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                   //              <div class="content">${msg}</div>
+                   //              <div class="task">Task: <span id="task-name">${task}</span></div>
+                   //              <div class="date"><span class="due">${date}</span></div>
+                   //          </li>`)
                 }else{
                     alert("Something went wrong");
                     popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
@@ -460,6 +466,19 @@ $(".saveDeadline").on('click',function(){
 
   
 })
+
+//chat bot
+$('#live-chat header').on('click', function() {
+        $('.chat').slideToggle(300, 'swing');
+        $('.chat-message-counter').fadeToggle(300, 'swing');
+
+});
+
+$('.chat-close').on('click', function(e) {
+    e.preventDefault();
+    $('#live-chat').fadeOut(300);
+
+});
 
 
 
