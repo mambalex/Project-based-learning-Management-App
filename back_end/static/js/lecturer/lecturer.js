@@ -484,6 +484,32 @@ $('.chat-close').on('click', function(e) {
 });
 
 
+//demo create new reminder
+function newReminder(){
+    var msg = "Welcome to comp9323!"
+    var task_uuid = projectId;
+    var submit_check = 'no';
+    var data = {
+                project_uuid: projectId,
+                ass_uuid:task_uuid,
+                message:msg,
+                submit_check:submit_check
+            }
+    $.ajax({
+            type: 'POST',
+            url: '/api/create_new_reminder',
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+            }
+
+        }).done(function(data){
+                console.log(data);
+    })
+}
+
+
 
 $(document).on("keypress", "#chatbotInput", function(e){
         if(e.which == 13){
@@ -506,7 +532,10 @@ $(document).on("keypress", "#chatbotInput", function(e){
                         <h5>Bot</h5>
                         <p>2018-10-12 10:59:59</p>
                       </div> 
-                    </div><hr>`);    
+                    </div><hr>`);  
+                  var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+                    return  
             }else if(val=="reminder"){
                     $(".chat-history").append(`<div class="chat-message clearfix">
                       <div class="chat-message-content clearfix">
@@ -514,8 +543,12 @@ $(document).on("keypress", "#chatbotInput", function(e){
                         <h5>Bot</h5>
                         <p>Sure, what do you want to send?</p>
                       </div> 
-                    </div><hr>`);  
-        }else if(val=="welcome"){
+                    </div><hr>`); 
+                      var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+                    return 
+        }else if(val=="Welcome"){
+                        newReminder();
                          $(".chat-history").append(`<div class="chat-message clearfix">
                       <div class="chat-message-content clearfix">
                         <span class="chat-time">13:35</span>
@@ -529,7 +562,24 @@ $(document).on("keypress", "#chatbotInput", function(e){
                                 <div class="content">Welcome to comp9323!</div>
                                 <div class="task">Task: <span id="task-name">Project</span></div>
                                 <div class="date"><span class="due">${date}</span></div>
-                            </li>`);}
+                            </li>`);
+                    var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+                    return
+                }
+
+      $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>Emm..</p>
+                      </div> 
+                    </div><hr>`); 
+      var d = $('.chat-history');
+      d.scrollTop(d.prop("scrollHeight"));
+
+                
+        
         });
     }
 });
