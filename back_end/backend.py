@@ -483,11 +483,13 @@ def create_new_reminder():
     message = request.json.get('message')
     submit_check = request.json.get('submit_check')
     if g.user.is_admin_user():
-        reminder_uuid = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
+        return_list = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
                                            message=message, submit_check=submit_check)
+        reminder_uuid = return_list[0]
+        timestamp = return_list[1]
         return jsonify(
             {'code': 200, 'msg': 'Create reminder success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
-             'reminder_uuid': reminder_uuid})
+             'reminder_uuid': reminder_uuid, 'timestamp': timestamp})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
