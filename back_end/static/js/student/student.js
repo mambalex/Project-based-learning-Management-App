@@ -388,10 +388,16 @@ $("#upload-btn-phase1").click(function(e){
         e.preventDefault();
         var uuid = "A529FD7A-C967-11E8-A7BE-4C3275989EF5";
         var file = $('#upload-file1').find("input[type=file]").prop('files')[0];
+        if(inGroupOrnot=="no"){
+            $("#errorAlert-phase1").text("You have no group!").show();
+            $("#successAlert-phase1").hide();
+            return 
+        }
         console.log(file);
         console.log(uuid);
         var formData = new FormData();
         formData.append('upload_file', file);
+        console.log(selfGroup);
         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
         formData.append('assessment_uuid', uuid);
         $.ajax({
@@ -406,15 +412,29 @@ $("#upload-btn-phase1").click(function(e){
             async: false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            },
+            error:function(){
+                    $("#errorAlert-phase1").text("File upload fails").show();
+                    $("#successAlert-phase1").hide();
+                     setTimeout(function(){
+                         $(".nav-proposal").click();
+                     },2000)
+                   
             }
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
                     $("#successAlert-phase1").text("Successfully uploaded!").show();
                     $("#errorAlert-phase1").hide();
+                    setTimeout(function(){
+                         $(".nav-proposal").click();
+                     },2000)
                 }else{
                     $("#errorAlert-phase1").text("File upload fails").show();
                     $("#successAlert-phase1").hide();
+                     setTimeout(function(){
+                         $(".nav-proposal").click();
+                     },2000)
                 }
             })
         

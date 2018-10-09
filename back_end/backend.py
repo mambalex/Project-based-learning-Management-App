@@ -478,10 +478,10 @@ def admin_get_reminder_list():
 @app.route('/api/create_new_reminder', methods=["POST"])
 @auth.login_required
 def create_new_reminder():
-    project_uuid = request.form.get('project_uuid', type=str)
-    ass_uuid = request.form.get('ass_uuid', type=str, default=project_uuid)
-    message = request.form.get('message', type=str)
-    submit_check = request.form.get('submit_check', type=str, default="no")
+    project_uuid = request.json.get('project_uuid')
+    ass_uuid = request.json.get('ass_uuid')
+    message = request.json.get('message')
+    submit_check = request.json.get('submit_check')
     if g.user.is_admin_user():
         return_list = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
                                            message=message, submit_check=submit_check)
@@ -499,7 +499,7 @@ def create_new_reminder():
 @app.route('/api/delete_reminder', methods=['POST'])
 @auth.login_required
 def delete_reminder():
-    reminder_uuid = request.form.get('reminder_uuid', type=str)
+    reminder_uuid = request.json.get('reminder_uuid')
     if g.user.is_admin_user():
         db.delete_reminder(reminder_uuid)
         return jsonify(

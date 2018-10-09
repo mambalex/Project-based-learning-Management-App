@@ -24,6 +24,15 @@ body {
     letter-spacing: 1px;
 
 }
+.alert{
+    position: absolute;
+    top:20px;
+    width: 260px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999;
+}
+
 #save{
     color: white;
     margin-right: 40px;

@@ -101,7 +101,22 @@
                         <a href="#" class="list-group-item reminder">Reminder</a>
                         <a href="#" class="list-group-item deadline">Deadline</a>
                         <a href="#" class="list-group-item upload">Resources</a>
+                        <a href="#" class="list-group-item mark">Mark</a>
                       </div>
+                    </div>
+                    <!--due-date-->
+                    <div class="due-date" id="due-date1">
+                      <div class="title">Upcoming Due Dates</div>
+                      <ul class="all-dealines">
+                                                  <li>
+                              <div class="content">Phase 1</div>
+                              <div class="date"><span class="due">3</span> days from now</div>
+                          </li>
+                          <li>
+                              <div class="content">Proposal</div>
+                              <div class="date"><span class="due">3</span> days from now</div>
+                          </li>
+                      </ul>
                     </div>
            </div>
 
@@ -132,13 +147,22 @@
 
 
           <div class="upload-files ">
+              <div class="alert alert-success" role="alert" style="display:none;"></div>
+              <div  class="alert alert-danger" role="alert" style="display:none;"></div>
               <div class="upload-files-header"><h4 >Upload Files</h4></div>
                <div class="input-group">
                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
                       <input type="text" class="form-control phase1-title" placeholder="Title">
                   </div>
                   <br>
-                  <textarea class="form-control" rows="5" id="phase1-description"></textarea><br>
+                  <textarea class="form-control" rows="5" id="phase1-description" placeholder="Description"></textarea><br>
+                <select class="form-control upload-selector">
+                          <option value=""hidden>Phase</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>                 
+                </select>
 
               <form method="POST"  action="#" enctype="multipart/form-data">
                  
@@ -182,8 +206,9 @@
 
 <!-- create new reminder -->
             <div class="new_note" >
-
                 <div class="form-group new_reminder">
+                      <div class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
                       <select class="form-control" id="task-select">
@@ -191,7 +216,7 @@
                         <option>Proposal</option>
                         <option>Design document</option>
                         <option>Requirement document</option>
-                        <option>Implementation files</option>
+                        <option>Implementation</option>
                         <option>Demo</option>
                         <option>Others</option>
                       </select>
@@ -202,16 +227,14 @@
                       </select>
                      <button type="button" class="btn btn-info">Submit</button>
                   </div>
-                  <div class="all-reminders"  id="due-date1">
+                  <div class="all-reminders" >
                       <div class="title">All Reminders</div>
                         <ul class="reminder-list">
                             <li >
+                                <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
                                 <div class="content">Proposal</div>
-                                <div class="date"><span class="due">4</span> days ago</div>
-                            </li>
-                            <li>
-                              <div class="content">Phase1</div>
-                                <div class="date"><span class="due">7</span> ago</div>
+                                <div class="task">Task: <span id="task-name">Proposal</span></div>
+                                 <div class="date"><span class="due">2</span></div>
                             </li>
                       </ul>
                   </div>
@@ -224,6 +247,8 @@
 
             <div class="deadline_view" style="display: none;">
               <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
+                      <div  class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
                       <div class="row">
                         <div class="col-md-12">
                           <h1>Please pick a deadline.</h1>
@@ -233,14 +258,14 @@
                       <div class="deadline-select">
                       <select class="form-control deadline-selector">
                           <option value=""hidden>Options</option>
-                                  <option>Phase1</option>
-                                  <option>Phase2</option>
-                                  <option>Phase3</option>
-                                  <option>Phase4</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>
                                   <option>Proposal</option>
                                   <option>Design document</option>
                                   <option>Requirement document</option>
-                                  <option>Implementation files</option>
+                                  <option>Implementation</option>
                                   <option>Demo</option>
                                   <option>Others</option>
                       </select>
@@ -307,13 +332,708 @@
                           <a href="#" class="list-group-item reminder">Reminder</a>
                           <a href="#" class="list-group-item deadline">Deadline</a>
                           <a href="#" class="list-group-item upload">Resources</a>
+                          <a href="#" class="list-group-item mark">Mark</a>
                       </div>
                   </div>
+                                      <!--due-date-->
+                    <div class="due-date" id="due-date1">
+                      <div class="title">Upcoming Due Dates</div>
+                      <ul class="all-dealines">
+                          <li>
+                              <div class="content">Requirement document</div>
+                              <div class="date"><span class="due">5</span> days from now</div>
+                          </li>
+                          <li>
+                              <div class="content">Design document</div>
+                              <div class="date"><span class="due">9</span> days from now</div>
+                          </li>
+                          <li>
+                              <div class="content">Phase 2</div>
+                              <div class="date"><span class="due">10</span> days from now</div>
+                          </li>
+                      </ul>
+                    </div>
               </div>
+
+                       <div class="right-wrapper">
+  <!--file input-->
+
+           <div class="documenets">
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <th class="col-sm-1">DOCUMENTS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
+                  </tr>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                  </tr>
+                  </tbody>
+              </table>
+           </div>
+
+
+          <div class="upload-files ">
+              <div class="alert alert-success" role="alert" style="display:none;"></div>
+              <div  class="alert alert-danger" role="alert" style="display:none;"></div>
+              <div class="upload-files-header"><h4 >Upload Files</h4></div>
+               <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
+                      <input type="text" class="form-control phase1-title" placeholder="Title">
+                  </div>
+                  <br>
+                  <textarea class="form-control" rows="5" id="phase1-description" placeholder="Description"></textarea><br>
+                <select class="form-control upload-selector">
+                          <option value=""hidden>Phase</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>                 
+                </select>
+
+              <form method="POST"  action="#" enctype="multipart/form-data">
+                 
+                  <!-- COMPONENT START -->
+                  <div class="form-group" id="phase1-file">
+                      <div class="input-group input-file" name="Fichier1">
+                          <input type="text"  class="form-control" placeholder='Choose a file...' />
+                          <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+
+                      </div>
+                  </div>
+                  <!-- COMPONENT END -->
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary pull-right phase1-upload">Submit</button>
+                      <button type="reset" class="btn btn-danger">Reset</button>
+                  </div>
+              </form>
+          </div>
+  <!-- notes -->
+            <div class="notes-wrapper">
+            <div class="saver-wrap" contenteditable="false">
+              <div class="notes-dot" contenteditable="false"></div>
+              <div class="rest" contenteditable="false"></div>
+            </div>
+            <div class="title" contenteditable="true">
+              Reminder
+            </div>
+            <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                Dear students,
+                Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                Date: Tuesday, July 24th, 2018
+                Venue: Colombo LG02 (K-B16-LG02)
+                Time: 18h00 to 19h00
+                See you all there.
+            </div>
+            <div class="line"><span class="daypass"></span> days ago</div>
+          </div>
+
+
+<!-- create new reminder -->
+            <div class="new_note" >
+                <div class="form-group new_reminder">
+                      <div class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                          <label >New Reminder</label>
+                          <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
+                      <select class="form-control" id="task-select">
+                        <option value=""hidden>Task</option>
+                        <option>Proposal</option>
+                        <option>Design document</option>
+                        <option>Requirement document</option>
+                        <option>Implementation</option>
+                        <option>Demo</option>
+                        <option>Others</option>
+                      </select>
+                      <select class="form-control" id="group-select">
+                        <option value=""hidden>Group Type</option>
+                        <option>All groups</option>
+                        <option>Unsubmitted groups</option>
+                      </select>
+                     <button type="button" class="btn btn-info">Submit</button>
+                  </div>
+                  <div class="all-reminders" >
+                      <div class="title">All Reminders</div>
+                        <ul class="reminder-list">
+                            <li >
+                                <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
+                                <div class="content">Proposal</div>
+                                <div class="task">Task: <span id="task-name">Proposal</span></div>
+                                 <div class="date"><span class="due">2</span></div>
+                            </li>
+                      </ul>
+                  </div>
+
+
+            </div>
+
+           <br><br><br><br>
+<!-- Deadline -->
+
+            <div class="deadline_view" style="display: none;">
+              <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
+                      <div  class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>Please pick a deadline.</h1>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="deadline-select">
+                      <select class="form-control deadline-selector">
+                          <option value=""hidden>Options</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>
+                                  <option>Proposal</option>
+                                  <option>Design document</option>
+                                  <option>Requirement document</option>
+                                  <option>Implementation</option>
+                                  <option>Demo</option>
+                                  <option>Others</option>
+                      </select>
+                      </div>
+                      <input class="form-control others-deadline" type="text" placeholder="Others">
+                      <div class="row deadline-btn">
+                        <div class="col-md-6">
+                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                        </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-12">
+                          <br/>
+                          <p>Date Picked:</p>
+<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+                        </div>
+                      </div>
+                    </div>
+                    <script
+                        src="https://code.jquery.com/jquery-3.3.1.min.js"
+                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                        crossorigin="anonymous"></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
+                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
+            </div>
+
+<!-- group  -->
+          <div class="group-info drop-shadow-nav-grp curved.v2">
+            <div class="group-info-title"> Group Forming</div>
+                <div class="group-options">
+                      <h4 class="question">How would you like to generate the groups?</h4>
+                <div class="two-options">
+                      <input type="checkbox" name="Randomly" class="generate-group"><label>Randomly Generate</label> <br>
+                      <input type="checkbox" name="Manually" class="generate-group"><label>Manually Generate</label>   <br><br>
+                      </div>
+                      <button type="button" class="btn btn-success">Submit</button>
+            
+                </div>
+          </div>
+          <br>
+          <div class="group_container drop-shadow-group lifted" >
+            <br>
+
 
           </div>
       </div>
 
+
+
+
+
+
+
+
+          </div>
+      </div>
+
+<!-- phase3 -->
+      <div class="phase3">
+          <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+              <div class="left-wrapper">
+                  <div class="sidebar-offcanvas sidebar">
+                      <div class="list-group">
+                          <a href="#" class="list-group-item active">Phase 3</a>
+                          <a href="#" class="list-group-item navgrp">Group</a>
+                          <a href="#" class="list-group-item reminder">Reminder</a>
+                          <a href="#" class="list-group-item deadline">Deadline</a>
+                          <a href="#" class="list-group-item upload">Resources</a>
+                          <a href="#" class="list-group-item mark">Mark</a>
+                      </div>
+                  </div>
+                                      <!--due-date-->
+                    <div class="due-date" id="due-date1">
+                      <div class="title">Upcoming Due Dates</div>
+                      <ul class="all-dealines">
+                          <li>
+                              <div class="content">Phase 3</div>
+                              <div class="date"><span class="due">7</span> days from now</div>
+                          </li>
+                          <li>
+                              <div class="content">Implementation</div>
+                              <div class="date"><span class="due">7</span> days from now</div>
+                          </li>
+                      </ul>
+                    </div>
+              </div>
+                       <div class="right-wrapper">
+  <!--file input-->
+
+           <div class="documenets">
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <th class="col-sm-1">DOCUMENTS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
+                  </tr>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                  </tr>
+                  </tbody>
+              </table>
+           </div>
+
+
+          <div class="upload-files ">
+              <div class="alert alert-success" role="alert" style="display:none;"></div>
+              <div  class="alert alert-danger" role="alert" style="display:none;"></div>
+              <div class="upload-files-header"><h4 >Upload Files</h4></div>
+               <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
+                      <input type="text" class="form-control phase1-title" placeholder="Title">
+                  </div>
+                  <br>
+                  <textarea class="form-control" rows="5" id="phase1-description" placeholder="Description"></textarea><br>
+                <select class="form-control upload-selector">
+                          <option value=""hidden>Phase</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>                 
+                </select>
+
+              <form method="POST"  action="#" enctype="multipart/form-data">
+                 
+                  <!-- COMPONENT START -->
+                  <div class="form-group" id="phase1-file">
+                      <div class="input-group input-file" name="Fichier1">
+                          <input type="text"  class="form-control" placeholder='Choose a file...' />
+                          <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+
+                      </div>
+                  </div>
+                  <!-- COMPONENT END -->
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary pull-right phase1-upload">Submit</button>
+                      <button type="reset" class="btn btn-danger">Reset</button>
+                  </div>
+              </form>
+          </div>
+  <!-- notes -->
+            <div class="notes-wrapper">
+            <div class="saver-wrap" contenteditable="false">
+              <div class="notes-dot" contenteditable="false"></div>
+              <div class="rest" contenteditable="false"></div>
+            </div>
+            <div class="title" contenteditable="true">
+              Reminder
+            </div>
+            <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                Dear students,
+                Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                Date: Tuesday, July 24th, 2018
+                Venue: Colombo LG02 (K-B16-LG02)
+                Time: 18h00 to 19h00
+                See you all there.
+            </div>
+            <div class="line"><span class="daypass"></span> days ago</div>
+          </div>
+
+
+<!-- create new reminder -->
+            <div class="new_note" >
+                <div class="form-group new_reminder">
+                      <div class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                          <label >New Reminder</label>
+                          <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
+                      <select class="form-control" id="task-select">
+                        <option value=""hidden>Task</option>
+                        <option>Proposal</option>
+                        <option>Design document</option>
+                        <option>Requirement document</option>
+                        <option>Implementation</option>
+                        <option>Demo</option>
+                        <option>Others</option>
+                      </select>
+                      <select class="form-control" id="group-select">
+                        <option value=""hidden>Group Type</option>
+                        <option>All groups</option>
+                        <option>Unsubmitted groups</option>
+                      </select>
+                     <button type="button" class="btn btn-info">Submit</button>
+                  </div>
+                  <div class="all-reminders" >
+                      <div class="title">All Reminders</div>
+                        <ul class="reminder-list">
+                            <li >
+                                <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
+                                <div class="content">Proposal</div>
+                                <div class="task">Task: <span id="task-name">Proposal</span></div>
+                                 <div class="date"><span class="due">2</span></div>
+                            </li>
+                      </ul>
+                  </div>
+
+
+            </div>
+
+           <br><br><br><br>
+<!-- Deadline -->
+
+            <div class="deadline_view" style="display: none;">
+              <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
+                      <div  class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>Please pick a deadline.</h1>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="deadline-select">
+                      <select class="form-control deadline-selector">
+                          <option value=""hidden>Options</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>
+                                  <option>Proposal</option>
+                                  <option>Design document</option>
+                                  <option>Requirement document</option>
+                                  <option>Implementation</option>
+                                  <option>Demo</option>
+                                  <option>Others</option>
+                      </select>
+                      </div>
+                      <input class="form-control others-deadline" type="text" placeholder="Others">
+                      <div class="row deadline-btn">
+                        <div class="col-md-6">
+                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                        </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-12">
+                          <br/>
+                               <p>Date Picked:</p>
+
+<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+                        </div>
+                      </div>
+                    </div>
+                    <script
+                        src="https://code.jquery.com/jquery-3.3.1.min.js"
+                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                        crossorigin="anonymous"></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
+                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
+            </div>
+
+<!-- group  -->
+          <div class="group-info drop-shadow-nav-grp curved.v2">
+            <div class="group-info-title"> Group Forming</div>
+                <div class="group-options">
+                      <h4 class="question">How would you like to generate the groups?</h4>
+                <div class="two-options">
+                      <input type="checkbox" name="Randomly" class="generate-group"><label>Randomly Generate</label> <br>
+                      <input type="checkbox" name="Manually" class="generate-group"><label>Manually Generate</label>   <br><br>
+                      </div>
+                      <button type="button" class="btn btn-success">Submit</button>
+            
+                </div>
+          </div>
+          <br>
+          <div class="group_container drop-shadow-group lifted" >
+            <br>
+
+
+          </div>
+      </div>
+
+
+
+          </div>
+      </div>
+
+<!-- phase4 -->
+      <div class="phase4">
+          <div class="sidenav_group drop-shadow-nav-grp curved.v2">
+              <div class="left-wrapper">
+                  <div class="sidebar-offcanvas sidebar">
+                      <div class="list-group">
+                          <a href="#" class="list-group-item active">Phase 4</a>
+                          <a href="#" class="list-group-item navgrp">Group</a>
+                          <a href="#" class="list-group-item reminder">Reminder</a>
+                          <a href="#" class="list-group-item deadline">Deadline</a>
+                          <a href="#" class="list-group-item upload">Resources</a>
+                          <a href="#" class="list-group-item mark">Mark</a>
+                      </div>
+                  </div>
+                                      <!--due-date-->
+                    <div class="due-date" id="due-date1">
+                      <div class="title">Upcoming Due Dates</div>
+                      <ul class="all-dealines">
+                        <li>
+                              <div class="content">Phase 4</div>
+                              <div class="date"><span class="due">9</span> days from now</div>
+                          </li>
+                          <li>
+                              <div class="content">Demo</div>
+                              <div class="date"><span class="due">9</span> days from now</div>
+                          </li>
+                      </ul>
+                    </div>
+              </div>
+                       <div class="right-wrapper">
+  <!--file input-->
+
+           <div class="documenets">
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <th class="col-sm-1">DOCUMENTS</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
+                  </tr>
+                  <tr>
+                      <td>Doc1</td>
+                      <td>Test Product 4</td>
+                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                  </tr>
+                  </tbody>
+              </table>
+           </div>
+
+
+          <div class="upload-files ">
+              <div class="alert alert-success" role="alert" style="display:none;"></div>
+              <div  class="alert alert-danger" role="alert" style="display:none;"></div>
+              <div class="upload-files-header"><h4 >Upload Files</h4></div>
+               <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-header text-muted"></span></span>
+                      <input type="text" class="form-control phase1-title" placeholder="Title">
+                  </div>
+                  <br>
+                  <textarea class="form-control" rows="5" id="phase1-description" placeholder="Description"></textarea><br>
+                <select class="form-control upload-selector">
+                          <option value=""hidden>Phase</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>                 
+                </select>
+
+              <form method="POST"  action="#" enctype="multipart/form-data">
+                 
+                  <!-- COMPONENT START -->
+                  <div class="form-group" id="phase1-file">
+                      <div class="input-group input-file" name="Fichier1">
+                          <input type="text"  class="form-control" placeholder='Choose a file...' />
+                          <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                    </span>
+
+                      </div>
+                  </div>
+                  <!-- COMPONENT END -->
+                  <div class="form-group">
+                      <button type="submit" class="btn btn-primary pull-right phase1-upload">Submit</button>
+                      <button type="reset" class="btn btn-danger">Reset</button>
+                  </div>
+              </form>
+          </div>
+  <!-- notes -->
+            <div class="notes-wrapper">
+            <div class="saver-wrap" contenteditable="false">
+              <div class="notes-dot" contenteditable="false"></div>
+              <div class="rest" contenteditable="false"></div>
+            </div>
+            <div class="title" contenteditable="true">
+              Reminder
+            </div>
+            <div class="content" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
+                Dear students,
+                Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                Date: Tuesday, July 24th, 2018
+                Venue: Colombo LG02 (K-B16-LG02)
+                Time: 18h00 to 19h00
+                See you all there.
+            </div>
+            <div class="line"><span class="daypass"></span> days ago</div>
+          </div>
+
+
+<!-- create new reminder -->
+            <div class="new_note" >
+                <div class="form-group new_reminder">
+                      <div class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                          <label >New Reminder</label>
+                          <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
+                      <select class="form-control" id="task-select">
+                        <option value=""hidden>Task</option>
+                        <option>Proposal</option>
+                        <option>Design document</option>
+                        <option>Requirement document</option>
+                        <option>Implementation</option>
+                        <option>Demo</option>
+                        <option>Others</option>
+                      </select>
+                      <select class="form-control" id="group-select">
+                        <option value=""hidden>Group Type</option>
+                        <option>All groups</option>
+                        <option>Unsubmitted groups</option>
+                      </select>
+                     <button type="button" class="btn btn-info">Submit</button>
+                  </div>
+                  <div class="all-reminders" >
+                      <div class="title">All Reminders</div>
+                        <ul class="reminder-list">
+                            <li >
+                                <div class="group-popup-close"><i class="fas fa-backspace "></i></div>
+                                <div class="content">Proposal</div>
+                                <div class="task">Task: <span id="task-name">Proposal</span></div>
+                                 <div class="date"><span class="due">2</span></div>
+                            </li>
+                      </ul>
+                  </div>
+
+
+            </div>
+
+           <br><br><br><br>
+<!-- Deadline -->
+
+            <div class="deadline_view" style="display: none;">
+              <div class="container deadline-container" ng-app="modalTest" ng-controller="dialogTestCtrl">
+                      <div  class="alert alert-success" role="alert" style="display:none;"></div>
+                      <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>Please pick a deadline.</h1>
+                          <br>
+                        </div>
+                      </div>
+                      <div class="deadline-select">
+                      <select class="form-control deadline-selector">
+                          <option value=""hidden>Options</option>
+                                  <option>Phase 1</option>
+                                  <option>Phase 2</option>
+                                  <option>Phase 3</option>
+                                  <option>Phase 4</option>
+                                  <option>Proposal</option>
+                                  <option>Design document</option>
+                                  <option>Requirement document</option>
+                                  <option>Implementation</option>
+                                  <option>Demo</option>
+                                  <option>Others</option>
+                      </select>
+                      </div>
+                      <input class="form-control others-deadline" type="text" placeholder="Others">
+                      <div class="row deadline-btn">
+                        <div class="col-md-6">
+                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                        </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-12">
+                          <br/>
+                                                      <p>Date Picked:</p>
+
+<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+                        </div>
+                      </div>
+                    </div>
+                    <script
+                        src="https://code.jquery.com/jquery-3.3.1.min.js"
+                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                        crossorigin="anonymous"></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
+                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
+                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
+                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
+            </div>
+
+<!-- group  -->
+          <div class="group-info drop-shadow-nav-grp curved.v2">
+            <div class="group-info-title"> Group Forming</div>
+                <div class="group-options">
+                      <h4 class="question">How would you like to generate the groups?</h4>
+                <div class="two-options">
+                      <input type="checkbox" name="Randomly" class="generate-group"><label>Randomly Generate</label> <br>
+                      <input type="checkbox" name="Manually" class="generate-group"><label>Manually Generate</label>   <br><br>
+                      </div>
+                      <button type="button" class="btn btn-success">Submit</button>
+            
+                </div>
+          </div>
+          <br>
+          <div class="group_container drop-shadow-group lifted" >
+            <br>
+
+
+          </div>
+      </div>
+
+          </div>
+
+
+      </div>
 
 </div>
 <!-- <div class="layer">

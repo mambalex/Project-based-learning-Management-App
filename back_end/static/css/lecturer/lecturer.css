@@ -11,10 +11,21 @@
   padding: 0;
 }
 
+
+.phase2,.phase3,.phase4{
+    display: none;
+    margin-bottom: 100px;
+}
 button{
     outline: 0 !important;
     /*border: none !important;*/
     -moz-outline-style: none !important;
+}
+
+
+.alert{
+  font-size: 14px;
+  text-align: center !important;
 }
 
 /*phase1*/
@@ -30,6 +41,46 @@ button{
     position: relative;
     /*border: 2px solid black;*/
 
+}
+
+/*due-date*/
+
+
+.due-date{
+    margin-top: 10px;
+    margin-left:60px;
+    margin-bottom: 50px;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#due-date2, #due-date1{
+    margin-top: 50px;
+}
+
+.due-date ul{
+    list-style: none;
+    padding: 0;
+}
+.due-date li{
+    border-top: 1px solid #ddd;
+    padding: 10px 15px;
+}
+.due-date>.title{
+    height: 40px;
+    background: rgb(55,123,181);
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.due-date li>.content{
+    color: #245853;
+}
+.due-date li>.date{
+    color: #777;
+    text-align: right;
 }
 
 
@@ -73,6 +124,9 @@ button{
     z-index: 999;
     padding-bottom: 20px;
 }
+
+
+
 
 .notes-wrapper .title {
     background-color: rgb(55,123,181);
@@ -128,6 +182,7 @@ button{
   margin-bottom: 20px;
 }
 .new_reminder{
+    align-self: flex-start;
     width: 43%;
     padding: 15px 30px 15px 30px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -145,17 +200,16 @@ button{
 
 
 .all-reminders{
-    display: inline-block;
-    position: absolute;
+   align-self: flex-start;
+    margin-left: 80px;
     width: 350px;
-    top:-25px;
-    right: 50px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-#due-date2, #due-date1{
+
+/*#due-date2, #due-date1{
     margin-top: 50px;
-}
+}*/
 
 .all-reminders ul{
     list-style: none;
@@ -163,6 +217,7 @@ button{
     margin-bottom: 0 !important;
 }
 .all-reminders li{
+    position: relative;
     border-top: 1px solid #ddd;
     padding: 10px 15px 5px 15px;
 }
@@ -182,15 +237,33 @@ button{
     color: #666D82;
     text-align: left;
 }
+
+.delete-reminder{
+  position: absolute;
+  right: 5px;
+  top: -1px;
+  cursor: pointer;;
+}
+
 .all-reminders li>.date{
+    font-size: 12px;
+    display: inline-block;
     color: #777;
     text-align: right;
+}
+.all-reminders li>.task{
+  margin-top: 30px;
+  font-size: 12px;
+  display: inline-block;
+  text-align: left;
+  width: 63%;
+  overflow: hidden;
 }
 
 
 /*group*/
 .group-info{
-    height: 80%;
+    height: 250px;
     width: 80%;
     display: none;
     border-radius: 3px;
@@ -315,6 +388,10 @@ button{
 .upload-files .upload-files-header{
     color: #245853;
     text-align: center;
+}
+
+.upload-selector{
+  margin-bottom: 20px;
 }
 
 /*phase2*/
