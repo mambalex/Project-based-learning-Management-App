@@ -139,9 +139,10 @@ def profile():
 @app.route('/temp/<string:filename>', methods=['GET'])
 def get_file(filename):
     if filename is None:
-        pass
+        abort(400)
     else:
-        file_data = open(os.path.join(UPLOAD_FOLDER, filename), "rb").read()
+        file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
+        file_data = open(os.path.join(file_dir, filename), "rb").read()
         response = make_response(file_data)
         response.headers['Content-Type'] = 'application/pdf'
         return response
