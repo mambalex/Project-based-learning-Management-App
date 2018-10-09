@@ -2,6 +2,7 @@ import database_lib
 import uuid
 import time
 import datetime
+import random
 
 
 # user info part
@@ -165,6 +166,22 @@ def clear_all_group(project_uuid):
 
 
 def random_group(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select u_i.email, u_i.name from enrol_project e_p, user_info u_i where e_p.project_uuid = '{}' and e_p.email = u_i.email and e_p.user_type = 'student';".format(
+        project_uuid)
+    all_student_list = database_object.search(sql)
+    all_student_list = convert_result_to_dict(temp_result=all_student_list, key_list=["email", "name"])
+    all_list = [item["email"] for item in all_student_list]
+    all_student_list = {item["email"]: item["name"] for item in all_student_list}
+
+
+
+
+
+    database_object.close()
+
     pass
 
 

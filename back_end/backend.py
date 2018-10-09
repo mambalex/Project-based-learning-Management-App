@@ -3,9 +3,8 @@ import re
 import json
 import time
 import base64
-import random
-# import database as db
-from back_end import database as db
+import database as db
+# from back_end import database as db
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
@@ -141,7 +140,7 @@ def get_file(filename):
     if filename is None:
         pass
     else:
-        file_data = open(os.path.join(UPLOAD_FOLDER, 'files/%s' % filename), "rb").read()
+        file_data = open(os.path.join(UPLOAD_FOLDER, filename), "rb").read()
         response = make_response(file_data)
         response.headers['Content-Type'] = 'application/pdf'
         return response
@@ -392,7 +391,8 @@ def leave_group():
 def random_group():
     project_uuid = request.json.get('project_uuid')
     if g.user.is_admin_user():
-        db.clear_all_group(project_uuid)
+        # db.clear_all_group(project_uuid)
+        pass
 
 
 # get group member list
