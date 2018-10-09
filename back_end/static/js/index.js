@@ -101,12 +101,13 @@ $(".login").on('submit',function (e) {
         if(status == '200'){
             $('#successAlert').text("Successfully login").show();
             $('#errorAlert').hide();
-            localStorage.setItem('token', JSON.stringify(rsp_data));
-            console.log(JSON.parse(localStorage.getItem('token')).token);
+            // 
             setTimeout(function(){ 
                 if(user_type == 'student'){
+                    localStorage.setItem('token', JSON.stringify(rsp_data));
                      window.location.pathname = "./student";
                 }else{
+                    localStorage.setItem('lecturer_token', JSON.stringify(rsp_data));
                      window.location.pathname = "./lecturer";
                 }
              },1500)

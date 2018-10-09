@@ -69,7 +69,7 @@ function getAllInfo(){
             data:JSON.stringify({'project_uuid':projectId}),
             async:false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
             },
             success(rsp_data){
                         console.log(rsp_data);
@@ -258,7 +258,7 @@ $(document).on('click', '.phase1-upload', function(e){
             processData: false,
             async: false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
             },
             error:function(){
                 popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
@@ -336,7 +336,7 @@ $(".new_note").find('.btn-info').on('click',function(){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
             },
             error:function(){
                 popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
@@ -382,7 +382,7 @@ $(document).on('click', '.delete-reminder', function(e){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
             },
             error:function(){
                 alert("Something went wrong");
@@ -448,7 +448,7 @@ $(".saveDeadline").on('click',function(){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
             },
             error: function() {
                 popUp(".deadline-container", ".alert-danger","Something went wrong",".deadline");
@@ -482,6 +482,58 @@ $('.chat-close').on('click', function(e) {
     $('#live-chat').fadeOut(300);
 
 });
+
+
+
+$(document).on("keypress", "#chatbotInput", function(e){
+        if(e.which == 13){
+        e.preventDefault();
+        var msg = $("#chatbotInput").val();
+        $(".chat-history").append(`<div class="chat-message clearfix">
+          <div class="chat-message-content clearfix">
+            <span class="chat-time">13:35</span>
+            <h5>John Doe</h5>
+            <p>${msg}</p>
+          </div> 
+        </div><hr>`);      
+        var arr = msg.split(" ");
+        arr.forEach(function(val){
+            // alert(val);
+            if(val=="phase1"){
+                $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>2018-10-12 10:59:59</p>
+                      </div> 
+                    </div><hr>`);    
+            }else if(val=="reminder"){
+                    $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>Sure, what do you want to send?</p>
+                      </div> 
+                    </div><hr>`);  
+        }else if(val=="welcome"){
+                         $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>New reminder has been sent :)</p>
+                      </div> 
+                    </div><hr>`); 
+                    var date = new Date().toISOString().split('T')[0];
+                    $(".reminder-list").append(`<li >
+                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                                <div class="content">Welcome to comp9323!</div>
+                                <div class="task">Task: <span id="task-name">Project</span></div>
+                                <div class="date"><span class="due">${date}</span></div>
+                            </li>`);}
+        });
+    }
+});
+
 
 
 
