@@ -343,14 +343,19 @@ $(".new_note").find('.btn-info').on('click',function(){
             }
         }).done(function(data){
                 console.log(data);
+                var time = data['timestamp'];
                 if(data['code']==200){
                     popUp(".new_note", ".alert-success","Successfully create new message",".reminder");
-                   // $(".reminder-list").append(`<li >
-                   //              <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-                   //              <div class="content">${msg}</div>
-                   //              <div class="task">Task: <span id="task-name">${task}</span></div>
-                   //              <div class="date"><span class="due">${date}</span></div>
-                   //          </li>`)
+                   $(".reminder-list").append(`<li >
+                                <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                                <div class="content">${msg}</div>
+                                <div class="task">Task: <span id="task-name">${task}</span></div>
+                                <div class="date"><span class="due">${time}</span></div>
+                            </li>`)
+                                  
+                        var d = new Date(time);
+                        reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
+
                 }else{
                     alert("Something went wrong");
                     popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
@@ -514,11 +519,12 @@ function newReminder(){
 $(document).on("keypress", "#chatbotInput", function(e){
         if(e.which == 13){
         e.preventDefault();
+        var name = userProfile['name'];
         var msg = $("#chatbotInput").val();
         $(".chat-history").append(`<div class="chat-message clearfix">
           <div class="chat-message-content clearfix">
             <span class="chat-time">13:35</span>
-            <h5>John Doe</h5>
+            <h5>${name}</h5>
             <p>${msg}</p>
           </div> 
         </div><hr>`);      
@@ -583,6 +589,12 @@ $(document).on("keypress", "#chatbotInput", function(e){
         });
     }
 });
+
+$(".tag").on('click',function(){
+    var msg = $(".new-reminder-msg").val();
+    var newMsg = `#mark# ${msg}`;
+    $(".new-reminder-msg").val(newMsg);
+})
 
 
 
