@@ -7,11 +7,14 @@ var taskList={};
 var groupInfo={};
 var currentPhase;
 
+$('#live-chat').hide();
 $(document).ready(function(){
     getAllInfo();
-    $('#live-chat header').click();
     $(".loaders").hide();
     $(".active").click();
+    $('#live-chat header').click(); 
+    $('#live-chat').show();
+
     welcomeUser();
     displayAllReminder();
 

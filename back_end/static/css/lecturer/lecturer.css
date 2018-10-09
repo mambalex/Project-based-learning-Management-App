@@ -554,6 +554,7 @@ button{
 /* ---------- LIVE-CHAT ---------- */
 
 #live-chat {
+  /*display: none;*/
   bottom: 0;
   font-size: 12px;
   right: 24px;
@@ -582,7 +583,7 @@ button{
 }
 
 #live-chat h4 {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 #live-chat h5 {
