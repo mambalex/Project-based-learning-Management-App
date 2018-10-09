@@ -8,11 +8,11 @@ var groupInfo={};
 var currentPhase;
 
 $(document).ready(function(){
-    getAllInfo();
+    // getAllInfo();
     $(".loaders").hide();
-    welcomeUser();
+    // welcomeUser();
     $(".active").click();
-    displayAllReminder();
+    // displayAllReminder();
 })
 
 //logout
@@ -21,9 +21,9 @@ $("#logout").click(function(){
 })
 
 //view files
-$(".files").on('click',function(){
+// $(".files").on('click',function(){
     
-})
+// })
 
 function popUp(src, sucessOrFail, text, click){
    $(src).find(sucessOrFail).text(text).show();

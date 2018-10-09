@@ -11,6 +11,11 @@
   padding: 0;
 }
 
+
+.phase2,.phase3,.phase4{
+    display: none;
+    margin-bottom: 100px;
+}
 button{
     outline: 0 !important;
     /*border: none !important;*/
@@ -36,6 +41,46 @@ button{
     position: relative;
     /*border: 2px solid black;*/
 
+}
+
+/*due-date*/
+
+
+.due-date{
+    margin-top: 10px;
+    margin-left:60px;
+    margin-bottom: 50px;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#due-date2, #due-date1{
+    margin-top: 50px;
+}
+
+.due-date ul{
+    list-style: none;
+    padding: 0;
+}
+.due-date li{
+    border-top: 1px solid #ddd;
+    padding: 10px 15px;
+}
+.due-date>.title{
+    height: 40px;
+    background: rgb(55,123,181);
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.due-date li>.content{
+    color: #245853;
+}
+.due-date li>.date{
+    color: #777;
+    text-align: right;
 }
 
 
@@ -79,6 +124,9 @@ button{
     z-index: 999;
     padding-bottom: 20px;
 }
+
+
+
 
 .notes-wrapper .title {
     background-color: rgb(55,123,181);
@@ -215,7 +263,7 @@ button{
 
 /*group*/
 .group-info{
-    height: 80%;
+    height: 250px;
     width: 80%;
     display: none;
     border-radius: 3px;
