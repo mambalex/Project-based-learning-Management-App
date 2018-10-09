@@ -125,7 +125,15 @@ button{
     padding-bottom: 20px;
 }
 
-
+.tag{
+  position: absolute;
+  bottom: 20px;
+  font-size: 14px;
+  border: 1px solid black;
+  padding: 1px 2px;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
 
 .notes-wrapper .title {
@@ -186,6 +194,7 @@ button{
     width: 43%;
     padding: 15px 30px 15px 30px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
 }
 
 #task-select{
