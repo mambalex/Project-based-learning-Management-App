@@ -352,7 +352,6 @@ $(".new_note").find('.btn-info').on('click',function(){
                                 <div class="task">Task: <span id="task-name">${task}</span></div>
                                 <div class="date"><span class="due">${time}</span></div>
                             </li>`)
-                                  
                         var d = new Date(time);
                         reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
 
@@ -511,6 +510,9 @@ function newReminder(){
 
         }).done(function(data){
                 console.log(data);
+                var time = data['timestamp'];
+                var d = new Date(time);
+                reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
     })
 }
 
