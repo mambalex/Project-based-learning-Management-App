@@ -684,11 +684,12 @@ def create_reminder(email, project_uuid, ass_uuid, message, submit_check="no"):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
+    timestamp = time.time()
     sql = "insert into reminder values \
-    ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) + "+0")
+    ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(reminder_uuid, email, project_uuid, ass_uuid, message, submit_check, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(timestamp)) + "+0")
     database_object.update(sql)
     database_object.close()
-    return reminder_uuid
+    return [reminder_uuid, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp))]
 
 
 def change_reminder_info(reminder_uuid, field, new_data):
