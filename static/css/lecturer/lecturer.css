@@ -11,6 +11,9 @@
   padding: 0;
 }
 
+.id{
+    display: none;
+}
 
 .phase2,.phase3,.phase4{
     display: none;
@@ -197,6 +200,15 @@ button{
     position: relative;
 }
 
+.new_reminder .alert{
+    position: absolute;
+    height: 35px;
+    top: 10px;
+    left: 45px;
+    padding: 5px 8px;
+    box-shadow: 0 0 black;
+}
+
 #task-select{
   margin-right: 10%;
 }
@@ -226,6 +238,7 @@ button{
     margin-bottom: 0 !important;
 }
 .all-reminders li{
+    display: block;
     position: relative;
     border-top: 1px solid #ddd;
     padding: 10px 15px 5px 15px;
@@ -245,13 +258,29 @@ button{
     font-size: 14px;
     color: #666D82;
     text-align: left;
+    height: auto;
 }
+.all-reminders li .content{
+  padding:10px;
+  /* Center Div */
+  display:block;
+  margin: 0 auto;
+  word-break:break-all;
+}
+/*.all-reminders li .content .text{*/
+   /**/
+/*}*/
+
 
 .delete-reminder{
   position: absolute;
   right: 5px;
   top: -1px;
   cursor: pointer;;
+}
+
+.delete-reminder i{
+    color:#dc3545;
 }
 
 .all-reminders li>.date{

@@ -89,7 +89,6 @@ $(".login").on('submit',function (e) {
         email: $('.login-email').val(),
         passwd: $('.login-password').val(),
     };
-
     $.ajax({
         type:'POST',
         url:'/api/login',

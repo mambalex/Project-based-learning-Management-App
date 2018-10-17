@@ -15,7 +15,7 @@ var currentGroupName;
 
 $(document).ready(function(){
     getAllInfo();
-    $(".loaders").hide();
+    // $(".loaders").hide();
     welcomeUser();
     $(".phase1-nav").click();
     displayReminder();

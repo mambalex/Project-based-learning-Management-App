@@ -28,7 +28,8 @@ position: relative;
   right: 30px;
   width: 50px;
   height: 22px;
-  background:rgb(55,123,181);
+  /*background:rgb(55,123,181);*/
+  background:#dc3545;
   color: white;
   text-align: center;
   cursor: pointer;
@@ -147,7 +148,8 @@ background-color: #377bb5;
   top: 30px;
   width: 50px;
   height: 22px;
-  background:rgb(55,123,181);
+  /*background:rgb(55,123,181);*/
+  background:#28a745;
   color: white;
   text-align: center;
   cursor: pointer;
