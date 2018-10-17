@@ -1,4 +1,6 @@
 .DS_Store
 ./back_end/__pycache__/*
-.idea/*
+.idea
 ./back_end/.idea/*
+__pycache__
+venv
