@@ -393,9 +393,45 @@ def leave_group():
 @auth.login_required
 def random_group():
     project_uuid = request.json.get('project_uuid')
-    if g.user.is_admin_user():
-        # db.clear_all_group(project_uuid)
-        pass
+    group_size = request.json.get('group_size')
+    default_group_size = 4
+
+    print(project_uuid,group_size)
+    if not g.user.is_admin_user():
+        return jsonify({'code':400, 'msg':'Insufficient permissions'})
+
+    db.clear_all_group(project_uuid)
+    if group_size is None:
+        group_size = default_group_size
+
+    student_list = db.get_ungroup_student(project_uuid)
+    student_num = len(student_list)
+    group_num = int(len(student_list) / default_group_size)
+    group_list = dict()
+    for i in range(group_num):
+        temp_group = list()
+        while len(temp_group) < default_group_size:
+            remove_list = list()
+            for j in range(len(student_list)):
+                if random.random() < 1/group_num:
+                    temp_group.append(student_list[j])
+                    remove_list.append(j)
+                if len(temp_group) >= default_group_size:
+                    break
+            remove_list.sort(reverse=True)
+            for j in remove_list:
+                student_list.pop(j)
+        group_list[i] = temp_group
+    temp_group_list = [i for i in range(group_num)]
+    for student in student_list:
+        random_group_num = round(random.random()/(1/len(temp_group_list))) -1
+        if random_group_num < 0:
+            random_group_num = 0
+        group_list[random_group_num].append(student)
+        temp_group_list.pop(random_group_num)
+    db.random_group(project_uuid, group_list)
+
+    return jsonify({'code':200,'msg':'Random group success','user_id':g.user.user_id,'user_type':g.user.user_type})
 
 
 # get group member list
