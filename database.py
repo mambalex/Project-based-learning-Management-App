@@ -474,6 +474,19 @@ def get_self_project_list(email):
     return result
 
 
+def lecturer_get_self_project_list(email):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select p.*, u_i.name from projects p, user_info u_i where p.master = '{}' and p.master = u_i.email;".format(
+        email)
+    result = database_object.search(sql)
+    database_object.close()
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
+    result = convert_result_to_dict(result, key_list)
+    return result
+
+
 # TODO: Unfinished function
 def get_whole_projects(project_uuid):
     pass

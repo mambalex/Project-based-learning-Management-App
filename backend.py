@@ -248,12 +248,14 @@ def get_auth_token():
         return jsonify({'code': 400, 'msg': 'Wrong password'})
     g.user = user
     token = g.user.generate_auth_token()
-    self_project_list = db.get_self_project_list(g.user.user_id)
+    
     if g.user.is_admin_user():
+        self_project_list = db.lecturer_get_self_project_list(g.user.user_id)
         return jsonify(
             {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id,
              'self_project_list': self_project_list})
     else:
+        self_project_list = db.get_self_project_list(g.user.user_id)
         all_project_list = db.get_project_list()
         return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student', 'user_id': g.user.user_id,
                         'self_project_list': self_project_list, 'all_project_list': all_project_list})
@@ -949,12 +951,12 @@ def create_whole_project():
     project_name = project_data['projectName']
     phases_dict = dict()
     for phase in project_data["phaseName"]:
-        phase_index = re.search('\d+', phase)
+        phase_index = re.search(r'\d+', phase)
         phase_index = int(phase_index.group(0))
         phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
         
     for task in project_data["taskName"]:
-        phase_index = re.search('\d+', phase)
+        phase_index = re.search(r'\d+', phase)
         phase_index = int(phase_index.group(0))
         phases_dict[phase_index]["task_list"].append(project_data["taskName"][task])
     
