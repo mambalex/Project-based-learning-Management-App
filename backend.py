@@ -150,7 +150,6 @@ def lecturer(username):
 
 
 @app.route('/student/<username>')
-# @auth.login_required
 def student(username):
     return render_template('student.html')
 
@@ -249,11 +248,15 @@ def get_auth_token():
             return jsonify({'code': 400, 'msg': 'Wrong password'})
     g.user = user
     token = g.user.generate_auth_token()
+    self_project_list = db.get_self_project_list(g.user.user_id)
+
     if g.user.is_admin_user():
         return jsonify(
-            {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id})
+            {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id,
+             'self_project_list': self_project_list})
     else:
-        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student', 'user_id': g.user.user_id})
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student', 'user_id': g.user.user_id,
+                        'self_project_list': self_project_list})
 
 
 # change user setting part
