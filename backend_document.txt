@@ -1912,3 +1912,25 @@ Sample Response:
     "user_type": "lecturer"
 }
 
+-------------------
+Chatbot API
+
+POST request to /api/chatbot
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+	"msg": "phase one deadline",
+	"project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+}
+
+Sample Response:
+{
+    "action": "search",
+    "code": 200,
+    "msg": "Get reply success",
+    "reply": "The deadline of phase one is 2018-10-12 10:59:59 ",
+    "user_id": "lecturer1@gmail.com",
+    "user_type": "lecturer"
+}

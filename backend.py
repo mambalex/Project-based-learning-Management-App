@@ -5,7 +5,7 @@ import time
 import base64
 import random
 import database as db
-# from back_end import database as db
+from chatbot import chatbot
 
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
@@ -55,6 +55,7 @@ app.config['SECRET_KEY'] = 'sUL2cGYDV3tGD6kLwcaHInlpmoYt4xzRYfjjKje+2SZna1aHBA9c
                             Vc12bV9CMYDi8YjrX2Z9tbvp4fYI5iKSIYYeuIu8haEbzFLqj2qsKn8PY+2f/6mg'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CHATBOT_RIVE_FILE'] = 'chatbot/comp9323.rive'
 
 app.jinja_env.variable_start_string = '%%'
 app.jinja_env.variable_end_string = '%%'
@@ -985,6 +986,26 @@ def mark_submittion():
     return jsonify(
         {'code': 200, 'msg': 'Mark submittion success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
+# Chatbot API
+@app.route('/api/chatbot', methods=['POST'])
+@auth.login_required
+def chatbot_api():
+    msg = request.json.get('msg')
+    project_uuid = request.json.get('project_uuid')
+    cb = chatbot.Chatbot(project_uuid, g.user.user_id, os.path.join(basedir, app.config['CHATBOT_RIVE_FILE']))
+    rsp_list = cb.get_reply(msg)
+    if rsp_list[1] == 'reminder':
+        if g.user.is_admin_user():
+            return jsonify({'code': 200, 'msg': 'Create new reminder', 'user_id': g.user.user_id,
+                            'user_type': g.user.user_type, 'action': rsp_list[1]})
+        else:
+            return jsonify({'code': 200, 'msg': 'Get reply success', 'user_id': g.user.user_id,
+                            'user_type': g.user.user_type, 'reply': "You don't have enough permissions to do this",
+                            'action': 'search'})
+    else:
+        return jsonify({'code': 200, 'msg': 'Get reply success', 'user_id': g.user.user_id,
+                        'user_type': g.user.user_type, 'reply': rsp_list[0], 'action': rsp_list[1]})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
