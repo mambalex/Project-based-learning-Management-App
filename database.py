@@ -449,10 +449,10 @@ def get_project_list():
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select * from projects;"
+    sql = "select p.*, u_i.name  from projects p, user_info u_i where p.master = u_i.email;"
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -461,11 +461,11 @@ def get_self_project_list(email):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select p.* from projects p, enrol_project e_p where e_p.email = '{}' and e_p.project_uuid = p.project_uuid;".format(
+    sql = "select p.*, u_i.name from projects p, enrol_project e_p, user_info u_i where e_p.email = '{}' and e_p.project_uuid = p.project_uuid and p.master = u_i.email;".format(
         email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
     result = convert_result_to_dict(result, key_list)
     return result
 

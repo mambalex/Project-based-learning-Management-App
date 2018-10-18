@@ -28,7 +28,31 @@ def allowed_file(filename):
 
 
 CORS(app, resources=r'/*')
-app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SECRET_KEY'] = 'sUL2cGYDV3tGD6kLwcaHInlpmoYt4xzRYfjjKje+2SZna1aHBA9clKI1gMpxjVxT\
+                            839ueFFqmxnPqYvkV1ARCFPhnDznI5XGJs0H12csnUbD0YEVsNChUihVv8I9XSDy\
+                            MTvlBJfO/VCMlctcJ7EC71R26jMIevE5UH0vMVlln1lUVQQCoNThaw4bC8aZv4vi\
+                            ehz4I0RFNpc/obNoUnU2NS6KtUJ7flCH9oXL2Sab/qRL1yHpeDWMBkJu4BBVHbfR\
+                            EEXGVYK0MTQ99veWR1/gzR7Cdp92hRH8yhZzuSYjOv8EtjXAz2RyGEqpchN5UYoP\
+                            MS+mIol283WcOlsXLfJkdiQS3uiDuDRKpPnmYMTqZkGNz8ODGvom8C4aiOf2+bIK\
+                            UbxUM5R7DYirVxizPYqp/BjLHkNIhOZw6GIbo1LxVw5Z2n30Y+YisnJM5oyMaNlx\
+                            o87FPaVo1XBgkjp2FSjnrzBwmlgnOeY0f2cEForVK0g1cF9kDnYtmZ4bXqXYgOT5\
+                            RtJ15MXphS9n6cCvirX2r5D8Dywl1kXdWsu4umozql8IWdM0oTOZA8ey4Kyx1a/h\
+                            5W232wsN0eMcQf31uoBJ7PgARDJF8gptZPBNiSKDHYD0TcFYsfxAwFYO+BAxbheE\
+                            TRwRwn5WLZuAAnciHEKqWhQhNOf3RNogmemfoXpf4K7cCzDpC9mUbjjbkbS/FVyy\
+                            zGBJjmkNv9X6sJLBcz7RhwlxvFVCHPenxaCvLWqOnTFmxl+LTto7okgCY3A1z3Tz\
+                            gBWOEK/Ky2Q8Zmcm36q87gMlYGfT0Po2a7zJpotIjBxbsqlVZ/tQDKt9+4sEA/VK\
+                            EZv5VzzBePfdaheIg42jQPX7Gl9fgz+DdBKNlEMEYg4SaU7VprDKtJf72dHPQQhk\
+                            4flnITlVbU7JrpmoQjidYcG7eoChg4BP8mTaNKceUNsO877dYJa9AzLMZ5tmu4Xa\
+                            nfeuNXuXyevFeyPW/rQci0aBnLZ0ZFQ+jrKl1DSWqnaotrCDB6M9gE17gq+GClG7\
+                            sAQ74k5PR7rwScWr+rt7w3c/uYP2pQslnOyq4qcjIQ03Hm54j6LsGljzsSgXdQgP\
+                            Gkce5zUtbrM42R/gbXWozfMyZzkZLinmwa2JFukiqHwMHO/pWeseVr3aQ5+xiNIc\
+                            /6GXqGsEWE5zWU1e7pspvhuKCPr4ZRzOyaPgrTA5HQkm2eiOEADXNKPJt5BscOtp\
+                            xk+qbHmbTX0vVUdxbN7k5Xbp1j8jOE7mR4myrRIvklFO2CmuZiMSuBphm+nOA1HB\
+                            y/9PfxaHlvXM1EaoPU7SzbLT/le4it2R77TToAnfrvmBpNM0C2UdgLSmomHpHYAJ\
+                            kZ12kpfLo8RP3R9BqYjPAib4V+wskJ5ppyGLWucc0FbJlg/zh/0k/S2QN6ZyMs3t\
+                            wXWbMAgHAsUo5azm6DmR0IkttkQ/HYN7Aa6bwO8w28tjo3olHa4gJfnT2S6Ng8W0\
+                            01Bdk4zt1Cd9/GtRvORog+7UbWRKJaX3U0kusoIUO/5hs7ClwI6VD85qo6K5QWyo\
+                            Vc12bV9CMYDi8YjrX2Z9tbvp4fYI5iKSIYYeuIu8haEbzFLqj2qsKn8PY+2f/6mg'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -396,9 +420,9 @@ def random_group():
     group_size = request.json.get('group_size')
     default_group_size = 4
 
-    print(project_uuid,group_size)
+    print(project_uuid, group_size)
     if not g.user.is_admin_user():
-        return jsonify({'code':400, 'msg':'Insufficient permissions'})
+        return jsonify({'code': 400, 'msg': 'Insufficient permissions'})
 
     db.clear_all_group(project_uuid)
     if group_size is None:
@@ -413,7 +437,7 @@ def random_group():
         while len(temp_group) < default_group_size:
             remove_list = list()
             for j in range(len(student_list)):
-                if random.random() < 1/group_num:
+                if random.random() < 1 / group_num:
                     temp_group.append(student_list[j])
                     remove_list.append(j)
                 if len(temp_group) >= default_group_size:
@@ -424,14 +448,15 @@ def random_group():
         group_list[i] = temp_group
     temp_group_list = [i for i in range(group_num)]
     for student in student_list:
-        random_group_num = round(random.random()/(1/len(temp_group_list))) -1
+        random_group_num = round(random.random() / (1 / len(temp_group_list))) - 1
         if random_group_num < 0:
             random_group_num = 0
         group_list[random_group_num].append(student)
         temp_group_list.pop(random_group_num)
     db.random_group(project_uuid, group_list)
 
-    return jsonify({'code':200,'msg':'Random group success','user_id':g.user.user_id,'user_type':g.user.user_type})
+    return jsonify(
+        {'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 # get group member list
@@ -812,7 +837,8 @@ def download():
     abort(404)
 
 
-# Start phase part
+# Start Get main data part
+# Student get main data
 @app.route('/api/student_main_info', methods=['POST'])
 @auth.login_required
 def student_load_main_info():
@@ -852,8 +878,12 @@ def student_load_main_info():
     reminder_list = global_reminder_list + unsubmit_reminder_list
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
 
+    self_project_list = db.get_self_project_list(g.user.user_id)
+    all_project_list = db.get_project_list()
+
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info,
-                    'group_list': group_list,
+                    'group_list': group_list, 'self_project_list': self_project_list,
+                    'all_project_list': all_project_list,
                     'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0,
                     'reminder_list': reminder_list})
 
@@ -885,9 +915,11 @@ def lecturer_load_main_info():
     reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
 
+    self_project_list = db.get_self_project_list(g.user.user_id)
+
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
                     'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
-                    'current_phase': 0, 'reminder_list': reminder_list})
+                    'current_phase': 0, 'reminder_list': reminder_list, 'self_project_list': self_project_list})
 
 
 # Get phase submittion
