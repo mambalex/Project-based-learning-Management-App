@@ -114,9 +114,11 @@ class User:
 def index():
     return render_template('index.html')
 
+
 @app.route('/create_project')
 def new_project():
     return render_template('new-project.html')
+
 
 @app.route('/lecturer')
 def lecturer():
@@ -224,9 +226,10 @@ def get_auth_token():
     g.user = user
     token = g.user.generate_auth_token()
     if g.user.is_admin_user():
-        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer'})
+        return jsonify(
+            {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id})
     else:
-        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student'})
+        return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student', 'user_id': g.user.user_id})
 
 
 # change user setting part
@@ -505,7 +508,7 @@ def create_new_reminder():
     submit_check = request.json.get('submit_check')
     if g.user.is_admin_user():
         return_list = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
-                                           message=message, submit_check=submit_check)
+                                         message=message, submit_check=submit_check)
         reminder_uuid = return_list[0]
         timestamp = return_list[1]
         return jsonify(
@@ -849,6 +852,48 @@ def lecturer_load_main_info():
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
                     'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
                     'current_phase': 0, 'reminder_list': reminder_list})
+
+
+# Get phase submittion
+@app.route('/api/get_phase_submit', methods=['POST'])
+@auth.login_required
+def get_phase_submit():
+    phase_uuid = request.json.get('phase_uuid')
+    task_list = db.get_phase_all_tasks(phase_uuid)
+    print(task_list)
+    submit_list = list()
+    phase_info = db.get_phases(phase_uuid)[0]
+    group_list = db.get_all_group(phase_info['project_uuid'])
+    for task in task_list:
+        task_submit_group = db.get_submits(task['task_uuid'])
+        submit_group_id = [item['group_uuid'] for item in task_submit_group]
+        unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+        task['submit_group'] = task_submit_group
+        task['unsubmit_group'] = unsubmit_group
+
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
+                    'data': task_list})
+
+
+# Create whole project
+@app.route('/api/create_whole_project', methods=['POST'])
+@auth.login_required
+def create_whole_project():
+    project_data = request.json.get('project_data')
+    print(project_data)
+    return jsonify(
+        {'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+# Mark submittion
+@app.route('/api/mark_submittion', methods=['POST'])
+@auth.login_required
+def mark_submittion():
+    mark_data = request.json.get('mark_data')
+    print(mark_data)
+
+    return jsonify(
+        {'code': 200, 'msg': 'Mark submittion success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 if __name__ == '__main__':
