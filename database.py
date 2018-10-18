@@ -165,24 +165,27 @@ def clear_all_group(project_uuid):
     database_object.close()
 
 
-def random_group(project_uuid):
+def random_group(project_uuid, group_data):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
-    sql = "select u_i.email, u_i.name from enrol_project e_p, user_info u_i where e_p.project_uuid = '{}' and e_p.email = u_i.email and e_p.user_type = 'student';".format(
-        project_uuid)
-    all_student_list = database_object.search(sql)
-    all_student_list = convert_result_to_dict(temp_result=all_student_list, key_list=["email", "name"])
-    all_list = [item["email"] for item in all_student_list]
-    all_student_list = {item["email"]: item["name"] for item in all_student_list}
-
-
-
-
-
+    print(group_data)
+    sql = "select * from projects where project_uuid = '{}';".format(project_uuid)
+    project_info = database_object.search(sql)
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address"]
+    project_info = convert_result_to_dict(project_info, key_list)[0]
+    for i in group_data:
+        group_uuid = uuid.uuid1()
+        group_name = "Group {}".format(i+1)
+        description = "{} group {}".format(project_info["project_name"], i+1)
+        sql = "insert into groups (group_uuid, group_name, project_uuid, description) values \
+            ('{}', '{}', '{}', '{}');".format(group_uuid, group_name, project_uuid, description)
+        database_object.update(sql)
+        for student in group_data[i]:
+            sql = "insert into group_relation values \
+                  ('{}', '{}', {});".format(student['email'], group_uuid, 1)
+            database_object.update(sql)
     database_object.close()
-
-    pass
 
 
 def get_all_group(project_uuid):
