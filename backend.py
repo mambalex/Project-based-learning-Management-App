@@ -68,7 +68,7 @@ app.debug = True
 # --------------------------- user model -----------------------
 class User:
     user_id = None
-    password = None
+    __password = None
     name = None
     gender = None
     dob = None
@@ -82,8 +82,7 @@ class User:
 
     def load_from_dict(self, user_profile):
         self.user_id = user_profile["email"]
-        self.__password = self.hash_password(
-            user_profile.get("passwd", "None"))
+        self.hash_password(user_profile.get("passwd", "None"))
         self.name = user_profile.get("name", self.user_id)
         self.gender = user_profile.get("gender", "None")
         self.dob = user_profile.get('dob', "None")
@@ -99,13 +98,13 @@ class User:
         self.hash_password(db.get_user_passwd(self.user_id))
 
     def hash_password(self, password):
-        self.password = custom_app_context.encrypt(password)
+        self.__password = custom_app_context.encrypt(password)
 
     def verify_password(self, password):
-        return custom_app_context.verify(password, self.password)
+        return custom_app_context.verify(password, self.__password)
 
     def is_admin_user(self):
-        return (self.user_type == 'lecturer' or self.user_type == 'mentor')
+        return self.user_type == 'lecturer' or self.user_type == 'mentor'
 
     def get_user_profile(self):
         user_profile = dict()
@@ -188,6 +187,8 @@ def verify_password(name_or_token, password):
     return True
 
 
+# Start test api
+
 # test api
 @app.route('/api/test', methods=['GET'])
 def test():
@@ -204,10 +205,11 @@ def test2():
 def upload_test():
     return render_template('upload.html')
 
-
 # end test api
 
-# create user
+
+
+# Create user API
 @app.route('/api/create_user', methods=['POST'])
 def new_user():
     user_id = request.form.get('email', type=str, default=None)
@@ -228,28 +230,25 @@ def new_user():
          'token': token.decode('ascii')})
 
 
-# login
+# Login API
 @app.route('/api/login', methods=['POST'])
 def get_auth_token():
-    name_or_token = request.form.get('email', type=str, default=None)
+    name = request.form.get('email', type=str, default=None)
     passwd = request.form.get('passwd', type=str, default=None)
-    if name_or_token is None:
+    if name is None:
         return jsonify({'code': 400, 'msg': 'Invalid email'})
     if passwd is None:
         return jsonify({'code': 400, 'msg': 'Invalid password'})
-    name_or_token = re.sub(r'^"|"$', '', name_or_token)
-    user = User.verify_auth_token(name_or_token)
-    if user is None:
-        if not db.check_user_id(name_or_token):
-            user = User(db.get_user(name_or_token)[0])
-        else:
-            return jsonify({'code': 400, 'msg': 'No such user'})
-        if not user.verify_password(passwd):
-            return jsonify({'code': 400, 'msg': 'Wrong password'})
+
+    if not db.check_user_id(name):
+        user = User(db.get_user(name)[0])
+    else:
+        return jsonify({'code': 400, 'msg': 'No such user'})
+    if not user.verify_password(passwd):
+        return jsonify({'code': 400, 'msg': 'Wrong password'})
     g.user = user
     token = g.user.generate_auth_token()
     self_project_list = db.get_self_project_list(g.user.user_id)
-
     if g.user.is_admin_user():
         return jsonify(
             {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id,
@@ -260,7 +259,7 @@ def get_auth_token():
                         'self_project_list': self_project_list, 'all_project_list': all_project_list})
 
 
-# change user setting part
+# Change user password
 @app.route('/api/change_passwd', methods=['POST'])
 @auth.login_required
 def change_passwd():
@@ -268,7 +267,7 @@ def change_passwd():
     db.change_user_passwd(email=g.user.user_id, new_passwd=new_passwd)
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Change user name
 @app.route('/api/change_name', methods=["POST"])
 @auth.login_required
 def change_name():
@@ -276,7 +275,7 @@ def change_name():
     db.change_user_name(email=g.user.user_id, new_name=new_name)
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Change user photo
 @app.route('/api/change_photo', methods=['POST'])
 @auth.login_required
 def change_photo():
@@ -284,7 +283,7 @@ def change_photo():
     db.change_user_photo(email=g.user.user_id, new_photo=new_photo)
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Change user gender
 @app.route('/api/change_gender', methods=['POST'])
 @auth.login_required
 def change_gender():
@@ -292,7 +291,7 @@ def change_gender():
     db.change_user_gender(g.user.user_id, new_gender)
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Change user type
 @app.route('/api/change_user_type', methods=['POST'])
 @auth.login_required
 def change_user_type():
@@ -306,7 +305,7 @@ def change_user_type():
     return jsonify({'code': 200, 'msg': 'Change success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# get student list
+# Get one project student list
 @app.route('/api/get_student_list', methods=['POST'])
 @auth.login_required
 def get_student_list():
@@ -317,7 +316,7 @@ def get_student_list():
          'data': student_list})
 
 
-# get student timeline
+# Get student timeline
 @app.route('/api/get_student_timeline', methods=['POST'])
 @auth.login_required
 def get_student_timeline():
@@ -362,7 +361,7 @@ def change_user_profile():
 
 # Group part
 
-# create a group
+# Create a group
 @app.route('/api/create_group', methods=['POST'])
 @auth.login_required
 def create_group():
@@ -377,7 +376,7 @@ def create_group():
                     'user_type': g.user.user_type})
 
 
-# get group list
+# Get one project group list
 @app.route('/api/get_group_list', methods=['POST'])
 @auth.login_required
 def get_group_list():
@@ -387,7 +386,7 @@ def get_group_list():
          'data': db.get_all_group(project_uuid)})
 
 
-# join a group
+# Join a group
 @app.route('/api/join_group', methods=['POST'])
 @auth.login_required
 def join_group():
@@ -402,7 +401,7 @@ def join_group():
             {'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# leave a group
+# Leave a group. For group leader, disband group
 @app.route('/api/leave_group', methods=['POST'])
 @auth.login_required
 def leave_group():
@@ -452,7 +451,7 @@ def random_group():
         {'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# get group member list
+# Get group member list
 @app.route('/api/get_member_list', methods=['POST'])
 @auth.login_required
 def get_member_list():
@@ -463,7 +462,7 @@ def get_member_list():
          'data': member_list})
 
 
-# get current group
+# Get current group
 @app.route('/api/current_group', methods=['POST'])
 @auth.login_required
 def get_current_group():
@@ -488,7 +487,7 @@ def get_current_group():
 
 # Project part
 
-# create a project
+# Create a project
 @app.route('/api/create_project', methods=['POST'])
 @auth.login_required
 def create_project():
@@ -508,14 +507,14 @@ def create_project():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# get project list
+# Get project list
 @app.route('/api/get_project_list', methods=['POST'])
 @auth.login_required
 def get_project_list():
     return jsonify({'code': 200, 'msg': 'Get project list success', 'data': db.get_project_list()})
 
 
-# enrol in a project
+# Enrol in a project
 @app.route('/api/enrol_project', methods=['POST'])
 @auth.login_required
 def enrol_project():
@@ -525,7 +524,7 @@ def enrol_project():
         {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# get self project_list
+# Get self project_list
 @app.route('/api/get_self_project_list', methods=['POST'])
 @auth.login_required
 def get_self_project_list():
@@ -536,7 +535,7 @@ def get_self_project_list():
 
 # Reminder part
 
-# lecturer and mentor get reminder list
+# Lecturer and mentor get reminder list
 @app.route('/api/admin_get_reminder_list', methods=["POST"])
 @auth.login_required
 def admin_get_reminder_list():
@@ -551,7 +550,7 @@ def admin_get_reminder_list():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# post a new reminder
+# Post a new reminder
 @app.route('/api/create_new_reminder', methods=["POST"])
 @auth.login_required
 def create_new_reminder():
@@ -572,7 +571,7 @@ def create_new_reminder():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# delete a reminder
+# Delete a reminder
 @app.route('/api/delete_reminder', methods=['POST'])
 @auth.login_required
 def delete_reminder():
@@ -586,7 +585,9 @@ def delete_reminder():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
-# change reminder part
+# Change reminder part
+
+# Change reminder assessment id
 @app.route('/api/change_reminder_ass_uuid', methods=['POST'])
 @auth.login_required
 def change_reminder_ass():
@@ -600,7 +601,7 @@ def change_reminder_ass():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Change reminder message
 @app.route('/api/change_reminder_message', methods=['POST'])
 @auth.login_required
 def change_reminder_message():
@@ -615,6 +616,7 @@ def change_reminder_message():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
+# Change reminder submit check
 @app.route('/api/change_reminder_submit_check', methods=['POST'])
 @auth.login_required
 def change_reminder_submit_check():
@@ -628,7 +630,7 @@ def change_reminder_submit_check():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Student get reminder list
 @app.route('/api/student_get_reminder_list', methods=['POST'])
 @auth.login_required
 def student_get_reminder_list():
@@ -638,6 +640,7 @@ def student_get_reminder_list():
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     else:
         global_reminder_list = db.student_get_self_global_reminder(project_uuid)
+        # TODO: Finish automatic replace mark tags
         unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
         reminder_list = global_reminder_list + unsubmit_reminder_list
         reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
@@ -646,8 +649,9 @@ def student_get_reminder_list():
              'data': reminder_list})
 
 
-# Addition documents
+# Addition documents part
 
+# Lecturer and mentor upload addition resource
 @app.route('/api/create_addition_resource', methods=['POST'])
 @auth.login_required
 def create_addition_resource():
@@ -662,7 +666,7 @@ def create_addition_resource():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Lecturer and mentor delete uploaded resource
 @app.route('/api/delete_addition_resource', methods=['POST'])
 @auth.login_required
 def delete_addition_resource():
@@ -675,7 +679,7 @@ def delete_addition_resource():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Lecturer and mentor get uploaded resource list
 @app.route('/api/get_upload_resource_list', methods=['POST'])
 @auth.login_required
 def get_upload_resource_list():
@@ -689,7 +693,7 @@ def get_upload_resource_list():
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
-
+# Student resource list
 @app.route('/api/student_resource_list', methods=['POST'])
 @auth.login_required
 def student_resource_list():
@@ -914,7 +918,7 @@ def lecturer_load_main_info():
                     'current_phase': 0, 'reminder_list': reminder_list, 'self_project_list': self_project_list})
 
 
-# Get phase submittion
+# Get phase all submittion
 @app.route('/api/get_phase_submit', methods=['POST'])
 @auth.login_required
 def get_phase_submit():
