@@ -66,18 +66,6 @@ body{
     color:white;
 }
 
-.project{
-    position: absolute;
-    height: 52px ;
-    right: 120px;
-    padding:18px 8px;
-    font-size: 14px;
-    color:white;
-    cursor: pointer;
-}
-.project:hover{
-    background: #2e6da4;
-}
 
 
 .user:hover{
@@ -100,6 +88,20 @@ body{
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
+}
+
+
+.project{
+    position: absolute;
+    height: 52px ;
+    right: 120px;
+    padding:18px 8px;
+    font-size: 14px;
+    color:white;
+    cursor: pointer;
+}
+.project:hover{
+    background: #2e6da4;
 }
 
 .project-dropdown{

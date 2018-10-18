@@ -48,10 +48,11 @@ function getAllInfo(){
                         });   
                         rsp_data['phase_list'].forEach(function(val){
                             phaseList[val['phase_name']]= val;
-                        }); 
-                        rsp_data['reminder_list'].forEach(function(val){
-                            reminderList[val['post_time']] = val['message'];
                         });
+                        reminderList = rsp_data['reminder_list'];
+                        // rsp_data['reminder_list'].forEach(function(val){
+                        //     reminderList[val['post_time']] = val['message'];
+                        // });
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
@@ -71,26 +72,40 @@ function welcomeUser(){
 }
 
 function displayReminder(){
-    var max = 0;
-    var latestReminder;
+    // var max = 0;
+    // var latestReminder;
     console.log(reminderList);
-    var reminderTimeList = Object.keys(reminderList);
-    reminderTimeList.forEach(function(val){
-        var temp = new Date(val);
-        var timeSTamp = temp.getTime();
-        if(timeSTamp > max){
-            max = timeSTamp;
-            latestReminder = val;
-        }
+    // var reminderTimeList = Object.keys(reminderList);
+    // reminderTimeList.forEach(function(val){
+    //     var temp = new Date(val);
+    //     var timeSTamp = temp.getTime();
+    //     if(timeSTamp > max){
+    //         max = timeSTamp;
+    //         latestReminder = val;
+    //     }
+    // })
+
+
+    $(".notes-wrapper li").remove();
+    reminderList.forEach(function (val) {
+        var date = val['post_time'];
+        var text = val['message'];
+        $(".notes-wrapper").append(`
+                        <li>
+                            <div class="content reminder">${text}</div>
+                            <div class="line">${date}</div>
+                        </li>
+
+        `)
     })
-    console.log(latestReminder);
-    var latestMessage = reminderList[latestReminder];
-    console.log(latestMessage);
-    var temp = new Date(latestReminder);
-    var now = new Date();
-    var daypass = Math.ceil((now.getTime()/1000 - temp.getTime()/1000)/(60 * 60 * 24));
-    $(".reminder").text(latestMessage);
-    $(".daypass").text(daypass);
+    // console.log(latestReminder);
+    // var latestMessage = reminderList[latestReminder];
+    // console.log(latestMessage);
+    // var temp = new Date(latestReminder);
+    // var now = new Date();
+    // var daypass = Math.ceil((now.getTime()/1000 - temp.getTime()/1000)/(60 * 60 * 24));
+    // $(".reminder").text(latestMessage);
+    // $(".daypass").text(daypass);
 
 
 }

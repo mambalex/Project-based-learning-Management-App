@@ -29,6 +29,14 @@
                     <div class="home">
                         <a href="main-page.html">Home</a>
                     </div>
+                    <div class="project">
+                          <div class="dropbtn">Projects</div>
+                          <div class="dropdown-content project-dropdown">
+                            <a href="#">Project 1</a>
+                            <a href="#">Project 2</a>
+                            <a href="#">Project 3</a>
+                          </div>
+                    </div>
                     <div class="welcome-user">
                           Welcome, John
                     </div>
@@ -148,25 +156,24 @@
             </div>
 
   <!-- notes -->
-                <div class="notes-wrapper">
-                        <div class="saver-wrap" contenteditable="false">
-                          <div class="notes-dot" contenteditable="false"></div>
-                          <div class="rest" contenteditable="false"></div>
+                <ul class="notes-wrapper">
+                        <div class="title">
+                              Reminder
                         </div>
-                        <div class="title" contenteditable="true">
-                          Reminder
-                        </div>
-                        <div class="content reminder" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
-                            Dear students,
-                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
-                            Date: Tuesday, July 24th, 2018
-                            Venue: Colombo LG02 (K-B16-LG02)
-                            Time: 18h00 to 19h00
-                            See you all there.
-                        </div>
-                        <div class="line"><span class="daypass"></span> days ago</div>
-                        <input type="file" onchange="previewFile()" id="selectedFile" style="display: none;" />
-                </div>
+                        <li>
+                            <div class="content reminder">
+                                Dear students,
+                                Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
+                                Date: Tuesday, July 24th, 2018
+                                Venue: Colombo LG02 (K-B16-LG02)
+                                Time: 18h00 to 19h00
+                                See you all there.
+                            </div>
+                            <div class="line"></div>
+                        </li>
+
+
+                </ul>
                <!-- <script  src="js/notes.js"></script> -->
 
 <!--document-->
@@ -440,25 +447,12 @@
         </div>
         <div class="right-wrapper">
           <!-- notes -->
-                <div class="notes-wrapper-2 notes-wrapper">
-                        <div class="saver-wrap" contenteditable="false">
-                          <div class="notes-dot" contenteditable="false"></div>
-                          <div class="rest" contenteditable="false"></div>
-                        </div>
-                        <div class="title" contenteditable="true">
-                          Reminder
-                        </div>
-                        <div class="content reminder" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
-                            Dear students,222222
-                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
-                            Date: Tuesday, July 24th, 2018
-                            Venue: Colombo LG02 (K-B16-LG02)
-                            Time: 18h00 to 19h00
-                            See you all there.
-                        </div>
-                        <div class="line"><span class="daypass"></span> days ago</div>
-                        <input type="file" onchange="previewFile()" id="selectedFile2" style="display: none;" />
-                </div>
+                <ul class="notes-wrapper-2 notes-wrapper">
+                     <div class="title">
+                              Reminder
+                     </div>
+
+                </ul>
 
             <div class="file-input" id="phase2-upload">
                 <div id="successAlert-phase2" class="alert alert-success" role="alert" style="display:none;"></div>
@@ -549,25 +543,12 @@
         </div>
         <div class="right-wrapper">
           <!-- notes -->
-                <div class="notes-wrapper-3 notes-wrapper">
-                        <div class="saver-wrap" contenteditable="false">
-                          <div class="notes-dot" contenteditable="false"></div>
-                          <div class="rest" contenteditable="false"></div>
+                <ul class="notes-wrapper-3 notes-wrapper">
+                     <div class="title">
+                              Reminder
                         </div>
-                        <div class="title" contenteditable="true">
-                          Reminder
-                        </div>
-                        <div class="content reminder" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
-                            Dear students,
-                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
-                            Date: Tuesday, July 24th, 2018
-                            Venue: Colombo LG02 (K-B16-LG02)
-                            Time: 18h00 to 19h00
-                            See you all there.
-                        </div>
-                        <div class="line"><span class="daypass"></span> days ago</div>
-                        <input type="file" onchange="previewFile()" id="selectedFile3" style="display: none;" />
-                </div>
+
+                </ul>
             <div class="file-input">
                 <div id="successAlert-phase3" class="alert alert-success" role="alert" style="display:none;"></div>
                 <div id="errorAlert-phase3" class="alert alert-danger" role="alert" style="display:none;"></div>
@@ -661,25 +642,11 @@
         </div>
         <div class="right-wrapper">
           <!-- notes -->
-                <div class="notes-wrapper-4 notes-wrapper">
-                        <div class="saver-wrap" contenteditable="false">
-                          <div class="notes-dot" contenteditable="false"></div>
-                          <div class="rest" contenteditable="false"></div>
+                <ul class="notes-wrapper-4 notes-wrapper">
+                 <div class="title">
+                              Reminder
                         </div>
-                        <div class="title" contenteditable="true">
-                          Reminder
-                        </div>
-                        <div class="content reminder" contenteditable="true" onpaste="OnPaste_StripFormatting(this, event);">
-                            Dear students,
-                            Welcome to COMP9323. I would like to inform you of the details of the introductory session to explain project, assessments, etc:
-                            Date: Tuesday, July 24th, 2018
-                            Venue: Colombo LG02 (K-B16-LG02)
-                            Time: 18h00 to 19h00
-                            See you all there.
-                        </div>
-                        <div class="line"><span class="daypass"></span> days ago</div>
-                        <input type="file" onchange="previewFile()" id="selectedFile4" style="display: none;" />
-                </div>
+                </ul>
 
             <div class="documents document-4">
                     <table class="table table-striped">

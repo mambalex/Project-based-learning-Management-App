@@ -65,10 +65,12 @@ button{
 /*note*/
 .notes-wrapper,.notes-wrapper-2,.notes-wrapper-3,.notes-wrapper-4 {
     display: none;
-    max-width: 400px;
+    max-width: 450px;
+    list-style: none;
     width: 90%;
     margin: 0 auto;
     margin-top: 10px;
+    padding-left: 0;
     height: auto;
     background-color: #fff;
     border-radius: 5px;
@@ -78,7 +80,14 @@ button{
     outline: 0;
     border: none;
     -moz-outline-style: none;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.notes-wrapper li{
+    display: block;
+    position: relative;
+    border-top: 1px solid #ddd;
+    padding: 10px 15px 10px 15px;
 }
 /*.notes-wrapper:active,.notes-wrapper:focus{
     outline: 0;
@@ -90,9 +99,10 @@ button{
 .notes-wrapper .line{
   position: absolute;
   right: 10px;
-  bottom: 20px;
+  bottom: 10px;
   height: 10px;
   color: #666D82;
+
 }
 .notes-wrapper .title {
     background-color: rgb(55,123,181);
@@ -117,6 +127,8 @@ button{
     outline: 0;
     border: none;
     -moz-outline-style: none;
+        word-break: break-all;
+
 }
 
 /*due-date*/
