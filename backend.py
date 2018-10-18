@@ -255,8 +255,9 @@ def get_auth_token():
             {'code': 200, 'token': token.decode('ascii'), 'user_type': 'lecturer', 'user_id': g.user.user_id,
              'self_project_list': self_project_list})
     else:
+        all_project_list = db.get_project_list()
         return jsonify({'code': 200, 'token': token.decode('ascii'), 'user_type': 'student', 'user_id': g.user.user_id,
-                        'self_project_list': self_project_list})
+                        'self_project_list': self_project_list, 'all_project_list': all_project_list})
 
 
 # change user setting part
@@ -432,30 +433,19 @@ def random_group():
         group_size = default_group_size
 
     student_list = db.get_ungroup_student(project_uuid)
-    student_num = len(student_list)
-    group_num = int(len(student_list) / default_group_size)
+    random.shuffle(student_list)
+    group_num = int(len(student_list) / group_size)
     group_list = dict()
     for i in range(group_num):
         temp_group = list()
         while len(temp_group) < default_group_size:
-            remove_list = list()
-            for j in range(len(student_list)):
-                if random.random() < 1 / group_num:
-                    temp_group.append(student_list[j])
-                    remove_list.append(j)
-                if len(temp_group) >= default_group_size:
-                    break
-            remove_list.sort(reverse=True)
-            for j in remove_list:
-                student_list.pop(j)
+            temp_group.append(student_list.pop())
         group_list[i] = temp_group
-    temp_group_list = [i for i in range(group_num)]
+
+    group_list_index = [i for i in group_list]
+    random.shuffle(group_list_index)
     for student in student_list:
-        random_group_num = round(random.random() / (1 / len(temp_group_list))) - 1
-        if random_group_num < 0:
-            random_group_num = 0
-        group_list[random_group_num].append(student)
-        temp_group_list.pop(random_group_num)
+        group_list[group_list_index.pop()].append(student)
     db.random_group(project_uuid, group_list)
 
     return jsonify(
