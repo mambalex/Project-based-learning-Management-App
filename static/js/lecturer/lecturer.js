@@ -18,6 +18,13 @@ $(document).ready(function(){
 
 })
 
+//create a project
+
+$("#create-project").on('click',function () {
+     window.open("/create_project", '_blank');
+})
+
+
 //logout
 $("#logout").click(function(){
      window.location.pathname = "/";

@@ -12,9 +12,16 @@ $("#profile").click( function(e){
 
 $(document).on('click', '.user', function(e){
     e.preventDefault();
-    if( $('.dropdown-content').css('display') === 'block' ){
-        $('.dropdown-content').hide();
-    }else{$('.dropdown-content').css('display','block');}
+    if( $(this).find('.dropdown-content').css('display') === 'block' ){
+        $(this).find('.dropdown-content').hide();
+    }else{$(this).find('.dropdown-content').css('display','block');}
+})
+
+$(document).on('click', '.project', function(e){
+    e.preventDefault();
+    if( $(this).find('.dropdown-content').css('display') === 'block' ){
+        $(this).find('.dropdown-content').hide();
+    }else{$(this).find('.dropdown-content').css('display','block');}
 })
 
 $( ".dropdown-content" ).on({

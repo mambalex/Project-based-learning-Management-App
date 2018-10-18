@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New project</title>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/css/lecturer/header-timeline.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/new-project.css">
+    <link rel="stylesheet" href="../static/css/lecturer/shadow.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+        <nav class="header">
+              <div class="home">
+                  <a href="/">Home</a>
+              </div>
+              <div class="welcome-user"></div>
+        </nav>
+
+        <div class="main-container drop-shadow-nav-grp curved.v2">
+            <div class="input-group mb-3">
+                 <label for="project-name">Project Name:</label>
+                  <input type="text" class="form-control" id="projectName"  placeholder="Project Name" >
+            </div>
+            <div class="input-group mb-3">
+                <div class="phase-title">Phase Name:</div>
+                <div class="input-group-prepend">
+                   <select class="custom-select form-control select-phase" id="inputGroupSelect02">
+                            <option value="" hidden>Choose...</option>
+                            <option value="Phase 1">Phase 1</option>
+                            <option value="Phase 2">Phase 2</option>
+                            <option value="Phase 3">Phase 3</option>
+                            <option value="Phase 4">Phase 4</option>
+                   </select>
+
+                  </div>
+                  <input type="text" class="form-control" placeholder="Phase Name">
+                  <i class="fas fa-plus-circle add-phase"></i>
+            </div>
+            <ul class="display-phase">
+
+            </ul>
+
+            <div class="input-group mb-3 task">
+                <div class="task-title">Task Name:</div>
+                <div class="input-group-prepend">
+                        <select class="custom-select select-task" >
+                            <option value="" hidden>Choose...</option>
+                            <option value="Phase 1">Phase 1</option>
+                            <option value="Phase 2">Phase 2</option>
+                            <option value="Phase 3">Phase 3</option>
+                            <option value="Phase 4">Phase 4</option>
+                        </select>
+
+                  </div>
+                  <input type="text" class="form-control" placeholder="Task Name" >
+                 <i class="fas fa-plus-circle add-task"></i>
+            </div>
+               <div class="input-group mb-3 task">
+                    <div class="submit-text">Need to submit files?</div>
+                     <select class="custom-select submit-files">
+                            <option value="" hidden>Choose...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                     </select>
+               </div>
+
+            <ul class="display-task">
+
+            </ul>
+            <div class="button"><button type="button" class="btn btn-success">Submit</button></div>
+        </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="../static/js/new-project.js"></script>
+</body>
+</html>
+
+

@@ -379,6 +379,14 @@ button{
     left: 100px;
 }
 
+.deadline_view .alert{
+        position: absolute;
+    top: -20px;
+    padding: 8px;
+    left: 30px;
+    width: 250px;
+}
+
 .deadline-select{
   display: inline-block;
   height: 30px !important;

@@ -51,7 +51,7 @@ body{
     display: none;
     color: white;
     position: absolute;
-    right: 90px;
+    right: 210px;
     top: 18px;
 }
 
@@ -66,6 +66,19 @@ body{
     color:white;
 }
 
+.project{
+    position: absolute;
+    height: 52px ;
+    right: 120px;
+    padding:18px 8px;
+    font-size: 14px;
+    color:white;
+    cursor: pointer;
+}
+.project:hover{
+    background: #2e6da4;
+}
+
 
 .user:hover{
     cursor: pointer;
@@ -76,7 +89,6 @@ body{
     position: absolute;
     right: -10px;
     z-index: 1;
-
     min-width: 10rem;
     padding: .5rem 0;
     margin: .125rem 0 0;
@@ -90,6 +102,10 @@ body{
     border-radius: .25rem;
 }
 
+.project-dropdown{
+    min-width: 150px;
+}
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -101,7 +117,6 @@ body{
 .dropdown-content a:hover {
     background-color: #ddd;
     cursor: pointer;}
-
 
 
 
@@ -225,29 +240,5 @@ body{
         width: 25%;
     }
 }
-
-
-/*@media (min-device-width: 320px) and (max-device-width: 700px) {
-  .timeline {
-    list-style-type: none;
-    display: block;
-  }
-
-  .tl_li {
-    transition: all 200ms ease-in;
-    display: flex;
-    width: inherit;
-  }
-
-  .phase {
-    width: 100px;
-  }
-
-  .phase_descpt:before {
-    left: -8%;
-    top: 30%;
-    transition: all 200ms ease-in;
-  }
-}*/
 
 

@@ -119,6 +119,9 @@ class User:
 def index():
     return render_template('index.html')
 
+@app.route('/create_project')
+def new_project():
+    return render_template('new-project.html')
 
 @app.route('/lecturer')
 def lecturer():

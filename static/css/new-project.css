@@ -1,0 +1,109 @@
+.main-container{
+    width: 80%;
+    margin: 10% 10%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 70px 0;
+}
+
+.home a{
+    text-decoration: none !important;
+}
+.home a:hover{
+    color: white !important;
+}
+
+
+.id{
+    display: none;
+}
+
+.input-group{
+    width: 60% !important;
+    margin-left: 20%;
+    position: relative;
+}
+/*.show-phase, .show-task{*/
+    /*margin-left: 100px;*/
+/*}*/
+
+.display-phase, .display-task{
+    width: 60% !important;
+    margin-left: 21%;
+}
+.show-phase{
+    width: 25%;
+    margin-right: 25px;
+}
+
+
+.task-name, .phase-name{
+        word-break: break-all;
+}
+label{
+    margin-right:30px;
+    padding-top:10px;
+}
+.phase-title{
+    margin-right:36px;
+    padding-top:10px;
+}
+.task-title{
+    margin-right:46px;
+    padding-top:10px;
+}
+
+.display{
+    display: flex;
+    position: relative;
+    margin-left:100px;
+}
+
+.display2{
+    margin: 0;
+}
+.show-task{
+   width: 25%;
+    margin-right: 25px;
+}
+.task-name{
+    width: 65%;
+}
+
+
+i{
+    position: absolute;
+    right:-40px;
+    top:10px;
+    color:#28a745;
+    font-size:20px;
+    cursor: pointer;
+}
+
+.display i{
+    position: absolute;
+    right: -30px;
+    top: 1px;
+    color: #dc3545;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.button{
+    margin-top: 70px;
+    text-align: center;
+}
+
+.submit-text{
+    margin-top: 6px;
+    margin-left: 130px;
+    margin-right: 50px;
+}
+
+.submit-f{
+    margin-left: 70px;
+}
+
+.submit-files{
+    padding: 6px 0;
+   margin-right: 150px;
+}
