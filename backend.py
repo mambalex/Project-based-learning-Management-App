@@ -10,7 +10,6 @@ import database as db
 from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
 from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
-# from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from passlib.apps import custom_app_context
@@ -30,11 +29,7 @@ def allowed_file(filename):
 
 CORS(app, resources=r'/*')
 app.config['SECRET_KEY'] = 'hard to guess string'
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_RECORD_QUERIES'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-                                        os.path.join(basedir, 'data.sqlite')
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.jinja_env.variable_start_string = '%%'
