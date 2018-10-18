@@ -433,6 +433,10 @@ def create_projects(master, project_name, deadline, mark_release=None, spec_addr
     return project_uuid
 
 
+def create_whole_project(master, project_data):
+    print(project_data)
+
+
 def get_projects(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
@@ -514,18 +518,18 @@ def delete_project(project_uuid):
 
 
 # phases part
-def create_phases(project_uuid, phase_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
+def create_phases(project_uuid, phase_index, phase_name, deadline, mark_release=None, submit_require=0, spec_address="None"):
     phase_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     if mark_release is None:
         sql = "insert into phases (phase_uuid, project_uuid, phase_name, deadline, submit_require, spec_address) values \
-    ('{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline,
+    ('{}', '{}', {}, '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_index, phase_name, deadline,
                                                 submit_require, spec_address)
     else:
         sql = "insert into phases values \
-    ('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_name, deadline, mark_release,
+    ('{}', '{}', {}, '{}', '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_index, phase_name, deadline, mark_release,
                                                       submit_require, spec_address)
     database_object.update(sql)
     database_object.close()
@@ -552,7 +556,7 @@ def get_phases(phase_uuid):
     sql = "select * from phases where phase_uuid = '{}';".format(phase_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require",
+    key_list = ["phase_uuid", "project_uuid", "phase_index", "phase_name", "deadline", "mark_release", "submit_require",
                 "spec_address"]
     result = convert_result_to_dict(result, key_list)
     return result
@@ -565,10 +569,26 @@ def get_project_all_phases(project_uuid):
     sql = "select * from phases where project_uuid = '{}' order by deadline;".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["phase_uuid", "project_uuid", "phase_name", "deadline", "mark_release", "submit_require",
+    key_list = ["phase_uuid", "project_uuid", "phase_index", "phase_name", "deadline", "mark_release", "submit_require",
                 "spec_address"]
     result = convert_result_to_dict(result, key_list)
     return result
+
+
+def get_current_phase_index(project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select * from phases where project_uuid = '{}' and now() < deadline order by deadline;".format(project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    if len(result) == 0:
+        return -1
+    else:
+        key_list = ["phase_uuid", "project_uuid", "phase_index", "phase_name", "deadline", "mark_release", "submit_require",
+                    "spec_address"]
+        result = convert_result_to_dict(result, key_list)
+        return result[0]["phase_index"]-1
 
 
 def change_phases_name(phase_uuid, new_name):
@@ -701,7 +721,7 @@ def get_student_timeline(email, group_uuid):
     database_object.open()
     sql = "select gr.email as email, gr.group_uuid as group_uuid, g.group_name as group_name,\
     g.project_uuid as project_uuid, pj.project_name as project_name, pj.deadline as project_deadline,\
-    pj.mark_release as project_mark_release, ph.phase_uuid as phase_uuid, ph.phase_name as phase_name,\
+    pj.mark_release as project_mark_release, ph.phase_uuid as phase_uuid, ph.phase_index, ph.phase_name as phase_name,\
     ph.deadline as phase_deadline, ph.mark_release as phase_mark_release,\
     ph.submit_require as phase_submit_require, t.task_uuid as task_uuid, t.task_name as task_name,\
     t.deadline as task_deadline, t.mark_release as task_mark_release, t.submit_require as task_submit_require\
@@ -711,7 +731,7 @@ def get_student_timeline(email, group_uuid):
     result = database_object.search(sql)
     database_object.close()
     key_list = ['email', 'group_uuid', 'group_name', 'project_uuid', 'project_name', 'project_deadline',
-                'project_mark_release', 'phase_uuid', 'phase_name', 'phase_deadline', 'phase_mark_release',
+                'project_mark_release', 'phase_uuid', "phase_index", 'phase_name', 'phase_deadline', 'phase_mark_release',
                 'phase_submit_require', 'task_uuid', 'task_name', 'task_deadline', 'task_mark_release',
                 'task_submit_require']
     result = convert_result_to_dict(result, key_list)
@@ -871,16 +891,16 @@ def create_test_data():
     create_user({"passwd": "123456", "email": "test3@test.com", "user_type": 'student'})
     create_user({"passwd": "123456", "email": "test4@test.com", "user_type": 'student'})
     project_uuid = create_projects("test1@test.com", "Test Project", "2018-10-20 23:59:59+0", "2018-10-25 00:00:00+0")
-    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 1", deadline="2018-10-11 23:59:59+0",
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_index=1, phase_name="Phase 1", deadline="2018-10-11 23:59:59+0",
                                mark_release="2018-10-13 00:00:00+0")
     task_uuid = create_tasks(phase_uuid, "Proposal", "2018-10-11 23:59:59+0", mark_release="2018-10-13 00:00:00+0", submit_require=1)
-    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 2", deadline="2018-10-13 23:59:59+0",
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_index=2, phase_name="Phase 2", deadline="2018-10-13 23:59:59+0",
                                mark_release="2018-10-15 00:00:00+0")
     task_uuid = create_tasks(phase_uuid, "Requirement document & Design document", "2018-10-13 23:59:59+0", mark_release="2018-10-15 00:00:00+0", submit_require=1)
-    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 3", deadline="2018-10-15 23:59:59+0",
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_index=3, phase_name="Phase 3", deadline="2018-10-15 23:59:59+0",
                                mark_release="2018-10-17 00:00:00+0")
     task_uuid = create_tasks(phase_uuid, "Implementation", "2018-10-15 23:59:59+0", mark_release="2018-10-17 00:00:00+0", submit_require=1)
-    phase_uuid = create_phases(project_uuid=project_uuid, phase_name="Phase 4", deadline="2018-10-17 23:59:59+0",
+    phase_uuid = create_phases(project_uuid=project_uuid, phase_index=4, phase_name="Phase 4", deadline="2018-10-17 23:59:59+0",
                                mark_release="2018-10-20 00:00:00+0")
     task_uuid = create_tasks(phase_uuid, "Demo", "2018-10-17 23:59:59+0", mark_release="2018-10-20 00:00:00+0", submit_require=1)
     enrol_project("test3@test.com", project_uuid)

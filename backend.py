@@ -868,6 +868,8 @@ def student_load_main_info():
         phase['resource_list'] = resource_list
         task_list = db.get_phase_all_tasks(phase['phase_uuid'])
         phase['task_list'] = task_list
+
+    current_phase = db.get_current_phase_index(project_uuid)
     # Reminder part
     global_reminder_list = db.student_get_self_global_reminder(project_uuid)
     unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
@@ -880,7 +882,7 @@ def student_load_main_info():
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info,
                     'group_list': group_list, 'self_project_list': self_project_list,
                     'all_project_list': all_project_list,
-                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': 0,
+                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': current_phase,
                     'reminder_list': reminder_list})
 
 
@@ -888,7 +890,6 @@ def student_load_main_info():
 @app.route('/api/lecturer_main_info', methods=['POST'])
 @auth.login_required
 def lecturer_load_main_info():
-    pass
     project_uuid = request.json.get('project_uuid')
     project_info = db.get_projects(project_uuid)
     if len(project_info) > 0:
@@ -907,6 +908,7 @@ def lecturer_load_main_info():
         phase['resource_list'] = resource_list
         task_list = db.get_phase_all_tasks(phase['phase_uuid'])
         phase['task_list'] = task_list
+    current_phase = db.get_current_phase_index(project_uuid)
     # Reminder part
     reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
@@ -915,7 +917,7 @@ def lecturer_load_main_info():
 
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
                     'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
-                    'current_phase': 0, 'reminder_list': reminder_list, 'self_project_list': self_project_list})
+                    'current_phase': current_phase, 'reminder_list': reminder_list, 'self_project_list': self_project_list})
 
 
 # Get phase all submittion
@@ -925,7 +927,6 @@ def get_phase_submit():
     phase_uuid = request.json.get('phase_uuid')
     task_list = db.get_phase_all_tasks(phase_uuid)
     print(task_list)
-    submit_list = list()
     phase_info = db.get_phases(phase_uuid)[0]
     group_list = db.get_all_group(phase_info['project_uuid'])
     for task in task_list:
@@ -945,6 +946,29 @@ def get_phase_submit():
 def create_whole_project():
     project_data = request.json.get('project_data')
     print(project_data)
+    project_name = project_data['projectName']
+    phases_dict = dict()
+    for phase in project_data["phaseName"]:
+        phase_index = re.search('\d+', phase)
+        phase_index = int(phase_index.group(0))
+        phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
+        
+    for task in project_data["taskName"]:
+        phase_index = re.search('\d+', phase)
+        phase_index = int(phase_index.group(0))
+        phases_dict[phase_index]["task_list"].append(project_data["taskName"][task])
+    
+    phase_list = list()
+    for phase_index in phases_dict:
+        phases_dict[phase_index]["phase_index"] = phase_index
+        phase_list.append(phases_dict[phase_index])
+
+    whole_project_data = dict()
+    whole_project_data["project_name"] = project_name
+    whole_project_data["phase_list"] = phase_list
+
+    db.create_whole_project(g.user.user_id, whole_project_data)
+
     return jsonify(
         {'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
