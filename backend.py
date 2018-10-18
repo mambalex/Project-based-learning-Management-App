@@ -120,14 +120,14 @@ def new_project():
     return render_template('new-project.html')
 
 
-@app.route('/lecturer')
-def lecturer():
+@app.route('/lecturer/<username>')
+def lecturer(username):
     return render_template('lecturer.html')
 
 
-@app.route('/student')
+@app.route('/student/<username>')
 # @auth.login_required
-def student():
+def student(username):
     return render_template('student.html')
 
 
@@ -465,9 +465,8 @@ def get_project_list():
 @app.route('/api/enrol_project', methods=['POST'])
 @auth.login_required
 def enrol_project():
-    project_uuid = request.form.get('project_uuid', type=str)
-    user_type = request.form.get('user_type', type=str, default='student')
-    db.enrol_project(g.user.user_id, project_uuid, user_type)
+    project_uuid = request.json.get('project_uuid')
+    db.enrol_project(g.user.user_id, project_uuid, g.user.user_type)
     return jsonify(
         {'code': 200, 'msg': 'enrol in project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 

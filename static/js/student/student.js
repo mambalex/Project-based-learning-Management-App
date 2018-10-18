@@ -1,3 +1,5 @@
+var array = document.location.href.toString().split("/");
+var username = array[array.length - 1];
 var projectList;
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
 var groupInfo={};
@@ -37,7 +39,7 @@ function getAllInfo(){
             data:JSON.stringify({'project_uuid':projectId}),
             async:false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             success(rsp_data){
                         console.log(rsp_data);
@@ -275,7 +277,7 @@ $(document).on('click', '#group-save', function(e){
                         contentType: "application/json",
                         data:JSON.stringify({'project_uuid':projectId, 'group_name':group_name, 'note':note}),
                         headers:{
-                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
                         },
                         }).done(function(rsp_data){
                             console.log(rsp_data)
@@ -323,7 +325,7 @@ $(document).on('click', '.join', function(e){
         contentType: "application/json",
         data:JSON.stringify({'project_uuid':projectId, 'group_uuid':group_uuid}),
         headers:{
-            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
         },
         }).done(function(rsp_data){
             if(rsp_data['code']==400){
@@ -371,7 +373,7 @@ $(document).on('click', '.leave', function(e){
             contentType: "application/json",
             data:JSON.stringify({'group_uuid':group_uuid}),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             }).done(function(rsp_data){
                         currentGroupName = "None";
@@ -426,7 +428,7 @@ $("#upload-btn-phase1").click(function(e){
             processData: false,
             async: false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
                     $("#errorAlert-phase1").text("File upload fails").show();
@@ -643,7 +645,7 @@ $("#upload-btn-phase2").click(function(e){
             processData: false,
             async: false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             }
         }).done(function(data){
                 console.log(data);
@@ -814,7 +816,7 @@ $("#upload-btn-phase3").click(function(e){
             processData: false,
             async: false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             }
         }).done(function(data){
                 console.log(data);
@@ -866,6 +868,25 @@ $(".remove-layer").click( function(e){
     $(".layer").hide();
     $(".enrol").hide();
 });
+
+
+$("#enrolButton").on("click",function () {
+    var projectId = $(this).siblings('select').val();
+    $.ajax({
+            type:'POST',
+            url:'/api/enrol_project',
+            contentType: "application/json",
+            data:JSON.stringify({'project_uuid':projectId}),
+            async:false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+        success:function () {
+            alert('Successfully enrolled')
+        }
+    })
+
+})
 
 
 

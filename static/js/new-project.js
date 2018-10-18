@@ -91,13 +91,27 @@ $(document).on('click', '.delete-task', function(e){
     $(this).parent().remove();
 })
 
+
+//create new project
 $(document).on('click', '.button', function(e){
     var projectName = $('#projectName').val();
-    var data ={
+    var project_data ={
            'projectName': projectName,
            'phaseName' : phaseName,
            'taskName': taskName
        }
-       console.log(data)
+        $.ajax({
+            type: 'POST',
+            url: '/api/create_whole_project',
+            contentType: "application/json",
+            data:JSON.stringify(project_data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+            },
+            error:function(){
+                popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
+            }
+        })
 })
 
+// project_data
