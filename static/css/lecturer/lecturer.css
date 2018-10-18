@@ -425,6 +425,10 @@ button{
     font-weight: 500;
 }
 
+.mark-doc{
+    width: 100%;
+}
+
 .upload-files{
     width: 80%;
     display: none;
@@ -596,6 +600,34 @@ button{
     display: table;
 }
 .clearfix:after { clear: both; }
+
+/* ---------- mark ---------- */
+
+.mark-container{
+    display: none;
+    position: relative;
+    width: 80%;
+    height: 80%;
+    margin:0 10%;
+}
+
+
+.mark-container select{
+    margin-bottom: 20px;
+    width: 70%;
+}
+
+.mark-container input{
+        margin-bottom: 50px;
+        width: 50%
+}
+
+
+.mark-container .button{
+   padding-left: 20%;
+
+}
+
 
 /* ---------- LIVE-CHAT ---------- */
 

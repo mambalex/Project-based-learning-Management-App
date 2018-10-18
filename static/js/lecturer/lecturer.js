@@ -143,6 +143,7 @@ $(".navgrp").click( function(){
     $(".alert").hide()
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
+    $(".mark-container").hide();
     $(".documenets").hide()
     $(".new_note").hide()
     $(".deadline_view").hide()
@@ -156,6 +157,7 @@ $(".reminder").click(function(){
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
     $(".documenets").hide()
+    $(".mark-container").hide();
     $(".group-info").hide()
     $(".deadline_view").hide()
     $(".new_note").css('display','flex')
@@ -171,6 +173,7 @@ $(".active").click( function(){
     $(".new_note").hide()
     $(".upload-files").hide()
     $(".documenets").hide()
+    $(".mark-container").hide();
     $(".deadline_view").hide()
     $(".notes-wrapper").show()
 });
@@ -182,17 +185,19 @@ $(".deadline").click( function(){
     $(".new_note").hide()
     $(".upload-files").hide()
     $(".documenets").hide()
+    $(".mark-container").hide();
     $(".notes-wrapper").hide()
     $(".deadline_view").show()
     $(".deadline-selector").val($(".deadline-selector option:first").val());
     $(".others-deadline").hide();
 });
 
-//Click Documents
+//Click Resources
 $(".upload").click( function(){
     $(".alert").hide()
     $(".group-info").hide()
     $(".new_note").hide()
+    $(".mark-container").hide();
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
     $(".upload-files").show()
@@ -200,6 +205,19 @@ $(".upload").click( function(){
     $(".reset").click();
 });
 
+//Click Mark
+$(".mark").click( function(){
+    $(".alert").hide()
+    $(".group-info").hide()
+    $(".new_note").hide()
+    $(".notes-wrapper").hide()
+    $(".deadline_view").hide()
+    $(".upload-files").hide()
+    $(".documenets").hide()
+    $(".mark-container .mark-doc").show()
+    $(".reset").click();
+    $(".mark-container").show();
+});
 
 
 // file-input

@@ -855,6 +855,18 @@ $(document).on('click', '.navmark4', function(e){
 })
 
 
+// click enrol
+$("#enrolNav").click( function(e){
+    e.stopImmediatePropagation();
+    $(".layer").show();
+    $(".enrol").show();
+});
+
+$(".remove-layer").click( function(e){
+    $(".layer").hide();
+    $(".enrol").hide();
+});
+
 
 
 
