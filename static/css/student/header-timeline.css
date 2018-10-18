@@ -36,7 +36,7 @@ body{
     display: none;
     color: white;
     position: absolute;
-    right: 90px;
+    right: 210px;
     top: 18px;
 }
 
@@ -73,6 +73,7 @@ body{
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
+     word-break:break-all;
 }
 
 .dropdown-content a {
@@ -86,6 +87,23 @@ body{
 .dropdown-content a:hover {
     background-color: #ddd;
     cursor: pointer;}
+
+.project{
+    position: absolute;
+    height: 52px ;
+    right: 120px;
+    padding:18px 8px;
+    font-size: 14px;
+    color:white;
+    cursor: pointer;
+}
+.project:hover{
+    background: #2e6da4;
+}
+
+.project-dropdown{
+    min-width: 150px;
+}
 
 /*.user:hover .dropdown-content {display: block;}*/
 

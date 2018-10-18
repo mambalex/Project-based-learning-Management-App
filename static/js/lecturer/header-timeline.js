@@ -12,6 +12,7 @@ $("#profile").click( function(e){
 
 $(document).on('click', '.user', function(e){
     e.preventDefault();
+    $('.project').find('.dropdown-content').hide();
     if( $(this).find('.dropdown-content').css('display') === 'block' ){
         $(this).find('.dropdown-content').hide();
     }else{$(this).find('.dropdown-content').css('display','block');}
@@ -19,6 +20,7 @@ $(document).on('click', '.user', function(e){
 
 $(document).on('click', '.project', function(e){
     e.preventDefault();
+    $('.user').find('.dropdown-content').hide();
     if( $(this).find('.dropdown-content').css('display') === 'block' ){
         $(this).find('.dropdown-content').hide();
     }else{$(this).find('.dropdown-content').css('display','block');}

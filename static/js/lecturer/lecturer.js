@@ -96,11 +96,12 @@ function getAllInfo(){
                                 taskList[task['task_name']] = task['task_uuid'];
                             })
                         }
-                        rsp_data['reminder_list'].forEach(function(val){
-                            var d = new Date(val['post_time'])
-                            reminderList[d.getTime()/1000] = val;
-                            // reminderList[val['post_time']] = val;
-                        });
+                        reminderList = rsp_data['reminder_list'];
+                        // rsp_data['reminder_list'].forEach(function(val){
+                        //     var d = new Date(val['post_time'])
+                        //     reminderList[d.getTime()/1000] = val;
+                        //     // reminderList[val['post_time']] = val;
+                        // });
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
@@ -294,18 +295,13 @@ function swap(json){
 
 
 function displayAllReminder(){
+     var taskListReverse = swap(taskList);
     $(".reminder-list").find("li").remove();
-    var reminderTimestamp = Object.keys(reminderList);
-    reminderTimestamp.sort(function(a, b){return b - a});
-    var taskListReverse = swap(taskList);
-    taskListReverse["a5259728-c967-11e8-8220-4c3275989ef5"] = "Project";
-    console.log(taskListReverse);
-    reminderTimestamp.forEach(function(val){
-        console.log(reminderList[val]);
-        var message = reminderList[val]["message"];
-        var ass_uuid = reminderList[val]['ass_uuid'];
-        var reminder_uuid = reminderList[val]['reminder_uuid'];
-        var date = reminderList[val]['post_time'];
+    reminderList.forEach(function (val) {
+        var message = val["message"];
+        var ass_uuid = val['ass_uuid'];
+        var reminder_uuid = val['reminder_uuid'];
+        var date = val['post_time'];
         var task = taskListReverse[ass_uuid];
         $(".reminder-list").append(`<li >
                                 <div class="id">${reminder_uuid}</div>
@@ -315,6 +311,26 @@ function displayAllReminder(){
                                 <div class="date"><span class="due">${date}</span></div>
                             </li>`)
     })
+    // var reminderTimestamp = Object.keys(reminderList);
+    // reminderTimestamp.sort(function(a, b){return b - a});
+    // var taskListReverse = swap(taskList);
+    // taskListReverse["a5259728-c967-11e8-8220-4c3275989ef5"] = "Project";
+    // console.log(taskListReverse);
+    // reminderTimestamp.forEach(function(val){
+    //     console.log(reminderList[val]);
+    //     var message = reminderList[val]["message"];
+    //     var ass_uuid = reminderList[val]['ass_uuid'];
+    //     var reminder_uuid = reminderList[val]['reminder_uuid'];
+    //     var date = reminderList[val]['post_time'];
+    //     var task = taskListReverse[ass_uuid];
+    //     $(".reminder-list").append(`<li >
+    //                             <div class="id">${reminder_uuid}</div>
+    //                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+    //                             <div class="content">${message}</div>
+    //                             <div class="task">Task: <span id="task-name">${task}</span></div>
+    //                             <div class="date"><span class="due">${date}</span></div>
+    //                         </li>`)
+    // })
 }
 
 
