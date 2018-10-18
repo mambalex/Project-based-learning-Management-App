@@ -1,4 +1,6 @@
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+var array = document.location.href.toString().split("/");
+var username = array[array.length - 1];
 var userInfo={};
 var reminderList={};
 var projectInfo={};
@@ -6,6 +8,7 @@ var phaseList={};
 var taskList={};
 var groupInfo={};
 var currentPhase;
+
 
 $('#live-chat').hide();
 $(document).ready(function(){
@@ -37,7 +40,7 @@ $(".files").on('click',function(){
             url:'/temp/phase1_1.pdf',
             async:false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             }
     })
 })
@@ -78,7 +81,7 @@ function getAllInfo(){
             data:JSON.stringify({'project_uuid':projectId}),
             async:false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             success(rsp_data){
                         console.log(rsp_data);
@@ -287,7 +290,7 @@ $(document).on('click', '.phase1-upload', function(e){
             processData: false,
             async: false,
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
                 popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
@@ -382,7 +385,7 @@ $(".new_note").find('.btn-info').on('click',function(){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
                 popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
@@ -426,7 +429,7 @@ $(document).on('click', '.delete-reminder', function(e){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
                 alert("Something went wrong");
@@ -500,7 +503,7 @@ $(".saveDeadline").on('click',function(){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error: function() {
                 popUp(".deadline-container", ".alert-danger","Something went wrong",".deadline");
@@ -553,7 +556,7 @@ function newReminder(){
             contentType: "application/json",
             data:JSON.stringify(data),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             }
 
         }).done(function(data){
@@ -621,81 +624,6 @@ $(document).on("keypress", "#chatbotInput", function(e){
              var d = $('.chat-history');
             d.scrollTop(d.prop("scrollHeight"));
         }
-
-
-        // $(".chat-history").append(`<div class="chat-message clearfix">
-        //   <div class="chat-message-content clearfix">
-        //     <span class="chat-time">13:35</span>
-        //     <h5>${name}</h5>
-        //     <p>${msg}</p>
-        //   </div> 
-        // </div><hr>`);      
-        // var arr = msg.split(" ");
-        // arr.forEach(function(val){
-        //     // alert(val);
-        //     if(val=="phase1"){
-        //         if(flag=='no'){
-        //             $(".chat-history").append(`<div class="chat-message clearfix">
-        //               <div class="chat-message-content clearfix">
-        //                 <span class="chat-time">13:35</span>
-        //                 <h5>Bot</h5>
-        //                 <p>2018-10-12 10:59:59</p>
-        //               </div> 
-        //             </div><hr>`);  
-        //           var d = $('.chat-history');
-        //              d.scrollTop(d.prop("scrollHeight"));
-        //              flag = 'yes';
-        //             break
-        //         }
-     
-        //     }else if(val=="reminder"){
-        //         if(flag=='no'){
-        //             $(".chat-history").append(`<div class="chat-message clearfix">
-        //               <div class="chat-message-content clearfix">
-        //                 <span class="chat-time">13:35</span>
-        //                 <h5>Bot</h5>
-        //                 <p>Sure, what do you want to send?</p>
-        //               </div> 
-        //             </div><hr>`); 
-        //               var d = $('.chat-history');
-        //              d.scrollTop(d.prop("scrollHeight"));
-        //               flag = 'yes';
-        //             break}
-        // }else if(val=="Welcome"){
-        //      if(flag=='no'){
-        //                 newReminder();
-        //                  $(".chat-history").append(`<div class="chat-message clearfix">
-        //               <div class="chat-message-content clearfix">
-        //                 <span class="chat-time">13:35</span>
-        //                 <h5>Bot</h5>
-        //                 <p>New reminder has been sent :)</p>
-        //               </div> 
-        //             </div><hr>`); 
-        //             var date = new Date().toISOString().split('T')[0];
-        //             $(".reminder-list").append(`<li >
-        //                      <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-        //                         <div class="content">Welcome to comp9323!</div>
-        //                         <div class="task">Task: <span id="task-name">Project</span></div>
-        //                         <div class="date"><span class="due">${date}</span></div>
-        //                     </li>`);
-        //             var d = $('.chat-history');
-        //              d.scrollTop(d.prop("scrollHeight"));
-        //               flag = 'yes';
-        //             break}
-        //         }
-     
-        // });
-        // if(flag=='no'){
-        //     $(".chat-history").append(`<div class="chat-message clearfix">
-        //               <div class="chat-message-content clearfix">
-        //                 <span class="chat-time">13:35</span>
-        //                 <h5>Bot</h5>
-        //                 <p>Emm..</p>
-        //               </div> 
-        //             </div><hr>`); 
-        //      var d = $('.chat-history');
-        //     d.scrollTop(d.prop("scrollHeight"));
-        // }
 
 
     }

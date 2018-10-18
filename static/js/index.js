@@ -97,17 +97,18 @@ $(".login").on('submit',function (e) {
         console.log(rsp_data);
         var status = rsp_data['code'];
         var user_type = rsp_data['user_type'];
+        var userId = rsp_data['user_id'];
         if(status == '200'){
             $('#successAlert').text("Successfully login").show();
             $('#errorAlert').hide();
             // 
             setTimeout(function(){ 
                 if(user_type == 'student'){
-                    localStorage.setItem('token', JSON.stringify(rsp_data));
-                     window.location.pathname = "./student";
+                    localStorage.setItem(userId, JSON.stringify(rsp_data));
+                     window.location.pathname = `./student/${userId}`;
                 }else{
-                    localStorage.setItem('lecturer_token', JSON.stringify(rsp_data));
-                     window.location.pathname = "./lecturer";
+                    localStorage.setItem(userId, JSON.stringify(rsp_data));
+                     window.location.pathname = `./lecturer/${userId}`;
                 }
              },1500)
         }else if(status == '400'){
