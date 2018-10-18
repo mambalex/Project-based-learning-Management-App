@@ -947,34 +947,37 @@ def get_phase_submit():
 @app.route('/api/create_whole_project', methods=['POST'])
 @auth.login_required
 def create_whole_project():
-    project_data = request.json.get('project_data')
-    print(project_data)
-    project_name = project_data['projectName']
-    phases_dict = dict()
-    for phase in project_data["phaseName"]:
-        phase_index = re.search(r'\d+', phase)
-        phase_index = int(phase_index.group(0))
-        phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
-        
-    for task in project_data["taskName"]:
-        phase_index = re.search(r'\d+', phase)
-        phase_index = int(phase_index.group(0))
-        phases_dict[phase_index]["task_list"].append(project_data["taskName"][task])
-    
-    phase_list = list()
-    for phase_index in phases_dict:
-        phases_dict[phase_index]["phase_index"] = phase_index
-        phase_list.append(phases_dict[phase_index])
+    if g.user.is_admin_user():
+        project_data = request.json.get('project_data')
+        print(project_data)
+        project_name = project_data['projectName']
+        phases_dict = dict()
+        for phase in project_data["phaseName"]:
+            phase_index = re.search(r'\d+', phase)
+            phase_index = int(phase_index.group(0))
+            phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
 
-    whole_project_data = dict()
-    whole_project_data["project_name"] = project_name
-    whole_project_data["phase_list"] = phase_list
+        for task in project_data["taskName"]:
+            phase_index = re.search(r'\d+', phase)
+            phase_index = int(phase_index.group(0))
+            phases_dict[phase_index]["task_list"].append(project_data["taskName"][task])
 
-    db.create_whole_project(g.user.user_id, whole_project_data)
+        phase_list = list()
+        for phase_index in phases_dict:
+            phases_dict[phase_index]["phase_index"] = phase_index
+            phase_list.append(phases_dict[phase_index])
 
-    return jsonify(
-        {'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+        whole_project_data = dict()
+        whole_project_data["project_name"] = project_name
+        whole_project_data["phase_list"] = phase_list
 
+        db.create_whole_project(g.user.user_id, whole_project_data)
+
+        return jsonify(
+            {'code': 200, 'msg': 'Create project success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # Mark submittion
 @app.route('/api/mark_submittion', methods=['POST'])
@@ -985,6 +988,31 @@ def mark_submittion():
 
     return jsonify(
         {'code': 200, 'msg': 'Mark submittion success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
+# Get Mark summary
+@app.route('/api/get_mark_summary', methods=['POST'])
+@auth.login_required
+def get_mark_summary():
+    project_uuid = request.json.get('project_uuid')
+    if g.user.is_admin_user():
+        phases_list = db.get_project_all_phases(project_uuid)
+        tasks_list = list()
+        for phase in phases_list:
+            temp_tasks_list = db.get_phase_all_tasks(phase["phase_uuid"])
+            tasks_list = tasks_list + temp_tasks_list
+        for task in tasks_list:
+            temp_submit_list = db.get_submits(task["task_uuid"])
+            task['submit'] = temp_submit_list
+            task['mark_status'] = "Marked"
+            for submit in temp_submit_list:
+                if submit['mark'] == "None":
+                    task['mark_status'] = "UnMarked"
+                    break
+
+    else:
+        return jsonify(
+            {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 # Chatbot API
