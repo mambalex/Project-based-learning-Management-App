@@ -104,9 +104,12 @@ $(".login").on('submit',function (e) {
             // 
             setTimeout(function(){ 
                 if(user_type == 'student'){
+                    localStorage.setItem(`${userId}ProjectList`, JSON.stringify(rsp_data['self_project_list']));
+                    localStorage.setItem("allProjectList", JSON.stringify(rsp_data['all_project_list']));
                     localStorage.setItem(userId, JSON.stringify(rsp_data));
-                     window.location.pathname = `./student/${userId}`;
+                    window.location.pathname = `./student/${userId}`;
                 }else{
+                    localStorage.setItem(`${userId}ProjectList`, JSON.stringify(rsp_data['self_project_list']));
                     localStorage.setItem(userId, JSON.stringify(rsp_data));
                      window.location.pathname = `./lecturer/${userId}`;
                 }
