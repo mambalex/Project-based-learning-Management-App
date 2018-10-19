@@ -63,7 +63,7 @@ function displayProjects () {
 //create a project
 $(document).on('click', "#create-project", function(e){
         e.preventDefault();
-     window.open("/create_project", '_blank');
+     window.open(`/create_project/${username}`, '_blank');
 })
 
 
