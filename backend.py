@@ -983,9 +983,9 @@ def create_whole_project():
             phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
 
         for task in project_data["taskName"]:
-            phase_index = re.search(r'\d+', phase)
+            phase_index = re.search(r'\d+', task)
             phase_index = int(phase_index.group(0))
-            phases_dict[phase_index]["task_list"].append(project_data["taskName"][task])
+            phases_dict[phase_index]["task_list"] = project_data["taskName"][task].copy()
 
         phase_list = list()
         for phase_index in phases_dict:
