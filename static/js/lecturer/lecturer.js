@@ -35,6 +35,7 @@ $(document).on('click', "#select-project", function(e){
     welcomeUser();
     $(".active").click();
     displayAllReminder();
+    displayResources();
     displayMarking();
 })
 
@@ -140,7 +141,7 @@ function getAllInfo(){
                             groupInfo[val['group_name']]= val;
                         });   
                         rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_index']]= val;
+                            phaseList[val['phase_name']]= val;
                         }); 
                         for(var phase in phaseList){
                             console.log(phaseList[phase]);
@@ -316,12 +317,12 @@ $(function() {
 
 //upload file
 
-$(document).on('click', '.phase1-upload', function(e){
+$(document).on('click', '.phase-doc-upload', function(e){
         e.preventDefault();
-        var title = $(".phase1-title").val();
-        var description = $("#phase1-description").val();
-        var file = $('#phase1-file').find("input[type=file]").prop('files')[0];
-        var phase = $(".upload-selector").val();
+        var title = $(this).closest(".upload-files").find(".title").val();
+        var description = $(this).closest(".upload-files").find(".description").val();
+        var file = $(this).closest(".upload-files").find("input[type=file]").prop('files')[0];
+        var phase = $(this).closest(".upload-files").find(".upload-selector").val();
         if(phase==""){
             popUp(".upload-files", ".alert-danger","Please select a phase",".upload");
             return
@@ -352,6 +353,8 @@ $(document).on('click', '.phase1-upload', function(e){
                 console.log(data);
                 if(data['code']==200){
                     popUp(".upload-files", ".alert-success","Successfully uploaded", ".upload");
+                    getAllInfo();
+                    displayResources();
                 }else{
                     popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
                 }
@@ -750,7 +753,7 @@ $(document).on("click", ".select-group-task", function(e){
                 document.append(`
                                   <tr>
                                   <td>Doc1</td>                             
-                                  <td><span class="id">no</span>No files</td>
+                                  <td><span class="id">no</span>Have not submitted</td>
                                   </tr>
                 `)
             }
@@ -769,7 +772,30 @@ $(document).on("click", ".select-group-task", function(e){
 
 //display resources
 function displayResources(){
+    for(var phase in phaseList ){
+        let phase_num = phase.split(" ")[1];
+        $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        phaseList[phase]['resource_list'].forEach(function (doc) {
+            var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
+            var displayName = doc['filename'];
+            var arr = doc['file_addr'].split('/');
+            var fileName = arr[arr.length - 1];
+            var filePath = `../temp/${fileName}`
+            $(`.phase${phase_num}-doc`).find("tbody").append(`
+                            <tr>
+                                  <td>Doc${num+1}</td>
+                                  <td>${displayName}</td>                   
+                                  <td align="right">
+                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                          <span class="glyphicon glyphicon-file"></span>
+                                          <span class="hidden-xs files">View</span>
+                                      </a>
+                                  </td>
+                              </tr>   
+            `)
+        })
 
+    }
 }
 
 $(document).on('click', '.mark-container .button', function(e){
@@ -796,8 +822,16 @@ $(document).on('click', '.mark-container .button', function(e){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             }
 
+        }).done(function (rsp_data) {
+            if(rsp_data['code']==200){
+                alert("Successfully marked!")
+            }
         })
 })
+
+
+
+
 
 
 
