@@ -351,14 +351,14 @@ button{
 
 /*group*/
 .group-info{
-    height: 250px;
     width: 80%;
     display: none;
     border-radius: 3px;
     display: none;
     position: absolute;
-    top:10%;
+    top: 10%;
     left: 10%;
+    padding-bottom: 30px;
 }
 
 .group-info-title{
@@ -390,7 +390,7 @@ button{
 .two-options{
     font-family: "Gotham SSm A","Gotham SSm B",​sans-serif;
     text-align: left;
-    padding-left: 220px;
+    margin-left: 38%;
 }
 
 .two-options label{
@@ -413,6 +413,20 @@ button{
 .group_container h1{
     text-align: center;
 }
+.group-info .group-size{
+    width: 30%;
+    text-align: center;
+    margin: 0 35% 20px 35%;
+}
+
+.group-info .group-size input{
+    padding-left: 30%;
+}
+
+.group-info .group-size input::placeholder{
+    font-weight: 400;
+}
+
 
 /*deadline*/
 

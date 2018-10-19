@@ -438,7 +438,7 @@ def random_group():
 
     student_list = db.get_ungroup_student(project_uuid)
     random.shuffle(student_list)
-    group_num = int(len(student_list) / group_size)
+    group_num = int(len(student_list) / int(group_size))
     group_list = dict()
     for i in range(group_num):
         temp_group = list()

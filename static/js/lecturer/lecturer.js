@@ -389,6 +389,52 @@ $(".mark").click( function(){
     $(".mark-container .select-group-task").click();
 });
 
+//generate groups
+$(document).on('click', '.group-info button', function(e){
+    var groupSize = $(this).siblings('.group-size').find('input').val();
+    if(!groupSize){
+        alert('Please enter a group size')
+        return
+    }
+    var ramdomOrManual;
+    $(".group-info input[type=checkbox]").each(function () {
+            var self = $(this);
+            if (self.is(':checked')) {
+                ramdomOrManual = self.attr("name");
+            }
+    });
+    if(!ramdomOrManual){
+        alert('Please select an option')
+        return
+    }
+    if(ramdomOrManual=="Randomly"){
+            var data={
+                'project_uuid': currentProject,
+                'group_size':groupSize
+            }
+           $.ajax({
+            type: 'POST',
+            url: '/api/random_group',
+            contentType: "application/json",
+            data:JSON.stringify(data),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            error:function(){
+                alert("Oops! Something went wrong!");
+            }
+        }).done(function(rsp_data){
+            if(rsp_data['code']==200){
+                alert("Successfully create random groups")
+                $('.group-size').find('input').val("");
+            }
+           })
+    }
+
+})
+
+
+
 
 // file-input
 function bs_input_file() {
