@@ -16,6 +16,7 @@ $('#live-chat').hide();
 $(document).ready(function(){
     displayProjects();
     $(".layer").show();
+    $(".remove-layer").hide();
     $(".select-project").show();
     // $('#live-chat header').click();
     // $('#live-chat').show();
@@ -29,6 +30,7 @@ $(document).on('click', "#select-project", function(e){
     $(".select-project").hide();
     $(".layer").hide();
     getAllInfo();
+    welcomeUser();
     $(".active").click();
     displayAllReminder();
 })
@@ -682,7 +684,11 @@ $(document).on('click', '.mark-container .button', function(e){
     var group = $(this).siblings('.select-group');
 })
 
-
+//click remove layer
+// $(document).on('click', '.remove-layer', function(e){
+//     $('.layer').hide();
+//     $('.select-project').hide();
+// })
 
 
 

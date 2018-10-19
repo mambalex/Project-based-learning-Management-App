@@ -32,6 +32,11 @@
     margin: 20px 20px 0 0;
 }
 
+
+#select-project{
+    margin:30px 0 0 90px;
+}
+
 .select-project{
     display: none;
     /*width: 300px;*/
