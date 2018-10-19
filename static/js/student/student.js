@@ -22,6 +22,7 @@ var currentGroupName;
 $(document).ready(function(){
     displayProjects();
     $(".layer").show();
+    $(".remove-layer").hide();
     $(".select-project").show();
 })
 
@@ -911,12 +912,14 @@ $(document).on('click', '.navmark4', function(e){
 $(document).on('click', "#enrolNav", function(e){
     e.stopImmediatePropagation();
     $(".layer").show();
+    $(".remove-layer").show();
     $(".enrol").show();
 });
 
-$(".remove-layer").click( function(e){
+$(document).on('click', ".remove-layer", function(e){
     $(".layer").hide();
     $(".enrol").hide();
+    $(".select-project").hide();
 });
 
 
@@ -924,6 +927,7 @@ $(".remove-layer").click( function(e){
 $(document).on('click', "#enrolButton", function(e){
     e.preventDefault();
     var projectId = $(this).siblings('select').val();
+    var projectName = $(this).siblings("select").find("option:selected").text();
     $.ajax({
             type:'POST',
             url:'/api/enrol_project',
@@ -935,6 +939,10 @@ $(document).on('click', "#enrolButton", function(e){
             },
         success:function () {
             alert('Successfully enrolled')
+                //add to select project popup
+                    $(".select-project select").append(`<option value=${projectId}>${projectName}</option>`);
+                //add to enrolled project navbar
+                    $("#enrolNav").before(`<a>${projectName}<span class="id">${projectId}</span></a>`);
         }
     })
 
@@ -943,6 +951,39 @@ $(document).on('click', "#enrolButton", function(e){
 
 
 
+function displayProjects () {
+    //select project popup
+    $(".select-project select option").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".select-project select").append(`
+                <option value=${id}>${name}</option>
+        `)
+    });
+
+    //enrolled project navbar
+    $(".header .project-dropdown a").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".project-dropdown").append(`
+        <a>${name}<span class="id">${id}</span></a>
+    `)
+    })
+     $(".project-dropdown").append(`<a id="enrolNav">Enrol</a>`)
+
+    //navbar click enrol
+    $('.enrol select option').remove();
+    projectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $('.enrol select').append(`
+             <option value=${id}>${name}</option>
+        `)
+    })
+
+}
 
 
 
