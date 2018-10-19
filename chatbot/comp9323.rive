@@ -628,6 +628,18 @@
 + [*] phase * [*] mark [*]
 - The mark of phase <star>||<star>|| is ##mark## $$search$$
 
++ [*] phase * [*] submit [*]
+- The submission summary of phase <star>: ||<star>||##submission## $$search$$
+
++ [*] submit [*] of phase *
+- The submission summary of phase <star>: ||<star>||##submission## $$search$$
+
++ [*] phase * [*] submission [*]
+- The submission summary of phase <star>: ||<star>||##submission## $$search$$
+
++ [*] submission [*] of phase *
+- The submission summary of phase <star>: ||<star>||##submission## $$search$$
+
 + [*] deadline of task *
 - The deadline of this task is||<star>|| ##deadline## $$search$$
 - The deadline of task <star>||<star>|| is ##deadline## $$search$$
@@ -650,6 +662,17 @@
 + [*] task * [*] mark [*]
 - The mark of task <star>||<star>|| is ##mark## $$search$$
 
++ [*] task * [*] submit [*]
+- The submission summary of task <star>: ||<star>||##submission## $$search$$
+
++ [*] submit [*] of task *
+- The submission summary of task <star>: ||<star>||##submission## $$search$$
+
++ [*] task * [*] submission [*]
+- The submission summary of task <star>: ||<star>||##submission## $$search$$
+
++ [*] submission [*] of task *
+- The submission summary of task <star>: ||<star>||##submission## $$search$$
 
 + i want to send a reminder
 - Ok, what is the reminder message?$$reminder$$
