@@ -37,8 +37,14 @@ $(document).on('click', "#select-project", function(e){
     displayAllReminder();
     displayResources();
     displayMarking();
+    displayDueDate(1);
+    displayDueDate(2);
+    displayDueDate(3);
+    displayDueDate(4);
 })
 
+
+//display projects
 function displayProjects () {
     if(!selfProjectList){
         window.open(`/create_project/${username}`, '_blank');
@@ -65,8 +71,115 @@ function displayProjects () {
     `)
     })
      $(".project-dropdown").append(`<a id="create-project">Create a project</a>`)
-
 }
+
+//display reminders
+function displayAllReminder(){
+    var taskListReverse = swap(taskList);
+    $(".reminder-list").find("li").remove();
+    reminderList.forEach(function (val) {
+        var message = val["message"];
+        var ass_uuid = val['ass_uuid'];
+        var reminder_uuid = val['reminder_uuid'];
+        var date = val['post_time'];
+        var task = taskListReverse[ass_uuid];
+        $(".reminder-list").append(`<li >
+                                <div class="id">${reminder_uuid}</div>
+                                <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                                <div class="content">${message}</div>
+                                <div class="task">Task: <span id="task-name">${task}</span></div>
+                                <div class="date"><span class="due">${date}</span></div>
+                            </li>`)
+    })
+}
+
+
+//display marking
+function displayMarking() {
+       console.log(phaseList);
+       for(var phase in phaseList){
+               // let index = phase.split(" ")[1];
+               let index = phase;
+               //add task
+               phaseList[phase]['task_list'].forEach(function(task){
+                     $(`.mark-container${index}`).find(".select-task").append(`
+                            <option value=${task['task_uuid']}>${task['task_name']}</option>
+                     `)
+                 })
+               //add group
+                groupList.forEach(function (group) {
+                    $(`.mark-container${index}`).find(".select-group").append(`
+                            <option value=${group['group_uuid']}>${group['group_name']}</option>
+                     `)
+                })
+
+        }
+}
+
+//display resources
+function displayResources(){
+    for(var phase in phaseList ){
+        let phase_num = phase.split(" ")[1];
+        $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        phaseList[phase]['resource_list'].forEach(function (doc) {
+            var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
+            var displayName = doc['filename'];
+            var arr = doc['file_addr'].split('/');
+            var fileName = arr[arr.length - 1];
+            var filePath = `../temp/${fileName}`
+            $(`.phase${phase_num}-doc`).find("tbody").append(`
+                            <tr>
+                                  <td>Doc${num+1}</td>
+                                  <td>${displayName}</td>                   
+                                  <td align="right">
+                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                          <span class="glyphicon glyphicon-file"></span>
+                                          <span class="hidden-xs files">View</span>
+                                      </a>
+                                  </td>
+                              </tr>   
+            `)
+        })
+
+    }
+}
+
+//display deadline
+function displayDueDate(id){
+    let phase = "Phase "+id;
+    let phaseDueDate = {};
+    $(`.due-date${id}`).find("ul li").remove();
+    phaseDueDate[`${phase}`] = phaseList[phase]['deadline'];
+    phaseList[phase]['task_list'].forEach(function (task) {
+        phaseDueDate[`${task['task_name']}`] = task['deadline']
+    });
+    for(let task in phaseDueDate){
+        let d = new Date(phaseDueDate[task]);
+        phaseDueDate[task] = d.getTime()/1000;
+    }
+    let keysSorted = Object.keys(phaseDueDate).sort((a,b) => phaseDueDate[a]-phaseDueDate[b]);
+    let now = new Date();
+    keysSorted.forEach(function (key) {
+        var dayLeft = Math.ceil((phaseDueDate[key] - now.getTime()/1000)/(60 * 60 * 24));
+        console.log(dayLeft)
+        if(dayLeft <=0 ){
+            $(`.due-date${id}`).find("ul").append(`
+                          <li>
+                              <div class="content">${key}</div>
+                              <div class="date"><span class="due"></span>Overdue</div>
+                          </li>
+            `)
+        }else{
+            $(`.due-date${id}`).find("ul").append(`
+                          <li>
+                              <div class="content">${key}</div>
+                              <div class="date"><span class="due">${dayLeft}</span> days from now</div>
+                          </li>
+            `)
+        }
+    })
+}
+
 
 
 
@@ -372,44 +485,7 @@ function swap(json){
 
 
 
-function displayAllReminder(){
-    var taskListReverse = swap(taskList);
-    $(".reminder-list").find("li").remove();
-    reminderList.forEach(function (val) {
-        var message = val["message"];
-        var ass_uuid = val['ass_uuid'];
-        var reminder_uuid = val['reminder_uuid'];
-        var date = val['post_time'];
-        var task = taskListReverse[ass_uuid];
-        $(".reminder-list").append(`<li >
-                                <div class="id">${reminder_uuid}</div>
-                                <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-                                <div class="content">${message}</div>
-                                <div class="task">Task: <span id="task-name">${task}</span></div>
-                                <div class="date"><span class="due">${date}</span></div>
-                            </li>`)
-    })
-    // var reminderTimestamp = Object.keys(reminderList);
-    // reminderTimestamp.sort(function(a, b){return b - a});
-    // var taskListReverse = swap(taskList);
-    // taskListReverse["a5259728-c967-11e8-8220-4c3275989ef5"] = "Project";
-    // console.log(taskListReverse);
-    // reminderTimestamp.forEach(function(val){
-    //     console.log(reminderList[val]);
-    //     var message = reminderList[val]["message"];
-    //     var ass_uuid = reminderList[val]['ass_uuid'];
-    //     var reminder_uuid = reminderList[val]['reminder_uuid'];
-    //     var date = reminderList[val]['post_time'];
-    //     var task = taskListReverse[ass_uuid];
-    //     $(".reminder-list").append(`<li >
-    //                             <div class="id">${reminder_uuid}</div>
-    //                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-    //                             <div class="content">${message}</div>
-    //                             <div class="task">Task: <span id="task-name">${task}</span></div>
-    //                             <div class="date"><span class="due">${date}</span></div>
-    //                         </li>`)
-    // })
-}
+
 
 
 //new reminder
@@ -693,27 +769,7 @@ $(".tag").on('click',function(){
 })
 
 
-//marking
-function displayMarking() {
-       console.log(phaseList);
-       for(var phase in phaseList){
-               // let index = phase.split(" ")[1];
-               let index = phase;
-               //add task
-               phaseList[phase]['task_list'].forEach(function(task){
-                     $(`.mark-container${index}`).find(".select-task").append(`
-                            <option value=${task['task_uuid']}>${task['task_name']}</option>
-                     `)
-                 })
-               //add group
-                groupList.forEach(function (group) {
-                    $(`.mark-container${index}`).find(".select-group").append(`
-                            <option value=${group['group_uuid']}>${group['group_name']}</option>
-                     `)
-                })
 
-        }
-}
 
 $(document).on("click", ".select-group-task", function(e){
         var groupId = $(this).siblings('.select-group').val();
@@ -770,33 +826,7 @@ $(document).on("click", ".select-group-task", function(e){
 
 
 
-//display resources
-function displayResources(){
-    for(var phase in phaseList ){
-        let phase_num = phase.split(" ")[1];
-        $(`.phase${phase_num}-doc`).find("tbody tr").remove();
-        phaseList[phase]['resource_list'].forEach(function (doc) {
-            var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
-            var displayName = doc['filename'];
-            var arr = doc['file_addr'].split('/');
-            var fileName = arr[arr.length - 1];
-            var filePath = `../temp/${fileName}`
-            $(`.phase${phase_num}-doc`).find("tbody").append(`
-                            <tr>
-                                  <td>Doc${num+1}</td>
-                                  <td>${displayName}</td>                   
-                                  <td align="right">
-                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
-                                          <span class="glyphicon glyphicon-file"></span>
-                                          <span class="hidden-xs files">View</span>
-                                      </a>
-                                  </td>
-                              </tr>   
-            `)
-        })
 
-    }
-}
 
 $(document).on('click', '.mark-container .button', function(e){
     e.preventDefault();
