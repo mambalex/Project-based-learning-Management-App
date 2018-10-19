@@ -527,7 +527,7 @@ def get_project_list():
 def enrol_project():
     project_uuid = request.json.get('project_uuid')
     if db.check_enrol(g.user.user_id, project_uuid):
-        return jsonify({'code': 200, 'msg': 'Already enrol in this project', 'user_id': g.user.user_id,
+        return jsonify({'code': 400, 'msg': 'Already enrol in this project', 'user_id': g.user.user_id,
                         'user_type': g.user.user_type})
     db.enrol_project(g.user.user_id, project_uuid, g.user.user_type)
     return jsonify(
