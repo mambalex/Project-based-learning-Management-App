@@ -19,7 +19,6 @@ def check_user_id(email):
         return False
 
 
-# 0 stand for lecturer, 1 stand for mentor, 2 stand for student
 def create_user(user_profile):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
