@@ -4,3 +4,4 @@
 ./back_end/.idea/*
 __pycache__
 venv
+env
