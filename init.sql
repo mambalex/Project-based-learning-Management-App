@@ -58,6 +58,7 @@ CREATE TABLE projects
     deadline timestamp(0) with time zone NOT NULL,
     mark_release timestamp(0) with time zone,
     spec_address text,
+    group_method integer NOT NULL,
     PRIMARY KEY (project_uuid)
 );
 
@@ -136,7 +137,7 @@ insert into user_info values ('student8@gmail.com', '123456', 'Shirley', 'female
 insert into user_info values ('student9@gmail.com', '123456', 'Robert', 'male', 'October 05', 'student', 'None');
 insert into user_info values ('student10@gmail.com', '123456', 'Angel', 'female', 'October 05', 'student', 'None');
 
-insert into projects values ('a5259728-c967-11e8-8220-4c3275989ef5', 'lecturer1@gmail.com', 'COMP9323 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None');
+insert into projects values ('a5259728-c967-11e8-8220-4c3275989ef5', 'lecturer1@gmail.com', 'COMP9323 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None', 0);
 insert into phases values ('a528cb28-c967-11e8-9304-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 1, 'Phase 1', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 0, 'None');
 insert into tasks values ('a529fd7a-c967-11e8-a7be-4c3275989ef5', 'a528cb28-c967-11e8-9304-4c3275989ef5', 'Proposal', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 1, 'None');
 insert into phases values ('a52b99de-c967-11e8-9bd2-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 2, 'Phase 2', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 0, 'None');
@@ -147,7 +148,7 @@ insert into tasks values ('a52fa206-c967-11e8-989a-4c3275989ef5', 'a52e00d4-c967
 insert into phases values ('a53111fa-c967-11e8-93b0-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 4,'Phase 4', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 0, 'None');
 insert into tasks values ('a53257cc-c967-11e8-9495-4c3275989ef5', 'a53111fa-c967-11e8-93b0-4c3275989ef5', 'Demo', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 1, 'None');
 
-insert into projects values ('04a676cc-c968-11e8-b2f6-4c3275989ef5', 'lecturer2@gmail.com', 'COMP9900 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None');
+insert into projects values ('04a676cc-c968-11e8-b2f6-4c3275989ef5', 'lecturer2@gmail.com', 'COMP9900 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None' ,0);
 insert into phases values ('04aabee4-c968-11e8-8dc6-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 1, 'Phase 1', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 0, 'None');
 insert into tasks values ('04ac2358-c968-11e8-a538-4c3275989ef5', '04aabee4-c968-11e8-8dc6-4c3275989ef5', 'Proposal', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 1, 'None');
 insert into phases values ('04adb2b6-c968-11e8-9522-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 2, 'Phase 2', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 0, 'None');

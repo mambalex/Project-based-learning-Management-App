@@ -981,11 +981,7 @@ def create_whole_project():
             phase_index = re.search(r'\d+', phase)
             phase_index = int(phase_index.group(0))
             phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
-
-        for task in project_data["taskName"]:
-            phase_index = re.search(r'\d+', task)
-            phase_index = int(phase_index.group(0))
-            phases_dict[phase_index]["task_list"] = project_data["taskName"][task].copy()
+            phases_dict[phase_index]["task_list"] = project_data["taskName"][phase].copy()
 
         phase_list = list()
         for phase_index in phases_dict:
@@ -995,7 +991,7 @@ def create_whole_project():
         whole_project_data = dict()
         whole_project_data["project_name"] = project_name
         whole_project_data["phase_list"] = phase_list
-
+        print(whole_project_data)
         db.create_whole_project(g.user.user_id, whole_project_data)
 
         return jsonify(
@@ -1011,7 +1007,7 @@ def create_whole_project():
 def mark_submittion():
     mark_data = request.json.get('mark_data')
     print(mark_data)
-
+    ass_uuid = mark_data
     return jsonify(
         {'code': 200, 'msg': 'Mark submittion success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 

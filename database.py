@@ -185,7 +185,7 @@ def random_group(project_uuid, group_data):
     print(group_data)
     sql = "select * from projects where project_uuid = '{}';".format(project_uuid)
     project_info = database_object.search(sql)
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "group_method"]
     project_info = convert_result_to_dict(project_info, key_list)[0]
     for i in group_data:
         group_uuid = uuid.uuid1()
@@ -429,18 +429,19 @@ def re_submit(submit_uuid, address):
     return submit_uuid
 
 # project part
-def create_projects(master, project_name, deadline, mark_release=None, spec_address="None"):
+# Group method: 0 stand for manuall group, 1 stand for random group
+def create_projects(master, project_name, deadline, mark_release=None, spec_address="None", group_method=0):
     project_uuid = uuid.uuid1()
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     if mark_release is None:
-        sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address) values \
-    ('{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, spec_address)
+        sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address, group_method) values \
+    ('{}', '{}', '{}', '{}', '{}', {});".format(project_uuid, master, project_name, deadline, spec_address, group_method)
     else:
         sql = "insert into projects values \
-    ('{}', '{}', '{}', '{}', '{}', '{}');".format(project_uuid, master, project_name, deadline, mark_release,
-                                                  spec_address)
+    ('{}', '{}', '{}', '{}', '{}', '{}', {});".format(project_uuid, master, project_name, deadline, mark_release,
+                                                  spec_address, group_method)
     database_object.update(sql)
     database_object.close()
     return project_uuid
@@ -448,6 +449,22 @@ def create_projects(master, project_name, deadline, mark_release=None, spec_addr
 
 def create_whole_project(master, project_data):
     print(project_data)
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    project_uuid = uuid.uuid1()
+    # sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address) values \
+    #       ('{}', '{}', '{}', '{}', 'None', 0);".format(project_uuid, master, project_data['project_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0")
+    # database_object.update(sql)
+    # for phase in project_data['phase_list']:
+    #     phase_uuid = uuid.uuid1()
+    #     sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
+    #         ('{}', '{}', {}, '{}', '{}', {}, 'None');".format(phase_uuid, project_uuid, phase['phase_index'], phase['phase_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0",
+    #                                                         submit_require)
+
+
+
+    database_object.close()
 
 
 def get_projects(project_uuid):
@@ -457,7 +474,7 @@ def get_projects(project_uuid):
     sql = "select * from projects where project_uuid = '{}';".format(project_uuid)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "group_method"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -469,7 +486,7 @@ def get_project_list():
     sql = "select p.*, u_i.name  from projects p, user_info u_i where p.master = u_i.email;"
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "group_method", "master_name"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -482,7 +499,7 @@ def get_self_project_list(email):
         email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "group_method", "master_name"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -495,7 +512,7 @@ def lecturer_get_self_project_list(email):
         email)
     result = database_object.search(sql)
     database_object.close()
-    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "master_name"]
+    key_list = ["project_uuid", "master", "project_name", "deadline", "mark_release", "spec_address", "group_method", "master_name"]
     result = convert_result_to_dict(result, key_list)
     return result
 
@@ -550,7 +567,7 @@ def create_phases(project_uuid, phase_index, phase_name, deadline, mark_release=
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     if mark_release is None:
-        sql = "insert into phases (phase_uuid, project_uuid, phase_name, deadline, submit_require, spec_address) values \
+        sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
     ('{}', '{}', {}, '{}', '{}', {}, '{}');".format(phase_uuid, project_uuid, phase_index, phase_name, deadline,
                                                 submit_require, spec_address)
     else:
