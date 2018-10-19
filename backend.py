@@ -923,6 +923,16 @@ def lecturer_load_main_info():
         phase['resource_list'] = resource_list
         task_list = db.get_phase_all_tasks(phase['phase_uuid'])
         phase['task_list'] = task_list
+        task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+        print(task_list)
+        phase_info = db.get_phases(phase['phase_uuid'])[0]
+        group_list = db.get_all_group(phase_info['project_uuid'])
+        for task in task_list:
+            task_submit_group = db.get_submits(task['task_uuid'])
+            submit_group_id = [item['group_uuid'] for item in task_submit_group]
+            unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+            task['submit_group'] = task_submit_group
+            task['unsubmit_group'] = unsubmit_group
     current_phase = db.get_current_phase_index(project_uuid)
     # Reminder part
     reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
