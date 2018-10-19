@@ -104,6 +104,20 @@ def enrol_project(email, project_uuid, user_type='student'):
     database_object.close()
 
 
+def check_enrol(email, project_uuid):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "select count(*) from enrol_project where email = '{}' and project_uuid = '{}';".format(
+        email, project_uuid)
+    result = database_object.search(sql)
+    database_object.close()
+    if result[0][0] == 1:
+        return True
+    else:
+        return False
+
+
 def change_student_mark(email, project_uuid, new_mark):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
