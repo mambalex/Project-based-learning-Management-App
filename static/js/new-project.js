@@ -1,4 +1,5 @@
-
+var array = document.location.href.toString().split("/");
+var username = array[array.length - 1];
 
 // var name = $(this).siblings('input').val();
 var phaseName = {};
@@ -94,22 +95,28 @@ $(document).on('click', '.delete-task', function(e){
 
 //create new project
 $(document).on('click', '.button', function(e){
+    e.preventDefault();
     var projectName = $('#projectName').val();
     var project_data ={
            'projectName': projectName,
            'phaseName' : phaseName,
            'taskName': taskName
-       }
-        $.ajax({
+       };
+       $.ajax({
             type: 'POST',
             url: '/api/create_whole_project',
             contentType: "application/json",
-            data:JSON.stringify(project_data),
+            data:JSON.stringify({'project_data':project_data}),
             headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem('lecturer_token')).token+':')
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
-            error:function(){
-                popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
+            error:function(rsp_data){
+                  console.log(rsp_data);
+                  alert("Oops! something went wrong");
+            },
+            success:function (rsp_data) {
+                console.log(rsp_data);
+                alert("Successfully create a project");
             }
         })
 })

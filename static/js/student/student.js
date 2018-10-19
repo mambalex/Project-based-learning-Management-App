@@ -1,7 +1,11 @@
 var array = document.location.href.toString().split("/");
 var username = array[array.length - 1];
-var projectList;
+var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
+var projectList = JSON.parse(localStorage.getItem("allProjectList"));
+var currentProject;
+var enrolledProject;
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+
 var groupInfo={};
 var selfGroup={};
 var selfGroupStatus;
@@ -16,8 +20,20 @@ var currentGroupName;
 // $(".loaders").hide();
 
 $(document).ready(function(){
+    displayProjects();
+    $(".layer").show();
+    $(".remove-layer").hide();
+    $(".select-project").show();
+})
+
+
+//select project
+$(document).on('click', "#select-project", function(e){
+    e.preventDefault();
+    currentProject = $(this).siblings('select').val(); //id
+    $(".select-project").hide();
+    $(".layer").hide();
     getAllInfo();
-    // $(".loaders").hide();
     welcomeUser();
     $(".phase1-nav").click();
     displayReminder();
@@ -28,15 +44,12 @@ $(document).ready(function(){
     displayDeadline(4);
 })
 
-
-
-
 function getAllInfo(){
     return $.ajax({
             type:'POST',
             url:'/api/student_main_info',
             contentType: "application/json",
-            data:JSON.stringify({'project_uuid':projectId}),
+            data:JSON.stringify({'project_uuid':currentProject}),
             async:false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
@@ -49,7 +62,7 @@ function getAllInfo(){
                             groupInfo[val['group_name']]= val;
                         });   
                         rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_name']]= val;
+                            phaseList[val['phase_index']]= val;
                         });
                         reminderList = rsp_data['reminder_list'];
                         // rsp_data['reminder_list'].forEach(function(val){
@@ -58,6 +71,9 @@ function getAllInfo(){
                         projectInfo = rsp_data['project_info'];
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
+                        projectList = rsp_data['all_project_list'];
+                        enrolledProject = rsp_data['self_project_list'];
+
                         console.log(selfGroup)
                         console.log(groupInfo)       
                         console.log(phaseList)       
@@ -71,6 +87,40 @@ function welcomeUser(){
     var name = userProfile['name'];
     $(".welcome-user").text(`Welcome ${name}`);
     $(".welcome-user").show();
+}
+
+function displayProjects () {
+    //select project popup
+    $(".select-project select option").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".select-project select").append(`
+                <option value=${id}>${name}</option>
+        `)
+    });
+
+    //enrolled project navbar
+    $(".header .project-dropdown a").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".project-dropdown").append(`
+        <a>${name}<span class="id">${id}</span></a>
+    `)
+    })
+     $(".project-dropdown").append(`<a id="enrolNav">Enrol</a>`)
+
+    //navbar click enrol
+    $('.enrol select option').remove();
+    projectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $('.enrol select').append(`
+             <option value=${id}>${name}</option>
+        `)
+    })
+
 }
 
 function displayReminder(){
@@ -147,6 +197,7 @@ function displayDeadline(id){
     var phase = "Phase "+id;
     let allDeadlines = {};
     //phase deadline
+    console.log(phaseList);
     var d = new Date();
     var phase1Due = phaseList[phase]['deadline'].split(" ")[0];
     var newD = new Date(phase1Due);
@@ -858,20 +909,25 @@ $(document).on('click', '.navmark4', function(e){
 
 
 // click enrol
-$("#enrolNav").click( function(e){
+$(document).on('click', "#enrolNav", function(e){
     e.stopImmediatePropagation();
     $(".layer").show();
+    $(".remove-layer").show();
     $(".enrol").show();
 });
 
-$(".remove-layer").click( function(e){
+$(document).on('click', ".remove-layer", function(e){
     $(".layer").hide();
     $(".enrol").hide();
+    $(".select-project").hide();
 });
 
 
-$("#enrolButton").on("click",function () {
+//enrol project
+$(document).on('click', "#enrolButton", function(e){
+    e.preventDefault();
     var projectId = $(this).siblings('select').val();
+    var projectName = $(this).siblings("select").find("option:selected").text();
     $.ajax({
             type:'POST',
             url:'/api/enrol_project',
@@ -883,6 +939,10 @@ $("#enrolButton").on("click",function () {
             },
         success:function () {
             alert('Successfully enrolled')
+                //add to select project popup
+                    $(".select-project select").append(`<option value=${projectId}>${projectName}</option>`);
+                //add to enrolled project navbar
+                    $("#enrolNav").before(`<a>${projectName}<span class="id">${projectId}</span></a>`);
         }
     })
 
@@ -890,6 +950,40 @@ $("#enrolButton").on("click",function () {
 
 
 
+
+function displayProjects () {
+    //select project popup
+    $(".select-project select option").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".select-project select").append(`
+                <option value=${id}>${name}</option>
+        `)
+    });
+
+    //enrolled project navbar
+    $(".header .project-dropdown a").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".project-dropdown").append(`
+        <a>${name}<span class="id">${id}</span></a>
+    `)
+    })
+     $(".project-dropdown").append(`<a id="enrolNav">Enrol</a>`)
+
+    //navbar click enrol
+    $('.enrol select option').remove();
+    projectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $('.enrol select').append(`
+             <option value=${id}>${name}</option>
+        `)
+    })
+
+}
 
 
 

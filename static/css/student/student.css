@@ -24,7 +24,11 @@ button{
     margin: 20px 20px 0 0;
 }
 
-.enrol{
+.id{
+    display: none;
+}
+
+.enrol, .select-project{
     display: none;
     /*width: 300px;*/
     /*height: 300px;*/
@@ -44,9 +48,11 @@ button{
     background: white;
 }
 
-#enrolButton{
+#enrolButton,#select-project{
     margin:30px 0 0 90px;
 }
+
+
 
 
 .container{

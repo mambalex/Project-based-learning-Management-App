@@ -139,8 +139,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/create_project')
-def new_project():
+@app.route('/create_project/<username>')
+def new_project(username):
     return render_template('new-project.html')
 
 

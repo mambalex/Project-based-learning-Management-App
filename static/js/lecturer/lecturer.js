@@ -1,6 +1,8 @@
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
 var array = document.location.href.toString().split("/");
 var username = array[array.length - 1];
+var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
+var currentProject;
 var userInfo={};
 var reminderList={};
 var projectInfo={};
@@ -12,19 +14,58 @@ var currentPhase;
 
 $('#live-chat').hide();
 $(document).ready(function(){
-    getAllInfo();
-    $(".active").click();
-    $('#live-chat header').click(); 
-    $('#live-chat').show();
-    welcomeUser();
-    displayAllReminder();
-
+    displayProjects();
+    $(".layer").show();
+    $(".remove-layer").hide();
+    $(".select-project").show();
+    // $('#live-chat header').click();
+    // $('#live-chat').show();
+    // welcomeUser();
 })
 
-//create a project
+//select project
+$(document).on('click', "#select-project", function(e){
+    e.preventDefault();
+    currentProject = $(this).siblings('select').val(); //id
+    $(".select-project").hide();
+    $(".layer").hide();
+    getAllInfo();
+    welcomeUser();
+    $(".active").click();
+    displayAllReminder();
+})
 
-$("#create-project").on('click',function () {
-     window.open("/create_project", '_blank');
+function displayProjects () {
+    //select project popup
+    $(".select-project select option").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".select-project select").append(`
+                <option value=${id}>${name}</option>
+        `)
+    });
+
+    //all projects navbar
+    $(".header .project-dropdown a").remove();
+    selfProjectList.forEach(function (proj) {
+        var name = proj['project_name'];
+        var id = proj['project_uuid'];
+        $(".project-dropdown").append(`
+        <a>${name}<span class="id">${id}</span></a>
+    `)
+    })
+     $(".project-dropdown").append(`<a id="create-project">Create a project</a>`)
+
+}
+
+
+
+
+//create a project
+$(document).on('click', "#create-project", function(e){
+        e.preventDefault();
+     window.open(`/create_project/${username}`, '_blank');
 })
 
 
@@ -78,7 +119,7 @@ function getAllInfo(){
             type:'POST',
             url:'/api/lecturer_main_info',
             contentType: "application/json",
-            data:JSON.stringify({'project_uuid':projectId}),
+            data:JSON.stringify({'project_uuid':currentProject}),
             async:false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
@@ -636,8 +677,18 @@ $(".tag").on('click',function(){
 })
 
 
+//marking
 
+$(document).on('click', '.mark-container .button', function(e){
+    var task = $(this).siblings('.select-task');
+    var group = $(this).siblings('.select-group');
+})
 
+//click remove layer
+// $(document).on('click', '.remove-layer', function(e){
+//     $('.layer').hide();
+//     $('.select-project').hide();
+// })
 
 
 
