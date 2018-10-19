@@ -5,9 +5,11 @@ var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`))
 var currentProject;
 var userInfo={};
 var reminderList={};
+var groupList;
 var projectInfo={};
 var phaseList={};
-var taskList={};
+var taskList={}; //name -> uuid
+var allTasks={}; //uuid -> task
 var groupInfo={};
 var currentPhase;
 
@@ -33,6 +35,7 @@ $(document).on('click', "#select-project", function(e){
     welcomeUser();
     $(".active").click();
     displayAllReminder();
+    displayMarking();
 })
 
 function displayProjects () {
@@ -75,16 +78,16 @@ $("#logout").click(function(){
 })
 
 // view files
-$(".files").on('click',function(){
-    $.ajax({
-            type:'GET',
-            url:'/temp/phase1_1.pdf',
-            async:false,
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            }
-    })
-})
+// $(".files").on('click',function(){
+//     $.ajax({
+//             type:'GET',
+//             url:'/temp/phase1_1.pdf',
+//             async:false,
+//             headers:{
+//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+//             }
+//     })
+// })
 
 function popUp(src, sucessOrFail, text, click){
    $(src).find(sucessOrFail).text(text).show();
@@ -132,15 +135,17 @@ function getAllInfo(){
                             groupInfo[val['group_name']]= val;
                         });   
                         rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_name']]= val;
+                            phaseList[val['phase_index']]= val;
                         }); 
                         for(var phase in phaseList){
                             console.log(phaseList[phase]);
                             phaseList[phase]['task_list'].forEach(function(task){
                                 taskList[task['task_name']] = task['task_uuid'];
+                                allTasks[task['task_uuid']] = task;
                             })
                         }
                         reminderList = rsp_data['reminder_list'];
+                        groupList = rsp_data['group_list'];
                         // rsp_data['reminder_list'].forEach(function(val){
                         //     var d = new Date(val['post_time'])
                         //     reminderList[d.getTime()/1000] = val;
@@ -188,7 +193,7 @@ $(".navgrp").click( function(){
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
     $(".mark-container").hide();
-    $(".documenets").hide()
+    $(".documents").hide()
     $(".new_note").hide()
     $(".deadline_view").hide()
     $(".group-info").show()
@@ -200,7 +205,7 @@ $(".reminder").click(function(){
     $(".alert").hide()
     $(".notes-wrapper").hide()
     $(".upload-files").hide()
-    $(".documenets").hide()
+    $(".documents").hide()
     $(".mark-container").hide();
     $(".group-info").hide()
     $(".deadline_view").hide()
@@ -216,7 +221,7 @@ $(".active").click( function(){
     $(".group-info").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
-    $(".documenets").hide()
+    $(".documents").hide()
     $(".mark-container").hide();
     $(".deadline_view").hide()
     $(".notes-wrapper").show()
@@ -228,7 +233,7 @@ $(".deadline").click( function(){
     $(".group-info").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
-    $(".documenets").hide()
+    $(".documents").hide()
     $(".mark-container").hide();
     $(".notes-wrapper").hide()
     $(".deadline_view").show()
@@ -245,7 +250,7 @@ $(".upload").click( function(){
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
     $(".upload-files").show()
-    $(".documenets").show()
+    $(".documents").show()
     $(".reset").click();
 });
 
@@ -257,10 +262,12 @@ $(".mark").click( function(){
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
     $(".upload-files").hide()
-    $(".documenets").hide()
+    $(".documents").hide()
     $(".mark-container .mark-doc").show()
     $(".reset").click();
     $(".mark-container").show();
+    $(".mark-container select").val("");
+    $(".mark-container .select-group-task").click();
 });
 
 
@@ -356,8 +363,9 @@ function swap(json){
 
 
 
+
 function displayAllReminder(){
-     var taskListReverse = swap(taskList);
+    var taskListReverse = swap(taskList);
     $(".reminder-list").find("li").remove();
     reminderList.forEach(function (val) {
         var message = val["message"];
@@ -678,20 +686,109 @@ $(".tag").on('click',function(){
 
 
 //marking
+function displayMarking() {
+       for(var phase in phaseList){
+               let index = phase.split(" ")[1];
+               //add task
+               phaseList[phase]['task_list'].forEach(function(task){
+                     $(`.mark-container${index}`).find(".select-task").append(`
+                            <option value=${task['task_uuid']}>${task['task_name']}</option>
+                     `)
+                 })
+               //add group
+                groupList.forEach(function (group) {
+                    $(`.mark-container${index}`).find(".select-group").append(`
+                            <option value=${group['group_uuid']}>${group['group_name']}</option>
+                     `)
+                })
+
+        }
+}
+
+$(document).on("click", ".select-group-task", function(e){
+        var groupId = $(this).siblings('.select-group').val();
+        var taskId = $(this).siblings('.select-task').val();
+        var document = $(this).siblings('.mark-doc').find('tbody');
+        console.log(groupId, taskId);
+        if(groupId && taskId){
+            document.find('tr').remove();
+            var flag = 'no';
+            for(var task_id in allTasks){
+                if (task_id == taskId){
+                    for (const group of allTasks[task_id]['submit_group']){
+                        if(group['group_uuid']==groupId){
+                                flag = 'yes';
+                                var num = document.find("tr").length;
+                                var arr = group['file_address'].split("/");
+                                var fileName = arr[arr.length - 1];
+                                var filePath = `../temp/${fileName}`
+                                document.append(`
+                                <tr>
+                                  <td>Doc${num+1}</td>
+                                  <td><span class="id">yes</span>${fileName}</td>                   
+                                  <td align="right">
+                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                          <span class="glyphicon glyphicon-file"></span>
+                                          <span class="hidden-xs files">View</span>
+                                      </a>
+                                  </td>
+                              </tr>                                                            
+                                `)
+                        }
+                    }
+                }
+            }
+            if(flag == 'no'){
+                document.find('tr').remove();
+                document.append(`
+                                  <tr>
+                                  <td>Doc1</td>                             
+                                  <td><span class="id">no</span>No files</td>
+                                  </tr>
+                `)
+            }
+        }else{
+               document.find('tr').remove();
+                document.append(`
+                                  <tr>
+                                  <td>Doc1</td>
+                                  <td>No files <span class="id">no</span></td>
+                                  </tr>
+                `)
+        }
+});
+
+
+
+//display resources
+function displayResources(){
+
+}
 
 $(document).on('click', '.mark-container .button', function(e){
-    var task = $(this).siblings('.select-task');
-    var group = $(this).siblings('.select-group');
+    e.preventDefault();
+    var flag = $(this).siblings('.mark-doc').find('.id').text();
+    if(flag =='no'){
+        alert("No file to mark")
+        return
+    }
+    var task = $(this).siblings('.select-task').val();
+    var group = $(this).siblings('.select-group').val();
+    var data = {
+                task_id:task,
+                group_id:group
+            };
+    $.ajax({
+            type: 'POST',
+            url: '/api/mark_submittion',
+            contentType: "application/json",
+            data:JSON.stringify({"mark_data":data}),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            }
+
+        })
 })
-
-//click remove layer
-// $(document).on('click', '.remove-layer', function(e){
-//     $('.layer').hide();
-//     $('.select-project').hide();
-// })
-
-
-
 
 
 

@@ -45,8 +45,8 @@
                   <i class="fas fa-user-alt"></i>
                   <div class="dropdown-content">
                       <a href="/profile" id="profile">My Profile</a>
-                      <a href="#">Notifications</a>
-                      <a href="#">Settings</a>
+                      <a >Notifications</a>
+                      <a >Settings</a>
                       <a href="index.html" id="logout">Logout</a>
                   </div>
               </div>
@@ -105,12 +105,12 @@
           <div class="left-wrapper">
                     <div class="sidebar-offcanvas sidebar">
                       <div class="list-group">
-                        <a href="#" class="list-group-item active">Phase 1</a>
-                        <a href="#" class="list-group-item navgrp">Group</a>
-                        <a href="#" class="list-group-item reminder">Reminder</a>
-                        <a href="#" class="list-group-item deadline">Deadline</a>
-                        <a href="#" class="list-group-item upload">Resources</a>
-                        <a href="#" class="list-group-item mark">Mark</a>
+                        <a  class="list-group-item active">Phase 1</a>
+                        <a  class="list-group-item navgrp">Group</a>
+                        <a  class="list-group-item reminder">Reminder</a>
+                        <a  class="list-group-item deadline">Deadline</a>
+                        <a  class="list-group-item upload">Resources</a>
+                        <a  class="list-group-item mark">Mark</a>
                       </div>
                     </div>
                     <!--due-date-->
@@ -132,7 +132,7 @@
           <div class="right-wrapper">
   <!--file input-->
 
-           <div class="documenets">
+           <div class="documents">
               <table class="table table-striped">
                   <thead>
                   <tr>
@@ -143,12 +143,22 @@
                   <tr>
                       <td>Doc1</td>
                       <td>Proposal</td>
-                      <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
+                      <td align="right">
+                          <a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs">
+                              <span class="glyphicon glyphicon-file"></span>
+                              <span class="hidden-xs files"> View</span>
+                          </a>
+                      </td>
                   </tr>
                   <tr>
                       <td>Doc2</td>
                       <td>phase1</td>
-                      <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                      <td align="right">
+                          <a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs">
+                              <span class="glyphicon glyphicon-file"></span>
+                              <span class="hidden-xs files"> View</span>
+                          </a>
+                      </td>
                   </tr>
                   </tbody>
               </table>
@@ -320,16 +330,14 @@
           <div class="mark-container mark-container1">
               <h1>Marking</h1><br><br>
               <select   class="form-control select-task">
-                    <option value="" hidden="">TASK NAMES</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
+                    <option value="" hidden="" class="task-option">TASK NAMES</option>
+
               </select>
               <select   class="form-control select-group">
-                    <option value="" hidden="">GROUPS</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
+                    <option value="" hidden="" class="group-option">GROUPS</option>
               </select>
-              <div class="documenets mark-doc">
+              <button type="button" class="btn btn-success select-group-task">Select</button>
+              <div class="documents mark-doc">
               <table class="table table-striped">
                        <thead>
                               <tr>
@@ -339,14 +347,26 @@
                               <tbody>
                               <tr>
                                   <td>Doc1</td>
-                                  <td>Phase_1.pdf</td>
-                                  <td align="right"><a href="../temp/phase_1.pdf" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs files"> View</span></a></td>
+                                  <td><span class="id">no</span>No files</td>
+{#                                  <td align="right">#}
+{#                                      <a  target="_blank"#}
+{#                                         class="btn btn-success btn-xs view_file">#}
+{#                                          <span class="glyphicon glyphicon-file"></span>#}
+{#                                          <span class="hidden-xs files"> View</span>#}
+{#                                      </a>#}
+{#                                  </td>#}
                               </tr>
-                              <tr>
-                                  <td>Doc2</td>
-                                  <td>Proposal.pdf</td>
-                                  <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
-                              </tr>
+{#                              <tr>#}
+{#                                  <td>Doc2</td>#}
+{#                                  <td>Proposal.pdf</td>#}
+{#                                  <td align="right">#}
+{#                                         <a href="../temp/phase_1.pdf" target="_blank"#}
+{#                                          class="btn btn-success btn-xs view_file">#}
+{#                                          <span class="glyphicon glyphicon-file"></span>#}
+{#                                          <span class="hidden-xs files"> View</span>#}
+{#                                      </a>#}
+{#                                  </td>#}
+{#                              </tr>#}
                               </tbody>
                         </table>
            </div>
@@ -364,12 +384,12 @@
               <div class="left-wrapper">
                   <div class="sidebar-offcanvas sidebar">
                       <div class="list-group">
-                          <a href="#" class="list-group-item active">Phase 2</a>
-                          <a href="#" class="list-group-item navgrp">Group</a>
-                          <a href="#" class="list-group-item reminder">Reminder</a>
-                          <a href="#" class="list-group-item deadline">Deadline</a>
-                          <a href="#" class="list-group-item upload">Resources</a>
-                          <a href="#" class="list-group-item mark">Mark</a>
+                          <a  class="list-group-item active">Phase 2</a>
+                          <a  class="list-group-item navgrp">Group</a>
+                          <a  class="list-group-item reminder">Reminder</a>
+                          <a  class="list-group-item deadline">Deadline</a>
+                          <a  class="list-group-item upload">Resources</a>
+                          <a  class="list-group-item mark">Mark</a>
                       </div>
                   </div>
                 <!--due-date-->
@@ -395,7 +415,7 @@
                        <div class="right-wrapper">
   <!--file input-->
 
-           <div class="documenets">
+           <div class="">
               <table class="table table-striped">
                   <thead>
                   <tr>
@@ -590,15 +610,11 @@
               <h1>Marking</h1><br><br>
               <select   class="form-control select-task">
                     <option value="" hidden="">TASK NAMES</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
               <select   class="form-control select-group">
                     <option value="" hidden="">GROUPS</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
-              <div class="documenets mark-doc">
+              <div class="mark-doc">
               <table class="table table-striped">
                        <thead>
                               <tr>
@@ -642,12 +658,12 @@
               <div class="left-wrapper">
                   <div class="sidebar-offcanvas sidebar">
                       <div class="list-group">
-                          <a href="#" class="list-group-item active">Phase 3</a>
-                          <a href="#" class="list-group-item navgrp">Group</a>
-                          <a href="#" class="list-group-item reminder">Reminder</a>
-                          <a href="#" class="list-group-item deadline">Deadline</a>
-                          <a href="#" class="list-group-item upload">Resources</a>
-                          <a href="#" class="list-group-item mark">Mark</a>
+                          <a  class="list-group-item active">Phase 3</a>
+                          <a  class="list-group-item navgrp">Group</a>
+                          <a  class="list-group-item reminder">Reminder</a>
+                          <a  class="list-group-item deadline">Deadline</a>
+                          <a  class="list-group-item upload">Resources</a>
+                          <a  class="list-group-item mark">Mark</a>
                       </div>
                   </div>
                                       <!--due-date-->
@@ -668,7 +684,7 @@
                        <div class="right-wrapper">
   <!--file input-->
 
-           <div class="documenets">
+           <div class="">
               <table class="table table-striped">
                   <thead>
                   <tr>
@@ -820,7 +836,7 @@
                           <button class="btn btn-primary" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                          <button class="btn btn-primary saveDeadline">Save</button>
                         </div>
                       </div>
                       
@@ -863,15 +879,11 @@
               <h1>Marking</h1><br><br>
               <select   class="form-control select-task">
                     <option value="" hidden="">TASK NAMES</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
               <select   class="form-control select-group">
                     <option value="" hidden="">GROUPS</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
-              <div class="documenets mark-doc">
+              <div class=" mark-doc">
               <table class="table table-striped">
                        <thead>
                               <tr>
@@ -909,12 +921,12 @@
               <div class="left-wrapper">
                   <div class="sidebar-offcanvas sidebar">
                       <div class="list-group">
-                          <a href="#" class="list-group-item active">Phase 4</a>
-                          <a href="#" class="list-group-item navgrp">Group</a>
-                          <a href="#" class="list-group-item reminder">Reminder</a>
-                          <a href="#" class="list-group-item deadline">Deadline</a>
-                          <a href="#" class="list-group-item upload">Resources</a>
-                          <a href="#" class="list-group-item mark">Mark</a>
+                          <a  class="list-group-item active">Phase 4</a>
+                          <a  class="list-group-item navgrp">Group</a>
+                          <a  class="list-group-item reminder">Reminder</a>
+                          <a  class="list-group-item deadline">Deadline</a>
+                          <a  class="list-group-item upload">Resources</a>
+                          <a  class="list-group-item mark">Mark</a>
                       </div>
                   </div>
                                       <!--due-date-->
@@ -935,7 +947,7 @@
                        <div class="right-wrapper">
   <!--file input-->
 
-           <div class="documenets">
+           <div class="">
               <table class="table table-striped">
                   <thead>
                   <tr>
@@ -1130,15 +1142,11 @@
               <h1>Marking</h1><br><br>
               <select   class="form-control select-task">
                     <option value="" hidden="">TASK NAMES</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
               <select   class="form-control select-group">
                     <option value="" hidden="">GROUPS</option>
-                    <option value="student">STUDENT</option>
-                    <option value="lecturer">LECTURER</option>
               </select>
-              <div class="documenets mark-doc">
+              <div class=" mark-doc">
               <table class="table table-striped">
                        <thead>
                               <tr>
@@ -1154,7 +1162,7 @@
                               <tr>
                                   <td>Doc2</td>
                                   <td>Proposal.pdf</td>
-                                  <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
+                                  <td align="right"><a href="../temp/1538969432.txt" target="_blank" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-file"></span><span class="hidden-xs"> View</span></a></td>
                               </tr>
                               </tbody>
                         </table>
@@ -1173,7 +1181,7 @@
     
     <header class="clearfix">
       
-      <a href="#" class="chat-close">x</a>
+      <a  class="chat-close">x</a>
 
       <h4>Chat Bot</h4>
 

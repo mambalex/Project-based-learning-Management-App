@@ -109,7 +109,9 @@ button{
   position: relative;
 }
 
-
+.list-group a{
+    cursor: pointer;
+}
 
 
 /*note*/
