@@ -9,12 +9,7 @@ var taskName ={
     'Phase 3':[],
     'Phase 4':[]
 };
-var taskArray = {
-    'Phase 1':[],
-    'Phase 2':[],
-    'Phase 3':[],
-    'Phase 4':[]
-};
+
 
 
 $(document).on('click', '.add-phase', function(e){
@@ -71,13 +66,11 @@ $(document).on('click', '.add-task', function(e){
     // console.log(taskName);
     // console.log(taskName[phase]);
     var numTask = taskName[phase].length;
-    taskName[phase].push(task);
-    taskArray[phase].push(
+    taskName[phase].push(
         {
-            taskName: task,
-            submitRequire: submit
-        }
-    )
+            'taskName': task,
+            'submitRequire': submit
+        });
     phase2 = phase.split(" ")[1];
     $(".display-task").append(`
                 <li class="display display2">
@@ -89,7 +82,6 @@ $(document).on('click', '.add-task', function(e){
                 </li>
     `);
     console.log(taskName);
-    console.log(taskArray);
     $(this).siblings('input').val("");
     $('.select-task').val("");
 })
@@ -98,13 +90,19 @@ $(document).on('click', '.delete-task', function(e){
     e.preventDefault();
     let phase = $(this).siblings('.id').text();
     let task = $(this).siblings('.task-name').text();
-    var index = taskName[phase].indexOf(task);
+    var submit = $(this).siblings('.submit-f').text();
+    var index;
+    taskName[phase].forEach(function (t,idx) {
+        console.log(idx,t)
+        if(t['taskName']==task && t['submitRequire']==submit){
+            index = idx;
+        }
+    })
+    // var index = taskName[phase].indexOf(`{'taskName':${task},'submitRequire': ${submit}}`);
     if (index > -1) {
         taskName[phase].splice(index, 1);
-        taskArray[phase].splice(index, 1);
     }
     console.log(taskName);
-    console.log(taskArray);
     $(this).parent().remove();
 })
 
@@ -116,8 +114,9 @@ $(document).on('click', '.button', function(e){
     var project_data ={
            'projectName': projectName,
            'phaseName' : phaseName,
-           'taskArray': taskArray
+           'taskArray': taskName
        };
+    console.log(project_data)
        $.ajax({
             type: 'POST',
             url: '/api/create_whole_project',
