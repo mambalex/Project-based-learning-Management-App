@@ -781,9 +781,11 @@ $(document).on('click', '.mark-container .button', function(e){
     }
     var task = $(this).siblings('.select-task').val();
     var group = $(this).siblings('.select-group').val();
+    var mark = $(this).siblings('.phase1-mark').val();
     var data = {
                 task_id:task,
-                group_id:group
+                group_id:group,
+                mark:mark
             };
     $.ajax({
             type: 'POST',

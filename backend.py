@@ -1,13 +1,11 @@
 import os
 import re
-import json
 import time
-import base64
 import random
 import database as db
 from chatbot import chatbot
 
-from flask import Flask, g, jsonify, make_response, request, abort, url_for, render_template, send_from_directory
+from flask import Flask, g, jsonify, make_response, request, abort, render_template, send_from_directory
 from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -930,8 +928,10 @@ def lecturer_load_main_info():
             print(task_submit_group)
             submit_group_id = [item['group_uuid'] for item in task_submit_group]
             unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+            nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
+
             task['submit_group'] = task_submit_group
-            task['unsubmit_group'] = unsubmit_group
+            task['unsubmit_group'] = unsubmit_group + nosubmit_group
         phase['task_list'] = task_list
 
 
@@ -940,7 +940,7 @@ def lecturer_load_main_info():
     reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
 
-    self_project_list = db.get_self_project_list(g.user.user_id)
+    self_project_list = db.lecturer_get_self_project_list(g.user.user_id)
 
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
                     'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
@@ -961,8 +961,9 @@ def get_phase_submit():
         task_submit_group = db.get_submits(task['task_uuid'])
         submit_group_id = [item['group_uuid'] for item in task_submit_group]
         unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+        nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
         task['submit_group'] = task_submit_group
-        task['unsubmit_group'] = unsubmit_group
+        task['unsubmit_group'] = unsubmit_group + nosubmit_group
 
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_id': g.user.user_id, 'user_type': g.user.user_type,
                     'data': task_list})
@@ -981,7 +982,7 @@ def create_whole_project():
             phase_index = re.search(r'\d+', phase)
             phase_index = int(phase_index.group(0))
             phases_dict[phase_index] = {"phase_name": project_data["phaseName"][phase], "task_list": list()}
-            phases_dict[phase_index]["task_list"] = project_data["taskName"][phase].copy()
+            phases_dict[phase_index]["task_list"] = project_data["taskArray"][phase].copy()
 
         phase_list = list()
         for phase_index in phases_dict:
@@ -991,7 +992,6 @@ def create_whole_project():
         whole_project_data = dict()
         whole_project_data["project_name"] = project_name
         whole_project_data["phase_list"] = phase_list
-        print(whole_project_data)
         db.create_whole_project(g.user.user_id, whole_project_data)
 
         return jsonify(
@@ -1007,7 +1007,16 @@ def create_whole_project():
 def mark_submittion():
     mark_data = request.json.get('mark_data')
     print(mark_data)
-    ass_uuid = mark_data
+    ass_uuid = mark_data['task_id']
+    group_id = mark_data['group_id']
+    mark = mark_data['mark']
+    submission = db.get_self_submit(group_id, ass_uuid)
+    print(submission)
+    if (len(submission)) == 0:
+        db.mark_unsubmits(ass_uuid, group_id, mark)
+    else:
+        db.mark_submits(submission[0]['submit_uuid'], mark)
+
     return jsonify(
         {'code': 200, 'msg': 'Mark submittion success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 

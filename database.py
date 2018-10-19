@@ -390,6 +390,16 @@ def mark_submits(submit_uuid, new_mark):
     database_object.close()
 
 
+def mark_unsubmits(ass_uuid, group_uuid, mark):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    submit_uuid = uuid.uuid1()
+    sql = "insert into submits values ('{}', '{}', '{}', 'None', now(), {});".format(submit_uuid, group_uuid, ass_uuid, mark)
+    database_object.update(sql)
+    database_object.close()
+
+
 def get_submits(ass_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
@@ -453,17 +463,22 @@ def create_whole_project(master, project_data):
     database_object = database_lib.Database_object(dbconfig)
     database_object.open()
     project_uuid = uuid.uuid1()
-    # sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address) values \
-    #       ('{}', '{}', '{}', '{}', 'None', 0);".format(project_uuid, master, project_data['project_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0")
-    # database_object.update(sql)
-    # for phase in project_data['phase_list']:
-    #     phase_uuid = uuid.uuid1()
-    #     sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
-    #         ('{}', '{}', {}, '{}', '{}', {}, 'None');".format(phase_uuid, project_uuid, phase['phase_index'], phase['phase_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0",
-    #                                                         submit_require)
-
-
-
+    sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address, group_method) values \
+          ('{}', '{}', '{}', '{}', 'None', 0);".format(project_uuid, master, project_data['project_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0")
+    database_object.update(sql)
+    for phase in project_data['phase_list']:
+        phase_uuid = uuid.uuid1()
+        sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
+            ('{}', '{}', {}, '{}', '{}', 0, 'None');".format(phase_uuid, project_uuid, phase['phase_index'], phase['phase_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0")
+        database_object.update(sql)
+        for task in phase['task_list']:
+            task_uuid = uuid.uuid1()
+            submit_require = 0
+            if task['submitRequire'] == "Yes":
+                submit_require = 1
+            sql = "insert into tasks (task_uuid, phase_uuid, task_name, deadline, submit_require, spec_address) values \
+                ('{}', '{}', '{}', '{}', {}, 'None');".format(task_uuid, phase_uuid, task['taskName'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800)) + "+0", submit_require)
+            database_object.update(sql)
     database_object.close()
 
 

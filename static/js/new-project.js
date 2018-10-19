@@ -9,6 +9,12 @@ var taskName ={
     'Phase 3':[],
     'Phase 4':[]
 };
+var taskArray = {
+    'Phase 1':[],
+    'Phase 2':[],
+    'Phase 3':[],
+    'Phase 4':[]
+};
 
 
 $(document).on('click', '.add-phase', function(e){
@@ -55,6 +61,7 @@ $(document).on('click', '.add-task', function(e){
         alert("Incorrect input");
         return
     }
+    console.log(taskName)
     var mySet = new Set(taskName[phase]);
     if(mySet.has(task)){
         alert('Already set this task');
@@ -65,6 +72,12 @@ $(document).on('click', '.add-task', function(e){
     // console.log(taskName[phase]);
     var numTask = taskName[phase].length;
     taskName[phase].push(task);
+    taskArray[phase].push(
+        {
+            taskName: task,
+            submitRequire: submit
+        }
+    )
     phase2 = phase.split(" ")[1];
     $(".display-task").append(`
                 <li class="display display2">
@@ -76,6 +89,7 @@ $(document).on('click', '.add-task', function(e){
                 </li>
     `);
     console.log(taskName);
+    console.log(taskArray);
     $(this).siblings('input').val("");
     $('.select-task').val("");
 })
@@ -87,8 +101,10 @@ $(document).on('click', '.delete-task', function(e){
     var index = taskName[phase].indexOf(task);
     if (index > -1) {
         taskName[phase].splice(index, 1);
+        taskArray[phase].splice(index, 1);
     }
     console.log(taskName);
+    console.log(taskArray);
     $(this).parent().remove();
 })
 
@@ -100,7 +116,7 @@ $(document).on('click', '.button', function(e){
     var project_data ={
            'projectName': projectName,
            'phaseName' : phaseName,
-           'taskName': taskName
+           'taskArray': taskArray
        };
        $.ajax({
             type: 'POST',

@@ -122,8 +122,9 @@ class Chatbot():
                         for task in phase['tasks_list']:
                             submit_group = db.get_submits(task['task_uuid'])
                             submit_group = [item['group_uuid'] for item in submit_group]
+                            nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
                             summary = summary + "  There are {}/{} groups have submitted task {}.\n".format(
-                                len(submit_group), len(all_group_list), task['task_name'])
+                                len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                         reply = re.sub(r'##.*##', summary, reply)
                         break
             return [reply, input_type]
@@ -180,8 +181,10 @@ class Chatbot():
 
                                 submit_group = db.get_submits(task['task_uuid'])
                                 submit_group = [item['group_uuid'] for item in submit_group]
+                                nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
+
                                 summary = "\nThere are {}/{} groups have submitted task {}.\n".format(
-                                len(submit_group), len(all_group_list), task['task_name'])
+                                len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                                 break
                         reply = re.sub(r'##.*##', summary, reply)
                         break
