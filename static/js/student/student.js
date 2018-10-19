@@ -72,7 +72,7 @@ function getAllInfo(){
                         userProfile = rsp_data['user_profile']; 
                         localStorage.setItem('profile', JSON.stringify(userProfile));
                         projectList = rsp_data['all_project_list'];
-                        enrolledProject = rsp_data['self_project_list'];
+                        selfProjectList = rsp_data['self_project_list'];
 
                         console.log(selfGroup)
                         console.log(groupInfo)       
@@ -936,14 +936,22 @@ $(document).on('click', "#enrolButton", function(e){
             async:false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            },
-        success:function () {
-            alert('Successfully enrolled')
-                //add to select project popup
-                    $(".select-project select").append(`<option value=${projectId}>${projectName}</option>`);
-                //add to enrolled project navbar
-                    $("#enrolNav").before(`<a>${projectName}<span class="id">${projectId}</span></a>`);
-        }
+            }
+    }).done(function (rsp_data) {
+            console.log(rsp_data);
+            if(rsp_data['code'] == 200){
+                 console.log(rsp_data);
+                 alert('Successfully enrolled')
+                 getAllInfo();
+                 displayProjects();
+                // //add to select project popup
+                //     $(".select-project select").append(`<option value=${projectId}>${projectName}</option>`);
+                // //add to enrolled project navbar
+                //     $("#enrolNav").before(`<a>${projectName}<span class="id">${projectId}</span></a>`);
+
+            }else if(rsp_data['code'] == 400){
+                alert("Already enrol in this project!");
+            }
     })
 
 })
