@@ -687,8 +687,10 @@ $(".tag").on('click',function(){
 
 //marking
 function displayMarking() {
+       console.log(phaseList);
        for(var phase in phaseList){
-               let index = phase.split(" ")[1];
+               // let index = phase.split(" ")[1];
+               let index = phase;
                //add task
                phaseList[phase]['task_list'].forEach(function(task){
                      $(`.mark-container${index}`).find(".select-task").append(`
