@@ -39,6 +39,11 @@ $(document).on('click', "#select-project", function(e){
 })
 
 function displayProjects () {
+    if(!selfProjectList){
+        window.open(`/create_project/${username}`, '_blank');
+        alert('please create a project')
+        return
+    }
     //select project popup
     $(".select-project select option").remove();
     selfProjectList.forEach(function (proj) {
