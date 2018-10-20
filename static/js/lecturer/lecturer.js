@@ -35,6 +35,7 @@ $(document).on('click', "#select-project", function(e){
     welcomeUser();
     $(".active").click();
     displayAllReminder();
+    displayDeadline();
     displayResources();
     displayMarking();
     displayDueDate(1);
@@ -91,6 +92,22 @@ function displayAllReminder(){
                                 <div class="date"><span class="due">${date}</span></div>
                             </li>`)
     })
+}
+
+//display deadline
+function displayDeadline() {
+    // $(".deadline-selector option").each(function (option) {
+    //     console.log($(option).text())
+    //     if($(option).val()!="Phase 1" && $(option).val()!="Phase 2" &&
+    //         $(option).val()!="Phase 3" && $(option).val()!="Phase 4"){
+    //         $(option).remove();
+    //     }
+    // })
+    for(let task in taskList){
+        $(".deadline-selector").append(`
+                <option value=${task}>${task}</option>
+            `)
+    }
 }
 
 
@@ -652,13 +669,13 @@ $('.deadline-selector').change(function(){
 
 $(".saveDeadline").on('click',function(){
     var taskPhaseId;
-    var task = $(".deadline-selector").val();
-    var month = $(".text-info").text().split(" ")[1];
-    var day = $(".text-info").text().split(" ")[2].slice(0, -1);
-    var year = $(".text-info").text().split(" ")[3];
+    var task = $(this).closest('.deadline-container').find(".deadline-selector").val();
+    var month = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[1];
+    var day = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[2].slice(0, -1);
+    var year = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[3];
     month = getMonthFromString(month);
-    if(task =="Others"){
-        task = $(".others-deadline").val();
+    if(task == "Others"){
+        task = $(this).closest('.deadline-container').find(".others-deadline").val();
         return
     }
     var temp = task.slice(0, -1);
