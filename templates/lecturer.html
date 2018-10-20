@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../static/css/lecturer/lecturer.css">
   <link rel="stylesheet" href="../static/css/lecturer/shadow.css">
   <link rel="stylesheet" type="text/css" href="../static/css/lecturer/header-timeline.css">
+    <script src="../static/js/echarts.min.js"></script>
 </head>
 
 <body>
@@ -272,7 +273,7 @@
                           <button class="btn btn-primary" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                          <button class="btn btn-primary saveDeadline">Save</button>
                         </div>
                       </div>
                       
@@ -532,7 +533,7 @@
                           <button class="btn btn-primary" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline" ">Save</button>
+                          <button class="btn btn-primary saveDeadline">Save</button>
                         </div>
                       </div>
                       
@@ -783,7 +784,7 @@
                           <br/>
                                <p>Date Picked:</p>
 
-<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate'}}</span></p> -->
                         </div>
                       </div>
                     </div>
@@ -847,6 +848,7 @@
                           <a  class="list-group-item deadline">Deadline</a>
                           <a  class="list-group-item upload">Resources</a>
                           <a  class="list-group-item mark">Mark</a>
+                          <a  class="list-group-item distribution">Mark distribution</a>
                       </div>
                   </div>
                                       <!--due-date-->
@@ -1064,6 +1066,9 @@
               <div class="button"><button type="button" class="btn btn-success">Mark</button></div>
 
           </div>
+           <div id="distribution" style="width:600px; height:400px;"></div>
+           <div id="distribution2" style="width:600px; height:400px;"></div>
+
       </div>
 
           </div>
