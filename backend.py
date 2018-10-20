@@ -1007,7 +1007,7 @@ def lecturer_load_main_info():
                         break
                 # Mark summary
                 mark_summary = dict()
-                mark_summary['title'] = {'text': 'Task {} mark summary'.format(task['task_name'])}
+                mark_summary['title'] = {'text': 'Task {} mark summary:'.format(task['task_name'])}
                 mark_summary['tooltip'] = dict()
                 mark_summary['legend'] = {'data': ['Mark']}
                 mark_summary['xAxis'] = {'data': [item["group_name"] for item in group_list]}
@@ -1021,12 +1021,18 @@ def lecturer_load_main_info():
                 grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
 
                 mark_distribution = dict()
-                mark_distribution['title'] = {'text': 'Task {} mark distribution'.format(task['task_name'])}
+                mark_distribution['title'] = {'text': 'Task {} mark distribution:'.format(task['task_name'])}
                 mark_distribution['tooltip'] = dict()
                 mark_distribution['legend'] = {'data': ['Mark']}
                 mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
                 mark_distribution['yAxis'] = dict()
                 mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
+                pie_distribution = dict()
+                pie_distribution['roseType'] = 'angle'
+                pie_distribution['name'] = 'Task {} mark distribution:'.format(task['task_name'])
+                pie_distribution['type'] = 'pie'
+                pie_distribution['radius'] = '55%'
 
                 for group in group_index:
                     if group in submit_group_id:
@@ -1054,20 +1060,29 @@ def lecturer_load_main_info():
                         group_mark_count[group] = group_mark_count[group] + 0
                 mark_summary['series'][0]['data'] = mark_data
                 distribution_data = [grade[item] for item in mark_distribution['xAxis']['data']]
+                distribution_data2 = [{'value': grade[item], 'name': item} for item in mark_distribution['xAxis']['data']]
                 mark_distribution['series'][0]['data'] = distribution_data
+                pie_distribution['data'] = distribution_data2
                 task['mark_summary'] = mark_summary
-                task['mark_distribution'] = mark_distribution
+                task['mark_distribution1'] = mark_distribution
+                task['mark_distribution2'] = pie_distribution
 
             phase['task_list'] = task_list
         project['phase_list'] = phase_list
 
         # Project mark distribution
-        project_mark_distribution['title'] = {'text': '{} mark distribution'.format(project["project_name"])}
+        project_mark_distribution['title'] = {'text': '{} mark distribution:'.format(project["project_name"])}
         project_mark_distribution['tooltip'] = dict()
         project_mark_distribution['legend'] = {'data': ['Mark']}
         project_mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
         project_mark_distribution['yAxis'] = dict()
         project_mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
+        project_pie_distribution = dict()
+        project_pie_distribution['roseType'] = 'angle'
+        project_pie_distribution['name'] = '{} mark distribution:'.format(project["project_name"])
+        project_pie_distribution['type'] = 'pie'
+        project_pie_distribution['radius'] = '55%'
 
         for group in group_mark_count:
             if mark_task_count == 0:
@@ -1086,8 +1101,11 @@ def lecturer_load_main_info():
                 project_grade["85-100"] = project_grade["85-100"] + 1
 
         distribution_data = [project_grade[item] for item in project_mark_distribution['xAxis']['data']]
+        distribution_data2 = [{'value': project_grade[item], 'name': item} for item in project_mark_distribution['xAxis']['data']]
         project_mark_distribution['series'][0]['data'] = distribution_data
-        project['mark_distribution'] = project_mark_distribution
+        project_pie_distribution['data'] = distribution_data2
+        project['mark_distribution1'] = project_mark_distribution
+        project['mark_distribution2'] = project_pie_distribution
         # Find current phase
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
