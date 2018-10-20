@@ -55,6 +55,7 @@ $(document).on('click', "#select-project", function(e){
     })
     welcomeUser();
     $(".phase1-nav").click();
+    displayPhaseName();
     displayTasks();
     displayResources();
     displayReminder();
@@ -89,6 +90,15 @@ function welcomeUser(){
     var name = userProfile['name'];
     $(".welcome-user").text(`Welcome ${name}`);
     $(".welcome-user").show();
+}
+
+
+//display phase name
+function displayPhaseName() {
+    for(var phase in phaseList){
+        let idx = phaseList[phase]['phase_index'];
+        $(`.p${idx}-name`).text(phase);
+    }
 }
 
 function displayProjects () {
@@ -1040,6 +1050,38 @@ $(document).on('click', ".upload-btn", function(e){
 //switch project
 $(document).on('click', ".project-dropdown a", function(e){
     let id = $(this).find('.id').text();
+    currentProject = id;
+    getAllInfo();
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+                selfGroup = proj['group_info'];
+                selfGroupStatus = proj['group_info']['status'];
+                proj['group_list'].forEach(function(val){
+                    groupInfo[val['group_name']]= val;
+                });
+                proj['phase_list'].forEach(function(val){
+                    phaseList[val['phase_name']]= val;
+                });
+                for(var phase in phaseList){
+                    phaseList[phase]['task_list'].forEach(function(task){
+                        taskList[task['task_name']] = task['task_uuid'];
+                        allTasks[task['task_uuid']] = task;
+                    })
+                }
+                reminderList = proj['reminder_list'];
+        }
+    })
+    welcomeUser();
+    $(".phase1-nav").click();
+    displayPhaseName();
+    displayTasks();
+    displayResources();
+    displayReminder();
+    displayGroupInfo();
+    displayDueDate(1);
+    displayDueDate(2);
+    displayDueDate(3);
+    displayDueDate(4);
 })
 
 
