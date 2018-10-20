@@ -50,7 +50,7 @@ $(document).on('click', "#select-project", function(e){
     $(".active").click();
     displayPhaseName();
     displayAllReminder();
-    displayDeadline();
+    displayTasks();
     displayResources();
     displayMarking();
     displayDueDate(1);
@@ -145,18 +145,26 @@ function displayAllReminder(){
 }
 
 //display deadline
-function displayDeadline() {
+function displayTasks() {
     $(".deadline-selector option").remove();
     for(let phase in phaseList ){
         $(".deadline-selector").append(`
                 <option value=${phaseList[phase]['phase_uuid']}>${phase}</option>
             `)
     }
+    //deadline  task
     for(let task in taskList){
         $(".deadline-selector").append(`
                 <option value=${taskList[task]}>${task}</option>
             `)
     }
+    // mark task disctribution
+    for(let task in taskList){
+        $(".distribution-selector").append(`
+                <option value=${taskList[task]}>${task}</option>
+            `)
+    }
+    $(".distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
 }
 
 
@@ -337,6 +345,7 @@ $(".navgrp").click( function(){
     $(".new_note").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".deadline_view").hide()
     $(".group-info").show()
 
@@ -353,6 +362,7 @@ $(".reminder").click(function(){
     $(".deadline_view").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".new_note").css('display','flex')
     $("#task-select").val($("#task-select option:first").val());
     $("#group-select").val($("#group-select option:first").val());
@@ -370,6 +380,7 @@ $(".active").click( function(){
     $(".deadline_view").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".notes-wrapper").show()
 });
 
@@ -384,6 +395,7 @@ $(".deadline").click( function(){
     $(".notes-wrapper").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".deadline_view").show()
     $(".deadline-selector").val($(".deadline-selector option:first").val());
     $(".others-deadline").hide();
@@ -399,6 +411,7 @@ $(".upload").click( function(){
     $(".deadline_view").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".upload-files").show()
     $(".documents").show()
     $(".reset").click();
@@ -415,6 +428,7 @@ $(".mark").click( function(){
     $(".documents").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".mark-container .mark-doc").show()
     $(".reset").click();
     $(".mark-container").show();
@@ -438,6 +452,7 @@ $(".distribution").click( function(){
     $(".mark-container .select-group-task").click();
     $("#distribution").show();
     $("#distribution2").show();
+    $("#select-task-distribution").show();
 });
 
 
@@ -913,7 +928,7 @@ $(document).on('click', ".project-dropdown a", function(e){
     $(".active").click();
     displayPhaseName();
     displayAllReminder();
-    displayDeadline();
+    displayTasks();
     displayResources();
     displayMarking();
     displayDueDate(1);
@@ -941,7 +956,7 @@ var option = {
             series: [{
                 name: 'Sales',
                 type: 'bar',
-                itemStyle: {color: '#28a745'},
+                itemStyle: {color: '#d9534f'},
                 data: [5, 20, 36, 10, 10, 20]
             }]
         };

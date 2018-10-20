@@ -708,6 +708,11 @@ button{
     top: 160px;
 }
 
+#select-task-distribution{
+    width: 50% !important;
+    margin: 20px 0;
+    text-align: left;
+}
 
 /* ---------- LIVE-CHAT ---------- */
 
