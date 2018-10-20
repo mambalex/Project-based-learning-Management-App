@@ -975,7 +975,7 @@ def student_load_main_info():
                             break
                     # Mark summary
                     mark_summary = dict()
-                    mark_summary['title'] = {'text': 'Task {} mark summary:'.format(task['task_name'])}
+                    mark_summary['title'] = {'text': 'Task - {} mark summary:'.format(task['task_name'])}
                     mark_summary['tooltip'] = dict()
                     mark_summary['legend'] = {'data': ['Mark']}
                     mark_summary['xAxis'] = {'data': [item["group_name"] for item in group_list]}
@@ -989,7 +989,7 @@ def student_load_main_info():
                     grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
 
                     mark_distribution = dict()
-                    mark_distribution['title'] = {'text': 'Task {} mark distribution:'.format(task['task_name'])}
+                    mark_distribution['title'] = {'text': 'Task - {} mark distribution:'.format(task['task_name'])}
                     mark_distribution['tooltip'] = dict()
                     mark_distribution['legend'] = {'data': ['Mark']}
                     mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
@@ -998,7 +998,7 @@ def student_load_main_info():
 
                     pie_distribution = dict()
                     pie_distribution['roseType'] = 'angle'
-                    pie_distribution['name'] = 'Task {} mark distribution:'.format(task['task_name'])
+                    pie_distribution['name'] = 'Task - {} mark distribution:'.format(task['task_name'])
                     pie_distribution['type'] = 'pie'
                     pie_distribution['radius'] = '55%'
 
@@ -1157,7 +1157,7 @@ def lecturer_load_main_info():
                 grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
 
                 mark_distribution = dict()
-                mark_distribution['title'] = {'text': 'Task {} mark distribution:'.format(task['task_name'])}
+                mark_distribution['title'] = {'text': 'Task - {} mark distribution:'.format(task['task_name'])}
                 mark_distribution['tooltip'] = dict()
                 mark_distribution['legend'] = {'data': ['Mark']}
                 mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
@@ -1166,7 +1166,7 @@ def lecturer_load_main_info():
 
                 pie_distribution = dict()
                 pie_distribution['roseType'] = 'angle'
-                pie_distribution['name'] = 'Task {} mark distribution:'.format(task['task_name'])
+                pie_distribution['name'] = 'Task - {} mark distribution:'.format(task['task_name'])
                 pie_distribution['type'] = 'pie'
                 pie_distribution['radius'] = '55%'
 

@@ -8,12 +8,10 @@ const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
 var groupInfo={};
 var selfGroup={};
 var selfGroupStatus;
-var userInfo={};
 var phaseList={};
 var taskList={}; //name -> uuid
 var allTasks={}; //uuid -> task
 var reminderList={};
-var projectInfo={};
 var userProfile={};
 var inGroupOrnot;
 var currentGroupName;
@@ -154,12 +152,14 @@ function displayTasks() {
             `)
     }
     // mark task disctribution
+     $("#distribution-selector option").remove();
+    $("#distribution-selector").append(`<option value="" hidden>Task Names</option>`)
     for(let task in taskList){
-        $(".distribution-selector").append(`
+        $("#distribution-selector").append(`
                 <option value=${taskList[task]}>${task}</option>
             `)
     }
-    $(".distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
+    $("#distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
 }
 
 //display resources
@@ -218,6 +218,7 @@ function displayReminder(){
 
 function displayGroupInfo(){
     //current group
+    $("#members li").remove();
     if(selfGroupStatus==1){
             inGroupOrnot = 'yes';
             $(".leave").show();
@@ -235,6 +236,8 @@ function displayGroupInfo(){
                 $("#group-name-own").text("You have not group");
         }
     // all groups
+        $("#all-groups li").remove();
+        console.log(groupInfo);
         for(var key in groupInfo){
             var val = groupInfo[key];
             var groupId = val['group_uuid'];
@@ -1124,6 +1127,13 @@ $(document).on('click', ".project-dropdown a", function(e){
                     $(".join").show();
                     $(".leave").show();
                 }
+                groupInfo={};
+                selfGroup={};
+                selfGroupStatus;
+                phaseList={};
+                taskList={}; //name -> uuid
+                allTasks={}; //uuid -> task
+                reminderList={};
                 selfGroup = proj['group_info'];
                 selfGroupStatus = proj['group_info']['status'];
                 proj['group_list'].forEach(function(val){
@@ -1156,13 +1166,37 @@ $(document).on('click', ".project-dropdown a", function(e){
 
 
 //distribution
+//distribution
 $(document).on('change', '#distribution-selector', function(){
     var taskId = $("#distribution-selector").val();
-    if(taskId=="Final Mark"){
+    console.log(taskId);
+    if(taskId != "Final Mark"){
+        for( var id in allTasks){
+            if(id==taskId){
+                var markDitribution1 = allTasks[id]['mark_distribution1'];
+                var markDitribution2 = allTasks[id]['mark_distribution2'];
+                console.log(markDitribution1);
+                console.log(markDitribution2);
+                markDitribution1["ti"]
+                var myChart = echarts.init(document.getElementById('distribution'));
+                myChart.setOption(markDitribution1);
+                var myChart2 = echarts.init(document.getElementById('distribution2'));
+                myChart2.setOption({series:[markDitribution2]});
+            }
+        }
 
+    }else{
+         selfProjectList.forEach(function (proj) {
+             if(proj['project_uuid'] == currentProject){
+                  var markDitribution1 = proj["mark_distribution1"];
+                  var markDitribution2 = proj["mark_distribution2"];
+                  var myChart = echarts.init(document.getElementById('distribution'));
+                  myChart.setOption(markDitribution1);
+                  var myChart2 = echarts.init(document.getElementById('distribution2'));
+                  myChart2.setOption({series:[markDitribution2]});
+             }
+        })
     }
-
-
 })
 
 

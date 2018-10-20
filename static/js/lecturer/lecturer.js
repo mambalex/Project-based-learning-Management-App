@@ -147,6 +147,7 @@ function displayAllReminder(){
 //display deadline
 function displayTasks() {
     $(".deadline-selector option").remove();
+    $(".deadline-selector").append(`<option value="" hidden>Options</option>`)
     for(let phase in phaseList ){
         $(".deadline-selector").append(`
                 <option value=${phaseList[phase]['phase_uuid']}>${phase}</option>
@@ -159,18 +160,19 @@ function displayTasks() {
             `)
     }
     // mark task disctribution
+    $("#distribution-selector option").remove();
+    $("#distribution-selector").append(`<option value="" hidden>Task Names</option>`)
     for(let task in taskList){
-        $(".distribution-selector").append(`
+        $("#distribution-selector").append(`
                 <option value=${taskList[task]}>${task}</option>
             `)
     }
-    $(".distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
+    $("#distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
 }
 
 
 //display marking
 function displayMarking() {
-       console.log(phaseList);
        for(var phase in phaseList){
                // let index = phase.split(" ")[1];
                let index = phaseList[phase]['phase_index'];
@@ -243,7 +245,6 @@ function displayDueDate(id){
     let now = new Date();
     keysSorted.forEach(function (key) {
         var dayLeft = Math.ceil((phaseDueDate[key] - now.getTime()/1000)/(60 * 60 * 24));
-        console.log(dayLeft)
         if(dayLeft <=0 ){
             $(`.due-date${id}`).find("ul").append(`
                           <li>
@@ -278,17 +279,7 @@ $("#logout").click(function(){
      window.location.pathname = "/";
 })
 
-// view files
-// $(".files").on('click',function(){
-//     $.ajax({
-//             type:'GET',
-//             url:'/temp/phase1_1.pdf',
-//             async:false,
-//             headers:{
-//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-//             }
-//     })
-// })
+
 
 function popUp(src, sucessOrFail, text, click){
    $(src).find(sucessOrFail).text(text).show();
@@ -906,6 +897,12 @@ $(document).on('click', ".project-dropdown a", function(e){
     getAllInfo();
     selfProjectList.forEach(function (proj) {
         if(proj['project_uuid'] == currentProject){
+                groupInfo={};
+                phaseList={};
+                taskList={}; //name -> uuid
+                allTasks={}; //uuid -> task
+                reminderList={};
+                groupList = [];
                 groupList = proj['group_list'];
                 proj['group_list'].forEach(function(val){
                     groupInfo[val['group_name']]= val;
@@ -937,17 +934,33 @@ $(document).on('click', ".project-dropdown a", function(e){
 
 
 //distribution
-
 $(document).on('change', '#distribution-selector', function(){
     var taskId = $("#distribution-selector").val();
-    var markDitribution;
-    if(taskId!="Final Mark"){
-        for(var id in taskList){
+    console.log(taskId);
+    if(taskId != "Final Mark"){
+        for( var id in allTasks){
             if(id==taskId){
-                markDitribution = taskList[id]['mark_distribution']
-                console.log(markDitribution)
+                var markDitribution1 = allTasks[id]['mark_distribution1'];
+                var markDitribution2 = allTasks[id]['mark_distribution2'];
+                console.log(markDitribution1);
+                console.log(markDitribution2);
+                var myChart = echarts.init(document.getElementById('distribution'));
+                myChart.setOption(markDitribution1);
+                var myChart2 = echarts.init(document.getElementById('distribution2'));
+                myChart2.setOption({series:[markDitribution2]});
             }
         }
+    }else{
+        selfProjectList.forEach(function (proj) {
+             if(proj['project_uuid'] == currentProject){
+                  var markDitribution1 = proj["mark_distribution1"];
+                  var markDitribution2 = proj["mark_distribution2"];
+                  var myChart = echarts.init(document.getElementById('distribution'));
+                  myChart.setOption(markDitribution1);
+                  var myChart2 = echarts.init(document.getElementById('distribution2'));
+                  myChart2.setOption({series:[markDitribution2]});
+             }
+        })
 
     }
 })
@@ -962,14 +975,14 @@ var option = {
                 data:['Mark']
             },
             xAxis: {
-                data: ["50-","50-60","60-70","70-80","80-90","90+"]
+                data: ["<50","50-65","65-75","75-85","85-100"]
             },
             yAxis: {},
             series: [{
                 name: 'Sales',
                 type: 'bar',
                 itemStyle: {color: '#d9534f'},
-                data: [5, 20, 36, 10, 10, 20]
+                data: [0, 0, 0, 0, 0, 0]
             }]
         };
 
@@ -984,12 +997,11 @@ myChart2.setOption({
             type: 'pie',
             radius: '55%',
             data:[
-                {value:235, name:'50-'},
-                {value:235, name:'50-60'},
-                {value:274, name:'60-70'},
-                {value:310, name:'70-80'},
-                {value:335, name:'80-90'},
-                {value:400, name:'90+'}
+                {value:300, name:'<50'},
+                {value:335, name:'50-65'},
+                {value:274, name:'65-75'},
+                {value:235, name:'75-85'},
+                {value:400, name:'85-100'}
             ]
         }
     ]
