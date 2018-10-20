@@ -456,6 +456,16 @@ def random_group():
         {'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
+# Group setting
+@app.route('/api/change_group_method', methods=['POST'])
+@auth.login_required
+def change_group_method():
+    update_data = request.json.get('update_data')
+    print(update_data)
+
+    return jsonify({'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
+
 # Get group member list
 @app.route('/api/get_member_list', methods=['POST'])
 @auth.login_required
@@ -888,15 +898,43 @@ def student_load_main_info():
     unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
     reminder_list = global_reminder_list + unsubmit_reminder_list
     reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
-
+    project_info['phase_list'] = phase_list.copy()
     self_project_list = db.get_self_project_list(g.user.user_id)
+    for project in self_project_list:
+        temp_group_info = dict()
+        if db.check_has_group(g.user.user_id, project["project_uuid"]):
+            temp_current_group = db.get_self_group(g.user.user_id, project["project_uuid"])[0]
+            temp_group_member = db.get_group_member(current_group["group_uuid"])
+            current_group["member"] = group_member
+            temp_group_info = current_group
+            temp_group_info['status'] = 1
+            temp_group_info['msg'] = 'Current join a group'
+        else:
+            temp_group_info['status'] = 0
+            temp_group_info['msg'] = 'Current do not join a group'
+        project['group_info'] = temp_group_info
+        # Group list
+        temp_group_list = db.get_all_group(project["project_uuid"])
+        project['group_list'] = temp_group_list
+        phase_list = db.get_project_all_phases(project["project_uuid"])
+        for phase in phase_list:
+            resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
+            phase['resource_list'] = resource_list
+            task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+            phase['task_list'] = task_list
+        current_phase = db.get_current_phase_index(project["project_uuid"])
+        project['current_phase'] = current_phase
+        temp_global_reminder_list = db.student_get_self_global_reminder(project["project_uuid"])
+        temp_unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project["project_uuid"])
+        temp_reminder_list = temp_global_reminder_list + temp_unsubmit_reminder_list
+        temp_reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
+        project['reminder_list'] = temp_reminder_list
     all_project_list = db.get_project_list()
 
     return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info,
                     'group_list': group_list, 'self_project_list': self_project_list,
-                    'all_project_list': all_project_list,
-                    'project_info': project_info, 'phase_list': phase_list, 'current_phase': current_phase,
-                    'reminder_list': reminder_list})
+                    'all_project_list': all_project_list, 'project_info': project_info,
+                    'current_phase': current_phase, 'reminder_list': reminder_list})
 
 
 # Lecturer main info

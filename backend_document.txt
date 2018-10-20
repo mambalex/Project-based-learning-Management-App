@@ -2496,6 +2496,10 @@ Sample Response:
 }
 
 -------------------
+Change group method
+TODO
+
+-------------------
 Chatbot API
 Login-Required
 
