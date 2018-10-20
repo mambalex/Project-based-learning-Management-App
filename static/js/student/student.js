@@ -978,6 +978,55 @@ function displayProjects () {
 }
 
 
+//upload files
+$(document).on('click', ".upload-btn", function(e){
+        e.preventDefault();
+        var taskId = $(this).closest('.file-input').find(".task-selector").val();
+        var file = $(this).closest('.file-input').find("input[type=file]").prop('files')[0];
+        if(inGroupOrnot=="no" || !selfGroup){
+            $("#errorAlert-phase1").text("You have no group!").show();
+            $("#successAlert-phase1").hide();
+            return
+        }
+        if(!taskId || !file){
+            alert('Wrong input')
+            return
+        }
+        var formData = new FormData();
+        formData.append('upload_file', file);
+        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+        formData.append('assessment_uuid', taskId);
+        $.ajax({
+            type: 'POST',
+            url: '/api/submit_file',
+            data: formData,
+            contentType: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            async: false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            error:function(){
+                   alert("Oops! Something went wrong!")
 
+            }
+        }).done(function(data){
+                console.log(data);
+                if(data['code']==200){
+                    alert("Successfully uploaded!");
+                     setTimeout(function(){
+                         $(this).closest('.file-input').find(".btn-danger").click();
+                     },2000)
+                }else{
+                     alert("File upload fails!")
+                     setTimeout(function(){
+                         $(this).closest('.file-input').find(".btn-danger").click();
+                     },2000)
+                }
+            })
+
+})
 
 
