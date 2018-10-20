@@ -2898,7 +2898,29 @@ Sample Response:
 
 -------------------
 Change group method
-TODO
+Login-Required
+
+POST request to /api/
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+    "update_data": {
+        'ramdomOrManual': 'Randomly',
+        'project_uuid': 'a5259728-c967-11e8-8220-4c3275989ef5',
+        'group_size': '4'
+    }
+}
+
+Sample Response:
+{
+    'code': 200,
+    'msg': 'Random group success',
+    "user_id": "lecturer1@gmail.com",
+    "user_type": "lecturer"
+}
+
 
 -------------------
 Chatbot API

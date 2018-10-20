@@ -462,6 +462,38 @@ def random_group():
 def change_group_method():
     update_data = request.json.get('update_data')
     print(update_data)
+    if not g.user.is_admin_user():
+        return jsonify({'code': 400, 'msg': 'Insufficient permissions'})
+    if update_data['ramdomOrManual'] == 'Manually':
+        db.change_project_group_method(update_data['project_uuid'], 0)
+        return jsonify({'code': 200, 'msg': 'Change group Method success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        db.change_project_group_method(update_data['project_uuid'], 1)
+        default_group_size = 4
+
+        project_uuid = update_data['project_uuid']
+        group_size = update_data['group_size']
+        print(project_uuid, group_size)
+     
+        db.clear_all_group(project_uuid)
+        if group_size is None or group_size == '':
+            group_size = default_group_size
+
+        student_list = db.get_ungroup_student(project_uuid)
+        random.shuffle(student_list)
+        group_num = int(len(student_list) / int(group_size))
+        group_list = dict()
+        for i in range(group_num):
+            temp_group = list()
+            while len(temp_group) < default_group_size:
+                temp_group.append(student_list.pop())
+            group_list[i] = temp_group
+
+        group_list_index = [i for i in group_list]
+        random.shuffle(group_list_index)
+        for student in student_list:
+            group_list[group_list_index.pop()].append(student)
+        db.random_group(project_uuid, group_list)
 
     return jsonify({'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 

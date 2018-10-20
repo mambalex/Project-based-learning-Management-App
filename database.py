@@ -573,6 +573,15 @@ def change_project_address(project_uuid, new_addr):
     change_ass_info("projects", "project_uuid", project_uuid, "spec_address", new_addr)
 
 
+def change_project_group_method(project_uuid, new_method):
+    dbconfig = {"dbname": "comp9323"}
+    database_object = database_lib.Database_object(dbconfig)
+    database_object.open()
+    sql = "update projects set group_method = {} where project_uuid = '{}';".format(new_method, project_uuid)
+    database_object.update(sql)
+    database_object.close()
+
+
 def delete_project(project_uuid):
     dbconfig = {"dbname": "comp9323"}
     database_object = database_lib.Database_object(dbconfig)
