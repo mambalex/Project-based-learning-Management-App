@@ -1030,18 +1030,44 @@ def get_mark_summary():
     if g.user.is_admin_user():
         phases_list = db.get_project_all_phases(project_uuid)
         tasks_list = list()
+        group_list = db.get_all_group(project_uuid)
         for phase in phases_list:
             temp_tasks_list = db.get_phase_all_tasks(phase["phase_uuid"])
             tasks_list = tasks_list + temp_tasks_list
         for task in tasks_list:
             temp_submit_list = db.get_submits(task["task_uuid"])
-            task['submit'] = temp_submit_list
+            mark_dict = {item['group_uuid']: item['mark'] for item in temp_submit_list}
+            task['submit'] = temp_submit_list.copy()
+            temp_submit_list = [item['group_uuid'] for item in temp_submit_list]
+            temp_unsubmit_list = [item for item in group_list if item ['group_uuid'] not in temp_submit_list]
             task['mark_status'] = "Marked"
-            for submit in temp_submit_list:
+            for submit in task['submit']:
                 if submit['mark'] == "None":
                     task['mark_status'] = "UnMarked"
                     break
-
+            task['unsubmit'] = temp_unsubmit_list
+            mark_summary = dict()
+            mark_summary['title'] = {'text': 'Task {} mark summary'.format(task['task_name'])}
+            mark_summary['tooltip'] = dict()
+            mark_summary['legend'] = {'data': ['Mark']}
+            mark_summary['xAxis'] = {'data': [item["group_name"] for item in group_list]}
+            group_index = [item["group_uuid"] for item in group_list]
+            mark_summary['yAxis'] = dict()
+            mark_summary['series'] = [{'name': 'Mark', 'type': 'bar'}]
+            mark_data = list()
+            for group in group_index:
+                if group in temp_submit_list:
+                    if mark_dict[group] == "None":
+                        mark_data.append(0)
+                    else:
+                        mark_data.append(int(mark_dict[group]))
+                else:
+                    mark_data.append(0)
+            mark_summary['series'][0]['data'] = mark_data
+            task['mark_summary'] = mark_summary
+        print(tasks_list)
+        return jsonify({'code': 400, 'msg': 'Get mark summary success', 'user_id': g.user.user_id,
+                        'user_type': g.user.user_type, 'data': tasks_list})
     else:
         return jsonify(
             {'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
