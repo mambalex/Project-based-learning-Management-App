@@ -942,6 +942,12 @@ def lecturer_load_main_info():
         project['ungroup_student'] = ungroup_student
         # Phase part
         phase_list = db.get_project_all_phases(project["project_uuid"])
+
+        project_mark_distribution = dict()
+        project_grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
+        group_mark_count = {item["group_uuid"]: 0 for item in group_list}
+        print(group_mark_count)
+        mark_task_count = 0
         for phase in phase_list:
             resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
             phase['resource_list'] = resource_list
@@ -958,6 +964,10 @@ def lecturer_load_main_info():
                 task['unsubmit_group'] = unsubmit_group + nosubmit_group
 
                 mark_dict = {item['group_uuid']: item['mark'] for item in task_submit_group}
+                for group in mark_dict:
+                    if mark_dict[group] != "None":
+                        mark_task_count = mark_task_count + 1
+                        break
                 task['mark_status'] = "Marked"
                 for submit in task['submit_group']:
                     if submit['mark'] == "None":
@@ -976,13 +986,13 @@ def lecturer_load_main_info():
 
                 # Mark distribution
 
-                grade = {"FL": 0, "PS": 0, "CR": 0, "DN": 0, "HD": 0}
+                grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
 
                 mark_distribution = dict()
                 mark_distribution['title'] = {'text': 'Task {} mark distribution'.format(task['task_name'])}
                 mark_distribution['tooltip'] = dict()
                 mark_distribution['legend'] = {'data': ['Mark']}
-                mark_distribution['xAxis'] = {'data': ["FL", "PS", "CR", "DN", "HD"]}
+                mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
                 mark_distribution['yAxis'] = dict()
                 mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
 
@@ -990,22 +1000,26 @@ def lecturer_load_main_info():
                     if group in submit_group_id:
                         if mark_dict[group] == "None":
                             mark_data.append(0)
-                            grade["FL"] = grade["FL"] + 1
+                            grade["<50"] = grade["<50"] + 1
+                            group_mark_count[group] = group_mark_count[group] + 0
                         else:
                             mark_data.append(int(mark_dict[group]))
+                            group_mark_count[group] = group_mark_count[group] + int(mark_dict[group])
+
                             if int(mark_dict[group]) < 50:
-                                grade["FL"] = grade["FL"] + 1
+                                grade["<50"] = grade["<50"] + 1
                             elif 50 <= int(mark_dict[group]) < 65:
-                                grade["PS"] = grade["PS"] + 1
+                                grade["50-65"] = grade["50-65"] + 1
                             elif 65 <= int(mark_dict[group]) < 75:
-                                grade["CR"] = grade["CR"] + 1
+                                grade["65-75"] = grade["65-75"] + 1
                             elif 75 <= int(mark_dict[group]) < 85:
-                                grade["DN"] = grade["DN"] + 1
+                                grade["75-85"] = grade["75-85"] + 1
                             elif 85 <= int(mark_dict[group]):
-                                grade["HD"] = grade["HD"] + 1
+                                grade["85-100"] = grade["85-100"] + 1
                     else:
                         mark_data.append(0)
-                        grade["FL"] = grade["FL"] + 1
+                        grade["<50"] = grade["<50"] + 1
+                        group_mark_count[group] = group_mark_count[group] + 0
                 mark_summary['series'][0]['data'] = mark_data
                 distribution_data = [grade[item] for item in mark_distribution['xAxis']['data']]
                 mark_distribution['series'][0]['data'] = distribution_data
@@ -1014,6 +1028,34 @@ def lecturer_load_main_info():
 
             phase['task_list'] = task_list
         project['phase_list'] = phase_list
+
+        # Project mark distribution
+        project_mark_distribution['title'] = {'text': '{} mark distribution'.format(project["project_name"])}
+        project_mark_distribution['tooltip'] = dict()
+        project_mark_distribution['legend'] = {'data': ['Mark']}
+        project_mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
+        project_mark_distribution['yAxis'] = dict()
+        project_mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
+        for group in group_mark_count:
+            if mark_task_count == 0:
+                temp_result = 0
+            else:
+                temp_result = group_mark_count[group] / mark_task_count
+            if temp_result < 50:
+                project_grade["<50"] = project_grade["<50"] + 1
+            elif 50 <= temp_result < 65:
+                project_grade["50-65"] = project_grade["50-65"] + 1
+            elif 65 <= temp_result < 75:
+                project_grade["65-75"] = project_grade["65-75"] + 1
+            elif 75 <= temp_result < 85:
+                project_grade["75-85"] = project_grade["75-85"] + 1
+            elif 85 <= temp_result < 100:
+                project_grade["85-100"] = project_grade["85-100"] + 1
+
+        distribution_data = [project_grade[item] for item in project_mark_distribution['xAxis']['data']]
+        project_mark_distribution['series'][0]['data'] = distribution_data
+        project['mark_distribution'] = project_mark_distribution
         # Find current phase
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
@@ -1142,7 +1184,7 @@ def get_mark_summary():
             mark_summary['series'][0]['data'] = mark_data
             task['mark_summary'] = mark_summary
         print(tasks_list)
-        return jsonify({'code': 400, 'msg': 'Get mark summary success', 'user_id': g.user.user_id,
+        return jsonify({'code': 200, 'msg': 'Get mark summary success', 'user_id': g.user.user_id,
                         'user_type': g.user.user_type, 'data': tasks_list})
     else:
         return jsonify(

@@ -1708,6 +1708,40 @@ Sample Response:
                 }
             ],
             "group_method": 0,
+            "mark_distribution": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            3,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Group #",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "COMP9323 Project mark distribution"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "<50",
+                        "50-65",
+                        "65-75",
+                        "75-85",
+                        "85-100"
+                    ]
+                },
+                "yAxis": {}
+            },
             "mark_release": "2018-10-25 11:00:00",
             "master": "lecturer1@gmail.com",
             "master_name": "Emma",
@@ -1750,11 +1784,11 @@ Sample Response:
                                 "tooltip": {},
                                 "xAxis": {
                                     "data": [
-                                        "FL",
-                                        "PS",
-                                        "CR",
-                                        "DN",
-                                        "HD"
+                                        "<50",
+                                        "50-65",
+                                        "65-75",
+                                        "75-85",
+                                        "85-100"
                                     ]
                                 },
                                 "yAxis": {}
@@ -1921,11 +1955,11 @@ Sample Response:
                                 "tooltip": {},
                                 "xAxis": {
                                     "data": [
-                                        "FL",
-                                        "PS",
-                                        "CR",
-                                        "DN",
-                                        "HD"
+                                        "<50",
+                                        "50-65",
+                                        "65-75",
+                                        "75-85",
+                                        "85-100"
                                     ]
                                 },
                                 "yAxis": {}
@@ -2079,11 +2113,11 @@ Sample Response:
                                 "tooltip": {},
                                 "xAxis": {
                                     "data": [
-                                        "FL",
-                                        "PS",
-                                        "CR",
-                                        "DN",
-                                        "HD"
+                                        "<50",
+                                        "50-65",
+                                        "65-75",
+                                        "75-85",
+                                        "85-100"
                                     ]
                                 },
                                 "yAxis": {}
@@ -2250,11 +2284,11 @@ Sample Response:
                                 "tooltip": {},
                                 "xAxis": {
                                     "data": [
-                                        "FL",
-                                        "PS",
-                                        "CR",
-                                        "DN",
-                                        "HD"
+                                        "<50",
+                                        "50-65",
+                                        "65-75",
+                                        "75-85",
+                                        "85-100"
                                     ]
                                 },
                                 "yAxis": {}
@@ -2421,11 +2455,11 @@ Sample Response:
                                 "tooltip": {},
                                 "xAxis": {
                                     "data": [
-                                        "FL",
-                                        "PS",
-                                        "CR",
-                                        "DN",
-                                        "HD"
+                                        "<50",
+                                        "50-65",
+                                        "65-75",
+                                        "75-85",
+                                        "85-100"
                                     ]
                                 },
                                 "yAxis": {}
@@ -2894,13 +2928,669 @@ Sample Response:
 Mark submittion
 Login-Required
 
-TODO
+POST request to /api/mark_submittion
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+    'mark_data': {
+        'task_id': 'sample_ass_uuid',
+        'group_id': 'sample_group1_uuid',
+        'mark': 80
+    }
+}
+
+Sample Response:
+{
+    'code': 200,
+    'msg': 'Mark submittion success',
+    "user_id": "lecturer1@gmail.com",
+    "user_type": "lecturer"
+}
 
 -------------------
 Get Mark summary
 Login-Required
 
-TODO
+POST request to /api/get_mark_summary
+Methods: POST
+Type: JSON
+
+Sample Post:
+{
+	"project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+}
+
+Sample Response:
+{
+    "code": 200,
+    "data": [
+        {
+            "deadline": "2018-10-12 10:59:59",
+            "mark_release": "2018-10-13 11:00:00",
+            "mark_status": "Marked",
+            "mark_summary": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Mark",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "Task Proposal mark summary"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "Group 1",
+                        "Group 2",
+                        "Group 3"
+                    ]
+                },
+                "yAxis": {}
+            },
+            "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
+            "spec_address": "None",
+            "submit": [],
+            "submit_require": 1,
+            "task_name": "Proposal",
+            "task_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+            "unsubmit": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ]
+        },
+        {
+            "deadline": "2018-10-14 10:59:59",
+            "mark_release": "2018-10-15 11:00:00",
+            "mark_status": "Marked",
+            "mark_summary": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Mark",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "Task Requirement document mark summary"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "Group 1",
+                        "Group 2",
+                        "Group 3"
+                    ]
+                },
+                "yAxis": {}
+            },
+            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
+            "spec_address": "None",
+            "submit": [],
+            "submit_require": 1,
+            "task_name": "Requirement document",
+            "task_uuid": "a52cf4be-c967-11e8-8b38-4c3275989ef5",
+            "unsubmit": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ]
+        },
+        {
+            "deadline": "2018-10-14 10:59:59",
+            "mark_release": "2018-10-15 11:00:00",
+            "mark_status": "Marked",
+            "mark_summary": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Mark",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "Task Design document mark summary"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "Group 1",
+                        "Group 2",
+                        "Group 3"
+                    ]
+                },
+                "yAxis": {}
+            },
+            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
+            "spec_address": "None",
+            "submit": [],
+            "submit_require": 1,
+            "task_name": "Design document",
+            "task_uuid": "2733b150-c9ea-11e8-94ac-4c3275989ef5",
+            "unsubmit": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ]
+        },
+        {
+            "deadline": "2018-10-16 10:59:59",
+            "mark_release": "2018-10-17 11:00:00",
+            "mark_status": "Marked",
+            "mark_summary": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Mark",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "Task Implementation mark summary"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "Group 1",
+                        "Group 2",
+                        "Group 3"
+                    ]
+                },
+                "yAxis": {}
+            },
+            "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
+            "spec_address": "None",
+            "submit": [],
+            "submit_require": 1,
+            "task_name": "Implementation",
+            "task_uuid": "a52fa206-c967-11e8-989a-4c3275989ef5",
+            "unsubmit": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ]
+        },
+        {
+            "deadline": "2018-10-18 10:59:59",
+            "mark_release": "2018-10-20 11:00:00",
+            "mark_status": "Marked",
+            "mark_summary": {
+                "legend": {
+                    "data": [
+                        "Mark"
+                    ]
+                },
+                "series": [
+                    {
+                        "data": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "Mark",
+                        "type": "bar"
+                    }
+                ],
+                "title": {
+                    "text": "Task Demo mark summary"
+                },
+                "tooltip": {},
+                "xAxis": {
+                    "data": [
+                        "Group 1",
+                        "Group 2",
+                        "Group 3"
+                    ]
+                },
+                "yAxis": {}
+            },
+            "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
+            "spec_address": "None",
+            "submit": [],
+            "submit_require": 1,
+            "task_name": "Demo",
+            "task_uuid": "a53257cc-c967-11e8-9495-4c3275989ef5",
+            "unsubmit": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ]
+        }
+    ],
+    "msg": "Get mark summary success",
+    "user_id": "lecturer1@gmail.com",
+    "user_type": "lecturer"
+}
 
 -------------------
 Student submit api
