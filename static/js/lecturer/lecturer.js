@@ -464,10 +464,6 @@ $(".distribution").click( function(){
 //generate groups
 $(document).on('click', '.group-info button', function(e){
             var groupSize = $(this).siblings('.group-size').find('input').val();
-            if(!groupSize){
-                alert('Please enter a group size')
-                return
-            }
             var ramdomOrManual;
             $(".group-info input[type=checkbox]").each(function () {
                     var self = $(this);
@@ -477,6 +473,10 @@ $(document).on('click', '.group-info button', function(e){
             });
             if(!ramdomOrManual){
                 alert('Please select an option')
+                return
+            }
+             if(ramdomOrManual=="Randomly" && !groupSize){
+                alert('Please enter a group size')
                 return
             }
             var data={
@@ -501,8 +501,6 @@ $(document).on('click', '.group-info button', function(e){
                 $('.group-size').find('input').val("");
             }
            })
-
-
 })
 
 
@@ -939,6 +937,20 @@ $(document).on('click', ".project-dropdown a", function(e){
 
 
 //distribution
+
+$(document).on('change', '#distribution-selector', function(){
+    var taskId = $("#distribution-selector").val();
+    var markDitribution;
+    if(taskId!="Final Mark"){
+        for(var id in taskList){
+            if(id==taskId){
+                markDitribution = taskList[id]['mark_distribution']
+                console.log(markDitribution)
+            }
+        }
+
+    }
+})
 
 var myChart = echarts.init(document.getElementById('distribution'));
 var option = {
