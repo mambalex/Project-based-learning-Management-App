@@ -1607,6 +1607,37 @@ Sample Response:
                         {
                             "deadline": "2018-11-20 00:00:00",
                             "mark_release": "2018-10-13 11:00:00",
+                            "mark_status": "UnMarked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Proposal mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "Group 1",
+                                        "Group 2",
+                                        "Group 3"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [
@@ -1695,6 +1726,37 @@ Sample Response:
                         {
                             "deadline": "2018-10-14 10:59:59",
                             "mark_release": "2018-10-15 11:00:00",
+                            "mark_status": "Marked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Requirement document mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "Group 1",
+                                        "Group 2",
+                                        "Group 3"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [],
@@ -1788,6 +1850,37 @@ Sample Response:
                         {
                             "deadline": "2018-10-14 10:59:59",
                             "mark_release": "2018-10-15 11:00:00",
+                            "mark_status": "Marked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Design document mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "Group 1",
+                                        "Group 2",
+                                        "Group 3"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [],
@@ -1894,6 +1987,37 @@ Sample Response:
                         {
                             "deadline": "2018-10-16 10:59:59",
                             "mark_release": "2018-10-17 11:00:00",
+                            "mark_status": "UnMarked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Implementation mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "Group 1",
+                                        "Group 2",
+                                        "Group 3"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [
@@ -1982,6 +2106,37 @@ Sample Response:
                         {
                             "deadline": "2018-10-18 10:59:59",
                             "mark_release": "2018-10-20 11:00:00",
+                            "mark_status": "Marked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Demo mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "Group 1",
+                                        "Group 2",
+                                        "Group 3"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [],
@@ -2123,6 +2278,29 @@ Sample Response:
                         {
                             "deadline": "2018-10-22 00:31:30",
                             "mark_release": "None",
+                            "mark_status": "Marked",
+                            "mark_summary": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [],
+                                        "name": "Mark",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task aaaa mark summary"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": []
+                                },
+                                "yAxis": {}
+                            },
                             "phase_uuid": "49f6b080-d3a3-11e8-8beb-4c3275989ef5",
                             "spec_address": "None",
                             "submit_group": [],

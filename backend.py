@@ -936,6 +936,33 @@ def lecturer_load_main_info():
 
                 task['submit_group'] = task_submit_group
                 task['unsubmit_group'] = unsubmit_group + nosubmit_group
+
+                mark_dict = {item['group_uuid']: item['mark'] for item in task_submit_group}
+                task['mark_status'] = "Marked"
+                for submit in task['submit_group']:
+                    if submit['mark'] == "None":
+                        task['mark_status'] = "UnMarked"
+                        break
+                mark_summary = dict()
+                mark_summary['title'] = {'text': 'Task {} mark summary'.format(task['task_name'])}
+                mark_summary['tooltip'] = dict()
+                mark_summary['legend'] = {'data': ['Mark']}
+                mark_summary['xAxis'] = {'data': [item["group_name"] for item in group_list]}
+                group_index = [item["group_uuid"] for item in group_list]
+                mark_summary['yAxis'] = dict()
+                mark_summary['series'] = [{'name': 'Mark', 'type': 'bar'}]
+                mark_data = list()
+                for group in group_index:
+                    if group in submit_group_id:
+                        if mark_dict[group] == "None":
+                            mark_data.append(0)
+                        else:
+                            mark_data.append(int(mark_dict[group]))
+                    else:
+                        mark_data.append(0)
+                mark_summary['series'][0]['data'] = mark_data
+                task['mark_summary'] = mark_summary
+
             phase['task_list'] = task_list
         project['phase_list'] = phase_list
         # Find current phase
