@@ -69,6 +69,7 @@ $(document).on('click', "#select-project", function(e){
     displayTasks();
     displayResources();
     displayReminder();
+    displayMarks();
     displayGroupInfo();
     displayDueDate(1);
     displayDueDate(2);
@@ -152,6 +153,13 @@ function displayTasks() {
                 <option value=${taskList[task]}>${task}</option>
             `)
     }
+    // mark task disctribution
+    for(let task in taskList){
+        $(".distribution-selector").append(`
+                <option value=${taskList[task]}>${task}</option>
+            `)
+    }
+    $(".distribution-selector").append(`<option value="Final Mark"}>Final Mark</option>`);
 }
 
 //display resources
@@ -159,6 +167,14 @@ function displayResources(){
     for(var phase in phaseList ){
         let phase_num = phase.split(" ")[1];
         $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        if(phaseList[phase]['resource_list'].length==0){
+            $(`.phase${phase_num}-doc`).find("tbody").append(`
+                            <tr>
+                                  <td>Doc</td>
+                                  <td>No files</td>                   
+                              </tr>   
+            `)
+        }
         phaseList[phase]['resource_list'].forEach(function (doc) {
             var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
             var displayName = doc['filename'];
@@ -271,8 +287,26 @@ function displayDueDate(id){
 
 //display mark
 function displayMarks(){
+     // p3-mark
+        for(var phase in phaseList ){
+        let phase_num = phase.split(" ")[1];
+        $(`.p${phase_num}-mark`).find("li").remove();
+        phaseList[phase]['task_list'].forEach(function (task) {
+            var taskName = task['task_name'];
+            var markStatus = task['mark_result']['status'];
+            var mark = task['mark_result']['mark'];
+            if(markStatus=="Marked"){
+                $(`.p${phase_num}-mark`).append(`
+                    <li><div class="taskName">${taskName}: </div><div class="taskMark">${mark}</div></li>
+                `)
+            }else{
+                $(`.p${phase_num}-mark`).append(`
+                     <li><div class="taskName">${taskName}: </div><div class="taskMark">Unmarked</div></li>
+                `)
+            }
+        })
 
-
+    }
 }
 
 
@@ -881,6 +915,7 @@ $(document).on('click', '.phase4-nav', function(e){
     $(".phase4-doc").hide();
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".phase4-mark").hide();
     $(".file-input").hide();
     $("button[type='reset']").click();
@@ -892,6 +927,7 @@ $(document).on('click', '.upload-nav-4', function(e){
     $(".phase4-doc").hide();
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".phase4-mark").hide();
     $(".file-input").show();
     $("button[type='reset']").click();
@@ -903,6 +939,7 @@ $(document).on('click', '.document-nav-4', function(e){
      $(".file-input").hide();
      $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".phase4-doc").show();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
@@ -915,6 +952,7 @@ $(document).on('click', '.navmark4', function(e){
     $(".phase4-doc").hide();
     $("#distribution").hide();
     $("#distribution2").hide();
+    $("#select-task-distribution").hide();
     $(".phase4-mark").show();
     $("button[type='reset']").click();
 })
@@ -927,6 +965,7 @@ $(document).on('click', '.distribution', function(e){
     $(".phase4-mark").hide();
     $("#distribution").show();
     $("#distribution2").show();
+    $("#select-task-distribution").show();
     $("button[type='reset']").click();
 })
 
@@ -1134,7 +1173,7 @@ var option = {
             series: [{
                 name: 'Sales',
                 type: 'bar',
-                itemStyle: {color: '#28a745'},
+                itemStyle: {color: '#d9534f'},
                 data: [5, 20, 36, 10, 10, 20]
             }]
         };
