@@ -899,6 +899,8 @@ def student_load_main_info():
     self_project_list = db.get_self_project_list(g.user.user_id)
     for project in self_project_list:
         # Group part
+        group_list = db.get_all_group(project["project_uuid"])
+
         temp_group_info = dict()
         if db.check_has_group(g.user.user_id, project["project_uuid"]):
             temp_current_group = db.get_self_group(g.user.user_id, project["project_uuid"])[0]
@@ -916,12 +918,21 @@ def student_load_main_info():
         project['group_list'] = temp_group_list
         temp_ungroup_student = db.get_ungroup_student(project["project_uuid"])
         project['ungroup_student'] = temp_ungroup_student
+        # Phase
         phase_list = db.get_project_all_phases(project["project_uuid"])
+
+        project_mark_distribution = dict()
+        project_grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
+        group_mark_count = {item["group_uuid"]: 0 for item in group_list}
+        print(group_mark_count)
+        mark_task_count = 0
+
         for phase in phase_list:
             resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
             phase['resource_list'] = resource_list
             task_list = db.get_phase_all_tasks(phase['phase_uuid'])
             phase['task_list'] = task_list
+            
             if temp_group_info['status'] == 0:
                 mark_result = dict()
                 mark_result['status'] = 'Ungroup'
@@ -942,7 +953,132 @@ def student_load_main_info():
                             mark_result['status'] = 'Marked'
                             mark_result['mark'] = int(submission["mark"])
                     task['mark_result'] = mark_result
+                    # Get mark summary and mark distribution part
+                    task_submit_group = db.get_submits(task['task_uuid'])
+                    print(task_submit_group)
+                    submit_group_id = [item['group_uuid'] for item in task_submit_group]
+                    unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+                    nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
+
+                    task['submit_group'] = task_submit_group
+                    task['unsubmit_group'] = unsubmit_group + nosubmit_group
+
+                    mark_dict = {item['group_uuid']: item['mark'] for item in task_submit_group}
+                    for group in mark_dict:
+                        if mark_dict[group] != "None":
+                            mark_task_count = mark_task_count + 1
+                            break
+                    task['mark_status'] = "Marked"
+                    for submit in task['submit_group']:
+                        if submit['mark'] == "None":
+                            task['mark_status'] = "UnMarked"
+                            break
+                    # Mark summary
+                    mark_summary = dict()
+                    mark_summary['title'] = {'text': 'Task {} mark summary:'.format(task['task_name'])}
+                    mark_summary['tooltip'] = dict()
+                    mark_summary['legend'] = {'data': ['Mark']}
+                    mark_summary['xAxis'] = {'data': [item["group_name"] for item in group_list]}
+                    group_index = [item["group_uuid"] for item in group_list]
+                    mark_summary['yAxis'] = dict()
+                    mark_summary['series'] = [{'name': 'Mark', 'type': 'bar'}]
+                    mark_data = list()
+
+                    # Mark distribution
+
+                    grade = {"<50": 0, "50-65": 0, "65-75": 0, "75-85": 0, "85-100": 0}
+
+                    mark_distribution = dict()
+                    mark_distribution['title'] = {'text': 'Task {} mark distribution:'.format(task['task_name'])}
+                    mark_distribution['tooltip'] = dict()
+                    mark_distribution['legend'] = {'data': ['Mark']}
+                    mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
+                    mark_distribution['yAxis'] = dict()
+                    mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
+                    pie_distribution = dict()
+                    pie_distribution['roseType'] = 'angle'
+                    pie_distribution['name'] = 'Task {} mark distribution:'.format(task['task_name'])
+                    pie_distribution['type'] = 'pie'
+                    pie_distribution['radius'] = '55%'
+
+                    for group in group_index:
+                        if group in submit_group_id:
+                            if mark_dict[group] == "None":
+                                mark_data.append(0)
+                                grade["<50"] = grade["<50"] + 1
+                                group_mark_count[group] = group_mark_count[group] + 0
+                            else:
+                                mark_data.append(int(mark_dict[group]))
+                                group_mark_count[group] = group_mark_count[group] + int(mark_dict[group])
+
+                                if int(mark_dict[group]) < 50:
+                                    grade["<50"] = grade["<50"] + 1
+                                elif 50 <= int(mark_dict[group]) < 65:
+                                    grade["50-65"] = grade["50-65"] + 1
+                                elif 65 <= int(mark_dict[group]) < 75:
+                                    grade["65-75"] = grade["65-75"] + 1
+                                elif 75 <= int(mark_dict[group]) < 85:
+                                    grade["75-85"] = grade["75-85"] + 1
+                                elif 85 <= int(mark_dict[group]):
+                                    grade["85-100"] = grade["85-100"] + 1
+                        else:
+                            mark_data.append(0)
+                            grade["<50"] = grade["<50"] + 1
+                            group_mark_count[group] = group_mark_count[group] + 0
+                    mark_summary['series'][0]['data'] = mark_data
+                    distribution_data = [grade[item] for item in mark_distribution['xAxis']['data']]
+                    distribution_data2 = [{'value': grade[item], 'name': item} for item in
+                                          mark_distribution['xAxis']['data']]
+                    mark_distribution['series'][0]['data'] = distribution_data
+                    pie_distribution['data'] = distribution_data2
+                    task['mark_summary'] = mark_summary
+                    task['mark_distribution1'] = mark_distribution
+                    task['mark_distribution2'] = pie_distribution
+                    
         project['phase_list'] = phase_list
+
+        # Project mark distribution
+        project_mark_distribution['title'] = {'text': '{} mark distribution:'.format(project["project_name"])}
+        project_mark_distribution['tooltip'] = dict()
+        project_mark_distribution['legend'] = {'data': ['Mark']}
+        project_mark_distribution['xAxis'] = {'data': ["<50", "50-65", "65-75", "75-85", "85-100"]}
+        project_mark_distribution['yAxis'] = dict()
+        project_mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
+        project_pie_distribution = dict()
+        project_pie_distribution['roseType'] = 'angle'
+        project_pie_distribution['name'] = '{} mark distribution:'.format(project["project_name"])
+        project_pie_distribution['type'] = 'pie'
+        project_pie_distribution['radius'] = '55%'
+
+        for group in group_mark_count:
+            if mark_task_count == 0:
+                temp_result = 0
+            else:
+                temp_result = group_mark_count[group] / mark_task_count
+            if temp_result < 50:
+                project_grade["<50"] = project_grade["<50"] + 1
+            elif 50 <= temp_result < 65:
+                project_grade["50-65"] = project_grade["50-65"] + 1
+            elif 65 <= temp_result < 75:
+                project_grade["65-75"] = project_grade["65-75"] + 1
+            elif 75 <= temp_result < 85:
+                project_grade["75-85"] = project_grade["75-85"] + 1
+            elif 85 <= temp_result < 100:
+                project_grade["85-100"] = project_grade["85-100"] + 1
+
+        distribution_data = [project_grade[item] for item in project_mark_distribution['xAxis']['data']]
+        distribution_data2 = [{'value': project_grade[item], 'name': item} for item in
+                              project_mark_distribution['xAxis']['data']]
+        project_mark_distribution['series'][0]['data'] = distribution_data
+        project_pie_distribution['data'] = distribution_data2
+        project['mark_distribution1'] = project_mark_distribution
+        project['mark_distribution2'] = project_pie_distribution
+
+
+
+
         # Current phase index
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
