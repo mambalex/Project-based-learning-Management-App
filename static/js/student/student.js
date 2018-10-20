@@ -36,12 +36,13 @@ $(document).on('click', "#select-project", function(e){
     getAllInfo();
     welcomeUser();
     $(".phase1-nav").click();
+    displayResources();
     displayReminder();
     displayGroupInfo();
-    displayDeadline(1);
-    displayDeadline(2);
-    displayDeadline(3);
-    displayDeadline(4);
+    displayDueDate(1);
+    displayDueDate(2);
+    displayDueDate(3);
+    displayDueDate(4);
 })
 
 function getAllInfo(){
@@ -62,7 +63,7 @@ function getAllInfo(){
                             groupInfo[val['group_name']]= val;
                         });   
                         rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_index']]= val;
+                            phaseList[val['phase_name']]= val;
                         });
                         reminderList = rsp_data['reminder_list'];
                         // rsp_data['reminder_list'].forEach(function(val){
@@ -120,24 +121,40 @@ function displayProjects () {
              <option value=${id}>${name}</option>
         `)
     })
-
 }
 
+//display resources
+function displayResources(){
+    for(var phase in phaseList ){
+        let phase_num = phase.split(" ")[1];
+        $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        phaseList[phase]['resource_list'].forEach(function (doc) {
+            var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
+            var displayName = doc['filename'];
+            var arr = doc['file_addr'].split('/');
+            var fileName = arr[arr.length - 1];
+            var filePath = `../temp/${fileName}`
+            $(`.phase${phase_num}-doc`).find("tbody").append(`
+                            <tr>
+                                  <td>Doc${num+1}</td>
+                                  <td>${displayName}</td>                   
+                                  <td align="right">
+                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                          <span class="glyphicon glyphicon-file"></span>
+                                          <span class="hidden-xs files">View</span>
+                                      </a>
+                                  </td>
+                              </tr>   
+            `)
+        })
+
+    }
+}
+
+
 function displayReminder(){
-    // var max = 0;
-    // var latestReminder;
+
     console.log(reminderList);
-    // var reminderTimeList = Object.keys(reminderList);
-    // reminderTimeList.forEach(function(val){
-    //     var temp = new Date(val);
-    //     var timeSTamp = temp.getTime();
-    //     if(timeSTamp > max){
-    //         max = timeSTamp;
-    //         latestReminder = val;
-    //     }
-    // })
-
-
     $(".notes-wrapper li").remove();
     reminderList.forEach(function (val) {
         var date = val['post_time'];
@@ -150,16 +167,6 @@ function displayReminder(){
 
         `)
     })
-    // console.log(latestReminder);
-    // var latestMessage = reminderList[latestReminder];
-    // console.log(latestMessage);
-    // var temp = new Date(latestReminder);
-    // var now = new Date();
-    // var daypass = Math.ceil((now.getTime()/1000 - temp.getTime()/1000)/(60 * 60 * 24));
-    // $(".reminder").text(latestMessage);
-    // $(".daypass").text(daypass);
-
-
 }
 
 function displayGroupInfo(){
@@ -193,80 +200,42 @@ function displayGroupInfo(){
             }
         }
 }
-function displayDeadline(id){
-    var phase = "Phase "+id;
-    let allDeadlines = {};
-    //phase deadline
-    console.log(phaseList);
-    var d = new Date();
-    var phase1Due = phaseList[phase]['deadline'].split(" ")[0];
-    var newD = new Date(phase1Due);
-    console.log(d.getTime(), newD.getTime());
-    var phase1left = Math.ceil((newD.getTime()/1000 - d.getTime()/1000)/(60 * 60 * 24));
-    allDeadlines[phase1left] = [phase];
-    console.log(allDeadlines);
 
-    //task deadline
-    var taskList = phaseList[phase]['task_list'];
-    console.log(taskList);
-    taskList.forEach(function(val){
-        var taskDeadline = val['deadline'].split(" ")[0];
-        var taskName = val['task_name'];
-        var taskId = val['task_uuid'];
-        var d = new Date();
-        var taskD = new Date(taskDeadline);
-        var taskleft = Math.ceil((taskD.getTime()/1000 - d.getTime()/1000)/(60 * 60 * 24));
-        if(taskleft in allDeadlines){
-            allDeadlines[taskleft].push(taskName);
-        }else{allDeadlines[taskleft] = [taskName];}
-        
-    })
-    console.log(allDeadlines);
-    var deadlines = Object.keys(allDeadlines);
-    deadlines.sort(function(a, b){return a - b});
-    deadlines.forEach(function(left){
-        allDeadlines[left].forEach(function(val){
-            // var temp = `.${phase}`;
-            // console.log(temp);
-            $(`.phase${id}`).find(".all-dealines").append(`<li >
-                              <div class='content'>${val}</div>
-                              <div class='date'><span class="due">${left}</span> days from now</div>
-                          </li>`);
-        })
+//display duedate
+function displayDueDate(id){
+    let phase = "Phase "+id;
+    let phaseDueDate = {};
+    $(`.due-date${id}`).find("ul li").remove();
+    phaseDueDate[`${phase}`] = phaseList[phase]['deadline'];
+    phaseList[phase]['task_list'].forEach(function (task) {
+        phaseDueDate[`${task['task_name']}`] = task['deadline']
+    });
+    for(let task in phaseDueDate){
+        let d = new Date(phaseDueDate[task]);
+        phaseDueDate[task] = d.getTime()/1000;
+    }
+    let keysSorted = Object.keys(phaseDueDate).sort((a,b) => phaseDueDate[a]-phaseDueDate[b]);
+    let now = new Date();
+    keysSorted.forEach(function (key) {
+        var dayLeft = Math.ceil((phaseDueDate[key] - now.getTime()/1000)/(60 * 60 * 24));
+        console.log(dayLeft)
+        if(dayLeft <=0 ){
+            $(`.due-date${id}`).find("ul").append(`
+                          <li>
+                              <div class="content">${key}</div>
+                              <div class="date"><span class="due"></span>Overdue</div>
+                          </li>
+            `)
+        }else{
+            $(`.due-date${id}`).find("ul").append(`
+                          <li>
+                              <div class="content">${key}</div>
+                              <div class="date"><span class="due">${dayLeft}</span> days from now</div>
+                          </li>
+            `)
+        }
     })
 }
-
-
-// function setProfileCookie(){
-//     setCookie('name', userProfile['name'], 1, "/");
-//     setCookie('dob', userProfile['dob'], 1, "/");
-//     setCookie('gender', userProfile['gender'], 1, "/");
-//     setCookie('email', userProfile['email'], 1, "/");
-// }
-
-// function setCookie(cname, cvalue, exdays, path) {
-//     var d = new Date();
-//     d.setTime(d.getTime() + (exdays*24*60*60*1000));
-//     var expires = "expires="+ d.toUTCString();
-//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=" + path;
-// }
-
-// function getCookie(cname) {
-//     var name = cname + "=";
-//     var decodedCookie = decodeURIComponent(document.cookie);
-//     var ca = decodedCookie.split(';');
-//     for(var i = 0; i <ca.length; i++) {
-//         var c = ca[i];
-//         while (c.charAt(0) == ' ') {
-//             c = c.substring(1);
-//         }
-//         if (c.indexOf(name) == 0) {
-//             return c.substring(name.length, c.length);
-//         }
-//     }
-//     return "";
-// }
-
 
 
 
@@ -719,7 +688,7 @@ $("#upload-btn-phase2").click(function(e){
 $(".phase2-nav").click( function(){
     $(".notes-wrapper-2").show();
     $(".file-input").hide();
-    $(".document-2").hide();
+    $(".phase2-doc").hide();
     $(".phase2-mark").hide();
     $("#successAlert-phase2").hide();
     $("#errorAlert-phase2").hide();
@@ -732,7 +701,7 @@ $(document).on('click', '.nav-requirement', function(e){
     e.preventDefault();
     $(".phase2-mark").hide();
     $(".notes-wrapper-2").hide();
-    $(".document-2").hide();
+    $(".phase2-doc").hide();
     $(".design").hide();
     $(".requirement").show();
     $(".file-input").show();
@@ -747,7 +716,7 @@ $(document).on('click', '.nav-design', function(e){
     e.preventDefault();
     $(".phase2-mark").hide();
     $(".notes-wrapper-2").hide();
-    $(".document-2").hide();
+    $(".phase2-doc").hide();
     $(".requirement").hide();
     $(".file-input").show();
     $(".design").show(); 
@@ -764,7 +733,7 @@ $(document).on('click', '.document', function(e){
     $(".requirement").hide();
     $(".design").hide();
     $(".phase2-mark").hide();
-    $(".document-2").show();
+    $(".phase2-doc").show();
     $("#successAlert-phase2").hide();
     $("#errorAlert-phase2").hide();
     $("button[type='reset']").click();
@@ -777,7 +746,7 @@ $(document).on('click', '.navmark2', function(e){
     $(".notes-wrapper-2").hide();
     $(".requirement").hide();
     $(".design").hide();
-    $(".document-2").hide();
+    $(".phase2-doc").hide();
     $(".phase2-mark").show();
     $("#successAlert-phase2").hide();
     $("#errorAlert-phase2").hide();
@@ -791,7 +760,7 @@ $(document).on('click', '.navmark2', function(e){
 $(document).on('click', '.phase3-nav', function(e){
     $(".notes-wrapper-3").show();
     $(".file-input").hide();
-    $(".document-3").hide();
+    $(".phase3-doc").hide();
     $(".phase3-mark").hide();
     $("#successAlert-phase3").hide();
     $("#errorAlert-phase3").hide();
@@ -802,7 +771,7 @@ $(document).on('click', '.phase3-nav', function(e){
 $(document).on('click', '.upload-nav-3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").show();
-    $(".document-3").hide();
+    $(".phase3-doc").hide();
     $(".phase3-mark").hide();
     $("#successAlert-phase3").hide();
     $("#errorAlert-phase3").hide();
@@ -813,7 +782,7 @@ $(document).on('click', '.upload-nav-3', function(e){
 $(document).on('click', '.document-nav-3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").hide();
-    $(".document-3").show();
+    $(".phase3-doc").show();
     $(".phase3-mark").hide();
     $("#successAlert-phase3").hide();
     $("#errorAlert-phase3").hide();
@@ -824,7 +793,7 @@ $(document).on('click', '.document-nav-3', function(e){
 $(document).on('click', '.navmark3', function(e){
     $(".notes-wrapper-3").hide();
     $(".file-input").hide();
-    $(".document-3").hide();
+    $(".phase3-doc").hide();
     $(".phase3-mark").show();
     $("#successAlert-phase3").hide();
     $("#errorAlert-phase3").hide();
@@ -886,7 +855,7 @@ $("#upload-btn-phase3").click(function(e){
 //click phase4
 $(document).on('click', '.phase4-nav', function(e){
     $(".notes-wrapper-4").show();
-    $(".document-4").hide();
+    $(".phase4-doc").hide();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
 })
@@ -894,7 +863,7 @@ $(document).on('click', '.phase4-nav', function(e){
 //click resources
 $(document).on('click', '.document-nav-4', function(e){
     $(".notes-wrapper-4").hide();
-    $(".document-4").show();
+    $(".phase4-doc").show();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
 })
@@ -902,7 +871,7 @@ $(document).on('click', '.document-nav-4', function(e){
 //click mark
 $(document).on('click', '.navmark4', function(e){
     $(".notes-wrapper-4").hide();
-    $(".document-4").hide();
+    $(".phase4-doc").hide();
     $(".phase4-mark").show();
     $("button[type='reset']").click();
 })
