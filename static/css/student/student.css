@@ -253,8 +253,12 @@ button{
 .file-input{
     display: none;
     width:70%;
-    margin: 50px 0 0 100px;
+    margin: 50px 0 0 10px;
     position: relative;
+}
+.file-input .task-select{
+    margin:30px 0 20px 0;
+    width: 60%;
 }
 
 .design{

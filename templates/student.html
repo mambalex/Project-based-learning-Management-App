@@ -107,7 +107,7 @@
                         <a  class="list-group-item active phase1-nav">Phase 1</a>
                         <a  class="list-group-item navgrp">Group</a>
                         <a  class="list-group-item document">Resources</a>
-                        <a  class="list-group-item nav-proposal">Proposal</a>
+                        <a  class="list-group-item upload-nav-1">Uploading files</a>
                         <a  class="list-group-item navmark1">Mark</a>
                       </div>
                     </div>
@@ -131,30 +131,55 @@
 
            <div class="right-wrapper">
             <!-- files input -->
-              <div class="file-input" id="phase1-upload">
-                <div id="successAlert-phase1" class="alert alert-success" role="alert" style="display:none;"></div>
-                <div id="errorAlert-phase1" class="alert alert-danger" role="alert" style="display:none;"></div>
-                <h4 class="proposal-title">Project Summary & Problem Statements</h4>
-
+               <div class="file-input">
+                <div id="successAlert-phase3" class="alert alert-success" role="alert" style="display:none;"></div>
+                <div id="errorAlert-phase3" class="alert alert-danger" role="alert" style="display:none;"></div>
+                <h1>Upload files</h1>
+                <div class="task-select">
+                      <select class="form-control task-selector">
+                          <option value="" hidden>Task Names</option>
+                      </select>
+                 </div>
                 <form method="POST" action="#" enctype="multipart/form-data" >
-                    <!-- COMPONENT START -->
-                    <div class="form-group" id="upload-file1">
-                        <div class="input-group input-file" name="Fichier1" >
+                    <div class="form-group" id="upload-file3">
+                        <div class="input-group input-file"  >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
                         </span>
-
-
                         </div>
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
-                        <button  class="btn btn-primary pull-right" id="upload-btn-phase1">Submit</button>
+                        <button  class="btn btn-primary pull-right" id="upload-btn-phase3">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>
+{#              <div class="file-input" id="phase1-upload">#}
+{#                <div id="successAlert-phase1" class="alert alert-success" role="alert" style="display:none;"></div>#}
+{#                <div id="errorAlert-phase1" class="alert alert-danger" role="alert" style="display:none;"></div>#}
+{#                <h4 class="proposal-title">Project Summary & Problem Statements</h4>#}
+{##}
+{#                <form method="POST" action="#" enctype="multipart/form-data" >#}
+{#                    <!-- COMPONENT START -->#}
+{#                    <div class="form-group" id="upload-file1">#}
+{#                        <div class="input-group input-file" name="Fichier1" >#}
+{#                            <input type="text"   class="form-control" placeholder='Choose a file...' />#}
+{#                            <span class="input-group-btn">#}
+{#                            <button class="btn btn-default btn-choose" type="button">Choose</button>#}
+{#                        </span>#}
+{##}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- COMPONENT END -->#}
+{#                    <div class="form-group">#}
+{#                        <button  class="btn btn-primary pull-right" id="upload-btn-phase1">Submit</button>#}
+{#                        <button type="reset" class="btn btn-danger">Reset</button>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
 
   <!-- notes -->
                 <ul class="notes-wrapper">
@@ -435,10 +460,9 @@
                 <div class="sidebar-offcanvas sidebar">
                     <div class="list-group">
                         <a  class="list-group-item active phase2-nav">Phase 2</a>
-                        <a  class="list-group-item nav-requirement">Requirement document</a>
-                        <a  class="list-group-item nav-design">Design document</a>
+                       <a  class="list-group-item upload-nav-2">Uploading files</a>
                         <a  class="list-group-item document">Resources</a>
-                        <a  class="list-group-item navmark1">Mark</a>
+                        <a  class="list-group-item navmark2">Mark</a>
                     </div>
                 </div>
                   <div class="due-date due-date2" id="due-date2">
@@ -463,31 +487,56 @@
                      </div>
 
                 </ul>
-
-            <div class="file-input" id="phase2-upload">
-                <div id="successAlert-phase2" class="alert alert-success" role="alert" style="display:none;"></div>
-                <div id="errorAlert-phase2" class="alert alert-danger" role="alert" style="display:none;"></div>
-                <h4 class="requirement">Requirement document</h4>
-                <h4 class="design">Design document</h4>
+             <div class="file-input">
+                <div id="successAlert-phase3" class="alert alert-success" role="alert" style="display:none;"></div>
+                <div id="errorAlert-phase3" class="alert alert-danger" role="alert" style="display:none;"></div>
+                <h1>Upload files</h1>
+                <div class="task-select">
+                      <select class="form-control task-selector">
+                          <option value="" hidden>Task Names</option>
+                      </select>
+                 </div>
                 <form method="POST" action="#" enctype="multipart/form-data" >
-                    <!-- COMPONENT START -->
-                    <div class="form-group" id="upload-file2">
-                        <div class="input-group input-file" name="Fichier1" >
+                    <div class="form-group" id="upload-file3">
+                        <div class="input-group input-file"  >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
                             <span class="input-group-btn">
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
                         </span>
-
-
                         </div>
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
-                        <button  class="btn btn-primary pull-right" id="upload-btn-phase2">Submit</button>
+                        <button  class="btn btn-primary pull-right" id="upload-btn-phase3">Submit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>
                 </form>
             </div>
+
+{#            <div class="file-input" id="phase2-upload">#}
+{#                <div id="successAlert-phase2" class="alert alert-success" role="alert" style="display:none;"></div>#}
+{#                <div id="errorAlert-phase2" class="alert alert-danger" role="alert" style="display:none;"></div>#}
+{#                <h4 class="requirement">Requirement document</h4>#}
+{#                <h4 class="design">Design document</h4>#}
+{#                <form method="POST" action="#" enctype="multipart/form-data" >#}
+{#                    <!-- COMPONENT START -->#}
+{#                    <div class="form-group" id="upload-file2">#}
+{#                        <div class="input-group input-file" name="Fichier1" >#}
+{#                            <input type="text"   class="form-control" placeholder='Choose a file...' />#}
+{#                            <span class="input-group-btn">#}
+{#                            <button class="btn btn-default btn-choose" type="button">Choose</button>#}
+{#                        </span>#}
+{##}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- COMPONENT END -->#}
+{#                    <div class="form-group">#}
+{#                        <button  class="btn btn-primary pull-right" id="upload-btn-phase2">Submit</button>#}
+{#                        <button type="reset" class="btn btn-danger">Reset</button>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </div>#}
 
             <div class="documents phase2-doc">
               <table class="table table-striped">
@@ -542,7 +591,7 @@
                         <a  class="list-group-item active phase3-nav">Phase 3</a>
                         <a  class="list-group-item upload-nav-3">Uploading files</a>
                           <a  class="list-group-item document-nav-3">Resources</a>
-                        <a  class="list-group-item navmark1">Mark</a>
+                        <a  class="list-group-item navmark3">Mark</a>
                     </div>
                 </div>
              <div class="due-date due-date3">
@@ -570,10 +619,13 @@
             <div class="file-input">
                 <div id="successAlert-phase3" class="alert alert-success" role="alert" style="display:none;"></div>
                 <div id="errorAlert-phase3" class="alert alert-danger" role="alert" style="display:none;"></div>
-                <h4 class="requirement">Implementation files</h4>
+                <h1>Upload files</h1>
+                <div class="task-select">
+                      <select class="form-control task-selector">
+                          <option value="" hidden>Task Names</option>
+                      </select>
+                 </div>
                 <form method="POST" action="#" enctype="multipart/form-data" >
-                    <!-- COMPONENT START -->
-                    <!-- <div class="add-input"><i class="fas fa-plus-circle fa-2x"></i></div> -->
                     <div class="form-group" id="upload-file3">
                         <div class="input-group input-file"  >
                             <input type="text"   class="form-control" placeholder='Choose a file...' />
@@ -581,13 +633,6 @@
                             <button class="btn btn-default btn-choose" type="button">Choose</button>
                         </span>
                         </div>
-<!--                      <div class="input-group inputFile" >
-                            <input type="text"   class="form-control" placeholder='Choose a file...' />
-                            <span class="input-group-btn">
-                            <button class="btn btn-default btn-choose" type="button">Choose</button>
-                            </span>
-                            <div class="remove-input"><i class="fas fa-minus-circle fa-2x"></i></div>
-                        </div> -->
                     </div>
                     <!-- COMPONENT END -->
                     <div class="form-group">
@@ -647,9 +692,9 @@
                 <div class="sidebar-offcanvas sidebar">
                     <div class="list-group">
                         <a  class="list-group-item active phase4-nav">Phase 4</a>
-                  <!--       <a  class="list-group-item nav-requirement">Uploading files</a> -->
+                    <a  class="list-group-item upload-nav-4">Uploading files</a>
                     <a  class="list-group-item document-nav-4">Resources</a>
-                        <a  class="list-group-item navmark1">Mark</a>
+                        <a  class="list-group-item navmark4">Mark</a>
                     </div>
                 </div>
          <div class="due-date due-date4">
@@ -673,6 +718,31 @@
                               Reminder
                         </div>
                 </ul>
+                <div class="file-input">
+                <div id="successAlert-phase3" class="alert alert-success" role="alert" style="display:none;"></div>
+                <div id="errorAlert-phase3" class="alert alert-danger" role="alert" style="display:none;"></div>
+                <h1>Upload files</h1>
+                <div class="task-select">
+                      <select class="form-control task-selector">
+                          <option value="" hidden>Task Names</option>
+                      </select>
+                 </div>
+                <form method="POST" action="#" enctype="multipart/form-data" >
+                    <div class="form-group" id="upload-file3">
+                        <div class="input-group input-file"  >
+                            <input type="text"   class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-choose" type="button">Choose</button>
+                        </span>
+                        </div>
+                    </div>
+                    <!-- COMPONENT END -->
+                    <div class="form-group">
+                        <button  class="btn btn-primary pull-right" id="upload-btn-phase3">Submit</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
+            </div>
 
 
               <div class="documents phase4-doc">

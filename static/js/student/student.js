@@ -3,7 +3,6 @@ var username = array[array.length - 1];
 var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
 var projectList = JSON.parse(localStorage.getItem("allProjectList"));
 var currentProject;
-var enrolledProject;
 const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
 
 var groupInfo={};
@@ -11,6 +10,8 @@ var selfGroup={};
 var selfGroupStatus;
 var userInfo={};
 var phaseList={};
+var taskList={}; //name -> uuid
+var allTasks={}; //uuid -> task
 var reminderList={};
 var projectInfo={};
 var userProfile={};
@@ -36,6 +37,7 @@ $(document).on('click', "#select-project", function(e){
     getAllInfo();
     welcomeUser();
     $(".phase1-nav").click();
+    displayTasks();
     displayResources();
     displayReminder();
     displayGroupInfo();
@@ -65,6 +67,12 @@ function getAllInfo(){
                         rsp_data['phase_list'].forEach(function(val){
                             phaseList[val['phase_name']]= val;
                         });
+                        for(var phase in phaseList){
+                            phaseList[phase]['task_list'].forEach(function(task){
+                                taskList[task['task_name']] = task['task_uuid'];
+                                allTasks[task['task_uuid']] = task;
+                            })
+                        }
                         reminderList = rsp_data['reminder_list'];
                         // rsp_data['reminder_list'].forEach(function(val){
                         //     reminderList[val['post_time']] = val['message'];
@@ -121,6 +129,15 @@ function displayProjects () {
              <option value=${id}>${name}</option>
         `)
     })
+}
+
+//display tasks
+function displayTasks() {
+    for(let task in taskList){
+        $(".task-selector").append(`
+                <option value=${taskList[task]}>${task}</option>
+            `)
+    }
 }
 
 //display resources
@@ -489,7 +506,7 @@ $(".phase1-nav").click( function(){
     $(".all-groups").hide();
     $(".documents").hide();
     $(".phase1-mark").hide();
-    $("#phase1-upload").hide();
+    $(".phase1 .file-input").hide();
     $("#successAlert-phase1").hide();
     $("#errorAlert-phase1").hide();
     $("button[type='reset']").click();
@@ -503,7 +520,7 @@ $(document).on('click', '.navgrp', function(e){
     $(".add-group").show();
     $(".all-groups").show();
     $(".phase1-mark").hide();
-    $("#phase1-upload").hide();
+    $(".phase1 .file-input").hide();
     $("#successAlert-phase1").hide();
     $("#errorAlert-phase1").hide();
     $("button[type='reset']").click();
@@ -519,14 +536,14 @@ $(".document").click( function(){
     $(".all-groups").hide();
     $(".documents").show();
     $(".phase1-mark").hide();
-    $("#phase1-upload").hide();
+    $(".phase1 .file-input").hide();
     $("#successAlert-phase1").hide();
     $("#errorAlert-phase1").hide();
     $("button[type='reset']").click();
 });
 
-// click proposal
-$(".nav-proposal").click( function(){
+// click uploading files
+$(".upload-nav-1").click( function(){
     $(".notes-wrapper").hide();
     $(".add-group").hide();
     $(".group-info").hide();
@@ -534,7 +551,7 @@ $(".nav-proposal").click( function(){
     $(".all-groups").hide();
     $(".documents").hide();
     $(".phase1-mark").hide();
-    $("#phase1-upload").show();
+    $(".phase1 .file-input").show();
     $("#successAlert-phase1").hide();
     $("#errorAlert-phase1").hide();
     $("button[type='reset']").click();
@@ -549,7 +566,7 @@ $(".navmark1").click(function(){
     $(".all-groups").hide();
     $(".documents").hide();
     $(".phase1-mark").show();
-    $("#phase1-upload").hide();
+    $(".phase1 .file-input").hide();
     $("#successAlert-phase1").hide();
     $("#errorAlert-phase1").hide();
     $("button[type='reset']").click();
@@ -696,30 +713,16 @@ $(".phase2-nav").click( function(){
 
 });
 
-//click requirement document
-$(document).on('click', '.nav-requirement', function(e){
-    e.preventDefault();
-    $(".phase2-mark").hide();
-    $(".notes-wrapper-2").hide();
-    $(".phase2-doc").hide();
-    $(".design").hide();
-    $(".requirement").show();
-    $(".file-input").show();
-    $("#successAlert-phase2").hide();
-    $("#errorAlert-phase2").hide();
-    $("button[type='reset']").click();
-    
-})
 
-//click design document
-$(document).on('click', '.nav-design', function(e){
+
+//click uploading files
+$(document).on('click', '.upload-nav-2', function(e){
     e.preventDefault();
     $(".phase2-mark").hide();
     $(".notes-wrapper-2").hide();
     $(".phase2-doc").hide();
     $(".requirement").hide();
     $(".file-input").show();
-    $(".design").show(); 
     $("#successAlert-phase2").hide();
     $("#errorAlert-phase2").hide();
     $("button[type='reset']").click();
@@ -857,12 +860,23 @@ $(document).on('click', '.phase4-nav', function(e){
     $(".notes-wrapper-4").show();
     $(".phase4-doc").hide();
     $(".phase4-mark").hide();
+    $(".file-input").hide();
+    $("button[type='reset']").click();
+})
+
+//click uploading files
+$(document).on('click', '.upload-nav-4', function(e){
+    $(".notes-wrapper-4").hide();
+    $(".phase4-doc").hide();
+    $(".phase4-mark").hide();
+    $(".file-input").show();
     $("button[type='reset']").click();
 })
 
 //click resources
 $(document).on('click', '.document-nav-4', function(e){
     $(".notes-wrapper-4").hide();
+     $(".file-input").hide();
     $(".phase4-doc").show();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
@@ -871,6 +885,7 @@ $(document).on('click', '.document-nav-4', function(e){
 //click mark
 $(document).on('click', '.navmark4', function(e){
     $(".notes-wrapper-4").hide();
+     $(".file-input").hide();
     $(".phase4-doc").hide();
     $(".phase4-mark").show();
     $("button[type='reset']").click();
