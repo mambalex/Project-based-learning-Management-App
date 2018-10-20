@@ -1724,9 +1724,43 @@ Sample Response:
                     "submit_require": 0,
                     "task_list": [
                         {
-                            "deadline": "2018-11-20 00:00:00",
+                            "deadline": "2018-10-12 10:59:59",
+                            "mark_distribution": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            3,
+                                            0,
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Group #",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Proposal mark distribution"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "FL",
+                                        "PS",
+                                        "CR",
+                                        "DN",
+                                        "HD"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "mark_release": "2018-10-13 11:00:00",
-                            "mark_status": "UnMarked",
+                            "mark_status": "Marked",
                             "mark_summary": {
                                 "legend": {
                                     "data": [
@@ -1759,20 +1793,38 @@ Sample Response:
                             },
                             "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
                             "spec_address": "None",
-                            "submit_group": [
-                                {
-                                    "file_address": "~/WorkSpace/COMP9323/Project-based-learning-Management-App/temp/1539048491.txt",
-                                    "group_name": "Group 1",
-                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                                    "mark": "None",
-                                    "submit_time": "2018-10-20 00:50:46",
-                                    "submit_uuid": "97f66382-d3a5-11e8-865a-4c3275989ef5"
-                                }
-                            ],
+                            "submit_group": [],
                             "submit_require": 1,
                             "task_name": "Proposal",
                             "task_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
                             "unsubmit_group": [
+                                {
+                                    "description": "Happy coding!",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student1@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Alex",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student2@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "John",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student3@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Olivia",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                                },
                                 {
                                     "description": "Need one more member",
                                     "group_name": "Group 2",
@@ -1844,6 +1896,40 @@ Sample Response:
                     "task_list": [
                         {
                             "deadline": "2018-10-14 10:59:59",
+                            "mark_distribution": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            3,
+                                            0,
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Group #",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Requirement document mark distribution"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "FL",
+                                        "PS",
+                                        "CR",
+                                        "DN",
+                                        "HD"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "mark_release": "2018-10-15 11:00:00",
                             "mark_status": "Marked",
                             "mark_summary": {
@@ -1968,6 +2054,40 @@ Sample Response:
                         },
                         {
                             "deadline": "2018-10-14 10:59:59",
+                            "mark_distribution": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            3,
+                                            0,
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Group #",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Design document mark distribution"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "FL",
+                                        "PS",
+                                        "CR",
+                                        "DN",
+                                        "HD"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "mark_release": "2018-10-15 11:00:00",
                             "mark_status": "Marked",
                             "mark_summary": {
@@ -2105,8 +2225,42 @@ Sample Response:
                     "task_list": [
                         {
                             "deadline": "2018-10-16 10:59:59",
+                            "mark_distribution": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            3,
+                                            0,
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Group #",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Implementation mark distribution"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "FL",
+                                        "PS",
+                                        "CR",
+                                        "DN",
+                                        "HD"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "mark_release": "2018-10-17 11:00:00",
-                            "mark_status": "UnMarked",
+                            "mark_status": "Marked",
                             "mark_summary": {
                                 "legend": {
                                     "data": [
@@ -2139,20 +2293,38 @@ Sample Response:
                             },
                             "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
                             "spec_address": "None",
-                            "submit_group": [
-                                {
-                                    "file_address": "~/WorkSpace/COMP9323/Project-based-learning-Management-App/temp/1539048491.txt",
-                                    "group_name": "Group 1",
-                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                                    "mark": "None",
-                                    "submit_time": "2018-10-20 00:53:07",
-                                    "submit_uuid": "2567657a-d3a6-11e8-8f1e-4c3275989ef5"
-                                }
-                            ],
+                            "submit_group": [],
                             "submit_require": 1,
                             "task_name": "Implementation",
                             "task_uuid": "a52fa206-c967-11e8-989a-4c3275989ef5",
                             "unsubmit_group": [
+                                {
+                                    "description": "Happy coding!",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student1@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Alex",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student2@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "John",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student3@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Olivia",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                                },
                                 {
                                     "description": "Need one more member",
                                     "group_name": "Group 2",
@@ -2224,6 +2396,40 @@ Sample Response:
                     "task_list": [
                         {
                             "deadline": "2018-10-18 10:59:59",
+                            "mark_distribution": {
+                                "legend": {
+                                    "data": [
+                                        "Mark"
+                                    ]
+                                },
+                                "series": [
+                                    {
+                                        "data": [
+                                            3,
+                                            0,
+                                            0,
+                                            0,
+                                            0
+                                        ],
+                                        "name": "Group #",
+                                        "type": "bar"
+                                    }
+                                ],
+                                "title": {
+                                    "text": "Task Demo mark distribution"
+                                },
+                                "tooltip": {},
+                                "xAxis": {
+                                    "data": [
+                                        "FL",
+                                        "PS",
+                                        "CR",
+                                        "DN",
+                                        "HD"
+                                    ]
+                                },
+                                "yAxis": {}
+                            },
                             "mark_release": "2018-10-20 11:00:00",
                             "mark_status": "Marked",
                             "mark_summary": {
@@ -2371,69 +2577,6 @@ Sample Response:
                     "submit_check": "yes"
                 }
             ],
-            "spec_address": "None",
-            "ungroup_student": []
-        },
-        {
-            "current_phase": 0,
-            "deadline": "2018-10-22 00:31:30",
-            "group_list": [],
-            "group_method": 0,
-            "mark_release": "None",
-            "master": "lecturer1@gmail.com",
-            "master_name": "Emma",
-            "phase_list": [
-                {
-                    "deadline": "2018-10-22 00:31:30",
-                    "mark_release": "None",
-                    "phase_index": 1,
-                    "phase_name": "aaa",
-                    "phase_uuid": "49f6b080-d3a3-11e8-8beb-4c3275989ef5",
-                    "project_uuid": "49f654a8-d3a3-11e8-b091-4c3275989ef5",
-                    "resource_list": [],
-                    "spec_address": "None",
-                    "submit_require": 0,
-                    "task_list": [
-                        {
-                            "deadline": "2018-10-22 00:31:30",
-                            "mark_release": "None",
-                            "mark_status": "Marked",
-                            "mark_summary": {
-                                "legend": {
-                                    "data": [
-                                        "Mark"
-                                    ]
-                                },
-                                "series": [
-                                    {
-                                        "data": [],
-                                        "name": "Mark",
-                                        "type": "bar"
-                                    }
-                                ],
-                                "title": {
-                                    "text": "Task aaaa mark summary"
-                                },
-                                "tooltip": {},
-                                "xAxis": {
-                                    "data": []
-                                },
-                                "yAxis": {}
-                            },
-                            "phase_uuid": "49f6b080-d3a3-11e8-8beb-4c3275989ef5",
-                            "spec_address": "None",
-                            "submit_group": [],
-                            "submit_require": 1,
-                            "task_name": "aaaa",
-                            "task_uuid": "49f6db14-d3a3-11e8-8bdb-4c3275989ef5",
-                            "unsubmit_group": []
-                        }
-                    ]
-                }
-            ],
-            "project_name": "COMP9999",
-            "project_uuid": "49f654a8-d3a3-11e8-b091-4c3275989ef5",
-            "reminder_list": [],
             "spec_address": "None",
             "ungroup_student": []
         }

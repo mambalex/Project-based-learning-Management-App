@@ -963,6 +963,7 @@ def lecturer_load_main_info():
                     if submit['mark'] == "None":
                         task['mark_status'] = "UnMarked"
                         break
+                # Mark summary
                 mark_summary = dict()
                 mark_summary['title'] = {'text': 'Task {} mark summary'.format(task['task_name'])}
                 mark_summary['tooltip'] = dict()
@@ -972,16 +973,44 @@ def lecturer_load_main_info():
                 mark_summary['yAxis'] = dict()
                 mark_summary['series'] = [{'name': 'Mark', 'type': 'bar'}]
                 mark_data = list()
+
+                # Mark distribution
+
+                grade = {"FL": 0, "PS": 0, "CR": 0, "DN": 0, "HD": 0}
+
+                mark_distribution = dict()
+                mark_distribution['title'] = {'text': 'Task {} mark distribution'.format(task['task_name'])}
+                mark_distribution['tooltip'] = dict()
+                mark_distribution['legend'] = {'data': ['Mark']}
+                mark_distribution['xAxis'] = {'data': ["FL", "PS", "CR", "DN", "HD"]}
+                mark_distribution['yAxis'] = dict()
+                mark_distribution['series'] = [{'name': 'Group #', 'type': 'bar'}]
+
                 for group in group_index:
                     if group in submit_group_id:
                         if mark_dict[group] == "None":
                             mark_data.append(0)
+                            grade["FL"] = grade["FL"] + 1
                         else:
                             mark_data.append(int(mark_dict[group]))
+                            if int(mark_dict[group]) < 50:
+                                grade["FL"] = grade["FL"] + 1
+                            elif 50 <= int(mark_dict[group]) < 65:
+                                grade["PS"] = grade["PS"] + 1
+                            elif 65 <= int(mark_dict[group]) < 75:
+                                grade["CR"] = grade["CR"] + 1
+                            elif 75 <= int(mark_dict[group]) < 85:
+                                grade["DN"] = grade["DN"] + 1
+                            elif 85 <= int(mark_dict[group]):
+                                grade["HD"] = grade["HD"] + 1
                     else:
                         mark_data.append(0)
+                        grade["FL"] = grade["FL"] + 1
                 mark_summary['series'][0]['data'] = mark_data
+                distribution_data = [grade[item] for item in mark_distribution['xAxis']['data']]
+                mark_distribution['series'][0]['data'] = distribution_data
                 task['mark_summary'] = mark_summary
+                task['mark_distribution'] = mark_distribution
 
             phase['task_list'] = task_list
         project['phase_list'] = phase_list
