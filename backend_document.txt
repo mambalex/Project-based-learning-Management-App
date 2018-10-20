@@ -1302,18 +1302,16 @@ Login-Required
 
 POST request to /api/student_main_info
 Methods: POST
-Type: JSON
+Type: None
 
-Sample Post:
-{
-    "Project_uuid": "sample_project1_uuid"
-}
+Sample Post: None
 
 Sample Response:
 {
     "all_project_list": [
         {
             "deadline": "2018-10-21 10:59:59",
+            "group_method": 0,
             "mark_release": "2018-10-25 11:00:00",
             "master": "lecturer1@gmail.com",
             "master_name": "Emma",
@@ -1323,256 +1321,162 @@ Sample Response:
         },
         {
             "deadline": "2018-10-21 10:59:59",
+            "group_method": 0,
             "mark_release": "2018-10-25 11:00:00",
             "master": "lecturer2@gmail.com",
             "master_name": "James",
             "project_name": "COMP9900 Project",
             "project_uuid": "04a676cc-c968-11e8-b2f6-4c3275989ef5",
             "spec_address": "None"
+        },
+        {
+            "deadline": "2018-10-22 00:31:30",
+            "group_method": 0,
+            "mark_release": "None",
+            "master": "lecturer1@gmail.com",
+            "master_name": "Emma",
+            "project_name": "COMP9999",
+            "project_uuid": "49f654a8-d3a3-11e8-b091-4c3275989ef5",
+            "spec_address": "None"
         }
     ],
     "code": 200,
-    "current_phase": -1,
-    "group_info": {
-        "description": "Happy coding!",
-        "group_name": "Group 1",
-        "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-        "mark": "None",
-        "member": [
-            {
-                "email": "student1@gmail.com",
-                "mem_type": 0,
-                "name": "Alex",
-                "photo": "None"
-            },
-            {
-                "email": "student2@gmail.com",
-                "mem_type": 1,
-                "name": "John",
-                "photo": "None"
-            },
-            {
-                "email": "student3@gmail.com",
-                "mem_type": 1,
-                "name": "Olivia",
-                "photo": "None"
-            }
-        ],
-        "msg": "Current join a group",
-        "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-        "status": 1
-    },
-    "group_list": [
-        {
-            "description": "Happy coding!",
-            "group_name": "Group 1",
-            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student1@gmail.com",
-                    "mem_type": 0,
-                    "name": "Alex",
-                    "photo": "None"
-                },
-                {
-                    "email": "student2@gmail.com",
-                    "mem_type": 1,
-                    "name": "John",
-                    "photo": "None"
-                },
-                {
-                    "email": "student3@gmail.com",
-                    "mem_type": 1,
-                    "name": "Olivia",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        },
-        {
-            "description": "Need one more member",
-            "group_name": "Group 2",
-            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student4@gmail.com",
-                    "mem_type": 0,
-                    "name": "Kevin",
-                    "photo": "None"
-                },
-                {
-                    "email": "student5@gmail.com",
-                    "mem_type": 1,
-                    "name": "Rose",
-                    "photo": "None"
-                },
-                {
-                    "email": "student6@gmail.com",
-                    "mem_type": 1,
-                    "name": "Jeanne",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        },
-        {
-            "description": "COMP9323 Group",
-            "group_name": "Group 3",
-            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student7@gmail.com",
-                    "mem_type": 0,
-                    "name": "Charles",
-                    "photo": "None"
-                },
-                {
-                    "email": "student8@gmail.com",
-                    "mem_type": 1,
-                    "name": "Shirley",
-                    "photo": "None"
-                },
-                {
-                    "email": "student9@gmail.com",
-                    "mem_type": 1,
-                    "name": "Robert",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        }
-    ],
     "msg": "Get data success",
-    "phase_list": [
-        {
-            "deadline": "2018-10-12 10:59:59",
-            "mark_release": "2018-10-13 11:00:00",
-            "phase_index": 1,
-            "phase_name": "Phase 1",
-            "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
-                {
-                    "deadline": "2018-10-12 10:59:59",
-                    "mark_release": "2018-10-13 11:00:00",
-                    "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_require": 1,
-                    "task_name": "Proposal",
-                    "task_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5"
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-14 10:59:59",
-            "mark_release": "2018-10-15 11:00:00",
-            "phase_index": 2,
-            "phase_name": "Phase 2",
-            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
-                {
-                    "deadline": "2018-10-14 10:59:59",
-                    "mark_release": "2018-10-15 11:00:00",
-                    "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_require": 1,
-                    "task_name": "Requirement document",
-                    "task_uuid": "a52cf4be-c967-11e8-8b38-4c3275989ef5"
-                },
-                {
-                    "deadline": "2018-10-14 10:59:59",
-                    "mark_release": "2018-10-15 11:00:00",
-                    "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_require": 1,
-                    "task_name": "Design document",
-                    "task_uuid": "2733b150-c9ea-11e8-94ac-4c3275989ef5"
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-16 10:59:59",
-            "mark_release": "2018-10-17 11:00:00",
-            "phase_index": 3,
-            "phase_name": "Phase 3",
-            "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
-                {
-                    "deadline": "2018-10-16 10:59:59",
-                    "mark_release": "2018-10-17 11:00:00",
-                    "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_require": 1,
-                    "task_name": "Implementation",
-                    "task_uuid": "a52fa206-c967-11e8-989a-4c3275989ef5"
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-18 10:59:59",
-            "mark_release": "2018-10-20 11:00:00",
-            "phase_index": 4,
-            "phase_name": "Phase 4",
-            "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
-                {
-                    "deadline": "2018-10-18 10:59:59",
-                    "mark_release": "2018-10-20 11:00:00",
-                    "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_require": 1,
-                    "task_name": "Demo",
-                    "task_uuid": "a53257cc-c967-11e8-9495-4c3275989ef5"
-                }
-            ]
-        }
-    ],
-    "project_info": {
-        "deadline": "2018-10-21 10:59:59",
-        "mark_release": "2018-10-25 11:00:00",
-        "master": "lecturer1@gmail.com",
-        "project_name": "COMP9323 Project",
-        "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-        "spec_address": "None"
-    },
-    "reminder_list": [
-        {
-            "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
-            "master": "lecturer1@gmail.com",
-            "message": "Task one proposal due soon.",
-            "post_time": "2018-10-07 22:26:57",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "reminder_uuid": "e6aef29a-ca23-11e8-8c13-4c3275989ef5",
-            "submit_check": "no"
-        }
-    ],
     "self_project_list": [
         {
+            "current_phase": -1,
             "deadline": "2018-10-21 10:59:59",
+            "group_info": {
+                "description": "Happy coding!",
+                "group_name": "Group 1",
+                "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                "mark": "None",
+                "member": [
+                    {
+                        "email": "student1@gmail.com",
+                        "mem_type": 0,
+                        "name": "Alex",
+                        "photo": "None"
+                    },
+                    {
+                        "email": "student2@gmail.com",
+                        "mem_type": 1,
+                        "name": "John",
+                        "photo": "None"
+                    },
+                    {
+                        "email": "student3@gmail.com",
+                        "mem_type": 1,
+                        "name": "Olivia",
+                        "photo": "None"
+                    }
+                ],
+                "msg": "Current join a group",
+                "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                "status": 1
+            },
+            "group_list": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ],
+            "group_method": 0,
             "mark_release": "2018-10-25 11:00:00",
             "master": "lecturer1@gmail.com",
             "master_name": "Emma",
             "project_name": "COMP9323 Project",
             "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "spec_address": "None"
+            "reminder_list": [
+                {
+                    "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+                    "master": "lecturer1@gmail.com",
+                    "message": "Task one proposal due soon.",
+                    "post_time": "2018-10-07 22:26:57",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "reminder_uuid": "e6aef29a-ca23-11e8-8c13-4c3275989ef5",
+                    "submit_check": "no"
+                }
+            ],
+            "spec_address": "None",
+            "ungroup_student": []
         }
     ],
     "user_profile": {
@@ -1589,631 +1493,654 @@ Login-Required
 
 POST request to /api/lecturer_main_info
 Methods: POST
-Type: JSON
+Type: None
 
-Sample Post:
-{
-    "Project_uuid": "sample_project1_uuid"
-}
+Sample Post: None
 
 Sample Response:
 {
     "code": 200,
-    "current_phase": -1,
-    "group_list": [
-        {
-            "description": "Happy coding!",
-            "group_name": "Group 1",
-            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student1@gmail.com",
-                    "mem_type": 0,
-                    "name": "Alex",
-                    "photo": "None"
-                },
-                {
-                    "email": "student2@gmail.com",
-                    "mem_type": 1,
-                    "name": "John",
-                    "photo": "None"
-                },
-                {
-                    "email": "student3@gmail.com",
-                    "mem_type": 1,
-                    "name": "Olivia",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        },
-        {
-            "description": "Need one more member",
-            "group_name": "Group 2",
-            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student4@gmail.com",
-                    "mem_type": 0,
-                    "name": "Kevin",
-                    "photo": "None"
-                },
-                {
-                    "email": "student5@gmail.com",
-                    "mem_type": 1,
-                    "name": "Rose",
-                    "photo": "None"
-                },
-                {
-                    "email": "student6@gmail.com",
-                    "mem_type": 1,
-                    "name": "Jeanne",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        },
-        {
-            "description": "COMP9323 Group",
-            "group_name": "Group 3",
-            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-            "mark": "None",
-            "member": [
-                {
-                    "email": "student7@gmail.com",
-                    "mem_type": 0,
-                    "name": "Charles",
-                    "photo": "None"
-                },
-                {
-                    "email": "student8@gmail.com",
-                    "mem_type": 1,
-                    "name": "Shirley",
-                    "photo": "None"
-                },
-                {
-                    "email": "student9@gmail.com",
-                    "mem_type": 1,
-                    "name": "Robert",
-                    "photo": "None"
-                }
-            ],
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-        }
-    ],
     "msg": "Get data success",
-    "phase_list": [
+    "self_project_list": [
         {
-            "deadline": "2018-10-12 10:59:59",
-            "mark_release": "2018-10-13 11:00:00",
-            "phase_index": 1,
-            "phase_name": "Phase 1",
-            "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
+            "current_phase": -1,
+            "deadline": "2018-10-21 10:59:59",
+            "group_list": [
+                {
+                    "description": "Happy coding!",
+                    "group_name": "Group 1",
+                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student1@gmail.com",
+                            "mem_type": 0,
+                            "name": "Alex",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student2@gmail.com",
+                            "mem_type": 1,
+                            "name": "John",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student3@gmail.com",
+                            "mem_type": 1,
+                            "name": "Olivia",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "Need one more member",
+                    "group_name": "Group 2",
+                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student4@gmail.com",
+                            "mem_type": 0,
+                            "name": "Kevin",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student5@gmail.com",
+                            "mem_type": 1,
+                            "name": "Rose",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student6@gmail.com",
+                            "mem_type": 1,
+                            "name": "Jeanne",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                },
+                {
+                    "description": "COMP9323 Group",
+                    "group_name": "Group 3",
+                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                    "mark": "None",
+                    "member": [
+                        {
+                            "email": "student7@gmail.com",
+                            "mem_type": 0,
+                            "name": "Charles",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student8@gmail.com",
+                            "mem_type": 1,
+                            "name": "Shirley",
+                            "photo": "None"
+                        },
+                        {
+                            "email": "student9@gmail.com",
+                            "mem_type": 1,
+                            "name": "Robert",
+                            "photo": "None"
+                        }
+                    ],
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                }
+            ],
+            "group_method": 0,
+            "mark_release": "2018-10-25 11:00:00",
+            "master": "lecturer1@gmail.com",
+            "master_name": "Emma",
+            "phase_list": [
                 {
                     "deadline": "2018-10-12 10:59:59",
                     "mark_release": "2018-10-13 11:00:00",
+                    "phase_index": 1,
+                    "phase_name": "Phase 1",
                     "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "resource_list": [],
                     "spec_address": "None",
-                    "submit_group": [
+                    "submit_require": 0,
+                    "task_list": [
                         {
-                            "file_address": "None",
-                            "group_name": "Group 1",
-                            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                            "mark": "None",
-                            "submit_time": "2018-10-19 16:07:02",
-                            "submit_uuid": "b8f0fa5a-d35c-11e8-80a8-4c3275989ef5"
-                        }
-                    ],
-                    "submit_require": 1,
-                    "task_name": "Proposal",
-                    "task_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
-                    "unsubmit_group": [
-                        {
-                            "description": "Need one more member",
-                            "group_name": "Group 2",
-                            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "deadline": "2018-11-20 00:00:00",
+                            "mark_release": "2018-10-13 11:00:00",
+                            "phase_uuid": "a528cb28-c967-11e8-9304-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [
                                 {
-                                    "email": "student4@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Kevin",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student5@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Rose",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student6@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Jeanne",
-                                    "photo": "None"
+                                    "file_address": "~/WorkSpace/COMP9323/Project-based-learning-Management-App/temp/1539048491.txt",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "submit_time": "2018-10-20 00:50:46",
+                                    "submit_uuid": "97f66382-d3a5-11e8-865a-4c3275989ef5"
                                 }
                             ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "COMP9323 Group",
-                            "group_name": "Group 3",
-                            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "submit_require": 1,
+                            "task_name": "Proposal",
+                            "task_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+                            "unsubmit_group": [
                                 {
-                                    "email": "student7@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Charles",
-                                    "photo": "None"
+                                    "description": "Need one more member",
+                                    "group_name": "Group 2",
+                                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student4@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Kevin",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student5@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Rose",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student6@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Jeanne",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student8@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Shirley",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student9@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Robert",
-                                    "photo": "None"
+                                    "description": "COMP9323 Group",
+                                    "group_name": "Group 3",
+                                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student7@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Charles",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student8@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Shirley",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student9@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Robert",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-14 10:59:59",
-            "mark_release": "2018-10-15 11:00:00",
-            "phase_index": 2,
-            "phase_name": "Phase 2",
-            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
-                {
-                    "deadline": "2018-10-14 10:59:59",
-                    "mark_release": "2018-10-15 11:00:00",
-                    "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
-                    "spec_address": "None",
-                    "submit_group": [],
-                    "submit_require": 1,
-                    "task_name": "Requirement document",
-                    "task_uuid": "a52cf4be-c967-11e8-8b38-4c3275989ef5",
-                    "unsubmit_group": [
-                        {
-                            "description": "Happy coding!",
-                            "group_name": "Group 1",
-                            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student1@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Alex",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student2@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "John",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student3@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Olivia",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "Need one more member",
-                            "group_name": "Group 2",
-                            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student4@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Kevin",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student5@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Rose",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student6@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Jeanne",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "COMP9323 Group",
-                            "group_name": "Group 3",
-                            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student7@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Charles",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student8@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Shirley",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student9@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Robert",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                            ]
                         }
                     ]
                 },
                 {
                     "deadline": "2018-10-14 10:59:59",
                     "mark_release": "2018-10-15 11:00:00",
+                    "phase_index": 2,
+                    "phase_name": "Phase 2",
                     "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "resource_list": [],
                     "spec_address": "None",
-                    "submit_group": [],
-                    "submit_require": 1,
-                    "task_name": "Design document",
-                    "task_uuid": "2733b150-c9ea-11e8-94ac-4c3275989ef5",
-                    "unsubmit_group": [
+                    "submit_require": 0,
+                    "task_list": [
                         {
-                            "description": "Happy coding!",
-                            "group_name": "Group 1",
-                            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "deadline": "2018-10-14 10:59:59",
+                            "mark_release": "2018-10-15 11:00:00",
+                            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [],
+                            "submit_require": 1,
+                            "task_name": "Requirement document",
+                            "task_uuid": "a52cf4be-c967-11e8-8b38-4c3275989ef5",
+                            "unsubmit_group": [
                                 {
-                                    "email": "student1@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Alex",
-                                    "photo": "None"
+                                    "description": "Happy coding!",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student1@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Alex",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student2@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "John",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student3@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Olivia",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student2@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "John",
-                                    "photo": "None"
+                                    "description": "Need one more member",
+                                    "group_name": "Group 2",
+                                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student4@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Kevin",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student5@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Rose",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student6@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Jeanne",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student3@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Olivia",
-                                    "photo": "None"
+                                    "description": "COMP9323 Group",
+                                    "group_name": "Group 3",
+                                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student7@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Charles",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student8@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Shirley",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student9@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Robert",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                            ]
                         },
                         {
-                            "description": "Need one more member",
-                            "group_name": "Group 2",
-                            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "deadline": "2018-10-14 10:59:59",
+                            "mark_release": "2018-10-15 11:00:00",
+                            "phase_uuid": "a52b99de-c967-11e8-9bd2-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [],
+                            "submit_require": 1,
+                            "task_name": "Design document",
+                            "task_uuid": "2733b150-c9ea-11e8-94ac-4c3275989ef5",
+                            "unsubmit_group": [
                                 {
-                                    "email": "student4@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Kevin",
-                                    "photo": "None"
+                                    "description": "Happy coding!",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student1@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Alex",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student2@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "John",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student3@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Olivia",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student5@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Rose",
-                                    "photo": "None"
+                                    "description": "Need one more member",
+                                    "group_name": "Group 2",
+                                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student4@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Kevin",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student5@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Rose",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student6@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Jeanne",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student6@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Jeanne",
-                                    "photo": "None"
+                                    "description": "COMP9323 Group",
+                                    "group_name": "Group 3",
+                                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student7@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Charles",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student8@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Shirley",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student9@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Robert",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "COMP9323 Group",
-                            "group_name": "Group 3",
-                            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student7@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Charles",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student8@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Shirley",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student9@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Robert",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                            ]
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-16 10:59:59",
-            "mark_release": "2018-10-17 11:00:00",
-            "phase_index": 3,
-            "phase_name": "Phase 3",
-            "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
+                },
                 {
                     "deadline": "2018-10-16 10:59:59",
                     "mark_release": "2018-10-17 11:00:00",
+                    "phase_index": 3,
+                    "phase_name": "Phase 3",
                     "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "resource_list": [],
                     "spec_address": "None",
-                    "submit_group": [],
-                    "submit_require": 1,
-                    "task_name": "Implementation",
-                    "task_uuid": "a52fa206-c967-11e8-989a-4c3275989ef5",
-                    "unsubmit_group": [
+                    "submit_require": 0,
+                    "task_list": [
                         {
-                            "description": "Happy coding!",
-                            "group_name": "Group 1",
-                            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "deadline": "2018-10-16 10:59:59",
+                            "mark_release": "2018-10-17 11:00:00",
+                            "phase_uuid": "a52e00d4-c967-11e8-8949-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [
                                 {
-                                    "email": "student1@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Alex",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student2@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "John",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student3@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Olivia",
-                                    "photo": "None"
+                                    "file_address": "~/WorkSpace/COMP9323/Project-based-learning-Management-App/temp/1539048491.txt",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "submit_time": "2018-10-20 00:53:07",
+                                    "submit_uuid": "2567657a-d3a6-11e8-8f1e-4c3275989ef5"
                                 }
                             ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "Need one more member",
-                            "group_name": "Group 2",
-                            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "submit_require": 1,
+                            "task_name": "Implementation",
+                            "task_uuid": "a52fa206-c967-11e8-989a-4c3275989ef5",
+                            "unsubmit_group": [
                                 {
-                                    "email": "student4@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Kevin",
-                                    "photo": "None"
+                                    "description": "Need one more member",
+                                    "group_name": "Group 2",
+                                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student4@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Kevin",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student5@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Rose",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student6@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Jeanne",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student5@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Rose",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student6@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Jeanne",
-                                    "photo": "None"
+                                    "description": "COMP9323 Group",
+                                    "group_name": "Group 3",
+                                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student7@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Charles",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student8@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Shirley",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student9@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Robert",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "COMP9323 Group",
-                            "group_name": "Group 3",
-                            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student7@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Charles",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student8@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Shirley",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student9@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Robert",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                            ]
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "deadline": "2018-10-18 10:59:59",
-            "mark_release": "2018-10-20 11:00:00",
-            "phase_index": 4,
-            "phase_name": "Phase 4",
-            "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "resource_list": [],
-            "spec_address": "None",
-            "submit_require": 0,
-            "task_list": [
+                },
                 {
                     "deadline": "2018-10-18 10:59:59",
                     "mark_release": "2018-10-20 11:00:00",
+                    "phase_index": 4,
+                    "phase_name": "Phase 4",
                     "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "resource_list": [],
                     "spec_address": "None",
-                    "submit_group": [],
-                    "submit_require": 1,
-                    "task_name": "Demo",
-                    "task_uuid": "a53257cc-c967-11e8-9495-4c3275989ef5",
-                    "unsubmit_group": [
+                    "submit_require": 0,
+                    "task_list": [
                         {
-                            "description": "Happy coding!",
-                            "group_name": "Group 1",
-                            "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
+                            "deadline": "2018-10-18 10:59:59",
+                            "mark_release": "2018-10-20 11:00:00",
+                            "phase_uuid": "a53111fa-c967-11e8-93b0-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [],
+                            "submit_require": 1,
+                            "task_name": "Demo",
+                            "task_uuid": "a53257cc-c967-11e8-9495-4c3275989ef5",
+                            "unsubmit_group": [
                                 {
-                                    "email": "student1@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Alex",
-                                    "photo": "None"
+                                    "description": "Happy coding!",
+                                    "group_name": "Group 1",
+                                    "group_uuid": "04b9e23e-c968-11e8-87f5-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student1@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Alex",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student2@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "John",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student3@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Olivia",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student2@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "John",
-                                    "photo": "None"
+                                    "description": "Need one more member",
+                                    "group_name": "Group 2",
+                                    "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student4@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Kevin",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student5@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Rose",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student6@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Jeanne",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 },
                                 {
-                                    "email": "student3@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Olivia",
-                                    "photo": "None"
+                                    "description": "COMP9323 Group",
+                                    "group_name": "Group 3",
+                                    "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
+                                    "mark": "None",
+                                    "member": [
+                                        {
+                                            "email": "student7@gmail.com",
+                                            "mem_type": 0,
+                                            "name": "Charles",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student8@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Shirley",
+                                            "photo": "None"
+                                        },
+                                        {
+                                            "email": "student9@gmail.com",
+                                            "mem_type": 1,
+                                            "name": "Robert",
+                                            "photo": "None"
+                                        }
+                                    ],
+                                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
                                 }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "Need one more member",
-                            "group_name": "Group 2",
-                            "group_uuid": "caf594d4-c968-11e8-badd-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student4@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Kevin",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student5@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Rose",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student6@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Jeanne",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
-                        },
-                        {
-                            "description": "COMP9323 Group",
-                            "group_name": "Group 3",
-                            "group_uuid": "05c5f5d8-c969-11e8-91ee-4c3275989ef5",
-                            "mark": "None",
-                            "member": [
-                                {
-                                    "email": "student7@gmail.com",
-                                    "mem_type": 0,
-                                    "name": "Charles",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student8@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Shirley",
-                                    "photo": "None"
-                                },
-                                {
-                                    "email": "student9@gmail.com",
-                                    "mem_type": 1,
-                                    "name": "Robert",
-                                    "photo": "None"
-                                }
-                            ],
-                            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5"
+                            ]
                         }
                     ]
                 }
-            ]
-        }
-    ],
-    "project_info": {
-        "deadline": "2018-10-21 10:59:59",
-        "mark_release": "2018-10-25 11:00:00",
-        "master": "lecturer1@gmail.com",
-        "project_name": "COMP9323 Project",
-        "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-        "spec_address": "None"
-    },
-    "reminder_list": [
-        {
-            "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
-            "master": "lecturer1@gmail.com",
-            "message": "Task one proposal due soon.",
-            "post_time": "2018-10-07 22:26:57",
+            ],
+            "project_name": "COMP9323 Project",
             "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "reminder_uuid": "e6aef29a-ca23-11e8-8c13-4c3275989ef5",
-            "submit_check": "no"
+            "reminder_list": [
+                {
+                    "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+                    "master": "lecturer1@gmail.com",
+                    "message": "Task one proposal due soon.",
+                    "post_time": "2018-10-07 22:26:57",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "reminder_uuid": "e6aef29a-ca23-11e8-8c13-4c3275989ef5",
+                    "submit_check": "no"
+                },
+                {
+                    "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+                    "master": "lecturer1@gmail.com",
+                    "message": "Task one proposal due soon, you have not submit.",
+                    "post_time": "2018-10-07 22:26:57",
+                    "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
+                    "reminder_uuid": "e6b15800-ca23-11e8-be86-4c3275989ef5",
+                    "submit_check": "yes"
+                }
+            ],
+            "spec_address": "None",
+            "ungroup_student": []
         },
         {
-            "ass_uuid": "a529fd7a-c967-11e8-a7be-4c3275989ef5",
+            "current_phase": 0,
+            "deadline": "2018-10-22 00:31:30",
+            "group_list": [],
+            "group_method": 0,
+            "mark_release": "None",
             "master": "lecturer1@gmail.com",
-            "message": "Task one proposal due soon, you have not submit.",
-            "post_time": "2018-10-07 22:26:57",
-            "project_uuid": "a5259728-c967-11e8-8220-4c3275989ef5",
-            "reminder_uuid": "e6b15800-ca23-11e8-be86-4c3275989ef5",
-            "submit_check": "yes"
+            "master_name": "Emma",
+            "phase_list": [
+                {
+                    "deadline": "2018-10-22 00:31:30",
+                    "mark_release": "None",
+                    "phase_index": 1,
+                    "phase_name": "aaa",
+                    "phase_uuid": "49f6b080-d3a3-11e8-8beb-4c3275989ef5",
+                    "project_uuid": "49f654a8-d3a3-11e8-b091-4c3275989ef5",
+                    "resource_list": [],
+                    "spec_address": "None",
+                    "submit_require": 0,
+                    "task_list": [
+                        {
+                            "deadline": "2018-10-22 00:31:30",
+                            "mark_release": "None",
+                            "phase_uuid": "49f6b080-d3a3-11e8-8beb-4c3275989ef5",
+                            "spec_address": "None",
+                            "submit_group": [],
+                            "submit_require": 1,
+                            "task_name": "aaaa",
+                            "task_uuid": "49f6db14-d3a3-11e8-8bdb-4c3275989ef5",
+                            "unsubmit_group": []
+                        }
+                    ]
+                }
+            ],
+            "project_name": "COMP9999",
+            "project_uuid": "49f654a8-d3a3-11e8-b091-4c3275989ef5",
+            "reminder_list": [],
+            "spec_address": "None",
+            "ungroup_student": []
         }
     ],
-    "self_project_list": [],
     "user_profile": {
         "dob": "October 05",
         "email": "lecturer1@gmail.com",

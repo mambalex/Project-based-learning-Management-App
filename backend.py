@@ -861,52 +861,18 @@ def download():
 @app.route('/api/student_main_info', methods=['POST'])
 @auth.login_required
 def student_load_main_info():
-    project_uuid = request.json.get('project_uuid')
-    project_info = db.get_projects(project_uuid)
-    if len(project_info) > 0:
-        project_info = project_info[0]
-        phase_list = db.get_project_all_phases(project_uuid)
-    else:
-        return jsonify(
-            {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     # User profile
-    user_profile = g.user.get_user_profile()
-    # Group part
-    group_info = dict()
-    if db.check_has_group(g.user.user_id, project_uuid):
-        current_group = db.get_self_group(g.user.user_id, project_uuid)[0]
-        group_member = db.get_group_member(current_group["group_uuid"])
-        current_group["member"] = group_member
-        group_info = current_group
-        group_info['status'] = 1
-        group_info['msg'] = 'Current join a group'
-    else:
-        group_info['status'] = 0
-        group_info['msg'] = 'Current do not join a group'
-    # Group list
-    group_list = db.get_all_group(project_uuid)
-    # Phase part
-    for phase in phase_list:
-        resource_list = db.get_resource_list(project_uuid, phase['phase_uuid'])
-        phase['resource_list'] = resource_list
-        task_list = db.get_phase_all_tasks(phase['phase_uuid'])
-        phase['task_list'] = task_list
-
-    current_phase = db.get_current_phase_index(project_uuid)
-    # Reminder part
-    global_reminder_list = db.student_get_self_global_reminder(project_uuid)
-    unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project_uuid)
-    reminder_list = global_reminder_list + unsubmit_reminder_list
-    reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
-    project_info['phase_list'] = phase_list.copy()
+    user_profile = g.user.get_user_profile()    
+    # Get self all project data
     self_project_list = db.get_self_project_list(g.user.user_id)
     for project in self_project_list:
+        # Group part
         temp_group_info = dict()
         if db.check_has_group(g.user.user_id, project["project_uuid"]):
             temp_current_group = db.get_self_group(g.user.user_id, project["project_uuid"])[0]
-            temp_group_member = db.get_group_member(current_group["group_uuid"])
-            current_group["member"] = group_member
-            temp_group_info = current_group
+            temp_group_member = db.get_group_member(temp_current_group["group_uuid"])
+            temp_current_group["member"] = temp_group_member
+            temp_group_info = temp_current_group
             temp_group_info['status'] = 1
             temp_group_info['msg'] = 'Current join a group'
         else:
@@ -916,14 +882,18 @@ def student_load_main_info():
         # Group list
         temp_group_list = db.get_all_group(project["project_uuid"])
         project['group_list'] = temp_group_list
+        temp_ungroup_student = db.get_ungroup_student(project["project_uuid"])
+        project['ungroup_student'] = temp_ungroup_student
         phase_list = db.get_project_all_phases(project["project_uuid"])
         for phase in phase_list:
             resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
             phase['resource_list'] = resource_list
             task_list = db.get_phase_all_tasks(phase['phase_uuid'])
             phase['task_list'] = task_list
+        # Current phase index
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
+        # Reminder part
         temp_global_reminder_list = db.student_get_self_global_reminder(project["project_uuid"])
         temp_unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project["project_uuid"])
         temp_reminder_list = temp_global_reminder_list + temp_unsubmit_reminder_list
@@ -931,59 +901,51 @@ def student_load_main_info():
         project['reminder_list'] = temp_reminder_list
     all_project_list = db.get_project_list()
 
-    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'group_info': group_info,
-                    'group_list': group_list, 'self_project_list': self_project_list,
-                    'all_project_list': all_project_list, 'project_info': project_info,
-                    'current_phase': current_phase, 'reminder_list': reminder_list})
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
+                    'self_project_list': self_project_list, 'all_project_list': all_project_list})
 
 
 # Lecturer main info
 @app.route('/api/lecturer_main_info', methods=['POST'])
 @auth.login_required
 def lecturer_load_main_info():
-    project_uuid = request.json.get('project_uuid')
-    project_info = db.get_projects(project_uuid)
-    if len(project_info) > 0:
-        project_info = project_info[0]
-        phase_list = db.get_project_all_phases(project_uuid)
-    else:
-        return jsonify(
-            {'code': 400, 'msg': 'Project not found', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
     # User profile
     user_profile = g.user.get_user_profile()
-    # Group list
-    group_list = db.get_all_group(project_uuid)
-    # Phase part
-    for phase in phase_list:
-        resource_list = db.get_resource_list(project_uuid, phase['phase_uuid'])
-        phase['resource_list'] = resource_list
-        task_list = db.get_phase_all_tasks(phase['phase_uuid'])
-        print(task_list)
-        phase_info = db.get_phases(phase['phase_uuid'])[0]
-        group_list = db.get_all_group(phase_info['project_uuid'])
-        for task in task_list:
-            task_submit_group = db.get_submits(task['task_uuid'])
-            print(task_submit_group)
-            submit_group_id = [item['group_uuid'] for item in task_submit_group]
-            unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
-            nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
-
-            task['submit_group'] = task_submit_group
-            task['unsubmit_group'] = unsubmit_group + nosubmit_group
-        phase['task_list'] = task_list
-
-
-    current_phase = db.get_current_phase_index(project_uuid)
-    # Reminder part
-    reminder_list = db.admin_get_self_reminder(g.user.user_id, project_uuid)
-    reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
-
+    # self all project data
     self_project_list = db.lecturer_get_self_project_list(g.user.user_id)
+    for project in self_project_list:
+        # Group list
+        group_list = db.get_all_group(project["project_uuid"])
+        project['group_list'] = group_list
+        ungroup_student = db.get_ungroup_student(project["project_uuid"])
+        project['ungroup_student'] = ungroup_student
+        # Phase part
+        phase_list = db.get_project_all_phases(project["project_uuid"])
+        for phase in phase_list:
+            resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
+            phase['resource_list'] = resource_list
+            task_list = db.get_phase_all_tasks(phase['phase_uuid'])
+            print(task_list)
+            for task in task_list:
+                task_submit_group = db.get_submits(task['task_uuid'])
+                print(task_submit_group)
+                submit_group_id = [item['group_uuid'] for item in task_submit_group]
+                unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
+                nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
 
-    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile,
-                    'group_list': group_list, 'project_info': project_info, 'phase_list': phase_list,
-                    'current_phase': current_phase, 'reminder_list': reminder_list,
-                    'self_project_list': self_project_list})
+                task['submit_group'] = task_submit_group
+                task['unsubmit_group'] = unsubmit_group + nosubmit_group
+            phase['task_list'] = task_list
+        project['phase_list'] = phase_list
+        # Find current phase
+        current_phase = db.get_current_phase_index(project["project_uuid"])
+        project['current_phase'] = current_phase
+        # Reminder part
+        reminder_list = db.admin_get_self_reminder(g.user.user_id, project["project_uuid"])
+        reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
+        project['reminder_list'] = reminder_list
+
+    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'self_project_list': self_project_list})
 
 
 # Get phase all submittion
