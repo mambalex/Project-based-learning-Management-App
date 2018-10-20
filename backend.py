@@ -890,6 +890,26 @@ def student_load_main_info():
             phase['resource_list'] = resource_list
             task_list = db.get_phase_all_tasks(phase['phase_uuid'])
             phase['task_list'] = task_list
+            if temp_group_info['status'] == 0:
+                mark_result = dict()
+                mark_result['status'] = 'Ungroup'
+                mark_result['mark'] = 0
+            else:
+                for task in task_list:
+                    mark_result = dict()
+                    submission = db.get_self_submit(temp_group_info["group_uuid"], task["task_uuid"])
+                    if len(submission) == 0:
+                        mark_result['status'] = 'Unsubmit'
+                        mark_result['mark'] = 0
+                    else:
+                        submission = submission[0]
+                        if submission["mark"] == "None":
+                            mark_result['status'] = 'UnMarked'
+                            mark_result['mark'] = 0
+                        else:
+                            mark_result['status'] = 'Marked'
+                            mark_result['mark'] = int(submission["mark"])
+                    task['mark_result'] = mark_result
         project['phase_list'] = phase_list
         # Current phase index
         current_phase = db.get_current_phase_index(project["project_uuid"])
