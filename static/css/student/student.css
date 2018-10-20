@@ -287,11 +287,31 @@ button{
 
 .mark-wrapper{
   height: 100px;
+    display: block !important;
 }
 .mark-wrapper p{
   margin-top: 40px;
   margin-left: 50px;
   color:#245853;
+}
+
+.mark-wrapper ul{
+    padding-top: 0 !important;
+    margin-left:30%;
+}
+
+.mark-wrapper ul li{
+    border:none !important;
+    font-size: 16px;
+}
+
+.mark-wrapper .taskMark{
+    margin-left: 30px;
+    color: red;
+}
+.mark-wrapper li{
+    display: flex;
+    width: 200px;
 }
 
 /*phase3*/
