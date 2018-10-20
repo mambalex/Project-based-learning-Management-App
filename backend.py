@@ -1066,7 +1066,7 @@ def get_mark_summary():
             mark_summary['series'][0]['data'] = mark_data
             task['mark_summary'] = mark_summary
         print(tasks_list)
-        return jsonify({'code': 400, 'msg': 'Insufficient permissions', 'user_id': g.user.user_id,
+        return jsonify({'code': 400, 'msg': 'Get mark summary success', 'user_id': g.user.user_id,
                         'user_type': g.user.user_type, 'data': tasks_list})
     else:
         return jsonify(
