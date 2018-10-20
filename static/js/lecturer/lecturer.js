@@ -708,7 +708,11 @@ $(".saveDeadline").on('click',function(){
                 console.log(data);
                 if(data['code']==200){
                     popUp(".deadline-container", ".alert-success","Successfully set a deadline",".deadline");
-
+                    getAllInfo();
+                    displayDueDate(1);
+                    displayDueDate(2);
+                    displayDueDate(3);
+                    displayDueDate(4);
                     // $("#successAlert-phase1").text("Successfully uploaded!").show();
                     // $("#errorAlert-phase1").hide();
                 }else{
