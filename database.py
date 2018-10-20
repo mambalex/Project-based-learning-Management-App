@@ -469,13 +469,13 @@ def create_whole_project(master, project_data):
     sql = "insert into projects (project_uuid, master, project_name, deadline, spec_address, group_method) values \
           ('{}', '{}', '{}', '{}', 'None', 0);".format(project_uuid, master, project_data['project_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800*expect_length)) + "+0")
     database_object.update(sql)
-    i = 1
+    i = 0
+    j = 1
     for phase in project_data['phase_list']:
         phase_uuid = uuid.uuid1()
-        sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
-            ('{}', '{}', {}, '{}', '{}', 0, 'None');".format(phase_uuid, project_uuid, phase['phase_index'], phase['phase_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800*len(phase['task_list']))) + "+0")
-        database_object.update(sql)
+        j = j + 1
         for task in phase['task_list']:
+            i = i + 1
             task_uuid = uuid.uuid1()
             submit_require = 0
             if task['submitRequire'] == "Yes":
@@ -483,7 +483,9 @@ def create_whole_project(master, project_data):
             sql = "insert into tasks (task_uuid, phase_uuid, task_name, deadline, submit_require, spec_address) values \
                 ('{}', '{}', '{}', '{}', {}, 'None');".format(task_uuid, phase_uuid, task['taskName'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800*i)) + "+0", submit_require)
             database_object.update(sql)
-            i = i + 1
+        sql = "insert into phases (phase_uuid, project_uuid, phase_index, phase_name, deadline, submit_require, spec_address) values \
+            ('{}', '{}', {}, '{}', '{}', 0, 'None');".format(phase_uuid, project_uuid, phase['phase_index'], phase['phase_name'], time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time()+172800*i)) + "+0")
+        database_object.update(sql)
     database_object.close()
 
 
