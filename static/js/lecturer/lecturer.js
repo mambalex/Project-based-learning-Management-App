@@ -146,16 +146,15 @@ function displayAllReminder(){
 
 //display deadline
 function displayDeadline() {
-    // $(".deadline-selector option").each(function (option) {
-    //     console.log($(option).text())
-    //     if($(option).val()!="Phase 1" && $(option).val()!="Phase 2" &&
-    //         $(option).val()!="Phase 3" && $(option).val()!="Phase 4"){
-    //         $(option).remove();
-    //     }
-    // })
+    $(".deadline-selector option").remove();
+    for(let phase in phaseList ){
+        $(".deadline-selector").append(`
+                <option value=${phaseList[phase]['phase_uuid']}>${phase}</option>
+            `)
+    }
     for(let task in taskList){
         $(".deadline-selector").append(`
-                <option value=${task}>${task}</option>
+                <option value=${taskList[task]}>${task}</option>
             `)
     }
 }
@@ -665,29 +664,16 @@ $('.deadline-selector').change(function(){
 });
 
 $(".saveDeadline").on('click',function(){
-    var taskPhaseId;
-    var task = $(this).closest('.deadline-container').find(".deadline-selector").val();
+    var taskId = $(this).closest('.deadline-container').find(".deadline-selector").val();
+    var taskName = $(this).closest('.deadline-container').find(".deadline-selector").find(":selected").text();
     var month = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[1];
     var day = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[2].slice(0, -1);
     var year = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[3];
     month = getMonthFromString(month);
-    if(task == "Others"){
-        task = $(this).closest('.deadline-container').find(".others-deadline").val();
-        return
-    }
-    var temp = task.slice(0, -1);
-    if(temp == "Phase "){
-        console.log(phaseList);
-        console.log(task);
-        taskPhaseId = phaseList[task]["phase_uuid"];
-    }else{
-        taskPhaseId = taskList[task];
-    }
-
     var data = {
                 deadline:`${year}-${month}-${day}`,
-                name:task,
-                ass_uuid:taskPhaseId
+                name:taskName,
+                ass_uuid:taskId
             }
     console.log(data);
     $.ajax({

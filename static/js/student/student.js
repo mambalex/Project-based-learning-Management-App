@@ -36,6 +36,16 @@ $(document).on('click', "#select-project", function(e){
     $(".layer").hide();
     selfProjectList.forEach(function (proj) {
         if(proj['project_uuid'] == currentProject){
+                groupMethod = proj['group_method'];
+                if(groupMethod==1){
+                    $(".add-group-btn").hide();
+                    $(".join").hide();
+                    $(".leave").hide();
+                }else{
+                    $(".add-group-btn").show();
+                    $(".join").show();
+                    $(".leave").show();
+                }
                 selfGroup = proj['group_info'];
                 selfGroupStatus = proj['group_info']['status'];
                 proj['group_list'].forEach(function(val){
@@ -136,6 +146,7 @@ function displayProjects () {
 
 //display tasks
 function displayTasks() {
+    $(".task-selector option").remove();
     for(let task in taskList){
         $(".task-selector").append(`
                 <option value=${taskList[task]}>${task}</option>
@@ -257,6 +268,12 @@ function displayDueDate(id){
     })
 }
 
+
+//display mark
+function displayMarks(){
+
+
+}
 
 
 
@@ -862,7 +879,8 @@ $("#upload-btn-phase3").click(function(e){
 $(document).on('click', '.phase4-nav', function(e){
     $(".notes-wrapper-4").show();
     $(".phase4-doc").hide();
-    // $("#distribution").hide();
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".phase4-mark").hide();
     $(".file-input").hide();
     $("button[type='reset']").click();
@@ -872,7 +890,8 @@ $(document).on('click', '.phase4-nav', function(e){
 $(document).on('click', '.upload-nav-4', function(e){
     $(".notes-wrapper-4").hide();
     $(".phase4-doc").hide();
-    // $("#distribution").hide();
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".phase4-mark").hide();
     $(".file-input").show();
     $("button[type='reset']").click();
@@ -882,7 +901,8 @@ $(document).on('click', '.upload-nav-4', function(e){
 $(document).on('click', '.document-nav-4', function(e){
     $(".notes-wrapper-4").hide();
      $(".file-input").hide();
-     // $("#distribution").hide();
+     $("#distribution").hide();
+    $("#distribution2").hide();
     $(".phase4-doc").show();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
@@ -891,9 +911,10 @@ $(document).on('click', '.document-nav-4', function(e){
 //click mark
 $(document).on('click', '.navmark4', function(e){
     $(".notes-wrapper-4").hide();
-     $(".file-input").hide();
+    $(".file-input").hide();
     $(".phase4-doc").hide();
-    // $("#distribution").hide();
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".phase4-mark").show();
     $("button[type='reset']").click();
 })
@@ -901,10 +922,11 @@ $(document).on('click', '.navmark4', function(e){
 // click distribution
 $(document).on('click', '.distribution', function(e){
     $(".notes-wrapper-4").hide();
-     $(".file-input").hide();
+    $(".file-input").hide();
     $(".phase4-doc").hide();
     $(".phase4-mark").hide();
-    // $("#distribution").show();
+    $("#distribution").show();
+    $("#distribution2").show();
     $("button[type='reset']").click();
 })
 
@@ -1054,6 +1076,15 @@ $(document).on('click', ".project-dropdown a", function(e){
     getAllInfo();
     selfProjectList.forEach(function (proj) {
         if(proj['project_uuid'] == currentProject){
+                if(groupMethod==1){
+                    $(".add-group-btn").hide();
+                    $(".join").hide();
+                    $(".leave").hide();
+                }else{
+                    $(".add-group-btn").show();
+                    $(".join").show();
+                    $(".leave").show();
+                }
                 selfGroup = proj['group_info'];
                 selfGroupStatus = proj['group_info']['status'];
                 proj['group_list'].forEach(function(val){
@@ -1087,23 +1118,45 @@ $(document).on('click', ".project-dropdown a", function(e){
 
 //distribution
 
-// var myChart = echarts.init($("#distribution"));
-// var option = {
-//             title: {
-//                 text: 'ECharts entry example'
-//             },
-//             tooltip: {},
-//             legend: {
-//                 data:['Sales']
-//             },
-//             xAxis: {
-//                 data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
-//             },
-//             yAxis: {},
-//             series: [{
-//                 name: 'Sales',
-//                 type: 'bar',
-//                 data: [5, 20, 36, 10, 10, 20]
-//             }]
-//         };
-// myChart.setOption(option);
+var myChart = echarts.init(document.getElementById('distribution'));
+var option = {
+            title: {
+                text: 'Mark Distribution'
+            },
+            tooltip: {},
+            legend: {
+                data:['Mark']
+            },
+            xAxis: {
+                data: ["50-","50-60","60-70","70-80","80-90","90+"]
+            },
+            yAxis: {},
+            series: [{
+                name: 'Sales',
+                type: 'bar',
+                itemStyle: {color: '#28a745'},
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+myChart.setOption(option);
+
+var myChart2 = echarts.init(document.getElementById('distribution2'));
+myChart2.setOption({
+    series : [
+        {
+            roseType: 'angle',
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            data:[
+                {value:235, name:'50-'},
+                {value:235, name:'50-60'},
+                {value:274, name:'60-70'},
+                {value:310, name:'70-80'},
+                {value:335, name:'80-90'},
+                {value:400, name:'90+'}
+            ]
+        }
+    ]
+})
