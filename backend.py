@@ -902,6 +902,7 @@ def student_load_main_info():
                         mark_result['status'] = 'Unsubmit'
                         mark_result['mark'] = 0
                     else:
+                        submission = submission[0]
                         if submission["mark"] == "None":
                             mark_result['status'] = 'UnMarked'
                             mark_result['mark'] = 0
