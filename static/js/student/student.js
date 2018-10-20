@@ -18,12 +18,12 @@ var userProfile={};
 var inGroupOrnot;
 var currentGroupName;
 
-// $(".loaders").hide();
 
+$(".layer").show();
+$(".remove-layer").hide();
 $(document).ready(function(){
+    getAllInfo();
     displayProjects();
-    $(".layer").show();
-    $(".remove-layer").hide();
     $(".select-project").show();
 })
 
@@ -34,7 +34,25 @@ $(document).on('click', "#select-project", function(e){
     currentProject = $(this).siblings('select').val(); //id
     $(".select-project").hide();
     $(".layer").hide();
-    getAllInfo();
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+                selfGroup = proj['group_info'];
+                selfGroupStatus = proj['group_info']['status'];
+                proj['group_list'].forEach(function(val){
+                    groupInfo[val['group_name']]= val;
+                });
+                proj['phase_list'].forEach(function(val){
+                    phaseList[val['phase_name']]= val;
+                });
+                for(var phase in phaseList){
+                    phaseList[phase]['task_list'].forEach(function(task){
+                        taskList[task['task_name']] = task['task_uuid'];
+                        allTasks[task['task_uuid']] = task;
+                    })
+                }
+                reminderList = proj['reminder_list'];
+        }
+    })
     welcomeUser();
     $(".phase1-nav").click();
     displayTasks();
@@ -59,35 +77,10 @@ function getAllInfo(){
             },
             success(rsp_data){
                         console.log(rsp_data);
-                        selfGroup = rsp_data['group_info'];  
-                        selfGroupStatus = rsp_data['group_info']['status']
-                        rsp_data['group_list'].forEach(function(val){
-                            groupInfo[val['group_name']]= val;
-                        });   
-                        rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_name']]= val;
-                        });
-                        for(var phase in phaseList){
-                            phaseList[phase]['task_list'].forEach(function(task){
-                                taskList[task['task_name']] = task['task_uuid'];
-                                allTasks[task['task_uuid']] = task;
-                            })
-                        }
-                        reminderList = rsp_data['reminder_list'];
-                        // rsp_data['reminder_list'].forEach(function(val){
-                        //     reminderList[val['post_time']] = val['message'];
-                        // });
-                        projectInfo = rsp_data['project_info'];
-                        userProfile = rsp_data['user_profile']; 
-                        localStorage.setItem('profile', JSON.stringify(userProfile));
                         projectList = rsp_data['all_project_list'];
                         selfProjectList = rsp_data['self_project_list'];
-
-                        console.log(selfGroup)
-                        console.log(groupInfo)       
-                        console.log(phaseList)       
-                        console.log(projectInfo)       
-                        console.log(userProfile)       
+                        userProfile = rsp_data['user_profile'];
+                        localStorage.setItem('profile', JSON.stringify(userProfile));
             }
     })
 }
@@ -859,6 +852,7 @@ $("#upload-btn-phase3").click(function(e){
 $(document).on('click', '.phase4-nav', function(e){
     $(".notes-wrapper-4").show();
     $(".phase4-doc").hide();
+    // $("#distribution").hide();
     $(".phase4-mark").hide();
     $(".file-input").hide();
     $("button[type='reset']").click();
@@ -868,6 +862,7 @@ $(document).on('click', '.phase4-nav', function(e){
 $(document).on('click', '.upload-nav-4', function(e){
     $(".notes-wrapper-4").hide();
     $(".phase4-doc").hide();
+    // $("#distribution").hide();
     $(".phase4-mark").hide();
     $(".file-input").show();
     $("button[type='reset']").click();
@@ -877,6 +872,7 @@ $(document).on('click', '.upload-nav-4', function(e){
 $(document).on('click', '.document-nav-4', function(e){
     $(".notes-wrapper-4").hide();
      $(".file-input").hide();
+     // $("#distribution").hide();
     $(".phase4-doc").show();
     $(".phase4-mark").hide();
     $("button[type='reset']").click();
@@ -887,9 +883,21 @@ $(document).on('click', '.navmark4', function(e){
     $(".notes-wrapper-4").hide();
      $(".file-input").hide();
     $(".phase4-doc").hide();
+    // $("#distribution").hide();
     $(".phase4-mark").show();
     $("button[type='reset']").click();
 })
+
+// click distribution
+$(document).on('click', '.distribution', function(e){
+    $(".notes-wrapper-4").hide();
+     $(".file-input").hide();
+    $(".phase4-doc").hide();
+    $(".phase4-mark").hide();
+    // $("#distribution").show();
+    $("button[type='reset']").click();
+})
+
 
 
 // click enrol
@@ -1029,4 +1037,31 @@ $(document).on('click', ".upload-btn", function(e){
 
 })
 
+//switch project
+$(document).on('click', ".project-dropdown a", function(e){
+    let id = $(this).find('.id').text();
+})
 
+
+//distribution
+
+// var myChart = echarts.init($("#distribution"));
+// var option = {
+//             title: {
+//                 text: 'ECharts entry example'
+//             },
+//             tooltip: {},
+//             legend: {
+//                 data:['Sales']
+//             },
+//             xAxis: {
+//                 data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+//             },
+//             yAxis: {},
+//             series: [{
+//                 name: 'Sales',
+//                 type: 'bar',
+//                 data: [5, 20, 36, 10, 10, 20]
+//             }]
+//         };
+// myChart.setOption(option);
