@@ -187,6 +187,14 @@ function displayResources(){
     for(var phase in phaseList ){
         let phase_num = phase.split(" ")[1];
         $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        if(phaseList[phase]['resource_list'].length==0){
+            $(`.phase${phase_num}-doc`).find("tbody").append(`
+                            <tr>
+                                  <td>Doc</td>
+                                  <td>No files</td>                   
+                              </tr>   
+            `)
+        }
         phaseList[phase]['resource_list'].forEach(function (doc) {
             var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
             var displayName = doc['filename'];
@@ -327,6 +335,8 @@ $(".navgrp").click( function(){
     $(".mark-container").hide();
     $(".documents").hide()
     $(".new_note").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".deadline_view").hide()
     $(".group-info").show()
 
@@ -341,6 +351,8 @@ $(".reminder").click(function(){
     $(".mark-container").hide();
     $(".group-info").hide()
     $(".deadline_view").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".new_note").css('display','flex')
     $("#task-select").val($("#task-select option:first").val());
     $("#group-select").val($("#group-select option:first").val());
@@ -356,6 +368,8 @@ $(".active").click( function(){
     $(".documents").hide()
     $(".mark-container").hide();
     $(".deadline_view").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".notes-wrapper").show()
 });
 
@@ -368,6 +382,8 @@ $(".deadline").click( function(){
     $(".documents").hide()
     $(".mark-container").hide();
     $(".notes-wrapper").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".deadline_view").show()
     $(".deadline-selector").val($(".deadline-selector option:first").val());
     $(".others-deadline").hide();
@@ -381,6 +397,8 @@ $(".upload").click( function(){
     $(".mark-container").hide();
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".upload-files").show()
     $(".documents").show()
     $(".reset").click();
@@ -395,12 +413,38 @@ $(".mark").click( function(){
     $(".deadline_view").hide()
     $(".upload-files").hide()
     $(".documents").hide()
+    $("#distribution").hide();
+    $("#distribution2").hide();
     $(".mark-container .mark-doc").show()
     $(".reset").click();
     $(".mark-container").show();
     $(".mark-container select").val("");
     $(".mark-container .select-group-task").click();
 });
+
+//Click Mark distribution
+$(".distribution").click( function(){
+    $(".alert").hide()
+    $(".group-info").hide()
+    $(".new_note").hide()
+    $(".notes-wrapper").hide()
+    $(".deadline_view").hide()
+    $(".upload-files").hide()
+    $(".documents").hide()
+    $(".mark-container .mark-doc").hide()
+    $(".reset").click();
+    $(".mark-container").hide();
+    $(".mark-container select").val("");
+    $(".mark-container .select-group-task").click();
+    $("#distribution").show();
+    $("#distribution2").show();
+});
+
+
+
+
+
+
 
 //generate groups
 $(document).on('click', '.group-info button', function(e){
@@ -752,75 +796,8 @@ function newReminder(){
 
 
 
-$(document).on("keypress", "#chatbotInput", function(e){
-    var flag = 'no';
-    if(e.which == 13){
-        e.preventDefault();
-        var name = userProfile['name'];
-        var msg = $("#chatbotInput").val();
-        if(msg==="deadline for phase1"){
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>2018-10-12 10:59:59</p>
-                      </div> 
-                    </div><hr>`);  
-                  var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else if(msg ==="send a new reminder"){
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>Sure, what do you want to send?</p>
-                      </div> 
-                    </div><hr>`); 
-                      var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else if(msg="Welcome to comp9323"){
-                      newReminder();
-                         $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>New reminder has been sent :)</p>
-                      </div> 
-                    </div><hr>`); 
-                    var date = new Date().toISOString().split('T')[0];
-                    $(".reminder-list").append(`<li >
-                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-                                <div class="content">Welcome to comp9323!</div>
-                                <div class="task">Task: <span id="task-name">Project</span></div>
-                                <div class="date"><span class="due">${date}</span></div>
-                            </li>`);
-                    var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else{
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>Emm..</p>
-                      </div> 
-                    </div><hr>`); 
-             var d = $('.chat-history');
-            d.scrollTop(d.prop("scrollHeight"));
-        }
 
-
-    }
-});
-
-$(".tag").on('click',function(){
-    var msg = $(".new-reminder-msg").val();
-    var newMsg = `#mark# ${msg}`;
-    $(".new-reminder-msg").val(newMsg);
-})
-
-
-
-
+//select marking group and task
 $(document).on("click", ".select-group-task", function(e){
         var groupId = $(this).siblings('.select-group').val();
         var taskId = $(this).siblings('.select-task').val();
@@ -875,9 +852,7 @@ $(document).on("click", ".select-group-task", function(e){
 });
 
 
-
-
-
+//submit mark
 $(document).on('click', '.mark-container .button', function(e){
     e.preventDefault();
     var flag = $(this).siblings('.mark-doc').find('.id').text();
@@ -947,6 +922,120 @@ $(document).on('click', ".project-dropdown a", function(e){
     displayDueDate(4);
 })
 
+
+//distribution
+
+var myChart = echarts.init(document.getElementById('distribution'));
+var option = {
+            title: {
+                text: 'Mark Distribution'
+            },
+            tooltip: {},
+            legend: {
+                data:['Mark']
+            },
+            xAxis: {
+                data: ["50-","50-60","60-70","70-80","80-90","90+"]
+            },
+            yAxis: {},
+            series: [{
+                name: 'Sales',
+                type: 'bar',
+                itemStyle: {color: '#28a745'},
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+myChart.setOption(option);
+
+var myChart2 = echarts.init(document.getElementById('distribution2'));
+myChart2.setOption({
+    series : [
+        {
+            roseType: 'angle',
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            data:[
+                {value:235, name:'50-'},
+                {value:235, name:'50-60'},
+                {value:274, name:'60-70'},
+                {value:310, name:'70-80'},
+                {value:335, name:'80-90'},
+                {value:400, name:'90+'}
+            ]
+        }
+    ]
+})
+
+
+//chat bot
+
+$(document).on("keypress", "#chatbotInput", function(e){
+    var flag = 'no';
+    if(e.which == 13){
+        e.preventDefault();
+        var name = userProfile['name'];
+        var msg = $("#chatbotInput").val();
+        if(msg==="deadline for phase1"){
+            $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>2018-10-12 10:59:59</p>
+                      </div> 
+                    </div><hr>`);
+                  var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+        }else if(msg ==="send a new reminder"){
+            $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>Sure, what do you want to send?</p>
+                      </div> 
+                    </div><hr>`);
+                      var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+        }else if(msg="Welcome to comp9323"){
+                      newReminder();
+                         $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>New reminder has been sent :)</p>
+                      </div> 
+                    </div><hr>`);
+                    var date = new Date().toISOString().split('T')[0];
+                    $(".reminder-list").append(`<li >
+                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                                <div class="content">Welcome to comp9323!</div>
+                                <div class="task">Task: <span id="task-name">Project</span></div>
+                                <div class="date"><span class="due">${date}</span></div>
+                            </li>`);
+                    var d = $('.chat-history');
+                     d.scrollTop(d.prop("scrollHeight"));
+        }else{
+            $(".chat-history").append(`<div class="chat-message clearfix">
+                      <div class="chat-message-content clearfix">
+                        <span class="chat-time">13:35</span>
+                        <h5>Bot</h5>
+                        <p>Emm..</p>
+                      </div> 
+                    </div><hr>`);
+             var d = $('.chat-history');
+            d.scrollTop(d.prop("scrollHeight"));
+        }
+
+
+    }
+});
+
+$(".tag").on('click',function(){
+    var msg = $(".new-reminder-msg").val();
+    var newMsg = `#mark# ${msg}`;
+    $(".new-reminder-msg").val(newMsg);
+})
 
 
 
