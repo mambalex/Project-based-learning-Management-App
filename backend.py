@@ -890,6 +890,7 @@ def student_load_main_info():
             phase['resource_list'] = resource_list
             task_list = db.get_phase_all_tasks(phase['phase_uuid'])
             phase['task_list'] = task_list
+        project['phase_list'] = phase_list
         # Current phase index
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
