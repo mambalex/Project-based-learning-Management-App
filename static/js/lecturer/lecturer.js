@@ -463,32 +463,32 @@ $(".distribution").click( function(){
 
 //generate groups
 $(document).on('click', '.group-info button', function(e){
-    var groupSize = $(this).siblings('.group-size').find('input').val();
-    if(!groupSize){
-        alert('Please enter a group size')
-        return
-    }
-    var ramdomOrManual;
-    $(".group-info input[type=checkbox]").each(function () {
-            var self = $(this);
-            if (self.is(':checked')) {
-                ramdomOrManual = self.attr("name");
+            var groupSize = $(this).siblings('.group-size').find('input').val();
+            if(!groupSize){
+                alert('Please enter a group size')
+                return
             }
-    });
-    if(!ramdomOrManual){
-        alert('Please select an option')
-        return
-    }
-    if(ramdomOrManual=="Randomly"){
+            var ramdomOrManual;
+            $(".group-info input[type=checkbox]").each(function () {
+                    var self = $(this);
+                    if (self.is(':checked')) {
+                        ramdomOrManual = self.attr("name");
+                    }
+            });
+            if(!ramdomOrManual){
+                alert('Please select an option')
+                return
+            }
             var data={
+                "ramdomOrManual":ramdomOrManual,
                 'project_uuid': currentProject,
                 'group_size':groupSize
             }
            $.ajax({
             type: 'POST',
-            url: '/api/random_group',
+            url: '/api/change_group_method',
             contentType: "application/json",
-            data:JSON.stringify(data),
+            data:JSON.stringify({"update_data":data}),
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
@@ -501,7 +501,7 @@ $(document).on('click', '.group-info button', function(e){
                 $('.group-size').find('input').val("");
             }
            })
-    }
+
 
 })
 

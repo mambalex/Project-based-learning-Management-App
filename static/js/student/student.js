@@ -1156,6 +1156,16 @@ $(document).on('click', ".project-dropdown a", function(e){
 
 
 //distribution
+$(document).on('change', '#distribution-selector', function(){
+    var taskId = $("#distribution-selector").val();
+    if(taskId=="Final Mark"){
+
+    }
+
+
+})
+
+
 
 var myChart = echarts.init(document.getElementById('distribution'));
 var option = {
