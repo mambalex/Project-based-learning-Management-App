@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="../static/css/student/group.css">
   <link rel="stylesheet" href="../static/css/student/shadow.css">
   <link rel="stylesheet" href="../static/css/student/header-timeline.css">
+{#    <script src="echarts.min.js"></script>#}
+{#    <script src="echarts.js"></script>#}
 
 </head>
 
@@ -60,7 +62,7 @@
                                 <!-- <span class="date">Project scoping<span> -->
                             </div>
                             <div class="phase_descpt">
-                                <h4>Project Scoping & Group forming</h4>
+                                <h4 class="p1-name">Project Scoping & Group forming</h4>
 
                             </div>
                         </li>
@@ -71,7 +73,7 @@
                                 <!-- <span class="date">Requirements & design<span> -->
                             </div>
                             <div class="phase_descpt">
-                                <h4>Requirement document & Design document</h4>
+                                <h4 class="p2-name">Requirement document & Design document</h4>
                             </div>
                         </li>
 
@@ -81,7 +83,7 @@
                                 <!-- <span class="date">Software prototyping and implementation<span> -->
                             </div>
                             <div class="phase_descpt">
-                                <h4>Software prototyping & Implementation</h4>
+                                <h4 class="p3-name">Software prototyping & Implementation</h4>
                             </div>
                         </li>
 
@@ -91,7 +93,7 @@
                                 <!-- <span class="date">implementation / testing / documentation (version2)<span> -->
                             </div>
                             <div class="phase_descpt">
-                                <h4>Implementation & Testing & Documentation</h4>
+                                <h4 class="p4-name">Implementation & Testing & Documentation</h4>
                             </div>
                         </li>
                     </ul>
@@ -692,9 +694,10 @@
                 <div class="sidebar-offcanvas sidebar">
                     <div class="list-group">
                         <a  class="list-group-item active phase4-nav">Phase 4</a>
-                    <a  class="list-group-item upload-nav-4">Uploading files</a>
-                    <a  class="list-group-item document-nav-4">Resources</a>
+                        <a  class="list-group-item upload-nav-4">Uploading files</a>
+                        <a  class="list-group-item document-nav-4">Resources</a>
                         <a  class="list-group-item navmark4">Mark</a>
+                        <a  class="list-group-item distribution">Mark distribution</a>
                     </div>
                 </div>
          <div class="due-date due-date4">
@@ -780,8 +783,13 @@
              <div id="mark4" class="all-groups drop-shadow-nav-grp curved.v2 phase4-mark">
                 <div class="group-info-title"> Mark</div>
                        <div class="group-wrapper mark-wrapper">
-                        <p>Your mark for phase 4 is <span class="mark-phase3"></span></p></div>
-              </div>
+                        <p>Your mark for phase 4 is <span class="mark-phase4"></span></p>
+                       </div>
+                </div>
+
+{#            <div id="distribution" style="width:600px; height:400px;"></div>#}
+
+
         </div>
         </div>
     </div>

@@ -3,7 +3,6 @@ var array = document.location.href.toString().split("/");
 var username = array[array.length - 1];
 var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
 var currentProject;
-var userInfo={};
 var reminderList={};
 var groupList;
 var projectInfo={};
@@ -15,14 +14,12 @@ var currentPhase;
 
 
 $('#live-chat').hide();
+$(".layer").show();
+$(".remove-layer").hide();
 $(document).ready(function(){
+    getAllInfo();
     displayProjects();
-    $(".layer").show();
-    $(".remove-layer").hide();
     $(".select-project").show();
-    // $('#live-chat header').click();
-    // $('#live-chat').show();
-    // welcomeUser();
 })
 
 //select project
@@ -31,9 +28,27 @@ $(document).on('click', "#select-project", function(e){
     currentProject = $(this).siblings('select').val(); //id
     $(".select-project").hide();
     $(".layer").hide();
-    getAllInfo();
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+                groupList = proj['group_list'];
+                proj['group_list'].forEach(function(val){
+                    groupInfo[val['group_name']]= val;
+                });
+                proj['phase_list'].forEach(function(val){
+                    phaseList[val['phase_name']]= val;
+                });
+                for(var phase in phaseList){
+                    phaseList[phase]['task_list'].forEach(function(task){
+                        taskList[task['task_name']] = task['task_uuid'];
+                        allTasks[task['task_uuid']] = task;
+                    })
+                }
+                reminderList = proj['reminder_list'];
+        }
+    })
     welcomeUser();
     $(".active").click();
+    displayPhaseName();
     displayAllReminder();
     displayDeadline();
     displayResources();
@@ -44,6 +59,41 @@ $(document).on('click', "#select-project", function(e){
     displayDueDate(4);
 })
 
+function getAllInfo(){
+    return $.ajax({
+            type:'POST',
+            url:'/api/lecturer_main_info',
+            contentType: "application/json",
+            data:JSON.stringify({'project_uuid':currentProject}),
+            async:false,
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            success(rsp_data){
+                        console.log(rsp_data);
+                        projectList = rsp_data['all_project_list'];
+                        selfProjectList = rsp_data['self_project_list'];
+                        userProfile = rsp_data['user_profile'];
+                        localStorage.setItem('profile', JSON.stringify(userProfile));
+            }
+    })
+}
+
+
+
+function welcomeUser(){
+    var name = userProfile['name'];
+    $(".welcome-user").text(`Welcome ${name} `);
+    $(".welcome-user").show();
+}
+
+//display phase name
+function displayPhaseName() {
+    for(var phase in phaseList){
+        let idx = phaseList[phase]['phase_index'];
+        $(`.p${idx}-name`).text(phase);
+    }
+}
 
 //display projects
 function displayProjects () {
@@ -253,60 +303,7 @@ function getMonthFromString(mon){
 
 
 
-function getAllInfo(){
-    return $.ajax({
-            type:'POST',
-            url:'/api/lecturer_main_info',
-            contentType: "application/json",
-            data:JSON.stringify({'project_uuid':currentProject}),
-            async:false,
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            },
-            success(rsp_data){
-                        console.log(rsp_data);
-                        // selfGroup = rsp_data['group_info'];  
-                        // selfGroupStatus = rsp_data['group_info']['status']
-                        rsp_data['group_list'].forEach(function(val){
-                            groupInfo[val['group_name']]= val;
-                        });   
-                        rsp_data['phase_list'].forEach(function(val){
-                            phaseList[val['phase_name']]= val;
-                        }); 
-                        for(var phase in phaseList){
-                            console.log(phaseList[phase]);
-                            phaseList[phase]['task_list'].forEach(function(task){
-                                taskList[task['task_name']] = task['task_uuid'];
-                                allTasks[task['task_uuid']] = task;
-                            })
-                        }
-                        reminderList = rsp_data['reminder_list'];
-                        groupList = rsp_data['group_list'];
-                        // rsp_data['reminder_list'].forEach(function(val){
-                        //     var d = new Date(val['post_time'])
-                        //     reminderList[d.getTime()/1000] = val;
-                        //     // reminderList[val['post_time']] = val;
-                        // });
-                        projectInfo = rsp_data['project_info'];
-                        userProfile = rsp_data['user_profile']; 
-                        localStorage.setItem('profile', JSON.stringify(userProfile));
-                        console.log(groupInfo)       
-                        console.log(phaseList)       
-                        console.log(projectInfo)       
-                        console.log(userProfile)   
-                        console.log(taskList)  
-                        console.log(reminderList)  
-            }
-    })
-}
 
-
-
-function welcomeUser(){
-    var name = userProfile['name'];
-    $(".welcome-user").text(`Welcome ${name} `);
-    $(".welcome-user").show();
-}
 
 
 
@@ -928,7 +925,41 @@ $(document).on('click', '.mark-container .button', function(e){
 
 
 
-
+//switch project
+$(document).on('click', ".project-dropdown a", function(e){
+    let id = $(this).find('.id').text();
+    currentProject = id;
+    getAllInfo();
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+                groupList = proj['group_list'];
+                proj['group_list'].forEach(function(val){
+                    groupInfo[val['group_name']]= val;
+                });
+                proj['phase_list'].forEach(function(val){
+                    phaseList[val['phase_name']]= val;
+                });
+                for(var phase in phaseList){
+                    phaseList[phase]['task_list'].forEach(function(task){
+                        taskList[task['task_name']] = task['task_uuid'];
+                        allTasks[task['task_uuid']] = task;
+                    })
+                }
+                reminderList = proj['reminder_list'];
+        }
+    })
+    welcomeUser();
+    $(".active").click();
+    displayPhaseName();
+    displayAllReminder();
+    displayDeadline();
+    displayResources();
+    displayMarking();
+    displayDueDate(1);
+    displayDueDate(2);
+    displayDueDate(3);
+    displayDueDate(4);
+})
 
 
 
