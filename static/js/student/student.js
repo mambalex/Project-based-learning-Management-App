@@ -3,7 +3,7 @@ var username = array[array.length - 1];
 var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
 var projectList = JSON.parse(localStorage.getItem("allProjectList"));
 var currentProject;
-const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
+
 
 var groupInfo={};
 var selfGroup={};
@@ -32,8 +32,32 @@ $(document).on('click', "#select-project", function(e){
     currentProject = $(this).siblings('select').val(); //id
     $(".select-project").hide();
     $(".layer").hide();
-    selfProjectList.forEach(function (proj) {
+    getCurrentProjectData();
+    welcomeUser();
+    $(".phase1-nav").click();
+    displayPhaseName();
+    displayTasks();
+    displayResources();
+    displayReminder();
+    if(selfGroup["status"]==1){
+        displayMarks();
+    }
+    displayGroupInfo();
+    displayDueDate(1);
+    displayDueDate(2);
+    displayDueDate(3);
+    displayDueDate(4);
+})
+
+function getCurrentProjectData() {
+      selfProjectList.forEach(function (proj) {
         if(proj['project_uuid'] == currentProject){
+                groupInfo={};
+                selfGroup={};
+                phaseList={};
+                taskList={}; //name -> uuid
+                allTasks={}; //uuid -> task
+                reminderList={};
                 groupMethod = proj['group_method'];
                 if(groupMethod==1){
                     $(".add-group-btn").hide();
@@ -45,6 +69,11 @@ $(document).on('click', "#select-project", function(e){
                     $(".leave").show();
                 }
                 selfGroup = proj['group_info'];
+                if(selfGroup['status']==0){
+                    inGroupOrnot = 'no'
+                }else{
+                    inGroupOrnot = 'yes'
+                }
                 selfGroupStatus = proj['group_info']['status'];
                 proj['group_list'].forEach(function(val){
                     groupInfo[val['group_name']]= val;
@@ -61,19 +90,7 @@ $(document).on('click', "#select-project", function(e){
                 reminderList = proj['reminder_list'];
         }
     })
-    welcomeUser();
-    $(".phase1-nav").click();
-    displayPhaseName();
-    displayTasks();
-    displayResources();
-    displayReminder();
-    displayMarks();
-    displayGroupInfo();
-    displayDueDate(1);
-    displayDueDate(2);
-    displayDueDate(3);
-    displayDueDate(4);
-})
+}
 
 function getAllInfo(){
     return $.ajax({
@@ -369,7 +386,7 @@ $(document).on('click', '#group-save', function(e){
                         type:'POST',
                         url:'/api/create_group',
                         contentType: "application/json",
-                        data:JSON.stringify({'project_uuid':projectId, 'group_name':group_name, 'note':note}),
+                        data:JSON.stringify({'project_uuid':currentProject, 'group_name':group_name, 'note':note}),
                         headers:{
                             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
                         },
@@ -417,35 +434,39 @@ $(document).on('click', '.join', function(e){
         type:'POST',
         url:'/api/join_group',
         contentType: "application/json",
-        data:JSON.stringify({'project_uuid':projectId, 'group_uuid':group_uuid}),
+        data:JSON.stringify({'project_uuid':currentProject, 'group_uuid':group_uuid}),
         headers:{
             'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
         },
         }).done(function(rsp_data){
+             console.log(rsp_data);
             if(rsp_data['code']==400){
                 alert("You already have a group")
             }else{
                 currentGroupName = groupName;
                 alert("Congrats! you successfully join a group");
-                inGroupOrnot = 'yes';
-                $(".leave").show();
-                //change member's number
-                let num = groupInfo[groupName]["member"].length;
-                $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(++num);
-                // console.log(groupInfo[groupName]);
-                // console.log(userInfo);
-                groupInfo[groupName]['member'].push({name:`${userProfile['name']}`})
-                var description = groupInfo[groupName]['description'];
-                var members = groupInfo[groupName]['member'];
-                selfGroup['group_name'] = currentGroupName;
-                selfGroup['description'] = description;
-                selfGroup['member'] = [{email:userProfile['email'],name:userProfile['name']}];
-                //display in self group part
-                $("#group-name-own").text(groupName);
-                $("#group-note-own").text(description);
-                members.forEach(function(val){
-                     $("#members").append(`<li>${val['name']}</li>`)
-            })
+                getAllInfo();
+                getCurrentProjectData();
+                displayGroupInfo();
+            //     inGroupOrnot = 'yes';
+            //     $(".leave").show();
+            //     //change member's number
+            //     let num = groupInfo[groupName]["member"].length;
+            //     $('.g-popup:contains("'+groupName+'")').siblings(".num-members").find('span').text(++num);
+            //     // console.log(groupInfo[groupName]);
+            //     // console.log(userInfo);
+            //     groupInfo[groupName]['member'].push({name:`${userProfile['name']}`})
+            //     var description = groupInfo[groupName]['description'];
+            //     var members = groupInfo[groupName]['member'];
+            //     selfGroup['group_name'] = currentGroupName;
+            //     selfGroup['description'] = description;
+            //     selfGroup['member'] = [{email:userProfile['email'],name:userProfile['name']}];
+            //     //display in self group part
+            //     $("#group-name-own").text(groupName);
+            //     $("#group-note-own").text(description);
+            //     members.forEach(function(val){
+            //          $("#members").append(`<li>${val['name']}</li>`)
+            // })
 
             }
         })
@@ -493,63 +514,63 @@ $(document).on('click', '.leave', function(e){
 });
 
 
-
-//phase 1 upload files
-$("#upload-btn-phase1").click(function(e){
-        e.preventDefault();
-        var uuid = "A529FD7A-C967-11E8-A7BE-4C3275989EF5";
-        var file = $('#upload-file1').find("input[type=file]").prop('files')[0];
-        if(inGroupOrnot=="no"){
-            $("#errorAlert-phase1").text("You have no group!").show();
-            $("#successAlert-phase1").hide();
-            return 
-        }
-        console.log(file);
-        console.log(uuid);
-        var formData = new FormData();
-        formData.append('upload_file', file);
-        console.log(selfGroup);
-        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-        formData.append('assessment_uuid', uuid);
-        $.ajax({
-            type: 'POST',
-            url: '/api/submit_file',
-            data: formData,
-            contentType: false,
-            cache: false,
-            // enctype: 'multipart/form-data',
-            contentType: false,
-            processData: false,
-            async: false,
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            },
-            error:function(){
-                    $("#errorAlert-phase1").text("File upload fails").show();
-                    $("#successAlert-phase1").hide();
-                     setTimeout(function(){
-                         $(".nav-proposal").click();
-                     },2000)
-                   
-            }
-        }).done(function(data){
-                console.log(data);
-                if(data['code']==200){
-                    $("#successAlert-phase1").text("Successfully uploaded!").show();
-                    $("#errorAlert-phase1").hide();
-                    setTimeout(function(){
-                         $(".nav-proposal").click();
-                     },2000)
-                }else{
-                    $("#errorAlert-phase1").text("File upload fails").show();
-                    $("#successAlert-phase1").hide();
-                     setTimeout(function(){
-                         $(".nav-proposal").click();
-                     },2000)
-                }
-            })
-        
-})
+//
+// //phase 1 upload files
+// $("#upload-btn-phase1").click(function(e){
+//         e.preventDefault();
+//         var uuid = "A529FD7A-C967-11E8-A7BE-4C3275989EF5";
+//         var file = $('#upload-file1').find("input[type=file]").prop('files')[0];
+//         if(inGroupOrnot=="no"){
+//             $("#errorAlert-phase1").text("You have no group!").show();
+//             $("#successAlert-phase1").hide();
+//             return
+//         }
+//         console.log(file);
+//         console.log(uuid);
+//         var formData = new FormData();
+//         formData.append('upload_file', file);
+//         console.log(selfGroup);
+//         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+//         formData.append('assessment_uuid', uuid);
+//         $.ajax({
+//             type: 'POST',
+//             url: '/api/submit_file',
+//             data: formData,
+//             contentType: false,
+//             cache: false,
+//             // enctype: 'multipart/form-data',
+//             contentType: false,
+//             processData: false,
+//             async: false,
+//             headers:{
+//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+//             },
+//             error:function(){
+//                     $("#errorAlert-phase1").text("File upload fails").show();
+//                     $("#successAlert-phase1").hide();
+//                      setTimeout(function(){
+//                          $(".nav-proposal").click();
+//                      },2000)
+//
+//             }
+//         }).done(function(data){
+//                 console.log(data);
+//                 if(data['code']==200){
+//                     $("#successAlert-phase1").text("Successfully uploaded!").show();
+//                     $("#errorAlert-phase1").hide();
+//                     setTimeout(function(){
+//                          $(".nav-proposal").click();
+//                      },2000)
+//                 }else{
+//                     $("#errorAlert-phase1").text("File upload fails").show();
+//                     $("#successAlert-phase1").hide();
+//                      setTimeout(function(){
+//                          $(".nav-proposal").click();
+//                      },2000)
+//                 }
+//             })
+//
+// })
 
 
 
@@ -713,46 +734,46 @@ $(function() {
 
 
 //phase 2 upload files
-$("#upload-btn-phase2").click(function(e){
-        e.preventDefault();
-        var uuid;
-        var designUuid = '2733B150-C9EA-11E8-94AC-4C3275989EF5';
-        var rqmUuid = 'A52CF4BE-C967-11E8-8B38-4C3275989EF5';
-        if ($("#phase2-upload").find('.design').css('display')=="none"){
-            uuid = rqmUuid;
-        }else{ uuid = designUuid;}
-        var file = $('#upload-file2').find("input[type=file]").prop('files')[0];
-        console.log(file);
-        console.log(uuid);
-        var formData = new FormData();
-        formData.append('upload_file', file);
-        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-        formData.append('assessment_uuid', uuid);
-        $.ajax({
-            type: 'POST',
-            url: '/api/submit_file',
-            data: formData,
-            contentType: false,
-            cache: false,
-            // enctype: 'multipart/form-data',
-            contentType: false,
-            processData: false,
-            async: false,
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            }
-        }).done(function(data){
-                console.log(data);
-                if(data['code']==200){
-                    $("#successAlert-phase2").text("Successfully uploaded!").show();
-                    $("#errorAlert-phase2").hide();
-                }else{
-                    $("#errorAlert-phase2").text("File upload fails").show();
-                    $("#successAlert-phase2").hide();
-                }
-            })
-        
-})
+// $("#upload-btn-phase2").click(function(e){
+//         e.preventDefault();
+//         var uuid;
+//         var designUuid = '2733B150-C9EA-11E8-94AC-4C3275989EF5';
+//         var rqmUuid = 'A52CF4BE-C967-11E8-8B38-4C3275989EF5';
+//         if ($("#phase2-upload").find('.design').css('display')=="none"){
+//             uuid = rqmUuid;
+//         }else{ uuid = designUuid;}
+//         var file = $('#upload-file2').find("input[type=file]").prop('files')[0];
+//         console.log(file);
+//         console.log(uuid);
+//         var formData = new FormData();
+//         formData.append('upload_file', file);
+//         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+//         formData.append('assessment_uuid', uuid);
+//         $.ajax({
+//             type: 'POST',
+//             url: '/api/submit_file',
+//             data: formData,
+//             contentType: false,
+//             cache: false,
+//             // enctype: 'multipart/form-data',
+//             contentType: false,
+//             processData: false,
+//             async: false,
+//             headers:{
+//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+//             }
+//         }).done(function(data){
+//                 console.log(data);
+//                 if(data['code']==200){
+//                     $("#successAlert-phase2").text("Successfully uploaded!").show();
+//                     $("#errorAlert-phase2").hide();
+//                 }else{
+//                     $("#errorAlert-phase2").text("File upload fails").show();
+//                     $("#successAlert-phase2").hide();
+//                 }
+//             })
+//
+// })
 
 
 
@@ -876,39 +897,39 @@ $(document).on('click', '.remove-input', function(e){
 })
 
 
-//phase 3 upload file
-$("#upload-btn-phase3").click(function(e){
-        e.preventDefault();
-        var uuid = "A52FA206-C967-11E8-989A-4C3275989EF5";
-        var file = $('#upload-file3').find("input[type=file]").prop('files')[0];
-        var formData = new FormData();
-        formData.append('upload_file', file);
-        formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-        formData.append('assessment_uuid', uuid);
-        $.ajax({
-            type: 'POST',
-            url: '/api/submit_file',
-            data: formData,
-            contentType: false,
-            cache: false,
-            // enctype: 'multipart/form-data',
-            contentType: false,
-            processData: false,
-            async: false,
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            }
-        }).done(function(data){
-                console.log(data);
-                if(data['code']==200){
-                    $("#successAlert-phase3").text("Successfully uploaded!").show();
-                    $("#errorAlert-phase3").hide();
-                }else{
-                    $("#errorAlert-phase3").text("File upload fails").show();
-                    $("#successAlert-phase3").hide();
-                }
-            })
-})
+// //phase 3 upload file
+// $("#upload-btn-phase3").click(function(e){
+//         e.preventDefault();
+//         var uuid = "A52FA206-C967-11E8-989A-4C3275989EF5";
+//         var file = $('#upload-file3').find("input[type=file]").prop('files')[0];
+//         var formData = new FormData();
+//         formData.append('upload_file', file);
+//         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
+//         formData.append('assessment_uuid', uuid);
+//         $.ajax({
+//             type: 'POST',
+//             url: '/api/submit_file',
+//             data: formData,
+//             contentType: false,
+//             cache: false,
+//             // enctype: 'multipart/form-data',
+//             contentType: false,
+//             processData: false,
+//             async: false,
+//             headers:{
+//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+//             }
+//         }).done(function(data){
+//                 console.log(data);
+//                 if(data['code']==200){
+//                     $("#successAlert-phase3").text("Successfully uploaded!").show();
+//                     $("#errorAlert-phase3").hide();
+//                 }else{
+//                     $("#errorAlert-phase3").text("File upload fails").show();
+//                     $("#successAlert-phase3").hide();
+//                 }
+//             })
+// })
 
 //phase4
 
@@ -1009,12 +1030,8 @@ $(document).on('click', "#enrolButton", function(e){
                  console.log(rsp_data);
                  alert('Successfully enrolled')
                  getAllInfo();
+                 getCurrentProjectData();
                  displayProjects();
-                // //add to select project popup
-                //     $(".select-project select").append(`<option value=${projectId}>${projectName}</option>`);
-                // //add to enrolled project navbar
-                //     $("#enrolNav").before(`<a>${projectName}<span class="id">${projectId}</span></a>`);
-
             }else if(rsp_data['code'] == 400){
                 alert("Already enrol in this project!");
             }
@@ -1063,17 +1080,18 @@ function displayProjects () {
 //upload files
 $(document).on('click', ".upload-btn", function(e){
         e.preventDefault();
+        var btn = $(this);
         var taskId = $(this).closest('.file-input').find(".task-selector").val();
         var file = $(this).closest('.file-input').find("input[type=file]").prop('files')[0];
-        if(inGroupOrnot=="no" || !selfGroup){
-            $("#errorAlert-phase1").text("You have no group!").show();
-            $("#successAlert-phase1").hide();
+        if(inGroupOrnot=="no" || selfGroup["status"]==0){
+            alert("Sorry, you have no group!")
             return
         }
         if(!taskId || !file){
             alert('Wrong input')
             return
         }
+        btn.addClass("running");
         var formData = new FormData();
         formData.append('upload_file', file);
         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
@@ -1086,25 +1104,26 @@ $(document).on('click', ".upload-btn", function(e){
             cache: false,
             contentType: false,
             processData: false,
-            async: false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
+                   btn.removeClass("running");
                    alert("Oops! Something went wrong!")
 
             }
         }).done(function(data){
                 console.log(data);
+                btn.removeClass("running");
                 if(data['code']==200){
                     alert("Successfully uploaded!");
                      setTimeout(function(){
-                         $(this).closest('.file-input').find(".btn-danger").click();
+                         btn.siblings("button").click();
                      },2000)
                 }else{
                      alert("File upload fails!")
                      setTimeout(function(){
-                         $(this).closest('.file-input').find(".btn-danger").click();
+                         btn.siblings("button").click();
                      },2000)
                 }
             })
@@ -1116,41 +1135,7 @@ $(document).on('click', ".project-dropdown a", function(e){
     let id = $(this).find('.id').text();
     currentProject = id;
     getAllInfo();
-    selfProjectList.forEach(function (proj) {
-        if(proj['project_uuid'] == currentProject){
-                if(groupMethod==1){
-                    $(".add-group-btn").hide();
-                    $(".join").hide();
-                    $(".leave").hide();
-                }else{
-                    $(".add-group-btn").show();
-                    $(".join").show();
-                    $(".leave").show();
-                }
-                groupInfo={};
-                selfGroup={};
-                selfGroupStatus;
-                phaseList={};
-                taskList={}; //name -> uuid
-                allTasks={}; //uuid -> task
-                reminderList={};
-                selfGroup = proj['group_info'];
-                selfGroupStatus = proj['group_info']['status'];
-                proj['group_list'].forEach(function(val){
-                    groupInfo[val['group_name']]= val;
-                });
-                proj['phase_list'].forEach(function(val){
-                    phaseList[val['phase_name']]= val;
-                });
-                for(var phase in phaseList){
-                    phaseList[phase]['task_list'].forEach(function(task){
-                        taskList[task['task_name']] = task['task_uuid'];
-                        allTasks[task['task_uuid']] = task;
-                    })
-                }
-                reminderList = proj['reminder_list'];
-        }
-    })
+    getCurrentProjectData();
     welcomeUser();
     $(".phase1-nav").click();
     displayPhaseName();

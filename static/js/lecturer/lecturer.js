@@ -1,8 +1,7 @@
-const projectId = "A5259728-C967-11E8-8220-4C3275989EF5";
 var array = document.location.href.toString().split("/");
 var username = array[array.length - 1];
 var selfProjectList = JSON.parse(localStorage.getItem(`${username}ProjectList`));
-var currentProject;
+var currentProject; //id
 var reminderList={};
 var groupList;
 var projectInfo={};
@@ -28,24 +27,7 @@ $(document).on('click', "#select-project", function(e){
     currentProject = $(this).siblings('select').val(); //id
     $(".select-project").hide();
     $(".layer").hide();
-    selfProjectList.forEach(function (proj) {
-        if(proj['project_uuid'] == currentProject){
-                groupList = proj['group_list'];
-                proj['group_list'].forEach(function(val){
-                    groupInfo[val['group_name']]= val;
-                });
-                proj['phase_list'].forEach(function(val){
-                    phaseList[val['phase_name']]= val;
-                });
-                for(var phase in phaseList){
-                    phaseList[phase]['task_list'].forEach(function(task){
-                        taskList[task['task_name']] = task['task_uuid'];
-                        allTasks[task['task_uuid']] = task;
-                    })
-                }
-                reminderList = proj['reminder_list'];
-        }
-    })
+    getCurrentProjectData();
     welcomeUser();
     $(".active").click();
     displayPhaseName();
@@ -79,6 +61,26 @@ function getAllInfo(){
     })
 }
 
+function getCurrentProjectData() {
+           selfProjectList.forEach(function (proj) {
+                    if(proj['project_uuid'] == currentProject){
+                            groupList = proj['group_list'];
+                            proj['group_list'].forEach(function(val){
+                                groupInfo[val['group_name']]= val;
+                            });
+                            proj['phase_list'].forEach(function(val){
+                                phaseList[val['phase_name']]= val;
+                            });
+                            for(var phase in phaseList){
+                                phaseList[phase]['task_list'].forEach(function(task){
+                                    taskList[task['task_name']] = task['task_uuid'];
+                                    allTasks[task['task_uuid']] = task;
+                                })
+                            }
+                            reminderList = proj['reminder_list'];
+                    }
+            })
+}
 
 
 function welcomeUser(){
@@ -144,8 +146,18 @@ function displayAllReminder(){
     })
 }
 
-//display deadline
+//display tasks
 function displayTasks() {
+    //reminder task
+    $(".task-select option").remove();
+    for(let task in taskList){
+        $(".task-select").append(`
+                <option value=${taskList[task]}>${task}</option>
+            `)
+    }
+    $(".task-select").append(`<option value=${currentProject}>Project</option>`)
+
+    //deadline phase
     $(".deadline-selector option").remove();
     $(".deadline-selector").append(`<option value="" hidden>Options</option>`)
     for(let phase in phaseList ){
@@ -173,21 +185,33 @@ function displayTasks() {
 
 //display marking
 function displayMarking() {
+
        for(var phase in phaseList){
                // let index = phase.split(" ")[1];
                let index = phaseList[phase]['phase_index'];
                //add task
+               $(`.mark-container${index}`).find(".select-task option").remove();
+               $(`.mark-container${index}`).find(".select-task").append(`   
+                            <option value="" hidden="" class="task-option">TASK NAMES</option>`)
                phaseList[phase]['task_list'].forEach(function(task){
                      $(`.mark-container${index}`).find(".select-task").append(`
                             <option value=${task['task_uuid']}>${task['task_name']}</option>
                      `)
                  })
                //add group
+
+                $(`.mark-container${index}`).find(".select-group option").remove();
+                $(`.mark-container${index}`).find(".select-group").append(`  
+                            <option value="" hidden="" class="group-option">GROUPS</option>`)
                 groupList.forEach(function (group) {
                     $(`.mark-container${index}`).find(".select-group").append(`
                             <option value=${group['group_uuid']}>${group['group_name']}</option>
                      `)
                 })
+                //add all group option
+                $(`.mark-container${index}`).find(".select-group").append(`
+                            <option value="All groups">All Groups</option>
+                     `)
 
         }
 }
@@ -197,6 +221,7 @@ function displayResources(){
     for(var phase in phaseList ){
         let phase_num = phase.split(" ")[1];
         $(`.phase${phase_num}-doc`).find("tbody tr").remove();
+        //no files
         if(phaseList[phase]['resource_list'].length==0){
             $(`.phase${phase_num}-doc`).find("tbody").append(`
                             <tr>
@@ -205,6 +230,7 @@ function displayResources(){
                               </tr>   
             `)
         }
+        //display files
         phaseList[phase]['resource_list'].forEach(function (doc) {
             var num = $(`.phase${phase_num}-doc`).find("tbody tr").length;
             var displayName = doc['filename'];
@@ -234,15 +260,19 @@ function displayDueDate(id){
     let phaseDueDate = {};
     $(`.due-date${id}`).find("ul li").remove();
     phaseDueDate[`${phase}`] = phaseList[phase]['deadline'];
+    //append phase due date to phaseDueDate object
     phaseList[phase]['task_list'].forEach(function (task) {
         phaseDueDate[`${task['task_name']}`] = task['deadline']
     });
+    //append task due date to phaseDueDate object
     for(let task in phaseDueDate){
         let d = new Date(phaseDueDate[task]);
         phaseDueDate[task] = d.getTime()/1000;
     }
+    //sort due date
     let keysSorted = Object.keys(phaseDueDate).sort((a,b) => phaseDueDate[a]-phaseDueDate[b]);
     let now = new Date();
+    //display all due date in sorted phaseDueDate
     keysSorted.forEach(function (key) {
         var dayLeft = Math.ceil((phaseDueDate[key] - now.getTime()/1000)/(60 * 60 * 24));
         if(dayLeft <=0 ){
@@ -264,9 +294,6 @@ function displayDueDate(id){
 }
 
 
-
-
-
 //create a project
 $(document).on('click', "#create-project", function(e){
         e.preventDefault();
@@ -285,7 +312,7 @@ function popUp(src, sucessOrFail, text, click){
    $(src).find(sucessOrFail).text(text).show();
     setTimeout(function(){
          $(click).click();
-    },3000)
+    },4000)
 }
 
 
@@ -313,16 +340,12 @@ function getMonthFromString(mon){
 
 
 
-
-
-
 //phase 1
 
 //only one checkbox can be selected in the group forming part
 $('input.generate-group').on('change', function() {
     $('input.generate-group').not(this).prop('checked', false);  
 });
-
 
 // side-nav
 
@@ -355,8 +378,8 @@ $(".reminder").click(function(){
     $("#distribution2").hide();
     $("#select-task-distribution").hide();
     $(".new_note").css('display','flex')
-    $("#task-select").val($("#task-select option:first").val());
-    $("#group-select").val($("#group-select option:first").val());
+    $(".task-select").val($(".task-select option:first").val());
+    $(".group-select").val($(".group-select option:first").val());
     $(".new-reminder-msg").val("");
 })
 
@@ -448,12 +471,9 @@ $(".distribution").click( function(){
 
 
 
-
-
-
-
 //generate groups
-$(document).on('click', '.group-info button', function(e){
+$(document).on('click', '.group-info .btn-success', function(e){
+            var btn = $(this);
             var groupSize = $(this).siblings('.group-size').find('input').val();
             var ramdomOrManual;
             $(".group-info input[type=checkbox]").each(function () {
@@ -475,6 +495,7 @@ $(document).on('click', '.group-info button', function(e){
                 'project_uuid': currentProject,
                 'group_size':groupSize
             }
+           btn.addClass("running");
            $.ajax({
             type: 'POST',
             url: '/api/change_group_method',
@@ -484,11 +505,14 @@ $(document).on('click', '.group-info button', function(e){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
+                btn.removeClass("running");
                 alert("Oops! Something went wrong!");
             }
         }).done(function(rsp_data){
+            console.log(rsp_data);
+            btn.removeClass("running");
             if(rsp_data['code']==200){
-                alert("Successfully create random groups")
+                alert("Successfully generated.")
                 $('.group-size').find('input').val("");
             }
            })
@@ -539,12 +563,15 @@ $(function() {
 
 $(document).on('click', '.phase-doc-upload', function(e){
         e.preventDefault();
+        var button = $(this);
+        button.addClass("running");
         var title = $(this).closest(".upload-files").find(".title").val();
         var description = $(this).closest(".upload-files").find(".description").val();
         var file = $(this).closest(".upload-files").find("input[type=file]").prop('files')[0];
         var phase = $(this).closest(".upload-files").find(".upload-selector").val();
-        if(phase==""){
-            popUp(".upload-files", ".alert-danger","Please select a phase",".upload");
+        if(phase=="" | !file){
+            popUp(".upload-files", ".alert-danger","Incorrect input",".upload");
+            button.removeClass("running");
             return
         }
         var phaseId = phaseList[phase]['phase_uuid'];
@@ -552,7 +579,7 @@ $(document).on('click', '.phase-doc-upload', function(e){
         formData.append('upload_file', file);       
         formData.append('description', description);
         formData.append('title', title);
-        formData.append('project_uuid', projectId);
+        formData.append('project_uuid', currentProject);
         formData.append('phase_uuid', phaseId);
         $.ajax({
             type: 'POST',
@@ -560,22 +587,24 @@ $(document).on('click', '.phase-doc-upload', function(e){
             data: formData,
             contentType: false,
             cache: false,
-            contentType: false,
             processData: false,
-            async: false,
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
+                button.removeClass("running");
                 popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
             }
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
+                    button.removeClass("running");
                     popUp(".upload-files", ".alert-success","Successfully uploaded", ".upload");
                     getAllInfo();
+                    getCurrentProjectData();
                     displayResources();
                 }else{
+                    button.removeClass("running");
                     popUp(".upload-files", ".alert-danger","Something went wrong",".upload");
                 }
             })
@@ -591,30 +620,26 @@ function swap(json){
 
 
 
-
-
-
-
 //new reminder
 $(".new_note").find('.btn-info').on('click',function(){
-    var msg = $(".new-reminder-msg").val();
-    var task = $("#task-select").val();
-    var groupType = $("#group-select").val();
+    var msg = $(this).siblings(".new-reminder-msg").val();
+    var task_uuid = $(this).siblings(".task-select").val();
+    var task = $(this).siblings(".task-select").find(":selected").text();
+    var groupType = $(this).siblings(".group-select").val();
     var submit_check;
-    var task_uuid;
+    var btn = $(this);
+    btn.addClass("running");
     if(groupType=="All groups"){
         submit_check = 'no';
     }else{ submit_check = 'yes'}
-    if(task=="Others"){
-        task_uuid = projectId;
-    }else{
-        task_uuid = taskList[task];
-        console.log(taskList);
-        console.log(taskList[task]);
+    if(!msg | !task_uuid | !groupType){
+        alert("Incorrect input!");
+        btn.removeClass("running");
+        return
     }
-    console.log(msg, task, groupType,submit_check,task_uuid)
+
     var data = {
-                project_uuid: projectId,
+                project_uuid: currentProject,
                 ass_uuid:task_uuid,
                 message:msg,
                 submit_check:submit_check
@@ -628,9 +653,11 @@ $(".new_note").find('.btn-info').on('click',function(){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error:function(){
+                btn.removeClass("running");
                 popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
             }
         }).done(function(rsp_data){
+                btn.removeClass("running");
                 console.log(data);
                 var time = rsp_data['timestamp'];
                 var reminder_uuid = rsp_data['reminder_uuid'];
@@ -649,6 +676,7 @@ $(".new_note").find('.btn-info').on('click',function(){
                         reminderList[d.getTime()/1000] = data;
                 }else{
                     alert("Something went wrong");
+                    btn.removeClass("running");
                     popUp(".new_note", ".alert-danger","Something went wrong",".reminder");
                     // $("#errorAlert-phase1").text("File upload fails").show();
                     // $("#successAlert-phase1").hide();
@@ -677,15 +705,18 @@ $(document).on('click', '.delete-reminder', function(e){
         }).done(function(data){
                 console.log(data);
                 if(data['code']==200){
-                    temp.remove();
-                    for(var time in reminderList){
-                        for(var key in reminderList[time]){
-                            if(reminderList[time][key]== reminder_uuid){
-                                console.log(reminderList[time]);
-                                delete reminderList.time;
-                            }
-                        }
-                    }
+                    getAllInfo();
+                    getCurrentProjectData();
+                    displayAllReminder();
+                    // temp.remove();
+                    // for(var time in reminderList){
+                    //     for(var key in reminderList[time]){
+                    //         if(reminderList[time][key]== reminder_uuid){
+                    //             console.log(reminderList[time]);
+                    //             delete reminderList.time;
+                    //         }
+                    //     }
+                    // }
                     alert("Successfully delete the message");
                     // $("#successAlert-phase1").text("Successfully uploaded!").show();
                     // $("#errorAlert-phase1").hide();
@@ -712,18 +743,24 @@ $('.deadline-selector').change(function(){
 });
 
 $(".saveDeadline").on('click',function(){
+    var btn = $(this);
+    btn.addClass("running");
     var taskId = $(this).closest('.deadline-container').find(".deadline-selector").val();
     var taskName = $(this).closest('.deadline-container').find(".deadline-selector").find(":selected").text();
     var month = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[1];
     var day = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[2].slice(0, -1);
     var year = $(this).closest('.deadline-container').find(".text-info").text().split(" ")[3];
     month = getMonthFromString(month);
+    if(!taskId){
+        btn.removeClass("running");
+        alert("Please select a task");
+        return
+    }
     var data = {
                 deadline:`${year}-${month}-${day}`,
                 name:taskName,
                 ass_uuid:taskId
             }
-    console.log(data);
     $.ajax({
             type: 'POST',
             url: '/api/change_ass',
@@ -733,13 +770,16 @@ $(".saveDeadline").on('click',function(){
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
             },
             error: function() {
+                btn.removeClass("running");
                 popUp(".deadline-container", ".alert-danger","Something went wrong",".deadline");
             }
         }).done(function(data){
+                btn.removeClass("running");
                 console.log(data);
                 if(data['code']==200){
                     popUp(".deadline-container", ".alert-success","Successfully set a deadline",".deadline");
                     getAllInfo();
+                    getCurrentProjectData();
                     displayDueDate(1);
                     displayDueDate(2);
                     displayDueDate(3);
@@ -756,6 +796,18 @@ $(".saveDeadline").on('click',function(){
   
 })
 
+$(document).on('click', '.deadline-button', function(e){
+    var date = $(this).closest('.deadline-container').find(".text-info");
+    $("#firstDeadline").click();
+    $(".modal-footer").find("button").on("click",function () {
+        date.text($(".firstDate").text());
+    })
+})
+
+
+
+
+
 //chat bot
 $('#live-chat header').on('click', function() {
         $('.chat').slideToggle(300, 'swing');
@@ -771,32 +823,32 @@ $('.chat-close').on('click', function(e) {
 
 
 //demo create new reminder
-function newReminder(){
-    var msg = "Welcome to comp9323!"
-    var task_uuid = projectId;
-    var submit_check = 'no';
-    var data = {
-                project_uuid: projectId,
-                ass_uuid:task_uuid,
-                message:msg,
-                submit_check:submit_check
-            }
-    $.ajax({
-            type: 'POST',
-            url: '/api/create_new_reminder',
-            contentType: "application/json",
-            data:JSON.stringify(data),
-            headers:{
-                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-            }
-
-        }).done(function(data){
-                console.log(data);
-                var time = data['timestamp'];
-                var d = new Date(time);
-                reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
-    })
-}
+// function newReminder(){
+//     var msg = "Welcome to comp9323!"
+//     var task_uuid = currentProject;
+//     var submit_check = 'no';
+//     var data = {
+//                 project_uuid: currentProject,
+//                 ass_uuid:task_uuid,
+//                 message:msg,
+//                 submit_check:submit_check
+//             }
+//     $.ajax({
+//             type: 'POST',
+//             url: '/api/create_new_reminder',
+//             contentType: "application/json",
+//             data:JSON.stringify(data),
+//             headers:{
+//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+//             }
+//
+//         }).done(function(data){
+//                 console.log(data);
+//                 var time = data['timestamp'];
+//                 var d = new Date(time);
+//                 reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
+//     })
+// }
 
 
 
@@ -812,29 +864,70 @@ $(document).on("click", ".select-group-task", function(e){
             var flag = 'no';
             for(var task_id in allTasks){
                 if (task_id == taskId){
-                    for (const group of allTasks[task_id]['submit_group']){
-                        if(group['group_uuid']==groupId){
+                    //display all group's file
+                            if(groupId=="All groups"){
                                 flag = 'yes';
-                                var num = document.find("tr").length;
-                                var arr = group['file_address'].split("/");
-                                var fileName = arr[arr.length - 1];
-                                var filePath = `../temp/${fileName}`
-                                document.append(`
-                                <tr>
-                                  <td>Doc${num+1}</td>
-                                  <td><span class="id">yes</span>${fileName}</td>                   
-                                  <td align="right">
-                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
-                                          <span class="glyphicon glyphicon-file"></span>
-                                          <span class="hidden-xs files">View</span>
-                                      </a>
-                                  </td>
-                              </tr>                                                            
-                                `)
-                        }
-                    }
+
+                             //display submitted groups' files
+                                for (var group of allTasks[task_id]['submit_group']){
+                                                    flag = 'yes';
+                                                    var arr = group['file_address'].split("/");
+                                                    var fileName = arr[arr.length - 1];
+                                                    var filePath = `../temp/${fileName}`
+                                                    document.append(`
+                                                    <tr>
+                                                      <td>${group['group_name']}</td>
+                                                      <td><span class="id">yes</span>${fileName}</td>                   
+                                                      <td align="right">
+                                                     <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                                              <span class="glyphicon glyphicon-file"></span>
+                                                              <span class="hidden-xs files">View</span>
+                                                       </a>
+                                                      </td>
+                                                  </tr>                                                            
+                                                    `)
+
+                                }
+                                 //display unsubmitted groups' files
+                                        for (var group of allTasks[task_id]['unsubmit_group']){
+                                                            flag = 'yes';
+                                                            var num = document.find("tr").length;
+                                                            document.append(`
+                                                            <tr>
+                                                              <td>${group['group_name']}</td>
+                                                              <td><span class="id">no</span>Have not submitted</td>
+                                                              <td align="right"> </td>                                           
+                                                            </tr>                                                        
+                                                            `)
+                                        }
+
+                            }else{
+                                   //display specific group's file
+                                    for (const group of allTasks[task_id]['submit_group']){
+                                        if(group['group_uuid']==groupId){
+                                                flag = 'yes';
+                                                var num = document.find("tr").length;
+                                                var arr = group['file_address'].split("/");
+                                                var fileName = arr[arr.length - 1];
+                                                var filePath = `../temp/${fileName}`
+                                                document.append(`
+                                                <tr>
+                                                  <td>Doc${num+1}</td>
+                                                  <td><span class="id">yes</span>${fileName}</td>                   
+                                                  <td align="right">
+                                                   <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
+                                                          <span class="glyphicon glyphicon-file"></span>
+                                                          <span class="hidden-xs files">View</span>
+                                                   </a>
+                                                  </td>
+                                              </tr>                                                            
+                                                `)
+                                        }
+                                    }
+                            }
                 }
             }
+            //no files
             if(flag == 'no'){
                 document.find('tr').remove();
                 document.append(`
@@ -857,16 +950,18 @@ $(document).on("click", ".select-group-task", function(e){
 
 
 //submit mark
-$(document).on('click', '.mark-container .button', function(e){
+$(document).on('click', '.mark-container .button .btn', function(e){
     e.preventDefault();
+    var button = $(this);
     var flag = $(this).siblings('.mark-doc').find('.id').text();
     if(flag =='no'){
         alert("No file to mark")
         return
     }
-    var task = $(this).siblings('.select-task').val();
-    var group = $(this).siblings('.select-group').val();
-    var mark = $(this).siblings('.phase1-mark').val();
+    button.addClass("running");
+    var task = $(this).parent().siblings('.select-task').val();
+    var group = $(this).parent().siblings('.select-group').val();
+    var mark = $(this).parent().siblings('.phase1-mark').val();
     var data = {
                 task_id:task,
                 group_id:group,
@@ -879,9 +974,14 @@ $(document).on('click', '.mark-container .button', function(e){
             data:JSON.stringify({"mark_data":data}),
             headers:{
                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            error: function () {
+                alert("Something went wrong!");
+                button.removeClass("running");
             }
 
         }).done(function (rsp_data) {
+            button.removeClass("running");
             if(rsp_data['code']==200){
                 alert("Successfully marked!")
             }

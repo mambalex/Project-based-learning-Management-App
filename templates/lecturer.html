@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="../static/css/lecturer/shadow.css">
   <link rel="stylesheet" type="text/css" href="../static/css/lecturer/header-timeline.css">
     <script src="../static/js/echarts.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/loading.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/loading-btn.css">
 </head>
 
 <body>
@@ -180,7 +182,11 @@
                   </div>
                   <!-- COMPONENT END -->
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary pull-right phase-doc-upload">Submit</button>
+                      <div class="btn btn-primary ld-ext-right pull-right phase-doc-upload">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                       </div>
+{#                      <button type="submit" class="btn btn-primary pull-right phase-doc-upload">Submit</button>#}
                       <button type="reset" class="btn btn-danger">Reset</button>
                   </div>
               </form>
@@ -214,7 +220,7 @@
                       <div class="tag">Mark</div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
-                      <select class="form-control" id="task-select">
+                      <select class="form-control task-select" >
                         <option value=""hidden>Task</option>
                         <option>Proposal</option>
                         <option>Design document</option>
@@ -223,12 +229,15 @@
                         <option>Demo</option>
                         <option>Others</option>
                       </select>
-                      <select class="form-control" id="group-select">
+                      <select class="form-control group-select">
                         <option value=""hidden>Group Type</option>
                         <option>All groups</option>
                         <option>Unsubmitted groups</option>
                       </select>
-                     <button type="button" class="btn btn-info">Submit</button>
+                    <div class="btn btn-info ld-ext-right">
+                                    Submit
+                      <div class="ld ld-ring ld-spin"></div>
+                    </div>
                   </div>
                   <div class="all-reminders" >
                       <div class="title">All Reminders</div>
@@ -271,17 +280,21 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-primary" ng-click="launch()" id="firstDeadline">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline">Save</button>
+                            <div class="btn btn-primary ld-ext-right saveDeadline">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                            </div>
+{#                          <button class="btn btn-primary saveDeadline">Save</button>#}
                         </div>
                       </div>
                       
                       <div class="row">
                         <div class="col-md-12">
                           <br/>
-                          <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p>
+                          <p>Date Picked: <span class="text-info firstDate">{{data.dt | date:'fullDate' }}</span></p>
                         </div>
                       </div>
                     </div>
@@ -306,7 +319,11 @@
                       <input type="checkbox" name="Manually" class="generate-group"><label>Manually Generate</label>   <br><br>
                       </div>
                       <div class="group-size"><input type="text" class="form-control" placeholder="Group Size"></div>
-                      <button type="button" class="btn btn-success">Submit</button>
+{#                      <button type="button" class="btn btn-success">Submit</button>#}
+                        <div class="btn btn-success ld-ext-right">
+                                    Submit
+                            <div class="ld ld-ring ld-spin"></div>
+                        </div>
             
                 </div>
           </div>
@@ -348,7 +365,14 @@
                         </table>
            </div>
               <input type="text" class="form-control phase1-mark" placeholder="Mark" >
-              <div class="button"><button type="button" class="btn btn-success">Mark</button></div>
+
+              <div class="button">
+                  <div class="btn btn-success ld-ext-right">
+                                    Mark
+                            <div class="ld ld-ring ld-spin"></div>
+                        </div>
+{#                  <button type="button" class="btn btn-success">Mark</button>#}
+              </div>
 
           </div>
       </div>
@@ -436,7 +460,10 @@
                   </div>
                   <!-- COMPONENT END -->
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary pull-right phase-doc-upload">Submit</button>
+                      <div class="btn btn-primary ld-ext-right pull-right phase-doc-upload ">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                       </div>
                       <button type="reset" class="btn btn-danger">Reset</button>
                   </div>
               </form>
@@ -469,7 +496,7 @@
                       <div class="alert alert-danger" role="alert" style="display:none;"></div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
-                      <select class="form-control" id="task-select">
+                      <select class="form-control task-select" >
                         <option value=""hidden>Task</option>
                         <option>Proposal</option>
                         <option>Design document</option>
@@ -478,7 +505,7 @@
                         <option>Demo</option>
                         <option>Others</option>
                       </select>
-                      <select class="form-control" id="group-select">
+                      <select class="form-control group-select">
                         <option value=""hidden>Group Type</option>
                         <option>All groups</option>
                         <option>Unsubmitted groups</option>
@@ -520,41 +547,30 @@
                                   <option value="Phase 2">Phase 2</option>
                                   <option value="Phase 3">Phase 3</option>
                                   <option value="Phase 4" class="p4">Phase 4</option>
-{#                                  <option>Proposal</option>#}
-{#                                  <option>Design document</option>#}
-{#                                  <option>Requirement document</option>#}
-{#                                  <option>Implementation</option>#}
-{#                                  <option>Demo</option>#}
-{#                                  <option>Others</option>#}
+
                       </select>
                       </div>
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-primary deadline-button"  ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline">Save</button>
+                           <div class="btn btn-primary ld-ext-right saveDeadline">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                            </div>
                         </div>
                       </div>
                       
                       <div class="row">
                         <div class="col-md-12">
                           <br/>
-                          <p>Date Picked:</p>
-<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+{#                          <p>Date Picked:</p>#}
+                            <p>Date Picked: <span class="text-info"></span></p>
                         </div>
                       </div>
                     </div>
-                    <script
-                        src="https://code.jquery.com/jquery-3.3.1.min.js"
-                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                        crossorigin="anonymous"></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
-                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
             </div>
 
 
@@ -586,7 +602,12 @@
                         </table>
            </div>
               <input type="text" class="form-control phase1-mark" placeholder="Mark" >
-              <div class="button"><button type="button" class="btn btn-success">Mark</button></div>
+              <div class="button">
+                       <div class="btn btn-success ld-ext-right">
+                                    Mark
+                            <div class="ld ld-ring ld-spin"></div>
+                        </div>
+              </div>
 
           </div>
 
@@ -679,7 +700,10 @@
                   </div>
                   <!-- COMPONENT END -->
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary pull-right phase-doc-upload">Submit</button>
+                      <div class="btn btn-primary ld-ext-right pull-right phase-doc-upload ">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                       </div>
                       <button type="reset" class="btn btn-danger">Reset</button>
                   </div>
               </form>
@@ -712,7 +736,7 @@
                       <div class="alert alert-danger" role="alert" style="display:none;"></div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
-                      <select class="form-control" id="task-select">
+                      <select class="form-control task-select" >
                         <option value=""hidden>Task</option>
                         <option>Proposal</option>
                         <option>Design document</option>
@@ -721,7 +745,7 @@
                         <option>Demo</option>
                         <option>Others</option>
                       </select>
-                      <select class="form-control" id="group-select">
+                      <select class="form-control group-select">
                         <option value=""hidden>Group Type</option>
                         <option>All groups</option>
                         <option>Unsubmitted groups</option>
@@ -773,31 +797,26 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-primary deadline-button" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline">Save</button>
+                            <div class="btn btn-primary ld-ext-right saveDeadline">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                            </div>
                         </div>
                       </div>
                       
                       <div class="row">
                         <div class="col-md-12">
                           <br/>
-                               <p>Date Picked:</p>
 
-<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate'}}</span></p> -->
+
+                        <p>Date Picked: <span class="text-info"></span></p>
                         </div>
                       </div>
                     </div>
-                    <script
-                        src="https://code.jquery.com/jquery-3.3.1.min.js"
-                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                        crossorigin="anonymous"></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
-                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
+
             </div>
 
 
@@ -828,7 +847,12 @@
                         </table>
            </div>
               <input type="text" class="form-control phase1-mark" placeholder="Mark" >
-              <div class="button"><button type="button" class="btn btn-success">Mark</button></div>
+              <div class="button">
+                  <div class="btn btn-success ld-ext-right">
+                                    Mark
+                            <div class="ld ld-ring ld-spin"></div>
+                        </div>
+              </div>
 
           </div>
       </div>
@@ -915,7 +939,10 @@
                   </div>
                   <!-- COMPONENT END -->
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary pull-right phase-doc-upload">Submit</button>
+                      <div class="btn btn-primary ld-ext-right pull-right phase-doc-upload ">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                       </div>
                       <button type="reset" class="btn btn-danger">Reset</button>
                   </div>
               </form>
@@ -948,7 +975,7 @@
                       <div class="alert alert-danger" role="alert" style="display:none;"></div>
                           <label >New Reminder</label>
                           <textarea class="form-control new-reminder-msg" rows="5" id="comment"></textarea>
-                      <select class="form-control" id="task-select">
+                      <select class="form-control task-select">
                         <option value=""hidden>Task</option>
                         <option>Proposal</option>
                         <option>Design document</option>
@@ -957,7 +984,7 @@
                         <option>Demo</option>
                         <option>Others</option>
                       </select>
-                      <select class="form-control" id="group-select">
+                      <select class="form-control group-select">
                         <option value=""hidden>Group Type</option>
                         <option>All groups</option>
                         <option>Unsubmitted groups</option>
@@ -1009,31 +1036,26 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-primary" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-primary deadline-button" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary saveDeadline ">Save</button>
+                            <div class="btn btn-primary ld-ext-right saveDeadline">
+                                    Save
+                                    <div class="ld ld-ring ld-spin"></div>
+                            </div>
                         </div>
                       </div>
                       
                       <div class="row">
                         <div class="col-md-12">
                           <br/>
-                                                      <p>Date Picked:</p>
+{# <p>Date Picked:</p>#}
 
-<!--                           <p>Date Picked: <span class="text-info">{{data.dt | date:'fullDate' }}</span></p> -->
+                            <p>Date Picked: <span class="text-info"></span></p>
                         </div>
                       </div>
                     </div>
-                    <script
-                        src="https://code.jquery.com/jquery-3.3.1.min.js"
-                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                        crossorigin="anonymous"></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular.min.js'></script>
-                    <script src='http://code.angularjs.org/1.2.16/angular-sanitize.min.js'></script>
-                    <script src='http://cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/example/js/ui-bootstrap-tpls-0.11.0.min.js'></script>
-                    <script src='http://rawgithub.com/m-e-conroy/angular-dialog-service/v4.2.0/dialogs.min.js'></script>
+
             </div>
 
 
@@ -1064,7 +1086,12 @@
                         </table>
            </div>
               <input type="text" class="form-control phase1-mark" placeholder="Mark" >
-              <div class="button"><button type="button" class="btn btn-success">Mark</button></div>
+              <div class="button">
+                       <div class="btn btn-success ld-ext-right">
+                                    Mark
+                            <div class="ld ld-ring ld-spin"></div>
+                        </div>
+              </div>
 
           </div>
            <div id="select-task-distribution">
