@@ -12,7 +12,7 @@ var groupInfo={};
 var currentPhase;
 
 
-$('#live-chat').hide();
+// $('#live-chat').hide();
 $(".layer").show();
 $(".remove-layer").hide();
 $(document).ready(function(){
@@ -136,6 +136,9 @@ function displayAllReminder(){
         var reminder_uuid = val['reminder_uuid'];
         var date = val['post_time'];
         var task = taskListReverse[ass_uuid];
+        if(val['submit_check']=="no"){
+            task = "Project"
+        }
         $(".reminder-list").append(`<li >
                                 <div class="id">${reminder_uuid}</div>
                                 <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
@@ -1110,64 +1113,163 @@ myChart2.setOption({
 
 //chat bot
 
+//add message to chat window
+function addMessage(msg, botOrUser){
+    if(botOrUser == "bot"){
+            $(".chat-history").append(`       
+                        <div class="chat-message clearfix">
+                          <div class="chat-message-content clearfix">
+                            <h5>Bot</h5>
+                            <p>${msg}</p>
+                          </div>
+                    </div><hr>`
+            );
+    }else{
+        $(".chat-history").append(`       
+                                <div class="chat-message clearfix userChat">
+                                      <div class="chat-message-content clearfix">
+                                        <p>${msg}</p>
+                                      </div>
+                                </div>
+                                <hr>`);
+    }
+    var d = $('.chat-history');
+    d.scrollTop(d.prop("scrollHeight"));
+}
+
+
+var reminderOrnot = "no";
+//get answer
+function getChatBotAnswer(msg){
+    var answer;
+    if (reminderOrnot == "yes"){
+            var data = {
+                project_uuid: currentProject,
+                ass_uuid:currentProject,
+                message:msg,
+                submit_check:'no'
+            }
+            $.ajax({
+                    type: 'POST',
+                    url: '/api/create_new_reminder',
+                    contentType: "application/json",
+                    data:JSON.stringify(data),
+                    headers:{
+                        'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+                    },
+                    error:function(){
+                        answer = "Oops! something went wrong!";
+                        reminderOrnot = 'no';
+                        addMessage(answer,"bot");
+                        return
+                    },
+                    success:function () {
+                         answer = "Successfully created a reminder :)";
+                         reminderOrnot = 'no';
+                         addMessage(answer,"bot");
+                         getAllInfo();
+                         getCurrentProjectData();
+                         displayAllReminder();
+                         return
+                    }
+                })
+
+    }else{
+            $.ajax({
+            type:'POST',
+            url:'/api/chatbot',
+            contentType: "application/json",
+            // async:false,
+            data:JSON.stringify({'msg':msg,'project_uuid':currentProject}),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            success(rsp_data){
+                console.log(rsp_data);
+                if(rsp_data["action"]=='reminder'){
+                    answer = "What would you like to send?"
+                    reminderOrnot = 'yes';
+                }else{
+                    answer = rsp_data['reply'];
+                }
+                addMessage(answer,"bot");
+            }
+             })
+    }
+
+}
+
+
+
 $(document).on("keypress", "#chatbotInput", function(e){
-    var flag = 'no';
+    //press enter
     if(e.which == 13){
         e.preventDefault();
-        var name = userProfile['name'];
         var msg = $("#chatbotInput").val();
-        if(msg==="deadline for phase1"){
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>2018-10-12 10:59:59</p>
-                      </div> 
-                    </div><hr>`);
-                  var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else if(msg ==="send a new reminder"){
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>Sure, what do you want to send?</p>
-                      </div> 
-                    </div><hr>`);
-                      var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else if(msg="Welcome to comp9323"){
-                      newReminder();
-                         $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>New reminder has been sent :)</p>
-                      </div> 
-                    </div><hr>`);
-                    var date = new Date().toISOString().split('T')[0];
-                    $(".reminder-list").append(`<li >
-                             <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-                                <div class="content">Welcome to comp9323!</div>
-                                <div class="task">Task: <span id="task-name">Project</span></div>
-                                <div class="date"><span class="due">${date}</span></div>
-                            </li>`);
-                    var d = $('.chat-history');
-                     d.scrollTop(d.prop("scrollHeight"));
-        }else{
-            $(".chat-history").append(`<div class="chat-message clearfix">
-                      <div class="chat-message-content clearfix">
-                        <span class="chat-time">13:35</span>
-                        <h5>Bot</h5>
-                        <p>Emm..</p>
-                      </div> 
-                    </div><hr>`);
-             var d = $('.chat-history');
-            d.scrollTop(d.prop("scrollHeight"));
-        }
-
-
+        $("#chatbotInput").val("");
+        addMessage(msg,"user");
+        getChatBotAnswer(msg);
     }
+
+
+
+    // var flag = 'no';
+    // if(e.which == 13){
+    //     e.preventDefault();
+    //     var name = userProfile['name'];
+    //     var msg = $("#chatbotInput").val();
+    //     if(msg==="deadline for phase1"){
+    //         $(".chat-history").append(`<div class="chat-message clearfix">
+    //                   <div class="chat-message-content clearfix">
+    //                     <span class="chat-time">13:35</span>
+    //                     <h5>Bot</h5>
+    //                     <p>2018-10-12 10:59:59</p>
+    //                   </div>
+    //                 </div><hr>`);
+    //               var d = $('.chat-history');
+    //                  d.scrollTop(d.prop("scrollHeight"));
+    //     }else if(msg ==="send a new reminder"){
+    //         $(".chat-history").append(`<div class="chat-message clearfix">
+    //                   <div class="chat-message-content clearfix">
+    //                     <span class="chat-time">13:35</span>
+    //                     <h5>Bot</h5>
+    //                     <p>Sure, what do you want to send?</p>
+    //                   </div>
+    //                 </div><hr>`);
+    //                   var d = $('.chat-history');
+    //                  d.scrollTop(d.prop("scrollHeight"));
+    //     }else if(msg="Welcome to comp9323"){
+    //                   newReminder();
+    //                      $(".chat-history").append(`<div class="chat-message clearfix">
+    //                   <div class="chat-message-content clearfix">
+    //                     <span class="chat-time">13:35</span>
+    //                     <h5>Bot</h5>
+    //                     <p>New reminder has been sent :)</p>
+    //                   </div>
+    //                 </div><hr>`);
+    //                 var date = new Date().toISOString().split('T')[0];
+    //                 $(".reminder-list").append(`<li >
+    //                          <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+    //                             <div class="content">Welcome to comp9323!</div>
+    //                             <div class="task">Task: <span id="task-name">Project</span></div>
+    //                             <div class="date"><span class="due">${date}</span></div>
+    //                         </li>`);
+    //                 var d = $('.chat-history');
+    //                  d.scrollTop(d.prop("scrollHeight"));
+    //     }else{
+    //         $(".chat-history").append(`<div class="chat-message clearfix">
+    //                   <div class="chat-message-content clearfix">
+    //                     <span class="chat-time">13:35</span>
+    //                     <h5>Bot</h5>
+    //                     <p>Emm..</p>
+    //                   </div>
+    //                 </div><hr>`);
+    //          var d = $('.chat-history');
+    //         d.scrollTop(d.prop("scrollHeight"));
+    //     }
+    //
+    //
+    // }
 });
 
 $(".tag").on('click',function(){
