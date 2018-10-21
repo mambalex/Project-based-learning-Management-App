@@ -106,11 +106,27 @@ class Chatbot():
 
                         phase_mark = db.get_self_submit(self.current_group['group_uuid'], phase['phase_uuid'])
                         if len(phase_mark) == 0:
-                            return ["It seems that your team has not submitted assignments yet.", input_type]
+                            submit_require = False
+                            print(phase["tasks_list"])
+                            summary = 'There are total {} tasks in this phase.\n'.format(len(phase['tasks_list']))
+                            for task in phase['tasks_list']:
+                                if task['submit_require']:
+                                    submit_require = True
+                                    task_mark = db.get_self_submit(self.current_group['group_uuid'], task['task_uuid'])
+                                    if len(task_mark) == 0:
+                                        summary = summary + 'It seems that your team has not submitted task {} yet.\n'.format(task['task_name'])
+                                    else:
+                                        if task_mark[0]["mark"] == "None":
+                                            summary = summary + "The mark of task {} have not been released yet.".format(task['task_name'])
+                                        else:
+                                            summary = summary + "The mark of task {} is {}.".format(task['task_name'], task_mark[0]["mark"])
+                            if not submit_require:
+                                summary = summary + "None of them need submit.\n"
+                            return [summary, input_type]
                         phase_mark = phase_mark[0]["mark"]
                         if phase_mark == "None":
                             return ["The mark of this phase have not been released yet.", input_type]
-                        reply = re.sub(r'##.*##', phase_mark, reply)
+                        reply = re.sub(r'##.*##', str(phase_mark), reply)
                         break
                     elif target == "submission":
                         print("search submission")
@@ -118,7 +134,7 @@ class Chatbot():
                             return ["I know the summary of submission of this phase, but you don't have enough permissions", input_type]
                         print(phase)
                         all_group_list = db.get_all_group(self.current_project_id)
-                        summary = "\nThere are total {} phases in this project.\n".format(len(phase['tasks_list']))
+                        summary = "\nThere are total {} tasks in this phase.\n".format(len(phase['tasks_list']))
                         for task in phase['tasks_list']:
                             submit_group = db.get_submits(task['task_uuid'])
                             submit_group = [item['group_uuid'] for item in submit_group]
@@ -166,7 +182,7 @@ class Chatbot():
                         task_mark = task_mark[0]["mark"]
                         if task_mark == "None":
                             return ["The mark of this task have not been released yet.", input_type]
-                        reply = re.sub(r'##.*##', task_mark, reply)
+                        reply = re.sub(r'##.*##', str(task_mark), reply)
                         break
                     elif target == "submission":
                         print("search submission")

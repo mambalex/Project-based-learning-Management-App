@@ -23,7 +23,7 @@ CREATE TABLE groups
     group_name text NOT NULL,
     project_uuid uuid NOT NULL,
     description text,
-    mark integer,
+    mark float,
     PRIMARY KEY (group_uuid)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE submits
     ass_uuid uuid NOT NULL,
     file_address text NOT NULL,
     submit_time timestamp(0) with time zone NOT NULL,
-    mark integer,
+    mark float,
     PRIMARY KEY (submit_uuid)
 );
 
