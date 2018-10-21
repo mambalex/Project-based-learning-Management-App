@@ -23,6 +23,7 @@ $(document).ready(function(){
     getAllInfo();
     displayProjects();
     $(".select-project").show();
+    $(".clearfix").click();
 })
 
 
@@ -1228,3 +1229,82 @@ myChart2.setOption({
         }
     ]
 })
+
+
+//chat bot
+$('#live-chat header').on('click', function() {
+        $('.chat').slideToggle(300, 'swing');
+        $('.chat-message-counter').fadeToggle(300, 'swing');
+
+});
+
+$('.chat-close').on('click', function(e) {
+    e.preventDefault();
+    $('#live-chat').fadeOut(300);
+
+});
+
+//chat bot
+
+//add message to chat window
+function addMessage(msg, botOrUser){
+    if(botOrUser == "bot"){
+            $(".chat-history").append(`       
+                        <div class="chat-message clearfix">
+                          <div class="chat-message-content clearfix">
+                            <h5>Bot</h5>
+                            <p>${msg}</p>
+                          </div>
+                    </div><hr>`
+            );
+    }else{
+        $(".chat-history").append(`       
+                                <div class="chat-message clearfix userChat">
+                                      <div class="chat-message-content clearfix">
+                                        <p>${msg}</p>
+                                      </div>
+                                </div>
+                                <hr>`);
+    }
+    var d = $('.chat-history');
+    d.scrollTop(d.prop("scrollHeight"));
+}
+
+
+var reminderOrnot = "no";
+//get answer
+function getChatBotAnswer(msg){
+            var answer;
+            $.ajax({
+            type:'POST',
+            url:'/api/chatbot',
+            contentType: "application/json",
+            // async:false,
+            data:JSON.stringify({'msg':msg,'project_uuid':currentProject}),
+            headers:{
+                'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
+            },
+            success(rsp_data){
+                console.log(rsp_data);
+                if(rsp_data["action"]=='reminder'){
+                    answer = "Emm.."
+                }else{
+                    answer = rsp_data['reply'];
+                }
+                addMessage(answer,"bot");
+            }
+             })
+}
+
+
+
+$(document).on("keypress", "#chatbotInput", function(e){
+    //press enter
+    if(e.which == 13){
+        e.preventDefault();
+        var msg = $("#chatbotInput").val();
+        $("#chatbotInput").val("");
+        addMessage(msg,"user");
+        getChatBotAnswer(msg);
+    }
+});

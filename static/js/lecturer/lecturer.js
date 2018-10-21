@@ -19,6 +19,7 @@ $(document).ready(function(){
     getAllInfo();
     displayProjects();
     $(".select-project").show();
+    $(".clearfix").click();
 })
 
 //select project
@@ -666,17 +667,20 @@ $(".new_note").find('.btn-info').on('click',function(){
                 var reminder_uuid = rsp_data['reminder_uuid'];
                 if(rsp_data['code']==200){
                     popUp(".new_note", ".alert-success","Successfully create new message",".reminder");
-                   $(".reminder-list").append(`<li >
-                                <div class="id">${reminder_uuid}</div>
-                                <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
-                                <div class="content"><p class="text">${msg}</p></div>
-                                <div class="task">Task: <span id="task-name">${task}</span></div>
-                                <div class="date"><span class="due">${time}</span></div>
-                            </li>`);
-                        data['time']= time;
-                        data['reminder_uuid'] = reminder_uuid;
-                        var d = new Date(time)
-                        reminderList[d.getTime()/1000] = data;
+                    getAllInfo();
+                    getCurrentProjectData();
+                    displayAllReminder();
+                   // $(".reminder-list").append(`<li >
+                   //              <div class="id">${reminder_uuid}</div>
+                   //              <div class="delete-reminder"><i class="fas fa-backspace close-reminder"></i></div>
+                   //              <div class="content"><p class="text">${msg}</p></div>
+                   //              <div class="task">Task: <span id="task-name">${task}</span></div>
+                   //              <div class="date"><span class="due">${time}</span></div>
+                   //          </li>`);
+                   //      data['time']= time;
+                   //      data['reminder_uuid'] = reminder_uuid;
+                   //      var d = new Date(time)
+                   //      reminderList[d.getTime()/1000] = data;
                 }else{
                     alert("Something went wrong");
                     btn.removeClass("running");
