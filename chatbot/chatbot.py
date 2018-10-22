@@ -109,13 +109,13 @@ class Chatbot():
                             return ["It seems that your team has not submitted assignments yet.", input_type]
                         phase_mark = phase_mark[0]["mark"]
                         if phase_mark == "None":
-                            return ["The mark of this phase have not been released yet.", input_type]
+                            return ["The mark of this phase has not been released yet.", input_type]
                         reply = re.sub(r'##.*##', phase_mark, reply)
                         break
                     elif target == "submission":
                         print("search submission")
                         if self.current_user != self.current_project_data['master']:
-                            return ["I know the summary of submission of this phase, but you don't have enough permissions", input_type]
+                            return ["Insufficient permissions to access the summary of submission", input_type]
                         print(phase)
                         all_group_list = db.get_all_group(self.current_project_id)
                         summary = "\nThere are total {} phases in this project.\n".format(len(phase['tasks_list']))
@@ -123,7 +123,7 @@ class Chatbot():
                             submit_group = db.get_submits(task['task_uuid'])
                             submit_group = [item['group_uuid'] for item in submit_group]
                             nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
-                            summary = summary + "  There are {}/{} groups have submitted task {}.\n".format(
+                            summary = summary + "  {}/{} groups have submitted task {}.\n".format(
                                 len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                         reply = re.sub(r'##.*##', summary, reply)
                         break
@@ -165,14 +165,14 @@ class Chatbot():
                             return ["It seems that your team has not submitted assignments yet.", input_type]
                         task_mark = task_mark[0]["mark"]
                         if task_mark == "None":
-                            return ["The mark of this task have not been released yet.", input_type]
+                            return ["The marks of this task have not been released yet.", input_type]
                         reply = re.sub(r'##.*##', task_mark, reply)
                         break
                     elif target == "submission":
                         print("search submission")
                         if self.current_user != self.current_project_data['master']:
                             return [
-                                "I know the summary of submission of this task, but you don't have enough permissions",
+                                "Insufficient permissions to access the summary of submission",
                                 input_type]
                         print(phase)
                         all_group_list = db.get_all_group(self.current_project_id)
@@ -183,7 +183,7 @@ class Chatbot():
                                 submit_group = [item['group_uuid'] for item in submit_group]
                                 nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
 
-                                summary = "\nThere are {}/{} groups have submitted task {}.\n".format(
+                                summary = "\n{}/{} groups have submitted task {}.\n".format(
                                 len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                                 break
                         reply = re.sub(r'##.*##', summary, reply)

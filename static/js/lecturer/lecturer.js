@@ -12,7 +12,7 @@ var groupInfo={};
 var currentPhase;
 
 
-// $('#live-chat').hide();
+
 $(".layer").show();
 $(".remove-layer").hide();
 $(document).ready(function(){

@@ -1296,7 +1296,7 @@ function getChatBotAnswer(msg){
              })
 }
 
-
+var s = "group one: jjj llll jjj \n group two: aaa vvv sss \n group one: jjj llll jjj \n group one: jjj llll jjj \n"
 
 $(document).on("keypress", "#chatbotInput", function(e){
     //press enter
@@ -1305,6 +1305,8 @@ $(document).on("keypress", "#chatbotInput", function(e){
         var msg = $("#chatbotInput").val();
         $("#chatbotInput").val("");
         addMessage(msg,"user");
+        addMessage(s,"bot");
         getChatBotAnswer(msg);
+        addMessage(s,"bot");
     }
 });
