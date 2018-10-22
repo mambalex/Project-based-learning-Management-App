@@ -1076,15 +1076,32 @@ def student_load_main_info():
         project['mark_distribution1'] = project_mark_distribution
         project['mark_distribution2'] = project_pie_distribution
 
-
-
-
         # Current phase index
         current_phase = db.get_current_phase_index(project["project_uuid"])
         project['current_phase'] = current_phase
         # Reminder part
         temp_global_reminder_list = db.student_get_self_global_reminder(project["project_uuid"])
+        # Change mark tag in reminder into mark result
+        for reminder_data in temp_global_reminder_list:
+            if re.search(r'#mark#', reminder_data["message"].lower()):
+                temp_ass_list = list()
+                for phase in phase_list:
+                    temp_ass_list = temp_ass_list + phase['task_list']
+                for task in temp_ass_list:
+                    if task['task_uuid'] == reminder_data["ass_uuid"]:
+                        reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']), reminder_data["message"])
+                        break
         temp_unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project["project_uuid"])
+        # Change mark tag in reminder into mark result
+        for reminder_data in temp_unsubmit_reminder_list:
+            if re.search(r'#mark#', reminder_data["message"].lower()):
+                temp_ass_list = list()
+                for phase in phase_list:
+                    temp_ass_list = temp_ass_list + phase['task_list']
+                for task in temp_ass_list:
+                    if task['task_uuid'] == reminder_data["ass_uuid"]:
+                        reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']), reminder_data["message"])
+                        break
         temp_reminder_list = temp_global_reminder_list + temp_unsubmit_reminder_list
         temp_reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
         project['reminder_list'] = temp_reminder_list
