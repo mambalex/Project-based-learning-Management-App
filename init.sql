@@ -138,21 +138,21 @@ insert into user_info values ('student9@gmail.com', '123456', 'Robert', 'male', 
 insert into user_info values ('student10@gmail.com', '123456', 'Angel', 'female', 'October 05', 'student', 'None');
 
 insert into projects values ('a5259728-c967-11e8-8220-4c3275989ef5', 'lecturer1@gmail.com', 'COMP9323 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None', 0);
-insert into phases values ('a528cb28-c967-11e8-9304-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 1, 'Phase 1', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 0, 'None');
-insert into tasks values ('a529fd7a-c967-11e8-a7be-4c3275989ef5', 'a528cb28-c967-11e8-9304-4c3275989ef5', 'Proposal', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 1, 'None');
-insert into phases values ('a52b99de-c967-11e8-9bd2-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 2, 'Phase 2', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 0, 'None');
-insert into tasks values ('a52cf4be-c967-11e8-8b38-4c3275989ef5', 'a52b99de-c967-11e8-9bd2-4c3275989ef5', 'Requirement document', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 1, 'None');
-insert into tasks values ('2733b150-c9ea-11e8-94ac-4c3275989ef5', 'a52b99de-c967-11e8-9bd2-4c3275989ef5', 'Design document', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 1, 'None');
-insert into phases values ('a52e00d4-c967-11e8-8949-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 3, 'Phase 3', '2018-10-15 23:59:59+0', '2018-10-17 00:00:00+0', 0, 'None');
-insert into tasks values ('a52fa206-c967-11e8-989a-4c3275989ef5', 'a52e00d4-c967-11e8-8949-4c3275989ef5', 'Implementation', '2018-10-15 23:59:59+0', '2018-10-17 00:00:00+0', 1, 'None');
-insert into phases values ('a53111fa-c967-11e8-93b0-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 4,'Phase 4', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 0, 'None');
-insert into tasks values ('a53257cc-c967-11e8-9495-4c3275989ef5', 'a53111fa-c967-11e8-93b0-4c3275989ef5', 'Demo', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 1, 'None');
+insert into phases values ('a528cb28-c967-11e8-9304-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 1, 'Phase 1', '2018-10-20 23:59:59+0', '2018-10-21 00:00:00+0', 0, 'None');
+insert into tasks values ('a529fd7a-c967-11e8-a7be-4c3275989ef5', 'a528cb28-c967-11e8-9304-4c3275989ef5', 'Proposal', '2018-10-20 23:59:59+0', '2018-10-21 00:00:00+0', 1, 'None');
+insert into phases values ('a52b99de-c967-11e8-9bd2-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 2, 'Phase 2', '2018-10-25 23:59:59+0', '2018-10-26 00:00:00+0', 0, 'None');
+insert into tasks values ('a52cf4be-c967-11e8-8b38-4c3275989ef5', 'a52b99de-c967-11e8-9bd2-4c3275989ef5', 'Requirement document', '2018-10-25 23:59:59+0', '2018-10-26 00:00:00+0', 1, 'None');
+insert into tasks values ('2733b150-c9ea-11e8-94ac-4c3275989ef5', 'a52b99de-c967-11e8-9bd2-4c3275989ef5', 'Design document', '2018-10-25 23:59:59+0', '2018-10-26 00:00:00+0', 1, 'None');
+insert into phases values ('a52e00d4-c967-11e8-8949-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 3, 'Phase 3', '2018-10-29 23:59:59+0', '2018-10-30 00:00:00+0', 0, 'None');
+insert into tasks values ('a52fa206-c967-11e8-989a-4c3275989ef5', 'a52e00d4-c967-11e8-8949-4c3275989ef5', 'Implementation', '2018-10-29 23:59:59+0', '2018-10-30 00:00:00+0', 1, 'None');
+insert into phases values ('a53111fa-c967-11e8-93b0-4c3275989ef5', 'a5259728-c967-11e8-8220-4c3275989ef5', 4,'Phase 4', '2018-11-02 23:59:59+0', '2018-11-05 00:00:00+0', 0, 'None');
+insert into tasks values ('a53257cc-c967-11e8-9495-4c3275989ef5', 'a53111fa-c967-11e8-93b0-4c3275989ef5', 'Demo', '2018-11-02 23:59:59+0', '2018-11-05 00:00:00+0', 1, 'None');
 
 insert into projects values ('04a676cc-c968-11e8-b2f6-4c3275989ef5', 'lecturer2@gmail.com', 'COMP9900 Project', '2018-10-20 23:59:59+0', '2018-10-25 00:00:00+0', 'None' ,0);
 insert into phases values ('04aabee4-c968-11e8-8dc6-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 1, 'Phase 1', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 0, 'None');
 insert into tasks values ('04ac2358-c968-11e8-a538-4c3275989ef5', '04aabee4-c968-11e8-8dc6-4c3275989ef5', 'Proposal', '2018-10-11 23:59:59+0', '2018-10-13 00:00:00+0', 1, 'None');
 insert into phases values ('04adb2b6-c968-11e8-9522-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 2, 'Phase 2', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 0, 'None');
-insert into tasks values ('04afe482-c968-11e8-8423-4c3275989ef5', '04adb2b6-c968-11e8-9522-4c3275989ef5', 'Requirement document & Design document', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 1, 'None');
+insert into tasks values ('04afe482-c968-11e8-8423-4c3275989ef5', '04adb2b6-c968-11e8-9522-4c3275989ef5', 'Design document', '2018-10-13 23:59:59+0', '2018-10-15 00:00:00+0', 1, 'None');
 insert into phases values ('04b1cd58-c968-11e8-8192-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 3,'Phase 3', '2018-10-15 23:59:59+0', '2018-10-17 00:00:00+0', 0, 'None');
 insert into tasks values ('04b30358-c968-11e8-802b-4c3275989ef5', '04b1cd58-c968-11e8-8192-4c3275989ef5', 'Implementation', '2018-10-15 23:59:59+0', '2018-10-17 00:00:00+0', 1, 'None');
 insert into phases values ('04b4dac8-c968-11e8-bc21-4c3275989ef5', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 4,'Phase 4', '2018-10-17 23:59:59+0', '2018-10-20 00:00:00+0', 0, 'None');
