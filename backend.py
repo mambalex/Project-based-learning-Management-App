@@ -1422,7 +1422,7 @@ def chatbot_api():
                             'user_type': g.user.user_type, 'action': rsp_list[1]})
         else:
             return jsonify({'code': 200, 'msg': 'Get reply success', 'user_id': g.user.user_id,
-                            'user_type': g.user.user_type, 'reply': "You don't have enough permissions to do this",
+                            'user_type': g.user.user_type, 'reply': "Insufficient permissions to create a reminder",
                             'action': 'search'})
     else:
         return jsonify({'code': 200, 'msg': 'Get reply success', 'user_id': g.user.user_id,

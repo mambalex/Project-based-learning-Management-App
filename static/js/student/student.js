@@ -23,7 +23,6 @@ $(document).ready(function(){
     getAllInfo();
     displayProjects();
     $(".select-project").show();
-    $(".clearfix").click();
 })
 
 
@@ -94,6 +93,7 @@ function getCurrentProjectData() {
 }
 
 function getAllInfo(){
+    $(".clearfix").click();
     return $.ajax({
             type:'POST',
             url:'/api/student_main_info',
@@ -418,6 +418,15 @@ $(document).on('click', '#group-save', function(e){
                         });
         }
 })
+
+
+//search group members
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".cans").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 
 
 // join a group
@@ -1218,6 +1227,7 @@ myChart2.setOption({
             name: '访问来源',
             type: 'pie',
             radius: '55%',
+            stillShowZeroSum:false,
             data:[
                 {value:235, name:'50-'},
                 {value:235, name:'50-60'},

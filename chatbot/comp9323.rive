@@ -679,3 +679,6 @@
 
 + [*] reminder [*]
 - Ok, what is the reminder message?$$reminder$$
+
++ [*] group [*]
+- There are those groups in this project: ##group## $$search$$

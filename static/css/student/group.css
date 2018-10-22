@@ -282,3 +282,12 @@ select.form-control.disabled {
 .group-popup-wrapper .title{
   font-weight: 500;
 }
+
+.table>thead>tr>th{
+  border-bottom: none !important;
+}
+
+
+.can-left{
+  width: 30%;
+}

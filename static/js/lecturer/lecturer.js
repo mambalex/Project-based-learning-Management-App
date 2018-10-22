@@ -12,14 +12,14 @@ var groupInfo={};
 var currentPhase;
 
 
-// $('#live-chat').hide();
+
 $(".layer").show();
 $(".remove-layer").hide();
+// $(".clearfix").click();
 $(document).ready(function(){
     getAllInfo();
     displayProjects();
     $(".select-project").show();
-    $(".clearfix").click();
 })
 
 //select project
@@ -43,6 +43,7 @@ $(document).on('click', "#select-project", function(e){
 })
 
 function getAllInfo(){
+    $(".clearfix").click();
     return $.ajax({
             type:'POST',
             url:'/api/lecturer_main_info',
@@ -1103,6 +1104,7 @@ myChart2.setOption({
             name: '访问来源',
             type: 'pie',
             radius: '55%',
+            stillShowZeroSum:false,
             data:[
                 {value:300, name:'<50'},
                 {value:335, name:'50-65'},

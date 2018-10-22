@@ -3,7 +3,7 @@ $(document).on('click', ".update", function(e){
     if($(this).text()=='update'){
     var data_to_update = $(this).siblings();
     // alert($(this).parent().contents().get(0).nodeValue);
-    $(this).text('comform');
+    $(this).text('confirm');
     data_to_update.attr('contenteditable', 'true');
     data_to_update.focus();
     }else{

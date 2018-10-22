@@ -394,8 +394,16 @@
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6 form-group">
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user text-muted"></span></span>
-                                            <input type="text" class="form-control" placeholder="Candidate">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                <span class="glyphicon glyphicon-user text-muted"></span>
+                                            </span>
+                                              <input class="form-control" id="myInput" type="text" placeholder="Search..">
+{#                                              <ul class="list-group" id="myList">#}
+{#                                                <li class="list-group-item">First item</li>#}
+{#                                                <li class="list-group-item">Second item</li>#}
+{#                                                <li class="list-group-item">Third item</li>#}
+{#                                                <li class="list-group-item">Fourth</li>#}
+{#                                              </ul>#}
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-4"><button class="btn btn-default cancel-group" ><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></button></div>
@@ -410,20 +418,20 @@
                                     <th class="col-sm-1">Candidates</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>900004</td>
-                                    <td>Test Product 4</td>
+                                <tbody >
+                                  <tr class="cans">
+                                    <td class="can-left">Candidate 1</td>
+                                    <td >Test Product 4</td>
                                     <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
                                   </tr>
-                                  <tr>
-                                    <td>900005</td>
+                                  <tr class="cans">
+                                    <td class="can-left">Candidate 2</td>
                                     <td>Test Product 5</td>
                                     <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
                                   </tr>
-                                  <tr>
-                                    <td>900006</td>
-                                    <td>Test Product 6</td>
+                                  <tr class="cans">
+                                    <td class="can-left">Candidate 3</td>
+                                    <td >Test Product 6</td>
                                     <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
                                   </tr>
                                 </tbody>
@@ -589,7 +597,6 @@
                        <div class="group-wrapper mark-wrapper">
                         <p>Your mark for </p>
                            <ul class="p2-mark">
-                               <li><div class="taskName">Proposal: </div><div class="taskMark">80</div></li>
                            </ul>
                        </div>
               </div>
@@ -700,7 +707,6 @@
                   <div class="group-wrapper mark-wrapper">
                         <p>Your mark for </p>
                            <ul class="p3-mark">
-                               <li><div class="taskName">Proposal: </div><div class="taskMark">80</div></li>
                            </ul>
                        </div>
          </div>
@@ -808,7 +814,7 @@
                        <div class="group-wrapper mark-wrapper">
                         <p>Your mark for </p>
                            <ul class="p4-mark">
-                               <li><div class="taskName">Proposal: </div><div class="taskMark">80</div></li>
+
                            </ul>
                        </div>
                 </div>
@@ -895,8 +901,9 @@
 
 
 <div class="layer">
-    <div class="glyphicon glyphicon-remove remove-layer"></div>
+
 </div>
+<div class="glyphicon glyphicon-remove remove-layer"></div>
 
 </body>
 <script type="text/javascript" src="../static/js/student/student.js"></script>
