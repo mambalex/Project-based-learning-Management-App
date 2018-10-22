@@ -21,6 +21,7 @@ var currentGroupName;
 $(".layer").show();
 $(".remove-layer").hide();
 $(document).ready(function(){
+    $(".clearfix").click();
     getAllInfo();
     displayProjects();
     $(".select-project").show();
@@ -31,6 +32,7 @@ $(document).ready(function(){
 $(document).on('click', "#select-project", function(e){
     e.preventDefault();
     currentProject = $(this).siblings('select').val(); //id
+    displayCurrentProject();
     $(".select-project").hide();
     $(".layer").hide();
     getCurrentProjectData();
@@ -95,7 +97,6 @@ function getCurrentProjectData() {
 }
 
 function getAllInfo(){
-    $(".clearfix").click();
     return $.ajax({
             type:'POST',
             url:'/api/student_main_info',
@@ -119,6 +120,16 @@ function welcomeUser(){
     var name = userProfile['name'];
     $(".welcome-user").text(`Welcome ${name}`);
     $(".welcome-user").show();
+}
+
+function displayCurrentProject() {
+    var projectName;
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+            projectName = proj['project_name'];
+        }
+    })
+    $("#current-project").text(projectName);
 }
 
 
@@ -1099,6 +1110,7 @@ $(document).on('click', ".upload-btn", function(e){
 $(document).on('click', ".project-dropdown a", function(e){
     let id = $(this).find('.id').text();
     currentProject = id;
+    displayCurrentProject();
     getAllInfo();
     getCurrentProjectData();
     welcomeUser();
