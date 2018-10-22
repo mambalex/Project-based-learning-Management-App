@@ -3,6 +3,7 @@ import re
 import time
 import random
 import database as db
+import email_service
 from chatbot import chatbot
 
 from flask import Flask, g, jsonify, make_response, request, abort, render_template, send_from_directory
@@ -405,6 +406,7 @@ def join_group():
         return jsonify(
             {'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+
 # Join someone in group
 @app.route('/api/invite_group', methods=['POST'])
 @auth.login_required
@@ -414,11 +416,13 @@ def invite_group():
     user_id = request.json.get('email')
     if db.check_has_group(user_id, project_uuid):
         return jsonify(
-            {'code': 400, 'msg': 'This user already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+            {'code': 400, 'msg': 'This user already in a group', 'user_id': g.user.user_id,
+             'user_type': g.user.user_type})
     else:
         db.create_group_relation(user_id, group_uuid)
         return jsonify(
             {'code': 200, 'msg': 'Invite success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+
 
 # Leave a group. For group leader, disband group
 @app.route('/api/leave_group', methods=['POST'])
@@ -480,7 +484,8 @@ def change_group_method():
         return jsonify({'code': 400, 'msg': 'Insufficient permissions'})
     if update_data['ramdomOrManual'] == 'Manually':
         db.change_project_group_method(update_data['project_uuid'], 0)
-        return jsonify({'code': 200, 'msg': 'Change group Method success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+        return jsonify({'code': 200, 'msg': 'Change group Method success', 'user_id': g.user.user_id,
+                        'user_type': g.user.user_type})
     else:
         db.change_project_group_method(update_data['project_uuid'], 1)
         default_group_size = 4
@@ -488,7 +493,7 @@ def change_group_method():
         project_uuid = update_data['project_uuid']
         group_size = update_data['group_size']
         print(project_uuid, group_size)
-     
+
         db.clear_all_group(project_uuid)
         if group_size is None or group_size == '':
             group_size = default_group_size
@@ -509,7 +514,8 @@ def change_group_method():
             group_list[group_list_index.pop()].append(student)
         db.random_group(project_uuid, group_list)
 
-    return jsonify({'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    return jsonify(
+        {'code': 200, 'msg': 'Random group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 
 # Get group member list
@@ -623,6 +629,9 @@ def create_new_reminder():
     message = request.json.get('message')
     submit_check = request.json.get('submit_check')
     if g.user.is_admin_user():
+        # TODO:Uncomment below to enable email reminder
+        # es = email_service.Email_Reminder(project_uuid, ass_uuid, message, submit_check)
+        # es.run()
         return_list = db.create_reminder(email=g.user.user_id, project_uuid=project_uuid, ass_uuid=ass_uuid,
                                          message=message, submit_check=submit_check)
         reminder_uuid = return_list[0]
@@ -908,7 +917,7 @@ def download():
 @auth.login_required
 def student_load_main_info():
     # User profile
-    user_profile = g.user.get_user_profile()    
+    user_profile = g.user.get_user_profile()
     # Get self all project data
     self_project_list = db.get_self_project_list(g.user.user_id)
     for project in self_project_list:
@@ -1103,7 +1112,8 @@ def student_load_main_info():
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
                     if task['task_uuid'] == reminder_data["ass_uuid"]:
-                        reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']), reminder_data["message"])
+                        reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']),
+                                                          reminder_data["message"])
                         break
         temp_unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project["project_uuid"])
         # Change mark tag in reminder into mark result
@@ -1114,8 +1124,14 @@ def student_load_main_info():
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
                     if task['task_uuid'] == reminder_data["ass_uuid"]:
-                        reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']), reminder_data["message"])
-                        break
+                        if db.check_has_group(g.user.user_id, project['project_uuid']):
+                            reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']),
+                                                              reminder_data["message"])
+                            break
+                        else:
+                            reminder_data["message"] = re.sub(r'#mark#', 'None',
+                                                              reminder_data["message"])
+                            break
         temp_reminder_list = temp_global_reminder_list + temp_unsubmit_reminder_list
         temp_reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
         project['reminder_list'] = temp_reminder_list
@@ -1227,7 +1243,8 @@ def lecturer_load_main_info():
                         group_mark_count[group] = group_mark_count[group] + 0
                 mark_summary['series'][0]['data'] = mark_data
                 distribution_data = [grade[item] for item in mark_distribution['xAxis']['data']]
-                distribution_data2 = [{'value': grade[item], 'name': item} for item in mark_distribution['xAxis']['data']]
+                distribution_data2 = [{'value': grade[item], 'name': item} for item in
+                                      mark_distribution['xAxis']['data']]
                 mark_distribution['series'][0]['data'] = distribution_data
                 pie_distribution['data'] = distribution_data2
                 task['mark_summary'] = mark_summary
@@ -1268,7 +1285,8 @@ def lecturer_load_main_info():
                 project_grade["85-100"] = project_grade["85-100"] + 1
 
         distribution_data = [project_grade[item] for item in project_mark_distribution['xAxis']['data']]
-        distribution_data2 = [{'value': project_grade[item], 'name': item} for item in project_mark_distribution['xAxis']['data']]
+        distribution_data2 = [{'value': project_grade[item], 'name': item} for item in
+                              project_mark_distribution['xAxis']['data']]
         project_mark_distribution['series'][0]['data'] = distribution_data
         project_pie_distribution['data'] = distribution_data2
         project['mark_distribution1'] = project_mark_distribution
@@ -1281,7 +1299,8 @@ def lecturer_load_main_info():
         reminder_list.sort(key=lambda reminder: reminder['post_time'], reverse=True)
         project['reminder_list'] = reminder_list
 
-    return jsonify({'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'self_project_list': self_project_list})
+    return jsonify(
+        {'code': 200, 'msg': 'Get data success', 'user_profile': user_profile, 'self_project_list': self_project_list})
 
 
 # Get phase all submittion
@@ -1374,7 +1393,7 @@ def get_mark_summary():
             mark_dict = {item['group_uuid']: item['mark'] for item in temp_submit_list}
             task['submit'] = temp_submit_list.copy()
             temp_submit_list = [item['group_uuid'] for item in temp_submit_list]
-            temp_unsubmit_list = [item for item in group_list if item ['group_uuid'] not in temp_submit_list]
+            temp_unsubmit_list = [item for item in group_list if item['group_uuid'] not in temp_submit_list]
             task['mark_status'] = "Marked"
             for submit in task['submit']:
                 if submit['mark'] == "None":

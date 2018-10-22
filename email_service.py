@@ -2,6 +2,8 @@ import smtplib
 import email.mime.multipart
 import email.mime.text
 
+import re
+
 import threading
 
 import database as db
@@ -38,6 +40,7 @@ class Email_Service(threading.Thread):
 
 class Email_Reminder(threading.Thread):
     project_uuid = None
+    project_info = None
     ass_uuid = None
     message = None
     submit_check = None
@@ -47,7 +50,39 @@ class Email_Reminder(threading.Thread):
         self.ass_uuid = ass_uuid
         self.message = message
         self.submit_check = submit_check
+        self.project_info = db.get_projects(self.project_uuid)[0]
 
     def run(self):
-        if self.submit_check():
-            pass
+        if self.submit_check.lower() == 'yes':
+            group_list = db.get_all_group(self.project_uuid)
+            group_id_list = [item['group_uuid'] for item in group_list]
+            group_dict = {item['group_uuid']: item for item in group_list}
+            submission = db.get_submits(self.ass_uuid)
+            submission = [item['group_uuid'] for item in submission]
+            unsubmit_group = [item for item in group_id_list if item not in submission]
+            for group_id in unsubmit_group:
+                for student in group_dict[group_id]["member"]:
+                    es = Email_Service()
+                    es.set_mail(student['email'], '{} Email Service'.format(self.project_info["project_name"]),
+                                self.message)
+                    es.run()
+        else:
+            if re.search(r'#mark#', self.message):
+                group_list = db.get_all_group(self.project_uuid)
+                for group in group_list:
+                    submission = db.get_self_submit(group["group_uuid"], self.ass_uuid)
+                    if len(submission) == 0:
+                        return
+                    submission = submission[0]
+                    msg = re.sub(r'#mark#', submission["mark"], self.message)
+                    for student in group["member"]:
+                        es = Email_Service()
+                        es.set_mail(student['email'], '{} Email Service'.format(self.project_info["project_name"]),
+                                    self.message)
+                        es.run()
+            else:
+                all_student = db.get_project_student_list(self.project_uuid)
+                for student in all_student:
+                    es = Email_Service()
+                    es.set_mail(student['email'], '{} Email Service'.format(self.project_info["project_name"]), self.message)
+                    es.run()
