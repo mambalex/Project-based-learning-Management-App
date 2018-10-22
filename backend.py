@@ -1112,6 +1112,7 @@ def student_load_main_info():
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
                     if db.check_has_group(g.user.user_id, project['project_uuid']):
+                        print(task['mark_result'])
                         reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']),
                                                             reminder_data["message"])
                         break
@@ -1130,6 +1131,8 @@ def student_load_main_info():
                 for task in temp_ass_list:
                     if task['task_uuid'] == reminder_data["ass_uuid"]:
                         if db.check_has_group(g.user.user_id, project['project_uuid']):
+                            print(task['mark_result'])
+
                             reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']),
                                                               reminder_data["message"])
                             break

@@ -13,6 +13,7 @@ var taskList={}; //name -> uuid
 var allTasks={}; //uuid -> task
 var reminderList={};
 var userProfile={};
+var ungroupedStudents;
 var inGroupOrnot;
 var currentGroupName;
 
@@ -68,6 +69,7 @@ function getCurrentProjectData() {
                     $(".join").show();
                     $(".leave").show();
                 }
+                ungroupedStudents=  proj['ungroup_student'];
                 selfGroup = proj['group_info'];
                 if(selfGroup['status']==0){
                     inGroupOrnot = 'no'
@@ -267,6 +269,27 @@ function displayGroupInfo(){
                  $("#all-groups").append(`<li><div class="title g-popup">${groupName}</div><div class="description">${description}</div><div class="num-members">Members: <span>${members.length}</span></div><div class="join">Join</div> </li>`)
             }
         }
+        //display all students that not in a group
+        $("#ungrouped tr").remove();
+        ungroupedStudents.forEach(function (std) {
+            if(std['email']!= username){
+                            $("#ungrouped").append(`
+                                  <tr class="cans">
+                                    <td class="can-left">Candidate 1</td>
+                                    <td >${std['name']}</td>
+                                    <td align="right">
+                                        <a class="btn btn-success btn-xs add-can">
+                                            <span class="id">${std['email']}</span>
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            <span class="hidden-xs"> Add</span>
+                                        </a>
+                                    </td>
+                                  </tr> 
+                `);
+            }
+        })
+
+
 }
 
 //display duedate
@@ -524,63 +547,7 @@ $(document).on('click', '.leave', function(e){
 });
 
 
-//
-// //phase 1 upload files
-// $("#upload-btn-phase1").click(function(e){
-//         e.preventDefault();
-//         var uuid = "A529FD7A-C967-11E8-A7BE-4C3275989EF5";
-//         var file = $('#upload-file1').find("input[type=file]").prop('files')[0];
-//         if(inGroupOrnot=="no"){
-//             $("#errorAlert-phase1").text("You have no group!").show();
-//             $("#successAlert-phase1").hide();
-//             return
-//         }
-//         console.log(file);
-//         console.log(uuid);
-//         var formData = new FormData();
-//         formData.append('upload_file', file);
-//         console.log(selfGroup);
-//         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-//         formData.append('assessment_uuid', uuid);
-//         $.ajax({
-//             type: 'POST',
-//             url: '/api/submit_file',
-//             data: formData,
-//             contentType: false,
-//             cache: false,
-//             // enctype: 'multipart/form-data',
-//             contentType: false,
-//             processData: false,
-//             async: false,
-//             headers:{
-//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-//             },
-//             error:function(){
-//                     $("#errorAlert-phase1").text("File upload fails").show();
-//                     $("#successAlert-phase1").hide();
-//                      setTimeout(function(){
-//                          $(".nav-proposal").click();
-//                      },2000)
-//
-//             }
-//         }).done(function(data){
-//                 console.log(data);
-//                 if(data['code']==200){
-//                     $("#successAlert-phase1").text("Successfully uploaded!").show();
-//                     $("#errorAlert-phase1").hide();
-//                     setTimeout(function(){
-//                          $(".nav-proposal").click();
-//                      },2000)
-//                 }else{
-//                     $("#errorAlert-phase1").text("File upload fails").show();
-//                     $("#successAlert-phase1").hide();
-//                      setTimeout(function(){
-//                          $(".nav-proposal").click();
-//                      },2000)
-//                 }
-//             })
-//
-// })
+
 
 
 
@@ -680,7 +647,6 @@ $(document).on('click', '.cancel-group', function(e){
 
 //click search
 $("document").on('click', '#add-candidates', function(e){
-    alert("hhh");
     $("#group-candidate").text("Search for candidates");
     $("#group-candidate-msg").text("Use the form below to search candidates");
 });
@@ -708,6 +674,37 @@ $(document).on('click', '.group-popup-close', function(e){
     e.preventDefault();
     $(".group-popup").hide();
 });
+
+//click add candidate to group
+$(document).on('click', ".add-can", function(e) {
+    var email = $(this).find(".id").text();
+    if (selfGroup['status'] == 0) {
+        alert("You are not in a group!")
+        return
+    }
+    var groupId = selfGroup['group_uuid'];
+    $.ajax({
+        type: 'POST',
+        url: '/api/invite_group',
+        contentType: "application/json",
+        data: JSON.stringify({'project_uuid': currentProject, 'group_uuid': groupId, 'email': email}),
+        async: false,
+        headers: {
+            'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token + ':')
+        }
+        }).done(function (rsp) {
+            console.log(rsp);
+            if (rsp['code'] == 200) {
+                alert("Successfully invited this student");
+                getAllInfo();
+                getCurrentProjectData();
+                displayGroupInfo();
+                $(".clearfix").click();
+            } else {
+                alert("Oops! Something went wrong!");
+            }
+    })
+})
 
 
 // phase2
@@ -742,48 +739,6 @@ $(function() {
     bs_input_file();
 });
 
-
-//phase 2 upload files
-// $("#upload-btn-phase2").click(function(e){
-//         e.preventDefault();
-//         var uuid;
-//         var designUuid = '2733B150-C9EA-11E8-94AC-4C3275989EF5';
-//         var rqmUuid = 'A52CF4BE-C967-11E8-8B38-4C3275989EF5';
-//         if ($("#phase2-upload").find('.design').css('display')=="none"){
-//             uuid = rqmUuid;
-//         }else{ uuid = designUuid;}
-//         var file = $('#upload-file2').find("input[type=file]").prop('files')[0];
-//         console.log(file);
-//         console.log(uuid);
-//         var formData = new FormData();
-//         formData.append('upload_file', file);
-//         formData.append('group_uuid', groupInfo[selfGroup['group_name']]['group_uuid']);
-//         formData.append('assessment_uuid', uuid);
-//         $.ajax({
-//             type: 'POST',
-//             url: '/api/submit_file',
-//             data: formData,
-//             contentType: false,
-//             cache: false,
-//             // enctype: 'multipart/form-data',
-//             contentType: false,
-//             processData: false,
-//             async: false,
-//             headers:{
-//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-//             }
-//         }).done(function(data){
-//                 console.log(data);
-//                 if(data['code']==200){
-//                     $("#successAlert-phase2").text("Successfully uploaded!").show();
-//                     $("#errorAlert-phase2").hide();
-//                 }else{
-//                     $("#errorAlert-phase2").text("File upload fails").show();
-//                     $("#successAlert-phase2").hide();
-//                 }
-//             })
-//
-// })
 
 
 
