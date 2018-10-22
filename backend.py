@@ -405,6 +405,20 @@ def join_group():
         return jsonify(
             {'code': 200, 'msg': 'Join group success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
+# Join someone in group
+@app.route('/api/invite_group', methods=['POST'])
+@auth.login_required
+def invite_group():
+    group_uuid = request.json.get('group_uuid')
+    project_uuid = request.json.get('project_uuid')
+    user_id = request.json.get('email')
+    if db.check_has_group(user_id, project_uuid):
+        return jsonify(
+            {'code': 400, 'msg': 'This user already in a group', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
+    else:
+        db.create_group_relation(user_id, group_uuid)
+        return jsonify(
+            {'code': 200, 'msg': 'Invite success', 'user_id': g.user.user_id, 'user_type': g.user.user_type})
 
 # Leave a group. For group leader, disband group
 @app.route('/api/leave_group', methods=['POST'])
