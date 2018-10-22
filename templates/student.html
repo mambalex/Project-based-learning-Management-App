@@ -406,7 +406,6 @@
 {#                                              </ul>#}
                                         </div>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4"><button class="btn btn-default cancel-group" ><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span></button></div>
 
                                 </div>
                               </div>
@@ -415,39 +414,24 @@
                               <table class="table table-striped">
                                 <thead>
                                   <tr>
-                                    <th class="col-sm-1">Candidates</th>
+                                    <th class="col-sm-1">Studnets not in a group</th>
                                   </tr>
                                 </thead>
-                                <tbody >
+                                <tbody id="ungrouped">
                                   <tr class="cans">
                                     <td class="can-left">Candidate 1</td>
                                     <td >Test Product 4</td>
-                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
-                                  </tr>
-                                  <tr class="cans">
-                                    <td class="can-left">Candidate 2</td>
-                                    <td>Test Product 5</td>
-                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
-                                  </tr>
-                                  <tr class="cans">
-                                    <td class="can-left">Candidate 3</td>
-                                    <td >Test Product 6</td>
-                                    <td align="right"><a href="" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs"> Add</span></a></td>
+                                    <td align="right">
+                                        <a class="btn btn-success btn-xs">
+                                            <span class="id"></span>
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            <span class="hidden-xs "> Add</span>
+                                        </a>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>
                             </div>
-                            <nav align="center">
-                              <ul class="pagination">
-                                <li class="disabled"><a  aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                                <li class="active"><a >1</a></li>
-                                <li><a >2</a></li>
-                                <li><a >3</a></li>
-                                <li><a >4</a></li>
-                                <li><a >5</a></li>
-                                <li><a  aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-                              </ul>
-                            </nav>
                           </div>
                         </div>
                       </form>
@@ -838,7 +822,6 @@
 
     <div id="live-chat">
                 <header class="clearfix">
-                  <a  class="chat-close">x</a>
                   <h4>Chat Bot</h4>
                 </header>
                 <div class="chat">
