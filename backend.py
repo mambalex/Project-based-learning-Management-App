@@ -1111,10 +1111,15 @@ def student_load_main_info():
                 for phase in phase_list:
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
-                    if task['task_uuid'] == reminder_data["ass_uuid"]:
+                    if db.check_has_group(g.user.user_id, project['project_uuid']):
                         reminder_data["message"] = re.sub(r'#mark#', str(task['mark_result']['mark']),
-                                                          reminder_data["message"])
+                                                            reminder_data["message"])
                         break
+                    else:
+                        reminder_data["message"] = re.sub(r'#mark#', 'None',
+                                                            reminder_data["message"])
+                        break
+                        
         temp_unsubmit_reminder_list = db.student_get_self_unsubmit_reminder(g.user.user_id, project["project_uuid"])
         # Change mark tag in reminder into mark result
         for reminder_data in temp_unsubmit_reminder_list:
