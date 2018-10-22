@@ -19,6 +19,7 @@ $(".remove-layer").hide();
 $(document).ready(function(){
     getAllInfo();
     displayProjects();
+    $(".clearfix").click();
     $(".select-project").show();
 })
 
@@ -26,6 +27,7 @@ $(document).ready(function(){
 $(document).on('click', "#select-project", function(e){
     e.preventDefault();
     currentProject = $(this).siblings('select').val(); //id
+    displayCurrentProject();
     $(".select-project").hide();
     $(".layer").hide();
     getCurrentProjectData();
@@ -43,7 +45,6 @@ $(document).on('click', "#select-project", function(e){
 })
 
 function getAllInfo(){
-    $(".clearfix").click();
     return $.ajax({
             type:'POST',
             url:'/api/lecturer_main_info',
@@ -90,6 +91,18 @@ function welcomeUser(){
     $(".welcome-user").text(`Welcome ${name} `);
     $(".welcome-user").show();
 }
+
+
+function displayCurrentProject() {
+    var projectName;
+    selfProjectList.forEach(function (proj) {
+        if(proj['project_uuid'] == currentProject){
+            projectName = proj['project_name'];
+        }
+    })
+    $("#current-project").text(projectName);
+}
+
 
 //display phase name
 function displayPhaseName() {
@@ -898,12 +911,14 @@ $(document).on("click", ".select-group-task", function(e){
                                 }
                                  //display unsubmitted groups' files
                                         for (var group of allTasks[task_id]['unsubmit_group']){
+                                            var mark = "Unmarked";
+                                            if(group['mark']!="None"){mark = group['mark']}
                                                             flag = 'yes';
                                                             var num = document.find("tr").length;
                                                             document.append(`
                                                             <tr>
                                                               <td>${group['group_name']}</td>
-                                                              <td><span class="id">no</span>Have not submitted</td>                                                                 <td class="group-mark">Unmarked</td>
+                                                              <td><span class="id">no</span>Have not submitted</td>                                                                 <td class="group-mark">${mark}</td>
                                                               <td align="right"> </td>                                           
                                                             </tr>                                                        
                                                             `)
@@ -1002,6 +1017,7 @@ $(document).on('click', '.mark-container .button .btn', function(e){
 $(document).on('click', ".project-dropdown a", function(e){
     let id = $(this).find('.id').text();
     currentProject = id;
+    displayCurrentProject();
     getAllInfo();
     selfProjectList.forEach(function (proj) {
         if(proj['project_uuid'] == currentProject){
