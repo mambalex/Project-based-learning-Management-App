@@ -931,8 +931,7 @@ def student_load_main_info():
             resource_list = db.get_resource_list(project["project_uuid"], phase['phase_uuid'])
             phase['resource_list'] = resource_list
             task_list = db.get_phase_all_tasks(phase['phase_uuid'])
-            phase['task_list'] = task_list
-            
+
             if temp_group_info['status'] == 0:
                 mark_result = dict()
                 mark_result['status'] = 'Ungroup'
@@ -1035,7 +1034,8 @@ def student_load_main_info():
                     task['mark_summary'] = mark_summary
                     task['mark_distribution1'] = mark_distribution
                     task['mark_distribution2'] = pie_distribution
-                    
+            phase['task_list'] = task_list
+
         project['phase_list'] = phase_list
 
         # Project mark distribution
