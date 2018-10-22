@@ -885,7 +885,7 @@ $(document).on("click", ".select-group-task", function(e){
                                                     document.append(`
                                                     <tr>
                                                       <td>${group['group_name']}</td>
-                                                      <td><span class="id">yes</span>${fileName}</td>                   
+                                                      <td><span class="id">yes</span>${fileName}</td>                                                           <td class="group-mark">${ group['mark']}</td>
                                                       <td align="right">
                                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
                                                               <span class="glyphicon glyphicon-file"></span>
@@ -903,7 +903,7 @@ $(document).on("click", ".select-group-task", function(e){
                                                             document.append(`
                                                             <tr>
                                                               <td>${group['group_name']}</td>
-                                                              <td><span class="id">no</span>Have not submitted</td>
+                                                              <td><span class="id">no</span>Have not submitted</td>                                                                 <td class="group-mark">Unmarked</td>
                                                               <td align="right"> </td>                                           
                                                             </tr>                                                        
                                                             `)

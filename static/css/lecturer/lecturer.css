@@ -519,6 +519,12 @@ button{
 
 
 
+.group-mark{
+
+    color: #d9534f;
+}
+
+
 .upload-files{
     width: 80%;
     display: none;
