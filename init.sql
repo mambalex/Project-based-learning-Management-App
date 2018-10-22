@@ -188,5 +188,5 @@ insert into enrol_project (email, project_uuid, user_type) values ('student10@gm
 insert into groups (group_uuid, group_name, project_uuid, description) values ('a5351b8a-c967-11e8-aca2-4c3275989ef5', 'First Group', '04a676cc-c968-11e8-b2f6-4c3275989ef5', 'None');
 insert into group_relation values ('student10@gmail.com', 'a5351b8a-c967-11e8-aca2-4c3275989ef5', 0);
 
-insert into reminder values ('e6aef29a-ca23-11e8-8c13-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon.', 'no', '2018-10-07 11:26:57+0');
-insert into reminder values ('e6b15800-ca23-11e8-be86-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon, you have not submit.', 'yes', '2018-10-07 11:26:57+0');
+insert into reminder values ('e6aef29a-ca23-11e8-8c13-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon.', 'no', '2018-10-17 11:26:57+0');
+insert into reminder values ('e6b15800-ca23-11e8-be86-4c3275989ef5', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a529fd7a-c967-11e8-a7be-4c3275989ef5', 'Task one proposal due soon, you have not submit.', 'yes', '2018-10-17 11:26:57+0');
