@@ -4,6 +4,7 @@ import time
 import random
 import database as db
 import email_service
+import auto_reminder
 from chatbot import chatbot
 
 from flask import Flask, g, jsonify, make_response, request, abort, render_template, send_from_directory
@@ -1183,7 +1184,7 @@ def lecturer_load_main_info():
                 unsubmit_group = [item for item in group_list if item["group_uuid"] not in submit_group_id]
                 nosubmit_group = [item for item in task_submit_group if item['file_address'] == "None"]
 
-                task['submit_group'] = task_submit_group
+                task['submit_group'] = [item for item in task_submit_group if item['file_address'] != "None"]
                 task['unsubmit_group'] = unsubmit_group + nosubmit_group
 
                 mark_dict = {item['group_uuid']: item['mark'] for item in task_submit_group}
