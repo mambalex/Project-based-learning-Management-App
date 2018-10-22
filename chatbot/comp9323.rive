@@ -606,7 +606,7 @@
 
 // Answer Deadline
 
-+ [*] deadline of phase *
++ [*] deadline [*] phase *
 - The deadline of this phase is||<star>|| ##deadline## $$search$$
 - The deadline of phase <star>||<star>|| is ##deadline## $$search$$
 
@@ -614,7 +614,7 @@
 - The deadline of this phase is||<star>|| ##deadline## $$search$$
 - The deadline of phase <star>||<star>|| is ##deadline## $$search$$
 
-+ [*] mark release [*] of phase *
++ [*] mark release [*] phase *
 - The mark release date of this phase is||<star>|| ##mark_release## $$search$$
 - The mark release date of phase <star>||<star>|| is ##mark_release## $$search$$
 
@@ -622,7 +622,7 @@
 - The mark release date of this phase is||<star>|| ##mark_release## $$search$$
 - The mark release date of phase <star>||<star>|| is ##mark_release## $$search$$
 
-+ [*] mark of phase *
++ [*] mark [*] phase *
 - The mark of phase <star>||<star>|| is ##mark## $$search$$
 
 + [*] phase * [*] mark [*]
@@ -631,16 +631,16 @@
 + [*] phase * [*] submit [*]
 - The submission summary of phase <star>: ||<star>||##submission## $$search$$
 
-+ [*] submit [*] of phase *
++ [*] submit [*] phase *
 - The submission summary of phase <star>: ||<star>||##submission## $$search$$
 
 + [*] phase * [*] submission [*]
 - The submission summary of phase <star>: ||<star>||##submission## $$search$$
 
-+ [*] submission [*] of phase *
++ [*] submission [*] phase *
 - The submission summary of phase <star>: ||<star>||##submission## $$search$$
 
-+ [*] deadline of task *
++ [*] deadline [*] task *
 - The deadline of this task is||<star>|| ##deadline## $$search$$
 - The deadline of task <star>||<star>|| is ##deadline## $$search$$
 
@@ -648,7 +648,7 @@
 - The deadline of this task is||<star>|| ##deadline## $$search$$
 - The deadline of task <star>||<star>|| is ##deadline## $$search$$
 
-+ [*] mark release [*] of task *
++ [*] mark release [*] task *
 - The mark release date of this task is||<star>|| ##mark_release## $$search$$
 - The mark release date of task <star>||<star>|| is ##mark_release## $$search$$
 
@@ -656,7 +656,7 @@
 - The mark release date of this task is||<star>|| ##mark_release## $$search$$
 - The mark release date of task <star>||<star>|| is ##mark_release## $$search$$
 
-+ [*] mark of task *
++ [*] mark [*] task *
 - The mark of task <star>||<star>|| is ##mark## $$search$$
 
 + [*] task * [*] mark [*]
@@ -665,13 +665,13 @@
 + [*] task * [*] submit [*]
 - The submission summary of task <star>: ||<star>||##submission## $$search$$
 
-+ [*] submit [*] of task *
++ [*] submit [*] task *
 - The submission summary of task <star>: ||<star>||##submission## $$search$$
 
 + [*] task * [*] submission [*]
 - The submission summary of task <star>: ||<star>||##submission## $$search$$
 
-+ [*] submission [*] of task *
++ [*] submission [*] task *
 - The submission summary of task <star>: ||<star>||##submission## $$search$$
 
 + i want to send a reminder
