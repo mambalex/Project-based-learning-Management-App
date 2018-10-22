@@ -1108,7 +1108,7 @@ def student_load_main_info():
         for reminder_data in temp_global_reminder_list:
             if re.search(r'#mark#', reminder_data["message"].lower()):
                 temp_ass_list = list()
-                for phase in phase_list:
+                for phase in project['phase_list']:
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
                     if db.check_has_group(g.user.user_id, project['project_uuid']):
@@ -1125,7 +1125,7 @@ def student_load_main_info():
         for reminder_data in temp_unsubmit_reminder_list:
             if re.search(r'#mark#', reminder_data["message"].lower()):
                 temp_ass_list = list()
-                for phase in phase_list:
+                for phase in project['phase_list']:
                     temp_ass_list = temp_ass_list + phase['task_list']
                 for task in temp_ass_list:
                     if task['task_uuid'] == reminder_data["ass_uuid"]:
