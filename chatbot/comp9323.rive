@@ -606,7 +606,7 @@
 
 // Answer Deadline
 
-+ [*] deadline of phase *
++ [*] deadline [*] phase *
 - The deadline of this phase is||<star>|| ##deadline## $$search$$
 - The deadline of phase <star>||<star>|| is ##deadline## $$search$$
 
@@ -622,7 +622,7 @@
 - The mark release date of this phase is||<star>|| ##mark_release## $$search$$
 - The mark release date of phase <star>||<star>|| is ##mark_release## $$search$$
 
-+ [*] mark of phase *
++ [*] mark [*] phase *
 - The mark of phase <star>||<star>|| is ##mark## $$search$$
 
 + [*] phase * [*] mark [*]

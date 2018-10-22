@@ -23,7 +23,6 @@ $(document).ready(function(){
     getAllInfo();
     displayProjects();
     $(".select-project").show();
-    $(".clearfix").click();
 })
 
 
@@ -94,6 +93,7 @@ function getCurrentProjectData() {
 }
 
 function getAllInfo(){
+    $(".clearfix").click();
     return $.ajax({
             type:'POST',
             url:'/api/student_main_info',
@@ -418,6 +418,15 @@ $(document).on('click', '#group-save', function(e){
                         });
         }
 })
+
+
+//search group members
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".cans").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 
 
 // join a group
@@ -1218,6 +1227,7 @@ myChart2.setOption({
             name: '访问来源',
             type: 'pie',
             radius: '55%',
+            stillShowZeroSum:false,
             data:[
                 {value:235, name:'50-'},
                 {value:235, name:'50-60'},
@@ -1296,7 +1306,7 @@ function getChatBotAnswer(msg){
              })
 }
 
-var s = "group one: jjj llll jjj \n group two: aaa vvv sss \n group one: jjj llll jjj \n group one: jjj llll jjj \n"
+
 
 $(document).on("keypress", "#chatbotInput", function(e){
     //press enter
@@ -1305,8 +1315,6 @@ $(document).on("keypress", "#chatbotInput", function(e){
         var msg = $("#chatbotInput").val();
         $("#chatbotInput").val("");
         addMessage(msg,"user");
-        addMessage(s,"bot");
         getChatBotAnswer(msg);
-        addMessage(s,"bot");
     }
 });
