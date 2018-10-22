@@ -35,7 +35,7 @@ $ pip3 install -r requirements.txt
 
 ```bash
 # create a sandbox for the backend
-$ python3 virtualenv -p /usr/bin/python3 env
+$ python3 -m virtualenv env
 # enter sandbox
 $ source env/bin/activate
 # set up sandbox
