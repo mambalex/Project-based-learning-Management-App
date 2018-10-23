@@ -237,8 +237,9 @@ function displayReminder(){
         var date = val['post_time'];
         var text = val['message'];
         var task;
-        if(val['submit_check']=="no"){
-            task = "Project"
+        console.log(allTasks);
+        if(val['project_uuid']==val['ass_uuid']){
+            task = "Project";
         }else{
             task =  allTasks[val['ass_uuid']]['task_name'];
         }

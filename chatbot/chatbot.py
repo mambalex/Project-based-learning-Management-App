@@ -136,10 +136,10 @@ class Chatbot():
                         all_group_list = db.get_all_group(self.current_project_id)
                         summary = "\nThere are total {} tasks in this phase.\n".format(len(phase['tasks_list']))
                         for task in phase['tasks_list']:
-                            submit_group = db.get_submits(task['task_uuid'])
-                            submit_group = [item['group_uuid'] for item in submit_group]
-                            nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
-                            summary = summary + "  There are {}/{} groups have submitted task {}.\n".format(
+                            temp_submit_group = db.get_submits(task['task_uuid'])
+                            submit_group = [item['group_uuid'] for item in temp_submit_group]
+                            nosubmit_group = [item for item in temp_submit_group if item['file_address'] == "None"]
+                            summary = summary + " {}/{} groups have submitted task {}.\n".format(
                                 len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                         reply = re.sub(r'##.*##', summary, reply)
                         break
@@ -195,11 +195,11 @@ class Chatbot():
                         for task in phase['tasks_list']:
                             if re.search(task_index, task['task_name'].lower()):
 
-                                submit_group = db.get_submits(task['task_uuid'])
-                                submit_group = [item['group_uuid'] for item in submit_group]
-                                nosubmit_group = [item for item in submit_group if item['file_address'] == "None"]
+                                temp_submit_group = db.get_submits(task['task_uuid'])
+                                submit_group = [item['group_uuid'] for item in temp_submit_group]
+                                nosubmit_group = [item for item in temp_submit_group if item['file_address'] == "None"]
 
-                                summary = "\nThere are {}/{} groups have submitted task {}.\n".format(
+                                summary = "\n {}/{} groups have submitted task {}.\n".format(
                                 len(submit_group)-len(nosubmit_group), len(all_group_list), task['task_name'])
                                 break
                         reply = re.sub(r'##.*##', summary, reply)
