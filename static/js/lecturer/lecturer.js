@@ -931,13 +931,20 @@ $(document).on("click", ".select-group-task", function(e){
                              //display submitted groups' files
                                 for (var group of allTasks[task_id]['submit_group']){
                                                     flag = 'yes';
+                                                    let mark;
+                                                    if(group['mark']=="None"){
+                                                        mark = 'Unmarked';
+                                                    }else{
+                                                        mark = group['mark'];
+                                                    }
+
                                                     var arr = group['file_address'].split("/");
                                                     var fileName = arr[arr.length - 1];
                                                     var filePath = `../temp/${fileName}`
                                                     document.append(`
                                                     <tr>
                                                       <td>${group['group_name']}</td>
-                                                      <td><span class="id">yes</span>${fileName}</td>                                                           <td class="group-mark">${ group['mark']}</td>
+                                                      <td><span class="id">yes</span>${fileName}</td>                                                           <td class="group-mark">${mark}</td>
                                                       <td align="right">
                                                      <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
                                                               <span class="glyphicon glyphicon-file"></span>
