@@ -144,7 +144,7 @@ button{
 }
 .due-date>.title{
     height: 40px;
-    background: rgb(55,123,181);
+    background: #d9534f;
     color: white;
     text-align: center;
     padding-top: 10px;
@@ -335,7 +335,7 @@ button{
 }
 .all-reminders li .content{
   padding:10px;
-  /* Center Div */
+  color: black;
   display:block;
   margin: 0 auto;
   word-break:break-all;

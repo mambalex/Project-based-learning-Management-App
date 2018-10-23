@@ -146,7 +146,6 @@ function displayProjects () {
 function displayGroupInfo() {
     // all groups
     $("#all-groups li").remove();
-    console.log(groupInfo);
     for (var key in groupInfo) {
         var val = groupInfo[key];
         var groupId = val['group_uuid'];
@@ -262,7 +261,7 @@ function displayMarking() {
 //display resources
 function displayResources(){
     for(var phase in phaseList ){
-        let phase_num = phase.split(" ")[1];
+        let phase_num = phaseList[phase]['phase_index'];
         $(`.phase${phase_num}-doc`).find("tbody tr").remove();
         //no files
         if(phaseList[phase]['resource_list'].length==0){
@@ -299,7 +298,12 @@ function displayResources(){
 
 //display deadline
 function displayDueDate(id){
-    let phase = "Phase "+id;
+    var phase;
+    for(var p in phaseList){
+        if(phaseList[p]['phase_index']==id){
+            phase = phaseList[p]['phase_name']
+        }
+    }
     let phaseDueDate = {};
     $(`.due-date${id}`).find("ul li").remove();
     phaseDueDate[`${phase}`] = phaseList[phase]['deadline'];
