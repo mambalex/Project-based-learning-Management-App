@@ -7,7 +7,7 @@ class Database_object():
 
     database_name = "postgres"
     host_addr = "localhost"
-    host_port = 5430
+    host_port = 5432
     user_name = "postgres"
     passwd = "postgres"
 
