@@ -159,6 +159,7 @@ button{
 }
 .notes-wrapper .title {
     background-color: rgb(55,123,181);
+    /*background-color: #5bc0de;*/
     padding: 18px 30px;
     padding-right: 60px;
     color: white;
@@ -172,9 +173,10 @@ button{
 
 .notes-wrapper .content {
     padding: 10px 30px;
-    padding-bottom: 15px;
+    padding-bottom: 30px;
     font-weight: 400;
-    color: #666D82;
+    /*color: #666D82;*/
+    color: black;
     line-height: 1.4;
     font-size: 14px;
     outline: 0;
@@ -182,6 +184,16 @@ button{
     -moz-outline-style: none;
         word-break: break-all;
 
+}
+.notes-wrapper .task{
+    color: #666D82;
+}
+
+
+.notes-wrapper #task-name{
+  text-align: left;
+  width: 63%;
+  overflow: hidden;
 }
 
 /*due-date*/
@@ -209,7 +221,7 @@ button{
 }
 .due-date>.title{
     height: 40px;
-    background: rgb(55,123,181);
+    background: #d9534f;
     color: white;
     text-align: center;
     padding-top: 10px;

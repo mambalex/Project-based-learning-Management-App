@@ -111,7 +111,8 @@ function getAllInfo(){
                         projectList = rsp_data['all_project_list'];
                         selfProjectList = rsp_data['self_project_list'];
                         userProfile = rsp_data['user_profile'];
-                        localStorage.setItem('profile', JSON.stringify(userProfile));
+                        userProfile['currentProject'] = currentProject;
+                        localStorage.setItem("student_profile", JSON.stringify(userProfile));
             }
     })
 }
@@ -196,7 +197,7 @@ function displayTasks() {
 //display resources
 function displayResources(){
     for(var phase in phaseList ){
-        let phase_num = phase.split(" ")[1];
+        let phase_num = phaseList[phase]['phase_index'];
         $(`.phase${phase_num}-doc`).find("tbody tr").remove();
         if(phaseList[phase]['resource_list'].length==0){
             $(`.phase${phase_num}-doc`).find("tbody").append(`
@@ -231,15 +232,20 @@ function displayResources(){
 
 
 function displayReminder(){
-
-    console.log(reminderList);
     $(".notes-wrapper li").remove();
     reminderList.forEach(function (val) {
         var date = val['post_time'];
         var text = val['message'];
+        var task;
+        if(val['submit_check']=="no"){
+            task = "Project"
+        }else{
+            task =  allTasks[val['ass_uuid']]['task_name'];
+        }
         $(".notes-wrapper").append(`
                         <li>
                             <div class="content reminder">${text}</div>
+                            <div class="task">Task: <span id="task-name">${task}</span></div>
                             <div class="line">${date}</div>
                         </li>
 
@@ -268,7 +274,6 @@ function displayGroupInfo(){
         }
     // all groups
         $("#all-groups li").remove();
-        console.log(groupInfo);
         for(var key in groupInfo){
             var val = groupInfo[key];
             var groupId = val['group_uuid'];
@@ -282,11 +287,11 @@ function displayGroupInfo(){
         }
         //display all students that not in a group
         $("#ungrouped tr").remove();
-        ungroupedStudents.forEach(function (std) {
+        ungroupedStudents.forEach(function (std, idx) {
             if(std['email']!= username){
                             $("#ungrouped").append(`
                                   <tr class="cans">
-                                    <td class="can-left">Candidate 1</td>
+                                    <td class="can-left">Candidate ${idx+1}</td>
                                     <td >${std['name']}</td>
                                     <td align="right">
                                         <a class="btn btn-success btn-xs add-can">
@@ -305,7 +310,12 @@ function displayGroupInfo(){
 
 //display duedate
 function displayDueDate(id){
-    let phase = "Phase "+id;
+    var phase;
+    for(var p in phaseList){
+        if(phaseList[p]['phase_index']==id){
+            phase = phaseList[p]['phase_name']
+        }
+    }
     let phaseDueDate = {};
     $(`.due-date${id}`).find("ul li").remove();
     phaseDueDate[`${phase}`] = phaseList[phase]['deadline'];
@@ -320,7 +330,6 @@ function displayDueDate(id){
     let now = new Date();
     keysSorted.forEach(function (key) {
         var dayLeft = Math.ceil((phaseDueDate[key] - now.getTime()/1000)/(60 * 60 * 24));
-        console.log(dayLeft)
         if(dayLeft <=0 ){
             $(`.due-date${id}`).find("ul").append(`
                           <li>
@@ -344,7 +353,7 @@ function displayDueDate(id){
 function displayMarks(){
      // p3-mark
         for(var phase in phaseList ){
-        let phase_num = phase.split(" ")[1];
+        let phase_num = phaseList[phase]['phase_index'];
         $(`.p${phase_num}-mark`).find("li").remove();
         phaseList[phase]['task_list'].forEach(function (task) {
             var taskName = task['task_name'];

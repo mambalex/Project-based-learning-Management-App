@@ -144,7 +144,7 @@ button{
 }
 .due-date>.title{
     height: 40px;
-    background: rgb(55,123,181);
+    background: #d9534f;
     color: white;
     text-align: center;
     padding-top: 10px;
@@ -335,7 +335,7 @@ button{
 }
 .all-reminders li .content{
   padding:10px;
-  /* Center Div */
+  color: black;
   display:block;
   margin: 0 auto;
   word-break:break-all;
@@ -373,14 +373,20 @@ button{
 
 
 /*group*/
-.group-info{
+.group-wrapper{
+    display: none;
+    flex-direction: column;
     width: 80%;
-    display: none;
+}
+
+.group-info{
+    /*width: 80%;*/
+    /*height: 50%;*/
+    /*display: none;*/
     border-radius: 3px;
-    display: none;
-    position: absolute;
-    top: 10%;
-    left: 10%;
+    /*position: absolute;*/
+    /*top: 10%;*/
+    /*left: 10%;*/
     padding-bottom: 30px;
 }
 
@@ -437,18 +443,137 @@ button{
     text-align: center;
 }
 .group-info .group-size{
-    width: 30%;
+    width: 25%;
     text-align: center;
     margin: 0 35% 20px 35%;
 }
 
 .group-info .group-size input{
-    padding-left: 30%;
+    padding-left: 27%;
     height: 25px;
+}
+
+.group-info .btn-success{
+    margin-right: 5%;
 }
 
 .group-info .group-size input::placeholder{
     font-weight: 400;
+}
+
+
+.all-groups{
+    height: auto;
+    /* display: none; */
+    border-radius: 3px;
+    margin: 10% 0;
+    padding-bottom: 30px;
+}
+
+.all-groups-title{
+  padding-top: 7px;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  height: 40px;
+  background-color: #377bb5;
+
+}
+
+.all-groups ul{
+  /*display: flex;*/
+  /*justify-content: space-between;*/
+  /*flex-wrap: wrap;*/
+  /*padding: 0;*/
+  /*height: 1000px;*/
+  list-style: none;
+  padding: 2.5%;
+  margin-top: 10px;
+
+}
+.all-groups li{
+  width: 50%;
+  /*margin-left: 2%;*/
+  float: left;
+  /*height: 100px;*/
+  border: 1px solid rgb(221,221,221);
+  position: relative;
+  margin-right: -1px;
+  margin-bottom: -1px;
+}
+.all-groups li .title{
+  padding-left: 20px;
+  padding-top: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #2e6da4;
+}
+.all-groups li .description{
+  font-size: 12px;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-right: 90px;
+  height: 60px;
+  overflow: hidden;
+}
+.all-groups li .num-members{
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  font-size: 11px;
+}
+.all-groups li .join{
+  position: absolute;
+  right: 20px;
+  top: 30px;
+  width: 50px;
+  height: 22px;
+  /*background:rgb(55,123,181);*/
+  background:#28a745;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 0.2em;
+}
+
+
+/*group-popup*/
+
+.group-popup{
+  display: none;
+  position: absolute;
+  top:62%;
+  z-index: 5;
+  padding:0;
+  width: 60%;
+  height: 220px;
+  color:black;
+}
+.group-popup .group-popup-close{
+  color:rgb(55,123,181) ;
+  display: inline-block;
+  font-size: 18px;
+  margin-left: 94%;
+  cursor: pointer;
+}
+
+.group-popup>.group-name{
+  text-align: center;
+  font-size: 19px;
+  margin: 0;
+  font-weight: 400;
+  color: #245853;
+  /*display:inline-block;*/
+  width: 100%;
+}
+
+.group-popup-wrapper {
+  margin: 16px 0 10px 40px;
+}
+.group-popup-wrapper .title{
+  font-weight: 500;
 }
 
 
@@ -705,7 +830,7 @@ button{
     position: relative;
     width: 80%;
     /*height: 80%;*/
-    margin: 0 10%;
+    margin: 0 10% 10% 0;
     padding: 20px 40px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
 }
@@ -721,13 +846,19 @@ button{
 
 .mark-container input{
         margin-bottom: 50px;
-        width: 50%;
+        width: 40%;
         display:inline-block;
+}
+
+.mark-container .select-group2{
+    width: 30%;
+    margin-left: 10%;
+    display:inline-block;
 }
 
 
 .mark-container .button{
-   padding-left: 20%;
+   padding-left: 25%;
     display:inline-block;
 
 }
