@@ -111,7 +111,8 @@ function getAllInfo(){
                         projectList = rsp_data['all_project_list'];
                         selfProjectList = rsp_data['self_project_list'];
                         userProfile = rsp_data['user_profile'];
-                        localStorage.setItem('profile', JSON.stringify(userProfile));
+                        userProfile['currentProject'] = currentProject;
+                        localStorage.setItem("student_profile", JSON.stringify(userProfile));
             }
     })
 }

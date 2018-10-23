@@ -154,8 +154,8 @@ def student(username):
     return render_template('student.html')
 
 
-@app.route('/profile')
-def profile():
+@app.route('/profile/<studentOrLecturer>')
+def profile(studentOrLecturer):
     return render_template('profile.html')
 
 
@@ -354,10 +354,10 @@ def get_user_profile():
 @app.route('/api/change_user_profile', methods=['POST'])
 @auth.login_required
 def change_user_profile():
-    name = request.form.get('name', type=str)
-    dob = request.form.get('dob', type=str)
-    gender = request.form.get('gender', type=str)
-    passwd = request.form.get('passwd', type=str)
+    name = request.json.get('name')
+    dob = request.json.get('dob')
+    gender = request.json.get('gender')
+    passwd = request.json.get('passwd')
     db.change_user_name(g.user.user_id, name)
     db.change_user_dob(g.user.user_id, dob)
     db.change_user_gender(g.user.user_id, gender)

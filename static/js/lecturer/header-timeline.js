@@ -1,3 +1,6 @@
+var array = document.location.href.toString().split("/");
+var username = array[array.length - 1];
+
 $("#logout").click( function(){
     $(location).attr('href','/');
     localStorage.clear();

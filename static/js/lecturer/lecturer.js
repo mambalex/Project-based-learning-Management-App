@@ -60,7 +60,8 @@ function getAllInfo(){
                         projectList = rsp_data['all_project_list'];
                         selfProjectList = rsp_data['self_project_list'];
                         userProfile = rsp_data['user_profile'];
-                        localStorage.setItem('profile', JSON.stringify(userProfile));
+                        userProfile['currentProject'] = currentProject;
+                        localStorage.setItem('lecturer_profile', JSON.stringify(userProfile));
             }
     })
 }
@@ -568,6 +569,9 @@ $(document).on('click', '.group-info .btn-success', function(e){
             if(rsp_data['code']==200){
                 alert("Successfully generated.")
                 $('.group-size').find('input').val("");
+                getAllInfo();
+                getCurrentProjectData();
+                displayGroupInfo();
             }
            })
 })
