@@ -230,7 +230,7 @@ function displayMarking() {
                 $(`.mark-container${index}`).find(".select-group").append(`
                             <option value="All groups">All Groups</option>
                      `)
-
+                $(`.mark-container${index}`).find(".select-group2 option[value='All groups']").remove();
         }
 }
 
@@ -843,35 +843,6 @@ $('.chat-close').on('click', function(e) {
 });
 
 
-//demo create new reminder
-// function newReminder(){
-//     var msg = "Welcome to comp9323!"
-//     var task_uuid = currentProject;
-//     var submit_check = 'no';
-//     var data = {
-//                 project_uuid: currentProject,
-//                 ass_uuid:task_uuid,
-//                 message:msg,
-//                 submit_check:submit_check
-//             }
-//     $.ajax({
-//             type: 'POST',
-//             url: '/api/create_new_reminder',
-//             contentType: "application/json",
-//             data:JSON.stringify(data),
-//             headers:{
-//                 'Authorization': 'Basic ' + btoa(JSON.parse(localStorage.getItem(username)).token+':')
-//             }
-//
-//         }).done(function(data){
-//                 console.log(data);
-//                 var time = data['timestamp'];
-//                 var d = new Date(time);
-//                 reminderList[d.getTime()/1000] = data['timestamp']['reminder_uuid'];
-//     })
-// }
-
-
 
 
 //select marking group and task
@@ -910,7 +881,7 @@ $(document).on("click", ".select-group-task", function(e){
 
                                 }
                                  //display unsubmitted groups' files
-                                        for (var group of allTasks[task_id]['unsubmit_group']){
+                                for (var group of allTasks[task_id]['unsubmit_group']){
                                             var mark = "Unmarked";
                                             if(group['mark']!="None"){mark = group['mark']}
                                                             flag = 'yes';
@@ -926,7 +897,9 @@ $(document).on("click", ".select-group-task", function(e){
 
                             }else{
                                    //display specific group's file
-                                    for (const group of allTasks[task_id]['submit_group']){
+                                    for (var group of allTasks[task_id]['submit_group']){
+                                        var mark = "Unmarked";
+                                        if(group['mark']!="None"){mark = group['mark']}
                                         if(group['group_uuid']==groupId){
                                                 flag = 'yes';
                                                 var num = document.find("tr").length;
@@ -936,7 +909,8 @@ $(document).on("click", ".select-group-task", function(e){
                                                 document.append(`
                                                 <tr>
                                                   <td>Doc${num+1}</td>
-                                                  <td><span class="id">yes</span>${fileName}</td>                   
+                                                  <td><span class="id">yes</span>${fileName}</td>   
+                                                   <td class="group-mark">${ group['mark']}</td>                
                                                   <td align="right">
                                                    <a href=${filePath} target="_blank" class="btn btn-success btn-xs view_file">
                                                           <span class="glyphicon glyphicon-file"></span>
@@ -947,18 +921,27 @@ $(document).on("click", ".select-group-task", function(e){
                                                 `)
                                         }
                                     }
+
+                                    //display specific unsubmitted group
+                                    for (var group of allTasks[task_id]['unsubmit_group']){
+                                        var mark = "Unmarked";
+                                        if(group['mark']!="None"){mark = group['mark']}
+                                        if(group['group_uuid']==groupId){
+                                            var mark = "Unmarked";
+                                            if(group['mark']!="None"){mark = group['mark']}
+                                                            flag = 'yes';
+                                                            var num = document.find("tr").length;
+                                                            document.append(`
+                                                            <tr>
+                                                              <td>${group['group_name']}</td>
+                                                              <td><span class="id">no</span>Have not submitted</td>                                                                 <td class="group-mark">${mark}</td>
+                                                              <td align="right"> </td>                                           
+                                                            </tr>                                                        
+                                                            `)
+                                                 }
+                                    }
                             }
                 }
-            }
-            //no files
-            if(flag == 'no'){
-                document.find('tr').remove();
-                document.append(`
-                                  <tr>
-                                  <td>Doc1</td>                             
-                                  <td><span class="id">no</span>Have not submitted</td>
-                                  </tr>
-                `)
             }
         }else{
                document.find('tr').remove();
@@ -968,7 +951,7 @@ $(document).on("click", ".select-group-task", function(e){
                                   <td>No files <span class="id">no</span></td>
                                   </tr>
                 `)
-        }
+         }
 });
 
 
@@ -983,7 +966,7 @@ $(document).on('click', '.mark-container .button .btn', function(e){
     }
     button.addClass("running");
     var task = $(this).parent().siblings('.select-task').val();
-    var group = $(this).parent().siblings('.select-group').val();
+    var group = $(this).parent().siblings('.select-group2').val();
     var mark = $(this).parent().siblings('.phase1-mark').val();
     var data = {
                 task_id:task,
@@ -1007,6 +990,9 @@ $(document).on('click', '.mark-container .button .btn', function(e){
             button.removeClass("running");
             if(rsp_data['code']==200){
                 alert("Successfully marked!")
+                getAllInfo();
+                getCurrentProjectData();
+                $(".select-group-task").click();
             }
         })
 })
@@ -1049,7 +1035,7 @@ $(document).on('click', ".project-dropdown a", function(e){
     displayAllReminder();
     displayTasks();
     displayResources();
-    displayMarking();
+    displayMarkMarking();
     displayDueDate(1);
     displayDueDate(2);
     displayDueDate(3);
@@ -1296,7 +1282,7 @@ $(document).on("keypress", "#chatbotInput", function(e){
 
 $(".tag").on('click',function(){
     var msg = $(".new-reminder-msg").val();
-    var newMsg = `#mark# ${msg}`;
+    var newMsg = `${msg}#mark#`;
     $(".new-reminder-msg").val(newMsg);
 })
 
