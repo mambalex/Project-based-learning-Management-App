@@ -114,6 +114,7 @@ body{
     text-decoration: none !important;
     display: block;
     font-size: 15px;
+    min-width: 105px
 }
 
 .dropdown-content a:hover {

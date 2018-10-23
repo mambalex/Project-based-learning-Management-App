@@ -1,5 +1,6 @@
 $(document).on('click', '.user', function(e){
     e.preventDefault();
+    $(".remove-layer").hide();
     $('.project').find('.dropdown-content').hide();
     if( $(this).find('.dropdown-content').css('display') === 'block' ){
         $(this).find('.dropdown-content').hide();

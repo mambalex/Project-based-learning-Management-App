@@ -35,6 +35,7 @@ $(document).on('click', "#select-project", function(e){
     $(".active").click();
     displayPhaseName();
     displayAllReminder();
+    displayGroupInfo();
     displayTasks();
     displayResources();
     displayMarking();
@@ -139,6 +140,30 @@ function displayProjects () {
     `)
     })
      $(".project-dropdown").append(`<a id="create-project">Create a project</a>`)
+}
+
+//display group
+function displayGroupInfo() {
+    // all groups
+    $("#all-groups li").remove();
+    console.log(groupInfo);
+    for (var key in groupInfo) {
+        var val = groupInfo[key];
+        var groupId = val['group_uuid'];
+        var groupName = val['group_name'];
+        var description = val['description'];
+        var members = val['member'];
+        var group_uuid = val['group_uuid']
+        if (members.length !== 0) {
+            $("#all-groups").append(`
+                <li>
+                <div class="title">${groupName}</div>
+                <div class="description">${description}</div>
+                <div class="num-members">Members: <span>${members.length}</span></div>
+                <div class="join g-popup">Info</div> 
+                </li>`)
+        }
+    }
 }
 
 //display reminders
@@ -379,7 +404,8 @@ $(".navgrp").click( function(){
     $("#distribution2").hide();
     $("#select-task-distribution").hide();
     $(".deadline_view").hide()
-    $(".group-info").show()
+    // $(".group-info").show()
+    $(".group-wrapper").css("display","flex");
 
 });
 
@@ -390,7 +416,8 @@ $(".reminder").click(function(){
     $(".upload-files").hide()
     $(".documents").hide()
     $(".mark-container").hide();
-    $(".group-info").hide()
+    // $(".group-info").hide()
+    $(".group-wrapper").hide()
     $(".deadline_view").hide()
     $("#distribution").hide();
     $("#distribution2").hide();
@@ -404,7 +431,8 @@ $(".reminder").click(function(){
 //Click Phase1
 $(".active").click( function(){
     $(".alert").hide()
-    $(".group-info").hide()
+    // $(".group-info").hide()
+     $(".group-wrapper").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
     $(".documents").hide()
@@ -419,7 +447,8 @@ $(".active").click( function(){
 //Click Deadline
 $(".deadline").click( function(){
     $(".alert").hide()
-    $(".group-info").hide()
+    $(".group-wrapper").hide()
+    // $(".group-info").hide()
     $(".new_note").hide()
     $(".upload-files").hide()
     $(".documents").hide()
@@ -436,7 +465,8 @@ $(".deadline").click( function(){
 //Click Resources
 $(".upload").click( function(){
     $(".alert").hide()
-    $(".group-info").hide()
+    $(".group-wrapper").hide()
+    // $(".group-info").hide()
     $(".new_note").hide()
     $(".mark-container").hide();
     $(".notes-wrapper").hide()
@@ -452,7 +482,8 @@ $(".upload").click( function(){
 //Click Mark
 $(".mark").click( function(){
     $(".alert").hide()
-    $(".group-info").hide()
+    $(".group-wrapper").hide()
+    // $(".group-info").hide()
     $(".new_note").hide()
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
@@ -471,7 +502,8 @@ $(".mark").click( function(){
 //Click Mark distribution
 $(".distribution").click( function(){
     $(".alert").hide()
-    $(".group-info").hide()
+    $(".group-wrapper").hide()
+    // $(".group-info").hide()
     $(".new_note").hide()
     $(".notes-wrapper").hide()
     $(".deadline_view").hide()
@@ -535,6 +567,34 @@ $(document).on('click', '.group-info .btn-success', function(e){
             }
            })
 })
+
+//click group name popup
+$(document).on('click', '.g-popup', function(e){
+    e.preventDefault();
+    var group_name = $(this).siblings('.title').text();
+    // console.log(group_name)
+    // console.log(groupInfo)
+    let description = groupInfo[group_name]['description']
+    let members = groupInfo[group_name]['member']
+    $(".group-popup").find(".group-name").text(group_name);
+    $(".group-popup").find(".note").text(description);
+    $(".group-popup").find(".all-members").children().remove();
+    members.forEach(function(val){
+         $(".group-popup").find(".all-members").append(`<li>${val['name']}</li>`)
+    })
+    $(".group-popup").show();
+});
+
+//close popup
+$(document).mouseup(function(e)
+{
+    var container = $(".group-popup");
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0)
+    {
+        container.hide();
+    }
+});
 
 
 
@@ -1033,6 +1093,7 @@ $(document).on('click', ".project-dropdown a", function(e){
     $(".active").click();
     displayPhaseName();
     displayAllReminder();
+    displayGroupInfo();
     displayTasks();
     displayResources();
     displayMarkMarking();

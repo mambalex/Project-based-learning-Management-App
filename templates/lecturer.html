@@ -49,8 +49,8 @@
                   <i class="fas fa-user-alt"></i>
                   <div class="dropdown-content">
                       <a href="/profile" id="profile">My Profile</a>
-                      <a >Notifications</a>
-                      <a >Settings</a>
+{#                      <a >Notifications</a>#}
+{#                      <a >Settings</a>#}
                       <a href="index.html" id="logout">Logout</a>
                   </div>
               </div>
@@ -279,7 +279,7 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-success" ng-click="launch()" id="firstDeadline">Deadline</button>
+                          <button class="btn btn-danger" ng-click="launch()" id="firstDeadline">Deadline</button>
                         </div>
                         <div class="col-md-6">
                             <div class="btn btn-success ld-ext-right saveDeadline">
@@ -309,6 +309,7 @@
             </div>
 
 <!-- group  -->
+         <div class="group-wrapper">
           <div class="group-info drop-shadow-nav-grp curved.v2">
             <div class="group-info-title"> Group Forming</div>
                 <div class="group-options">
@@ -326,6 +327,47 @@
             
                 </div>
           </div>
+              <div class="group-info all-groups drop-shadow-nav-grp curved.v2">
+                <div class="all-groups-title"> All Groups</div>
+                <ul id="all-groups">
+                   <li >
+                        <div class="title g-popup">Goup1</div>
+                        <div class="description">blabla</div>
+                        <div class="num-members">Members: <span>5</span></div>
+                       <div class="join">Info</div>
+                    </li>
+                    <li >
+                        <div class="title g-popup">Goup1</div>
+                        <div class="description">blabla</div>
+                        <div class="num-members">Members: <span>5</span></div>
+                        <div class="join">Info</div>
+                    </li>
+                    <li >
+                        <div class="title g-popup">Goup1</div>
+                        <div class="description">blabla</div>
+                        <div class="num-members">Members: <span>5</span></div>
+                        <div class="join">Info</div>
+                    </li>
+
+                </ul>
+                </div>
+                  </div>
+              <!--group-popup-->
+          <div class="group-popup drop-shadow-nav-grp curved.v2">
+              <div class="group-name"></div>
+              <div class="group-popup-wrapper">
+                  <div class="memebers">
+                      <div class="title">Members:</div>
+                      <ul class="all-members">
+<!--                           <li>Zhiqin Zhang </li>
+                          <li>Han Zhang </li> -->
+                      </ul>
+                  </div>
+                  <div class="note"></div>
+              </div>
+          </div>
+
+
 <!-- mark  -->
           <div class="mark-container mark-container1">
               <h1>Marking</h1><br><br>
@@ -554,7 +596,7 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-success deadline-button"  ng-click="launch()">Deadline</button>
+                          <button class="btn btn-danger deadline-button"  ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
                            <div class="btn btn-success ld-ext-right saveDeadline">
@@ -801,7 +843,7 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-success deadline-button" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-danger deadline-button" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
                             <div class="btn btn-success ld-ext-right saveDeadline">
@@ -1043,7 +1085,7 @@
                       <input class="form-control others-deadline" type="text" placeholder="Others">
                       <div class="row deadline-btn">
                         <div class="col-md-6">
-                          <button class="btn btn-success deadline-button" ng-click="launch()">Deadline</button>
+                          <button class="btn btn-danger deadline-button" ng-click="launch()">Deadline</button>
                         </div>
                         <div class="col-md-6">
                             <div class="btn btn-success ld-ext-right saveDeadline">
