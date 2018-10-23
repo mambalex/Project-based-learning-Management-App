@@ -12,7 +12,7 @@ This application work on MacOS and Linux.
 For Linux, only test on Debian.
 
 ### requirement ###
-Database: Postgresql, run on localhost port 5430 with a database named "comp9323".
+Database: Postgresql, run on localhost port 5432 with a database named "comp9323".
 For the detail of setup database, see setup database part
 
 Server: Python3. For detail, see setup server part.
