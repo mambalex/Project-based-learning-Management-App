@@ -654,13 +654,13 @@ $(document).on('click', '.phase-doc-upload', function(e){
         var title = $(this).closest(".upload-files").find(".title").val();
         var description = $(this).closest(".upload-files").find(".description").val();
         var file = $(this).closest(".upload-files").find("input[type=file]").prop('files')[0];
-        var phase = $(this).closest(".upload-files").find(".upload-selector").val();
-        if(phase=="" | !file){
+        var phaseId = $(this).closest(".upload-files").find(".upload-selector").val();
+        if(phaseId=="" | !file){
             popUp(".upload-files", ".alert-danger","Incorrect input",".upload");
             button.removeClass("running");
             return
         }
-        var phaseId = phaseList[phase]['phase_uuid'];
+        // var phaseId = phaseList[phase]['phase_uuid'];
         var formData = new FormData();
         formData.append('upload_file', file);       
         formData.append('description', description);

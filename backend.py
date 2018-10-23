@@ -857,6 +857,13 @@ def api_upload():
     file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
     project_uuid = request.form.get('project_uuid', type=str)
     phase_uuid = request.form.get('phase_uuid', type=str)
+    phase_list = db.get_project_all_phases(project_uuid)
+    phase_index = re.search(r'\d', phase_uuid)
+    phase_index = int(phase_index.group(0))
+    for phase in phase_list:
+        if phase["phase_index"] == phase_index:
+            phase_uuid = phase["phase_uuid"]
+            break
     description = request.form.get('description', type=str)
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
