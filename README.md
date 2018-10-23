@@ -81,5 +81,7 @@ $ python3 backend.py
 $ python backend.py
 ```
 
-And now application is running on localhost:5000.
+And now application is running on localhost:5000. You could use test account
+email: 'student1@gmail.com', password: '123456' to view student interface.
+email: 'lecturer1@gmail.com', password: '123456' to view lecturer interface.
 
