@@ -131,9 +131,9 @@ insert into group_relation values ('mason@gmail.com', '5b16b189-0e5a-40c4-a9f2-d
 insert into group_relation values ('connor@gmail.com', '5b16b189-0e5a-40c4-a9f2-d13b42eb80c7', 1);
 
 
-insert into reminder values ('5e6c4ec2-5d7c-44e0-a0cf-1d948df8afe3', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52e00d4-c967-11e8-8949-4c3275989ef5', 'Phase modification, read instructions.', 'no', '2018-10-09 11:26:57+0');
+insert into reminder values ('5e6c4ec2-5d7c-44e0-a0cf-1d948df8afe3', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52fa206-c967-11e8-989a-4c3275989ef5', 'Phase modification, read instructions.', 'no', '2018-10-09 11:26:57+0');
 insert into reminder values ('5cc5cde1-b608-4dde-ae8e-7583164fb808', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a53257cc-c967-11e8-9495-4c3275989ef5', 'Task closed, no more submission accpected', 'yes', '2018-10-20 11:26:57+0');
-insert into reminder values ('f0891b0e-d920-4993-9e5a-d27f470c5f8e', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52e00d4-c967-11e8-8949-4c3275989ef5', 'Achieves optimal levels of performance and accomplishment ', 'no', '2018-10-10 11:26:57+0');
+insert into reminder values ('f0891b0e-d920-4993-9e5a-d27f470c5f8e', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52fa206-c967-11e8-989a-4c3275989ef5', 'Achieves optimal levels of performance and accomplishment ', 'no', '2018-10-10 11:26:57+0');
 insert into reminder values ('450a43be-0c38-41eb-9ca4-3ebae905b736', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a53257cc-c967-11e8-9495-4c3275989ef5', 'Excels at developing programs', 'yes', '2018-10-20 11:26:57+0');
-insert into reminder values ('be980096-58c0-4664-b600-4f40833013ec', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52e00d4-c967-11e8-8949-4c3275989ef5', 'Exceeded the original goal of TASK by 80% through methods given in class', 'no', '2018-10-11 11:26:57+0');
+insert into reminder values ('be980096-58c0-4664-b600-4f40833013ec', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a52fa206-c967-11e8-989a-4c3275989ef5', 'Exceeded the original goal of TASK by 80% through methods given in class', 'no', '2018-10-11 11:26:57+0');
 insert into reminder values ('610273b7-3100-42a4-a2a9-c7e6d95fac62', 'lecturer1@gmail.com', 'a5259728-c967-11e8-8220-4c3275989ef5', 'a53257cc-c967-11e8-9495-4c3275989ef5', 'Keeps documents organized via google drive to avoid duplicate information', 'yes', '2018-10-12 11:26:57+0');
