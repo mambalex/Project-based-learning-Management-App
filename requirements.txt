@@ -1,5 +1,5 @@
 psycopg2-binary==2.7.5
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 itsdangerous==0.24
 Jinja2==2.10
 Flask==1.0.2
