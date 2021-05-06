@@ -3,7 +3,7 @@ Werkzeug==0.14.1
 itsdangerous==0.24
 Jinja2==2.10
 Flask==1.0.2
-Flask-Cors==3.0.6
+Flask-Cors==3.0.9
 Flask-HTTPAuth==3.2.4
 Flask-RESTful==0.3.6
 passlib==1.7.1
